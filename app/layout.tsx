@@ -1,4 +1,5 @@
 import type { Metadata } from 'next';
+import { Toaster } from 'react-hot-toast';
 
 import localFont from 'next/font/local';
 
@@ -20,7 +21,10 @@ type Props = Readonly<{
 export default function RootLayout({ children }: Props) {
   return (
     <html lang="en">
-      <body className={`${jost.className}`}>{children}</body>
+      <body className={`${jost.className}`}>
+        <Toaster />
+        {children}
+      </body>
     </html>
   );
 }
