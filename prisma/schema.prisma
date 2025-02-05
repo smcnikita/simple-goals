@@ -1,0 +1,44 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource mysql {
+  provider = "mysql"
+  url      = env("DATABASE_URL")
+}
+
+// User model representing a user in the system
+model users {
+  id         Int      @id @default(autoincrement())
+  name       String
+  email      String   @unique
+  password   String
+  created_at DateTime @default(now())
+  updated_at DateTime
+}
+
+model years {
+  id      Int @id @default(autoincrement())
+  year    Int
+  user_id Int
+
+  @@index([user_id])
+}
+
+// Goal model representing a goal associated with a user
+model goals {
+  id           Int       @id @default(autoincrement())
+  name         String
+  description  String?
+  is_completed Boolean   @default(false)
+  completed_at DateTime?
+  sort_order   Int
+  year_id      Int
+  created_at   DateTime  @default(now())
+  updated_at   DateTime
+
+  @@index([year_id])
+}

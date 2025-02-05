@@ -6,20 +6,50 @@
     "dev": "next dev --turbopack",
     "build": "next build",
     "start": "next start",
-    "lint": "next lint"
+    "lint": "next lint",
+    "test": "vitest",
+    "format": "prettier -c .",
+    "format:fix": "prettier -w .",
+    "db:clean": "rimraf ./prisma/dev.db",
+    "db:push": "npx prisma db push",
+    "db:generate": "npx prisma generate",
+    "db:studio": "npx prisma studio",
+    "db:seed": "tsx ./prisma/seed.ts",
+    "prepare": "husky"
+  },
+  "husky": {
+    "hooks": {
+      "pre-commit": "lint-staged"
+    }
+  },
+  "lint-staged": {
+    "*.(json|html|css|md)": [
+      "npm run format"
+    ],
+    "*.(ts|tsx)": [
+      "pnpm format",
+      "pnpm lint"
+    ]
   },
   "dependencies": {
+    "@prisma/client": "^6.3.1",
+    "clsx": "^2.1.1",
+    "next": "15.1.6",
+    "prisma": "^6.3.1",
     "react": "^19.0.0",
     "react-dom": "^19.0.0",
-    "next": "15.1.6"
+    "react-hot-toast": "^2.5.1"
   },
   "devDependencies": {
-    "typescript": "^5",
+    "@eslint/eslintrc": "^3",
     "@types/node": "^20",
     "@types/react": "^19",
     "@types/react-dom": "^19",
     "eslint": "^9",
     "eslint-config-next": "15.1.6",
-    "@eslint/eslintrc": "^3"
+    "prettier": "^3.4.2",
+    "rimraf": "^6.0.1",
+    "typescript": "^5",
+    "vitest": "^3.0.5"
   }
 }
