@@ -1,0 +1,44 @@
+.button__secondary {
+  width: 100%;
+
+  padding: 16px;
+
+  color: white;
+  background: var(--info-1-color);
+
+  transition: all 0.3s ease;
+}
+
+.button__secondary::after {
+  content: '';
+
+  position: absolute;
+  top: 50%;
+  left: 50%;
+
+  width: 0;
+  height: 0;
+
+  background: var(--black-color-10);
+
+  border-radius: 50%;
+
+  transform: translate(-50%, -50%);
+
+  transition:
+    width 0.3s,
+    height 0.3s;
+}
+
+.button__secondary:hover::after {
+  width: 200px;
+  height: 200px;
+}
+
+.button__secondary:hover {
+  box-shadow: 0 6px 20px rgba(76, 130, 210, 0.4);
+}
+
+.button__secondary:active {
+  transform: scale(0.98);
+}

@@ -9,6 +9,7 @@ import './globals.css';
 
 const jost = localFont({
   src: '../assets/Jost-Regular.woff2',
+  variable: '--font-jost',
 });
 
 export const metadata: Metadata = {

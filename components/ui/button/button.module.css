@@ -1,0 +1,20 @@
+.button {
+  position: relative;
+
+  border: none;
+  border-radius: 10px;
+
+  padding: 16px;
+
+  cursor: pointer;
+
+  overflow: hidden;
+
+  font-size: inherit;
+
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
+}
+
+.button__sm {
+  padding: 12px;
+}
