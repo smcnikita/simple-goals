@@ -1,5 +1,6 @@
 import { NextResponse } from 'next/server';
 import type { NextRequest } from 'next/server';
+
 import { PATHS } from '@/constants/paths';
 
 const allowPaths = [PATHS.home];

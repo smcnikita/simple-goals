@@ -4,6 +4,7 @@ import { Toaster } from 'react-hot-toast';
 import localFont from 'next/font/local';
 
 import Container from '@/components/ui/container/Container';
+import Header from '@/components/ui/header';
 
 import './globals.css';
 
@@ -26,7 +27,10 @@ export default function RootLayout({ children }: Props) {
     <html lang="en">
       <body className={`${jost.className}`}>
         <Toaster />
-        <Container>{children}</Container>
+        <Container>
+          <Header />
+          {children}
+        </Container>
       </body>
     </html>
   );

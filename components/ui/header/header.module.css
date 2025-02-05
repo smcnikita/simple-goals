@@ -1,0 +1,17 @@
+.wrapper {
+  padding: 12px 0;
+}
+
+.header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+
+  padding: 20px;
+
+  border-radius: 12px;
+
+  background: var(--dark-color);
+
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
+}
