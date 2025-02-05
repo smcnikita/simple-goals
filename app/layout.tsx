@@ -3,6 +3,8 @@ import { Toaster } from 'react-hot-toast';
 
 import localFont from 'next/font/local';
 
+import Container from '@/components/ui/container/Container';
+
 import './globals.css';
 
 const jost = localFont({
