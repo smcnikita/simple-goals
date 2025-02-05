@@ -6,7 +6,7 @@
     "dev": "next dev --turbopack",
     "build": "next build",
     "start": "next start",
-    "lint": "next lint",
+    "lint": "next lint .",
     "test": "vitest",
     "format": "prettier -c .",
     "format:fix": "prettier -w .",
@@ -27,8 +27,8 @@
       "npm run format"
     ],
     "*.(ts|tsx)": [
-      "pnpm format",
-      "pnpm lint"
+      "npm run format",
+      "npm run lint"
     ]
   },
   "dependencies": {
@@ -42,11 +42,17 @@
   },
   "devDependencies": {
     "@eslint/eslintrc": "^3",
+    "@testing-library/dom": "^10.4.0",
+    "@testing-library/react": "^16.2.0",
     "@types/node": "^20",
     "@types/react": "^19",
     "@types/react-dom": "^19",
     "eslint": "^9",
     "eslint-config-next": "15.1.6",
+    "eslint-config-prettier": "^10.0.1",
+    "husky": "^9.1.7",
+    "jsdom": "^26.0.0",
+    "lint-staged": "^15.4.3",
     "prettier": "^3.4.2",
     "rimraf": "^6.0.1",
     "typescript": "^5",

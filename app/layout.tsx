@@ -25,7 +25,7 @@ export default function RootLayout({ children }: Props) {
     <html lang="en">
       <body className={`${jost.className}`}>
         <Toaster />
-        {children}
+        <Container>{children}</Container>
       </body>
     </html>
   );

@@ -1,0 +1,32 @@
+name: Format and lint
+
+on:
+  push:
+    branches:
+      - main
+      - dev
+  pull_request:
+    branches:
+      - main
+      - dev
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v3
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v3
+        with:
+          node-version: '22' # Use the Node.js version you are using in your project
+
+      - name: Install Dependencies
+        run: npm install
+
+      - name: Run Formatter
+        run: npm run format
+
+      - name: Run Linter
+        run: npm run lint
