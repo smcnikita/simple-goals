@@ -6,20 +6,21 @@ import HeaderMenuItem from './HeaderMenuItem';
 
 import classes from '../styles/header.module.css';
 
-const nowYear = new Date().getFullYear();
-const menuList = [
-  { name: 'Home', href: PATHS.home },
-  { name: 'Goals', href: PATHS.goals.base + PATHS.goals.slug.replace(':slug', nowYear.toString()) },
-];
+type Props = {
+  isAuth: boolean;
+};
 
-const HeaderMenu: FC = () => {
+const HeaderMenu: FC<Props> = ({ isAuth }) => {
+  const nowYear = new Date().getFullYear();
+
   return (
     <nav className={classes.tabs}>
-      {menuList.map((el) => (
-        <HeaderMenuItem key={el.name} href={el.href}>
-          {el.name}
+      <HeaderMenuItem href={PATHS.home}>Home</HeaderMenuItem>
+      {isAuth && (
+        <HeaderMenuItem href={PATHS.goals.base + PATHS.goals.slug.replace(':slug', nowYear.toString())}>
+          Goals
         </HeaderMenuItem>
-      ))}
+      )}
     </nav>
   );
 };

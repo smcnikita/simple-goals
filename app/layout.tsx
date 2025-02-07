@@ -7,6 +7,9 @@ import Container from '@/components/ui/container';
 import Header from '@/components/ui/header';
 
 import './globals.css';
+import { cookies, headers } from 'next/headers';
+import { TOKEN } from '@/constants/cookies';
+import { USER_ID } from '@/constants/headers';
 
 const jost = localFont({
   src: '../assets/Jost-Regular.woff2',
@@ -22,13 +25,21 @@ type Props = Readonly<{
   children: React.ReactNode;
 }>;
 
-export default function RootLayout({ children }: Props) {
+export default async function RootLayout({ children }: Props) {
+  const cookiesStore = await cookies();
+  const headersStore = await headers();
+
+  const token = cookiesStore.get(TOKEN);
+  const userId = headersStore.get(USER_ID);
+
+  const isAuth = !!token && !!userId;
+
   return (
     <html lang="en">
       <body className={`${jost.className}`}>
         <Toaster />
         <Container>
-          <Header />
+          <Header isAuth={isAuth} />
           {children}
         </Container>
       </body>
