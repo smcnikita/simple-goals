@@ -1,4 +1,11 @@
 .wrapper {
+  position: sticky;
+  top: 0;
+
+  background: var(--purple-dark-color);
+
+  height: 108px;
+
   padding: 12px 0;
 }
 
@@ -14,4 +21,37 @@
   background: var(--dark-color);
 
   box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
+}
+
+.tabs {
+  display: flex;
+  align-items: center;
+}
+
+.tab {
+  padding: 10px 20px;
+
+  background: none;
+
+  border: none;
+  border-radius: 12px;
+
+  font-size: 16px;
+  font-weight: 400;
+
+  color: var(--light-color);
+
+  text-decoration: none;
+
+  cursor: pointer;
+
+  transition: all 0.3s ease-in-out;
+}
+
+.tab:hover {
+  background: rgba(245, 245, 245, 0.05);
+}
+
+.tab__active {
+  background: rgba(245, 245, 245, 0.05);
 }

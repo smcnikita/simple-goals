@@ -5,4 +5,9 @@ export const PATHS = {
     signIn: '/sign-in',
     signUp: '/sign-up',
   },
+
+  goals: {
+    base: '/goals',
+    slug: '/:slug',
+  },
 };

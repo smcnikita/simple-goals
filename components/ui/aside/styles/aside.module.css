@@ -1,0 +1,21 @@
+.aside {
+  width: 280px;
+  height: calc(100dvh - 108px - 12px);
+
+  background: #222222;
+
+  padding: 30px 20px;
+
+  position: sticky;
+  left: 0;
+  top: 108px;
+
+  flex-shrink: 0;
+
+  box-shadow: 0 0 25px rgba(0, 0, 0, 0.4);
+
+  border-radius: 12px;
+
+  overflow-y: auto;
+  overflow-x: hidden;
+}

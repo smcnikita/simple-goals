@@ -5,6 +5,8 @@ import { usePathname } from 'next/navigation';
 
 import { showHeader } from '../utils/showHeader';
 
+import HeaderMenu from './HeaderMenu';
+
 import classes from '../styles/header.module.css';
 
 const Header: FC = () => {
@@ -18,8 +20,12 @@ const Header: FC = () => {
   return (
     <header className={classes.wrapper}>
       <div className={classes.header}>
-        <div>header</div>
-        <div>header 2</div>
+        <HeaderMenu />
+        <div>
+          <button type="button" className={classes.tab}>
+            Sign In
+          </button>
+        </div>
       </div>
     </header>
   );
