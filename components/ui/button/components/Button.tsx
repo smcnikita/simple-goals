@@ -1,11 +1,11 @@
 import clsx from 'clsx';
-
 import type { FC, PropsWithChildren } from 'react';
-import type { Props } from './types';
 
-import classes from './button.module.css';
-import classesPrimary from './primary.module.css';
-import classesSecondary from './secondary.module.css';
+import type { Props } from '../types';
+
+import classes from '../styles/button.module.css';
+import classesPrimary from '../styles/primary.module.css';
+import classesSecondary from '../styles/secondary.module.css';
 
 const Button: FC<PropsWithChildren<Props>> = (props) => {
   const { children, type = 'button', className, variant = 'primary', size = 'md', ...rest } = props;

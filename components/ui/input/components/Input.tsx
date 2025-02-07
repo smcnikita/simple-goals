@@ -1,9 +1,9 @@
 import clsx from 'clsx';
-
 import type { FC, PropsWithChildren } from 'react';
-import type { Props } from './types';
 
-import classes from './input.module.css';
+import type { Props } from '../types';
+
+import classes from '../styles/input.module.css';
 
 const input: FC<PropsWithChildren<Props>> = (props) => {
   const { children, message, useLabel = true, useMessage = true, id, ...rest } = props;

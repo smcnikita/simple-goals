@@ -1,11 +1,11 @@
 'use client';
 
-import { usePathname } from 'next/navigation';
 import type { FC } from 'react';
+import { usePathname } from 'next/navigation';
 
-import { showHeader } from './utils/showHeader';
+import { showHeader } from '../utils/showHeader';
 
-import classes from './header.module.css';
+import classes from '../styles/header.module.css';
 
 const Header: FC = () => {
   const pathname = usePathname();
