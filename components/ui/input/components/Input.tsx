@@ -9,7 +9,11 @@ const input: FC<PropsWithChildren<Props>> = (props) => {
   const { children, message, useLabel = true, useMessage = true, id, ...rest } = props;
 
   return (
-    <div className={classes.group}>
+    <div
+      className={clsx(classes.group, {
+        [classes.error]: message,
+      })}
+    >
       <input className={classes.field} id={id} {...rest} />
       {useLabel && (
         <label
