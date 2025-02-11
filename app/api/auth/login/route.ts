@@ -1,4 +1,5 @@
 import { NextResponse } from 'next/server';
+import { USER_ID } from '@/constants/headers';
 
 import { SignInSchema } from '@/lib/definitions/auth';
 import { prisma } from '@/lib/prisma';
@@ -40,7 +41,7 @@ export async function POST(req: Request) {
     httpOnly: true,
     path: '/',
     secure: process.env.NODE_ENV !== 'development',
-    maxAge: 168,
+    maxAge: 7 * 24 * 60 * 60,
   };
 
   const response = NextResponse.json(
@@ -52,6 +53,7 @@ export async function POST(req: Request) {
   );
 
   response.cookies.set(cookieOptions);
+  response.headers.set(USER_ID, user.id.toString());
 
   return response;
 }

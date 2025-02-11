@@ -5,6 +5,8 @@ import Link from 'next/link';
 import { useState, type FC } from 'react';
 import { toast } from 'react-hot-toast';
 
+import { PATHS } from '@/constants/paths';
+
 import { httpSignIn } from '@/lib/http/auth';
 
 import Input from '@/components/ui/input';
@@ -53,14 +55,12 @@ const SignIn: FC = () => {
       }
 
       setIsLoading(false);
-
-      return;
     }
 
     setErrors(defaultErrors);
-
-    console.log(dataRes);
     setIsLoading(false);
+
+    window.location.href = PATHS.home;
   };
 
   return (
