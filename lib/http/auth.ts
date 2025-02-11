@@ -7,3 +7,8 @@ export const httpSignIn = async (email: string, password: string) => {
   const body = JSON.stringify({ email, password });
   return fetchFromAPI(apiUrl, { method: 'POST', body });
 };
+
+export const httpLogout = async () => {
+  const apiUrl = API_PATHS.auth.logout;
+  return fetchFromAPI(apiUrl, { method: 'POST' });
+};

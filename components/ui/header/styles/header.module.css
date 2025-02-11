@@ -29,6 +29,10 @@
 }
 
 .tab {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
   padding: 10px 20px;
 
   background: none;
@@ -44,6 +48,8 @@
   text-decoration: none;
 
   cursor: pointer;
+
+  box-shadow: none !important;
 
   transition: all 0.3s ease-in-out;
 }
