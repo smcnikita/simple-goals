@@ -1,4 +1,5 @@
 import { NextResponse } from 'next/server';
+
 import { USER_ID, USER_NAME } from '@/constants/headers';
 import { TOKEN } from '@/constants/cookies';
 

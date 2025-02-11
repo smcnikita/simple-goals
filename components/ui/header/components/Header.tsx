@@ -3,8 +3,11 @@
 import type { FC } from 'react';
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
+import toast from 'react-hot-toast';
 
 import { PATHS } from '@/constants/paths';
+
+import { httpLogout } from '@/lib/http/auth';
 
 import { showHeader } from '../utils/showHeader';
 
@@ -13,8 +16,6 @@ import HeaderMenu from './HeaderMenu';
 import BaseIcon, { ExitIcon } from '@/components/ui/icon';
 
 import classes from '../styles/header.module.css';
-import { httpLogout } from '@/lib/http/auth';
-import toast from 'react-hot-toast';
 
 type Props = {
   isAuth: boolean;
