@@ -32,10 +32,10 @@ const SignUp: FC = () => {
         <div className={classes.social}>
           <div className={classes.buttons}>
             <Button size="sm" className={classes.button}>
-              <Image src="/google.png" width={20} height={20} alt="Sign in with Google" />
+              <Image src="/images/google.png" width={20} height={20} alt="Sign in with Google" />
             </Button>
             <Button size="sm" className={classes.button}>
-              <Image src="/github-white.png" width={20} height={20} alt="Sign in with Github" />
+              <Image src="/images/github-white.png" width={20} height={20} alt="Sign in with Github" />
             </Button>
           </div>
         </div>
