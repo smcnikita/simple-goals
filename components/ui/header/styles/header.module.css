@@ -26,6 +26,7 @@
 .tabs {
   display: flex;
   align-items: center;
+  gap: 6px;
 }
 
 .tab {
