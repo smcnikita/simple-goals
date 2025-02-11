@@ -38,18 +38,18 @@ const SignIn: FC = () => {
     const dataRes = await res.json();
 
     if (!res.ok) {
-      const { errors, error } = dataRes;
+      const { errors, message } = dataRes;
 
-      if (errors.email) {
+      if (errors && errors.email) {
         setErrors({ ...defaultErrors, email: errors.email[0] });
       }
 
-      if (errors.password) {
+      if (errors && errors.password) {
         setErrors({ ...defaultErrors, password: errors.password[0] });
       }
 
-      if (error) {
-        toast.error(error);
+      if (message) {
+        toast.error(message);
       }
 
       setIsLoading(false);
