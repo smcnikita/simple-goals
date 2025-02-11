@@ -1,16 +1,17 @@
-import { fetchFromAPI } from '@/lib/http';
 import type { YearItem } from '@/types/years';
 
 import Aside from '@/components/ui/aside';
 
 import classes from './page.module.css';
+import { getYears } from './years-actions';
 
 type Props = Readonly<{
   children: React.ReactNode;
 }>;
 
 const LayoutGoals = async ({ children }: Props) => {
-  const years = await fetchFromAPI<YearItem[]>('/years?userId=1');
+  const res = (await getYears()) as YearItem[] | undefined;
+  const years = res ?? [];
 
   return (
     <div className={classes.wrapper}>
