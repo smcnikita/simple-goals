@@ -1,6 +1,8 @@
-import { TOKEN } from '@/constants/cookies';
-import { goalsController } from '@/controllers/goals-controller';
 import { NextResponse } from 'next/server';
+
+import { TOKEN } from '@/constants/cookies';
+
+import { goalsController } from '@/controllers/goals-controller';
 
 export async function POST(req: Request) {
   const cookiesStore = req.headers.get('cookie');
