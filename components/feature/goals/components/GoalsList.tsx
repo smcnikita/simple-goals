@@ -12,9 +12,10 @@ type Props = {
   goals: GoalModel[];
   canChangeGoal: boolean;
   updateGoal: (goalId: number, isCompleted: boolean) => Promise<void>;
+  removeGoal: (goalId: number) => Promise<void>;
 };
 
-const GoalsList: FC<Props> = ({ goals, canChangeGoal, updateGoal }) => {
+const GoalsList: FC<Props> = ({ goals, canChangeGoal, updateGoal, removeGoal }) => {
   const uncompletedGoals = useMemo(() => {
     return goals.filter((goal) => !goal.is_completed && goal.completed_at === null);
   }, [goals]);
@@ -29,7 +30,13 @@ const GoalsList: FC<Props> = ({ goals, canChangeGoal, updateGoal }) => {
     <div className={classes.items}>
       <ul className={classes.list}>
         {uncompletedGoals.map((goal) => (
-          <GoalsItem key={goal.id} goal={goal} canChangeGoal={canChangeGoal} updateGoal={updateGoal} />
+          <GoalsItem
+            key={goal.id}
+            goal={goal}
+            canChangeGoal={canChangeGoal}
+            updateGoal={updateGoal}
+            removeGoal={removeGoal}
+          />
         ))}
       </ul>
 
@@ -37,7 +44,13 @@ const GoalsList: FC<Props> = ({ goals, canChangeGoal, updateGoal }) => {
         <p className={classes.items_title}>Completed</p>
         <ul className={classes.list}>
           {completedGoals.map((goal) => (
-            <GoalsItem key={goal.id} goal={goal} canChangeGoal={canChangeGoal} updateGoal={updateGoal} />
+            <GoalsItem
+              key={goal.id}
+              goal={goal}
+              canChangeGoal={canChangeGoal}
+              updateGoal={updateGoal}
+              removeGoal={removeGoal}
+            />
           ))}
         </ul>
       </div>

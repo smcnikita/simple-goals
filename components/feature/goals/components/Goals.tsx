@@ -5,7 +5,7 @@ import toast from 'react-hot-toast';
 
 import type { GoalModel } from '@/models/goals-model';
 
-import { httpUpdateGoal } from '@/lib/http/goals';
+import { httpUpdateGoal, httpRemoveGoal } from '@/lib/http/goals';
 
 import GoalsList from './GoalsList';
 
@@ -49,6 +49,24 @@ const Goals: FC<Props> = ({ goals, year }) => {
     setLocalGoals(newGoals);
   };
 
+  const removeGoal = async (goalId: number) => {
+    if (!canChangeGoal) {
+      return;
+    }
+
+    const res = await httpRemoveGoal(goalId, year);
+    const data = await res.json();
+
+    if (!res.ok) {
+      toast.error(data.message);
+      return;
+    }
+
+    const newGoals = localGoals.filter((goal) => goal.id !== goalId);
+
+    setLocalGoals(newGoals);
+  };
+
   useEffect(() => {
     setLocalGoals(goals);
   }, [goals]);
@@ -63,7 +81,7 @@ const Goals: FC<Props> = ({ goals, year }) => {
 
   return (
     <section className={classes.section}>
-      <GoalsList goals={localGoals} canChangeGoal={canChangeGoal} updateGoal={updateGoal} />
+      <GoalsList goals={localGoals} canChangeGoal={canChangeGoal} updateGoal={updateGoal} removeGoal={removeGoal} />
     </section>
   );
 };

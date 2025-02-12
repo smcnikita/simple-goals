@@ -15,9 +15,10 @@ type Props = {
   goal: GoalModel;
   canChangeGoal: boolean;
   updateGoal: (goalId: number, isCompleted: boolean) => Promise<void>;
+  removeGoal: (goalId: number) => Promise<void>;
 };
 
-const GoalsItem: FC<Props> = ({ goal, canChangeGoal, updateGoal }) => {
+const GoalsItem: FC<Props> = ({ goal, canChangeGoal, updateGoal, removeGoal }) => {
   const onChange = async (event: React.ChangeEvent<HTMLInputElement>) => {
     event.preventDefault();
     event.stopPropagation();
@@ -51,7 +52,7 @@ const GoalsItem: FC<Props> = ({ goal, canChangeGoal, updateGoal }) => {
             <EditPencilIcon />
           </BaseIcon>
         </Button>
-        <Button size="sm" isButtonError>
+        <Button size="sm" isButtonError onClick={async () => await removeGoal(goal.id)}>
           <BaseIcon size="14">
             <TrashIcon />
           </BaseIcon>

@@ -35,4 +35,13 @@ export const goalsController = {
       },
     });
   },
+
+  removeGoal: async (goalId: number, yearId: number) => {
+    return await prisma.goals.delete({
+      where: {
+        id: goalId,
+        year_id: yearId,
+      },
+    });
+  },
 };
