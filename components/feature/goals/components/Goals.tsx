@@ -8,9 +8,13 @@ import classes from '../style/goals.module.css';
 
 type Props = {
   goals: GoalModel[];
+  year: number;
 };
 
-const Goals: FC<Props> = ({ goals }) => {
+const Goals: FC<Props> = ({ goals, year }) => {
+  const currentYear = new Date().getFullYear();
+  const canChangeGoal = year === currentYear;
+
   if (goals.length === 0) {
     return (
       <section className={classes.section}>
@@ -21,7 +25,7 @@ const Goals: FC<Props> = ({ goals }) => {
 
   return (
     <section className={classes.section}>
-      <GoalsList goals={goals} />
+      <GoalsList goals={goals} canChangeGoal={canChangeGoal} />
     </section>
   );
 };

@@ -10,9 +10,10 @@ import classes from '../style/goals.module.css';
 
 type Props = {
   goals: GoalModel[];
+  canChangeGoal: boolean;
 };
 
-const GoalsList: FC<Props> = ({ goals }) => {
+const GoalsList: FC<Props> = ({ goals, canChangeGoal }) => {
   const uncompletedGoals = useMemo(() => {
     return goals.filter((goal) => !goal.is_completed && goal.completed_at === null);
   }, [goals]);
@@ -27,7 +28,7 @@ const GoalsList: FC<Props> = ({ goals }) => {
     <div className={classes.items}>
       <ul className={classes.list}>
         {uncompletedGoals.map((goal) => (
-          <GoalsItem key={goal.id} goal={goal} />
+          <GoalsItem key={goal.id} goal={goal} canChangeGoal={canChangeGoal} />
         ))}
       </ul>
 
@@ -35,7 +36,7 @@ const GoalsList: FC<Props> = ({ goals }) => {
         <p className={classes.items_title}>Completed</p>
         <ul className={classes.list}>
           {completedGoals.map((goal) => (
-            <GoalsItem key={goal.id} goal={goal} />
+            <GoalsItem key={goal.id} goal={goal} canChangeGoal={canChangeGoal} />
           ))}
         </ul>
       </div>

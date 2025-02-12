@@ -26,7 +26,7 @@ export default async function GoalsSlugPage({ params }: { params: Promise<{ slug
     <div>
       <h1>Goals for {slug}</h1>
 
-      <Goals goals={goals} />
+      <Goals year={year} goals={goals} />
     </div>
   );
 }
