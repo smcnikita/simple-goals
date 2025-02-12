@@ -30,6 +30,17 @@ const GoalsItem: FC<Props> = ({ goal, canChangeGoal, updateGoal, removeGoal }) =
     await updateGoal(goal.id, event.target.checked);
   };
 
+  const onRemove = async (event: React.MouseEvent<HTMLButtonElement>) => {
+    event.preventDefault();
+    event.stopPropagation();
+
+    if (!canChangeGoal) {
+      return;
+    }
+
+    await removeGoal(goal.id);
+  };
+
   return (
     <li
       className={clsx(classes.item, {
@@ -52,7 +63,7 @@ const GoalsItem: FC<Props> = ({ goal, canChangeGoal, updateGoal, removeGoal }) =
             <EditPencilIcon />
           </BaseIcon>
         </Button>
-        <Button size="sm" isButtonError onClick={async () => await removeGoal(goal.id)}>
+        <Button size="sm" isButtonError onClick={onRemove}>
           <BaseIcon size="14">
             <TrashIcon />
           </BaseIcon>
