@@ -21,4 +21,14 @@ export const goalsController = {
       orderBy: { sort_order: 'asc' },
     });
   },
+
+  updateGoal: async (goalId: number, isCompleted: boolean) => {
+    return await prisma.goals.update({
+      where: { id: goalId },
+      data: {
+        is_completed: isCompleted,
+        completed_at: isCompleted ? new Date() : null,
+      },
+    });
+  },
 };

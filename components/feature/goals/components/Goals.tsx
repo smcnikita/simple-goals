@@ -1,6 +1,11 @@
-import type { FC } from 'react';
+'use client';
+
+import { useEffect, useState, type FC } from 'react';
+import toast from 'react-hot-toast';
 
 import type { GoalModel } from '@/models/goals-model';
+
+import { httpUpdateGoal } from '@/lib/http/goals';
 
 import GoalsList from './GoalsList';
 
@@ -12,8 +17,41 @@ type Props = {
 };
 
 const Goals: FC<Props> = ({ goals, year }) => {
+  const [localGoals, setLocalGoals] = useState<GoalModel[]>([]);
+
   const currentYear = new Date().getFullYear();
   const canChangeGoal = year === currentYear;
+
+  const updateGoal = async (goalId: number, isCompleted: boolean) => {
+    if (!canChangeGoal) {
+      return;
+    }
+
+    const res = await httpUpdateGoal(goalId, isCompleted);
+    const data = await res.json();
+
+    if (!res.ok) {
+      toast.error(data.message);
+      return;
+    }
+
+    const newGoals = localGoals.map((goal) => {
+      if (goal.id === goalId) {
+        return {
+          ...goal,
+          is_completed: isCompleted,
+          completed_at: isCompleted ? new Date() : null,
+        };
+      }
+      return goal;
+    });
+
+    setLocalGoals(newGoals);
+  };
+
+  useEffect(() => {
+    setLocalGoals(goals);
+  }, [goals]);
 
   if (goals.length === 0) {
     return (
@@ -25,7 +63,7 @@ const Goals: FC<Props> = ({ goals, year }) => {
 
   return (
     <section className={classes.section}>
-      <GoalsList goals={goals} canChangeGoal={canChangeGoal} />
+      <GoalsList goals={localGoals} canChangeGoal={canChangeGoal} updateGoal={updateGoal} />
     </section>
   );
 };

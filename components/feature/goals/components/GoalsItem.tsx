@@ -11,16 +11,19 @@ import classes from '../style/goals.module.css';
 type Props = {
   goal: GoalModel;
   canChangeGoal: boolean;
+  updateGoal: (goalId: number, isCompleted: boolean) => Promise<void>;
 };
 
-const GoalsItem: FC<Props> = ({ goal, canChangeGoal }) => {
-  const onChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+const GoalsItem: FC<Props> = ({ goal, canChangeGoal, updateGoal }) => {
+  const onChange = async (event: React.ChangeEvent<HTMLInputElement>) => {
     event.preventDefault();
     event.stopPropagation();
 
     if (!canChangeGoal) {
       return;
     }
+
+    await updateGoal(goal.id, event.target.checked);
   };
 
   return (

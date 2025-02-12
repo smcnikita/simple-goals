@@ -4,4 +4,8 @@ export const API_PATHS = {
     signUp: '/auth/signup',
     logout: '/auth/logout',
   },
+
+  goals: {
+    update: '/goals/change',
+  },
 };
