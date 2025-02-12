@@ -27,7 +27,7 @@ const Goals: FC<Props> = ({ goals, year }) => {
       return;
     }
 
-    const res = await httpUpdateGoal(goalId, isCompleted);
+    const res = await httpUpdateGoal(goalId, isCompleted, year);
     const data = await res.json();
 
     if (!res.ok) {

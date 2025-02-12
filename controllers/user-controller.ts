@@ -1,4 +1,5 @@
 import { prisma } from '@/lib/prisma';
+
 import { UserModel } from '@/models/users-model';
 
 export const userController = {

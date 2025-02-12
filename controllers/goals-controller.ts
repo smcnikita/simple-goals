@@ -23,9 +23,12 @@ export const goalsController = {
     });
   },
 
-  updateGoal: async (goalId: number, isCompleted: boolean) => {
+  updateGoal: async (goalId: number, isCompleted: boolean, yearId: number) => {
     return await prisma.goals.update({
-      where: { id: goalId },
+      where: {
+        id: goalId,
+        year_id: yearId,
+      },
       data: {
         is_completed: isCompleted,
         completed_at: isCompleted ? new Date() : null,

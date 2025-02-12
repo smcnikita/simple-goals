@@ -44,7 +44,7 @@ const Header: FC<Props> = ({ isAuth }) => {
     <header className={classes.wrapper}>
       <div className={classes.header}>
         <HeaderMenu isAuth={isAuth} />
-        <div>
+        <div className={classes.tabs}>
           {isAuth ? (
             <button type="button" className={classes.tab} onClick={() => logout()}>
               <BaseIcon color="white">
