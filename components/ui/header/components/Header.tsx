@@ -12,6 +12,7 @@ import { httpLogout } from '@/lib/http/auth';
 import { showHeader } from '../utils/showHeader';
 
 import HeaderMenu from './HeaderMenu';
+import ThemeComponent from '@/components/feature/theme';
 
 import BaseIcon, { ExitIcon } from '@/components/ui/icon';
 
@@ -45,6 +46,7 @@ const Header: FC<Props> = ({ isAuth }) => {
       <div className={classes.header}>
         <HeaderMenu isAuth={isAuth} />
         <div className={classes.tabs}>
+          <ThemeComponent />
           {isAuth ? (
             <button type="button" className={classes.tab} onClick={() => logout()}>
               <BaseIcon color="white">

@@ -1,15 +1,17 @@
 import type { Metadata } from 'next';
+import { cookies, headers } from 'next/headers';
+import localFont from 'next/font/local';
 import { Toaster } from 'react-hot-toast';
 
-import localFont from 'next/font/local';
+import { TOKEN } from '@/constants/cookies';
+import { USER_ID } from '@/constants/headers';
+
+import ThemeProvider from '@/components/providers/theme';
 
 import Container from '@/components/ui/container';
 import Header from '@/components/ui/header';
 
 import './globals.css';
-import { cookies, headers } from 'next/headers';
-import { TOKEN } from '@/constants/cookies';
-import { USER_ID } from '@/constants/headers';
 
 const jost = localFont({
   src: '../assets/Jost-Regular.woff2',
@@ -36,6 +38,7 @@ export default async function RootLayout({ children }: Props) {
 
   return (
     <html lang="en">
+      <ThemeProvider />
       <body className={`${jost.className}`}>
         <Toaster />
         <Container>
