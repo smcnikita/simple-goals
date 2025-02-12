@@ -18,6 +18,7 @@ export const goalsController = {
 
     return await prisma.goals.findMany({
       where: { year_id: yearModel.id },
+      orderBy: { sort_order: 'asc' },
     });
   },
 };

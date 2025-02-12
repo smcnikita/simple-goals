@@ -10,7 +10,20 @@
   list-style: none;
 }
 
-.item {
+.items {
+  display: flex;
+  flex-direction: column;
+  gap: 32px;
+}
+
+.items_wrapper {
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+}
+
+.items_title {
+  color: var(--gray-1-color);
 }
 
 .noGoals {
