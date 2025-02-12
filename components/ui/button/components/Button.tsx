@@ -8,7 +8,15 @@ import classesPrimary from '../styles/primary.module.css';
 import classesSecondary from '../styles/secondary.module.css';
 
 const Button: FC<PropsWithChildren<Props>> = (props) => {
-  const { children, type = 'button', className, variant = 'primary', size = 'md', ...rest } = props;
+  const {
+    children,
+    type = 'button',
+    className,
+    variant = 'primary',
+    size = 'md',
+    isButtonError = false,
+    ...rest
+  } = props;
 
   return (
     <button
@@ -20,6 +28,8 @@ const Button: FC<PropsWithChildren<Props>> = (props) => {
           [classesSecondary.button__secondary]: variant === 'secondary',
 
           [classes.button__sm]: size === 'sm',
+
+          [classesPrimary.button__error]: isButtonError,
         },
         className
       )}

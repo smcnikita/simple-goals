@@ -5,8 +5,11 @@ import type { FC } from 'react';
 import type { GoalModel } from '@/models/goals-model';
 
 import Checkbox from '@/components/ui/checkbox';
+import Button from '@/components/ui/button';
+import BaseIcon, { EditPencilIcon, TrashIcon } from '@/components/ui/icon';
 
 import classes from '../style/goals.module.css';
+import clsx from 'clsx';
 
 type Props = {
   goal: GoalModel;
@@ -27,7 +30,11 @@ const GoalsItem: FC<Props> = ({ goal, canChangeGoal, updateGoal }) => {
   };
 
   return (
-    <li className={classes.item}>
+    <li
+      className={clsx(classes.item, {
+        [classes.canEdit]: canChangeGoal,
+      })}
+    >
       <Checkbox
         checked={goal.is_completed}
         disabled={!canChangeGoal}
@@ -37,6 +44,19 @@ const GoalsItem: FC<Props> = ({ goal, canChangeGoal, updateGoal }) => {
       >
         {goal.name}
       </Checkbox>
+
+      <div className={classes.item_actions}>
+        <Button size="sm">
+          <BaseIcon size="14">
+            <EditPencilIcon />
+          </BaseIcon>
+        </Button>
+        <Button size="sm" isButtonError>
+          <BaseIcon size="14">
+            <TrashIcon />
+          </BaseIcon>
+        </Button>
+      </div>
     </li>
   );
 };

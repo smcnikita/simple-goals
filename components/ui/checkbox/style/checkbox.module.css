@@ -1,36 +1,57 @@
 .container {
   display: flex;
-  align-items: center;
-  cursor: pointer;
-  font-size: 18px;
-  color: var(--light-color);
   gap: 10px;
+
+  width: 100%;
+
+  cursor: pointer;
+
+  color: var(--light-color);
 }
 
 .container input {
   display: none;
 }
 
+.container span {
+  overflow-wrap: anywhere;
+}
+
 .custom {
+  position: relative;
+  top: 2px;
+
   width: 24px;
   height: 24px;
-  border-radius: 6px;
-  background: #222222;
-  position: relative;
+
   display: flex;
   align-items: center;
   justify-content: center;
-  transition: background 0.3s ease-in-out;
+  align-self: flex-start;
+
+  flex-shrink: 0;
+
+  border-radius: 6px;
+
+  background: #222222;
+
   box-shadow: 0 2px 5px rgba(0, 0, 0, 0.3);
+
+  transition: background 0.3s ease-in-out;
 }
 
 .custom::after {
   content: '';
+
   width: 10px;
   height: 10px;
+
   background: #f5f5f5;
+
   border-radius: 3px;
+
   opacity: 0;
+
   transition: opacity 0.2s ease-in-out;
 }
 
@@ -44,17 +65,21 @@
 
 .container input:checked ~ span {
   text-decoration: line-through;
+
   opacity: 0.6;
 }
 
 .container input:disabled + .custom {
   background: #444;
+
   cursor: not-allowed;
+
   box-shadow: none;
 }
 
 .container input:disabled ~ span {
   color: #777;
+
   cursor: not-allowed;
 }
 

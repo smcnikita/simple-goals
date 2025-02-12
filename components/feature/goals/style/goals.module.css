@@ -5,7 +5,7 @@
 .list {
   display: flex;
   flex-direction: column;
-  gap: 32px;
+  /* gap: 32px; */
 
   list-style: none;
 }
@@ -28,4 +28,34 @@
 
 .noGoals {
   color: var(--gray-1-color);
+}
+
+.item {
+  display: flex;
+  justify-content: space-between;
+
+  border-bottom: 1px solid var(--purple-dark-2-color);
+
+  padding: 12px 0;
+}
+
+.item_actions {
+  top: 2px;
+
+  display: none;
+
+  transition: all 0.3s ease;
+}
+
+.canEdit .item_actions {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  align-self: flex-start;
+
+  opacity: 0;
+}
+
+.canEdit.item:hover .item_actions {
+  opacity: 1;
 }

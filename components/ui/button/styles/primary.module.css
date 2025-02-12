@@ -36,3 +36,7 @@
 .button__primary:active {
   transform: translateY(0);
 }
+
+.button__primary.button__error:hover {
+  background: var(--error-2-color);
+}
