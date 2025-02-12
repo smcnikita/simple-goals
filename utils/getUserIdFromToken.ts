@@ -1,9 +1,6 @@
 import { decrypt } from '@/lib/session';
 
-type RequestCookie = {
-  name: string;
-  value: string;
-};
+import type { RequestCookie } from '@/types/cookie';
 
 export const getUserIdFromToken = async (token: RequestCookie | undefined): Promise<number | null> => {
   if (!token) {
