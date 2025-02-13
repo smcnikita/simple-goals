@@ -1,34 +1,18 @@
 import { NextResponse } from 'next/server';
 
-import { TOKEN } from '@/constants/cookies';
-
 import { goalsController } from '@/controllers/goals-controller';
 import { yearsController } from '@/controllers/years-controller';
 
-import { getUserIdFromToken } from '@/utils/getUserIdFromToken';
+import { checkUserIdService } from '@/services/check-user-id-service';
 
 export async function DELETE(req: Request) {
-  const cookiesStore = req.headers.get('cookie');
-  const hasToken = cookiesStore?.includes(TOKEN);
+  const checkUserId = await checkUserIdService(req);
 
-  if (!cookiesStore || !hasToken) {
-    return NextResponse.json({ message: 'Error' }, { status: 500 });
+  if (!checkUserId.success) {
+    return NextResponse.json({ message: checkUserId.error }, { status: 500 });
   }
 
-  const token = cookiesStore
-    .split(';')
-    .find((cookie) => cookie.includes(TOKEN))
-    ?.split('=')[1];
-
-  if (!token) {
-    return NextResponse.json({ message: 'Error' }, { status: 500 });
-  }
-
-  const userId = await getUserIdFromToken({ name: TOKEN, value: token });
-
-  if (!userId) {
-    return NextResponse.json({ message: 'Error' }, { status: 500 });
-  }
+  const userId = checkUserId.userId;
 
   const res = await req.json();
 
@@ -49,6 +33,42 @@ export async function DELETE(req: Request) {
   const response = NextResponse.json(
     {
       message: 'Success',
+    },
+    { status: 200 }
+  );
+
+  return response;
+}
+
+export async function POST(req: Request) {
+  const checkUserId = await checkUserIdService(req);
+
+  if (!checkUserId.success) {
+    return NextResponse.json({ message: checkUserId.error }, { status: 500 });
+  }
+
+  const userId = checkUserId.userId;
+
+  const res = await req.json();
+
+  const { name, year } = res as { name: string; year: number };
+
+  if (!name || !year) {
+    return NextResponse.json({ message: 'Error: name is required' }, { status: 500 });
+  }
+
+  const yearModel = await yearsController.getYearByName(userId, year);
+
+  if (!yearModel) {
+    return NextResponse.json({ message: 'Error: year not found' }, { status: 500 });
+  }
+
+  const newGoal = await goalsController.createGoal({ name, year_id: yearModel.id });
+
+  const response = NextResponse.json(
+    {
+      message: 'Success',
+      data: newGoal,
     },
     { status: 200 }
   );
