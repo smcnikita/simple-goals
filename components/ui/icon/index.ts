@@ -8,3 +8,4 @@ export { default as EditPencilIcon } from './components/EditPencilIcon';
 export { default as TrashIcon } from './components/TrashIcon';
 export { default as SunIcon } from './components/SunIcon';
 export { default as MoonIcon } from './components/MoonIcon';
+export { default as UserIcon } from './components/UserIcon';

@@ -1,0 +1,76 @@
+.popover {
+  position: relative;
+}
+
+.content {
+  position: absolute;
+  top: 50px;
+  right: 0;
+
+  width: 200px;
+
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+
+  background: var(--dark-color);
+
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
+
+  border-radius: 12px;
+
+  padding: 12px;
+
+  opacity: 0;
+  visibility: hidden;
+
+  transition:
+    opacity 0.3s ease-in-out,
+    visibility 0.3s ease-in-out;
+}
+
+.content.show {
+  opacity: 1;
+  visibility: visible;
+}
+
+.content_action {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 12px;
+
+  width: 100%;
+
+  padding: 10px 20px;
+
+  background: none;
+
+  border: none;
+  border-radius: 12px;
+
+  font-size: 16px;
+  font-weight: 400;
+
+  color: var(--light-color);
+
+  text-decoration: none;
+
+  cursor: pointer;
+
+  box-shadow: none !important;
+
+  transition: all 0.3s ease-in-out;
+}
+
+.content_action:hover {
+  background: rgba(245, 245, 245, 0.05);
+}
+
+.content_title {
+  color: var(--gray-1-color);
+}
+
+.content_action.active {
+  background: rgba(245, 245, 245, 0.05);
+}
