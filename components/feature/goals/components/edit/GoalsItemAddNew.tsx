@@ -4,11 +4,11 @@ import { useState, type FC } from 'react';
 import BaseEditComponent from './BaseEditComponent';
 
 type Props = {
-  createGoal: (name: string) => Promise<void>;
+  create: (name: string) => Promise<void>;
   updateIsAddNewGoal: (value: boolean) => void;
 };
 
-const AddNewGoal: FC<Props> = ({ createGoal, updateIsAddNewGoal }) => {
+const AddNewGoal: FC<Props> = ({ create, updateIsAddNewGoal }) => {
   const [value, setValue] = useState('');
   const updateValue = (value: string) => setValue(value);
 
@@ -20,7 +20,8 @@ const AddNewGoal: FC<Props> = ({ createGoal, updateIsAddNewGoal }) => {
       return;
     }
 
-    await createGoal(value);
+    await create(value);
+
     setValue('');
     updateIsAddNewGoal(false);
   };

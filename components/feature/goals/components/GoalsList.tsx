@@ -5,23 +5,25 @@ import { useMemo, type FC } from 'react';
 import type { GoalModel } from '@/models/goals-model';
 
 import GoalsItem from './GoalsItem';
-import AddNewGoal from './edit/AddNewGoal';
+import GoalsItemAddNew from './edit/GoalsItemAddNew';
 
 import classes from '../style/goals.module.css';
 
 type Props = {
   goals: GoalModel[];
   canChangeGoal: boolean;
-  isAddNewGoal: boolean;
-  updateGoal: (goalId: number, isCompleted: boolean) => Promise<void>;
-  removeGoal: (goalId: number) => Promise<void>;
-  changeNameGoal: (goalId: number, newName: string) => Promise<void>;
-  createGoal: (name: string) => Promise<void>;
-  updateIsAddNewGoal: (value: boolean) => void;
+  isShowAddGoal: boolean;
+
+  create: (name: string) => Promise<void>;
+  remove: (goalId: number) => Promise<void>;
+  updateCompleted: (goalId: number, isCompleted: boolean) => Promise<void>;
+  updateName: (goalId: number, newName: string) => Promise<void>;
+
+  updateIsShowAddGoal: (value: boolean) => void;
 };
 
 const GoalsList: FC<Props> = (props) => {
-  const { goals, canChangeGoal, isAddNewGoal, updateGoal, removeGoal, changeNameGoal, createGoal, updateIsAddNewGoal } =
+  const { goals, canChangeGoal, isShowAddGoal, updateCompleted, remove, updateName, create, updateIsShowAddGoal } =
     props;
 
   const uncompletedGoals = useMemo(() => {
@@ -39,9 +41,9 @@ const GoalsList: FC<Props> = (props) => {
       <>
         <p className={classes.noGoals}>No goals yet</p>
 
-        {isAddNewGoal && (
+        {isShowAddGoal && (
           <div className={classes.item}>
-            <AddNewGoal createGoal={createGoal} updateIsAddNewGoal={updateIsAddNewGoal} />
+            <GoalsItemAddNew create={create} updateIsAddNewGoal={updateIsShowAddGoal} />
           </div>
         )}
       </>
@@ -56,16 +58,16 @@ const GoalsList: FC<Props> = (props) => {
             key={goal.id}
             goal={goal}
             canChangeGoal={canChangeGoal}
-            updateGoal={updateGoal}
-            removeGoal={removeGoal}
-            changeNameGoal={changeNameGoal}
+            remove={remove}
+            updateCompleted={updateCompleted}
+            updateName={updateName}
           />
         ))}
       </ul>
 
-      {isAddNewGoal && (
+      {isShowAddGoal && (
         <div className={classes.item}>
-          <AddNewGoal createGoal={createGoal} updateIsAddNewGoal={updateIsAddNewGoal} />
+          <GoalsItemAddNew create={create} updateIsAddNewGoal={updateIsShowAddGoal} />
         </div>
       )}
 
@@ -78,9 +80,9 @@ const GoalsList: FC<Props> = (props) => {
                 key={goal.id}
                 goal={goal}
                 canChangeGoal={canChangeGoal}
-                updateGoal={updateGoal}
-                removeGoal={removeGoal}
-                changeNameGoal={changeNameGoal}
+                remove={remove}
+                updateCompleted={updateCompleted}
+                updateName={updateName}
               />
             ))}
           </ul>

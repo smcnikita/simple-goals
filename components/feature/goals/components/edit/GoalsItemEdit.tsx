@@ -1,7 +1,7 @@
 'use client';
 
 import type { FC } from 'react';
-import BaseEditComponent from './edit/BaseEditComponent';
+import BaseEditComponent from './BaseEditComponent';
 
 type Props = {
   value: string;

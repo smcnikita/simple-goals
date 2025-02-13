@@ -1,26 +1,28 @@
 'use client';
 
 import { useState, type FC } from 'react';
+import clsx from 'clsx';
 
 import type { GoalModel } from '@/models/goals-model';
 
 import Checkbox from '@/components/ui/checkbox';
 import Button from '@/components/ui/button';
 import BaseIcon, { EditPencilIcon, TrashIcon } from '@/components/ui/icon';
-import EditItem from './EditItem';
+
+import GoalsItemEdit from './edit/GoalsItemEdit';
 
 import classes from '../style/goals.module.css';
-import clsx from 'clsx';
 
 type Props = {
   goal: GoalModel;
   canChangeGoal: boolean;
-  updateGoal: (goalId: number, isCompleted: boolean) => Promise<void>;
-  removeGoal: (goalId: number) => Promise<void>;
-  changeNameGoal: (goalId: number, newName: string) => Promise<void>;
+
+  remove: (goalId: number) => Promise<void>;
+  updateCompleted: (goalId: number, isCompleted: boolean) => Promise<void>;
+  updateName: (goalId: number, newName: string) => Promise<void>;
 };
 
-const GoalsItem: FC<Props> = ({ canChangeGoal, changeNameGoal, goal, removeGoal, updateGoal }) => {
+const GoalsItem: FC<Props> = ({ canChangeGoal, goal, remove, updateCompleted, updateName }) => {
   const [isEdit, setIsEdit] = useState(false);
   const [newName, setNewName] = useState('');
 
@@ -34,7 +36,7 @@ const GoalsItem: FC<Props> = ({ canChangeGoal, changeNameGoal, goal, removeGoal,
       return;
     }
 
-    await updateGoal(goal.id, event.target.checked);
+    await updateCompleted(goal.id, event.target.checked);
   };
 
   const onRemove = async (event: React.MouseEvent<HTMLButtonElement>) => {
@@ -45,7 +47,7 @@ const GoalsItem: FC<Props> = ({ canChangeGoal, changeNameGoal, goal, removeGoal,
       return;
     }
 
-    await removeGoal(goal.id);
+    await remove(goal.id);
   };
 
   const onSave = async (event: React.MouseEvent<HTMLButtonElement> | React.KeyboardEvent<HTMLInputElement>) => {
@@ -56,7 +58,7 @@ const GoalsItem: FC<Props> = ({ canChangeGoal, changeNameGoal, goal, removeGoal,
       return;
     }
 
-    await changeNameGoal(goal.id, newName);
+    await updateName(goal.id, newName);
     setIsEdit(false);
   };
 
@@ -118,7 +120,7 @@ const GoalsItem: FC<Props> = ({ canChangeGoal, changeNameGoal, goal, removeGoal,
 
       {isEdit && (
         <>
-          <EditItem
+          <GoalsItemEdit
             value={newName}
             updateValue={updateNewName}
             onKeyDown={onKeyDownForEdit}
