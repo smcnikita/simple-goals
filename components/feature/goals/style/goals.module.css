@@ -59,3 +59,29 @@
 .canEdit.item:hover .item_actions {
   opacity: 1;
 }
+
+.editWrapper {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+
+  width: 100%;
+}
+
+.editActions {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.editInput {
+  color: var(--light-color);
+  background: none;
+
+  font-size: 16px;
+
+  width: 100%;
+
+  border: none;
+  border-radius: 12px;
+}

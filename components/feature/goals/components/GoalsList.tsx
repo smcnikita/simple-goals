@@ -13,9 +13,10 @@ type Props = {
   canChangeGoal: boolean;
   updateGoal: (goalId: number, isCompleted: boolean) => Promise<void>;
   removeGoal: (goalId: number) => Promise<void>;
+  changeNameGoal: (goalId: number, newName: string) => Promise<void>;
 };
 
-const GoalsList: FC<Props> = ({ goals, canChangeGoal, updateGoal, removeGoal }) => {
+const GoalsList: FC<Props> = ({ goals, canChangeGoal, updateGoal, removeGoal, changeNameGoal }) => {
   const uncompletedGoals = useMemo(() => {
     return goals.filter((goal) => !goal.is_completed && goal.completed_at === null);
   }, [goals]);
@@ -36,6 +37,7 @@ const GoalsList: FC<Props> = ({ goals, canChangeGoal, updateGoal, removeGoal }) 
             canChangeGoal={canChangeGoal}
             updateGoal={updateGoal}
             removeGoal={removeGoal}
+            changeNameGoal={changeNameGoal}
           />
         ))}
       </ul>
@@ -50,6 +52,7 @@ const GoalsList: FC<Props> = ({ goals, canChangeGoal, updateGoal, removeGoal }) 
               canChangeGoal={canChangeGoal}
               updateGoal={updateGoal}
               removeGoal={removeGoal}
+              changeNameGoal={changeNameGoal}
             />
           ))}
         </ul>

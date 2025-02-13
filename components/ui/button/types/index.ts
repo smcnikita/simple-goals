@@ -2,7 +2,7 @@ import type { ButtonHTMLAttributes } from 'react';
 
 type ButtonProps = {
   variant?: 'primary' | 'secondary';
-  size?: 'sm' | 'md';
+  size?: 'sm' | 'sm-2' | 'md';
   isButtonError?: boolean;
 };
 

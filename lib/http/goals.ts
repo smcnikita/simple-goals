@@ -13,3 +13,9 @@ export const httpRemoveGoal = async (goalId: number, year: number) => {
   const body = JSON.stringify({ id: goalId, year });
   return fetchFromAPI(apiUrl, { method: 'DELETE', body });
 };
+
+export const httpChangeNameGoal = async (goalId: number, year: number, newName: string) => {
+  const apiUrl = API_PATHS.goals.changeName;
+  const body = JSON.stringify({ id: goalId, year, name: newName });
+  return fetchFromAPI(apiUrl, { method: 'PUT', body });
+};

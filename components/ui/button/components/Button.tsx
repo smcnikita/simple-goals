@@ -28,6 +28,7 @@ const Button: FC<PropsWithChildren<Props>> = (props) => {
           [classesSecondary.button__secondary]: variant === 'secondary',
 
           [classes.button__sm]: size === 'sm',
+          [classes.button__sm__2]: size === 'sm-2',
 
           [classesPrimary.button__error]: isButtonError,
         },
