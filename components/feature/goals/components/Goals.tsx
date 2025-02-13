@@ -5,11 +5,12 @@ import toast from 'react-hot-toast';
 
 import type { GoalModel } from '@/models/goals-model';
 
-import { httpUpdateGoal, httpRemoveGoal, httpChangeNameGoal } from '@/lib/http/goals';
+import { httpUpdateGoal, httpRemoveGoal, httpChangeNameGoal, httpCreateGoal } from '@/lib/http/goals';
 
 import GoalsList from './GoalsList';
 
 import classes from '../style/goals.module.css';
+import Button from '@/components/ui/button';
 
 type Props = {
   goals: GoalModel[];
@@ -18,6 +19,9 @@ type Props = {
 
 const Goals: FC<Props> = ({ goals, year }) => {
   const [localGoals, setLocalGoals] = useState<GoalModel[]>([]);
+  const [isAddNewGoal, setIsAddNewGoal] = useState(false);
+
+  const updateIsAddNewGoal = (value: boolean) => setIsAddNewGoal(value);
 
   const currentYear = new Date().getFullYear();
   const canChangeGoal = year === currentYear;
@@ -93,27 +97,46 @@ const Goals: FC<Props> = ({ goals, year }) => {
     setLocalGoals(newGoals);
   };
 
+  const createGoal = async (name: string) => {
+    if (!canChangeGoal) {
+      return;
+    }
+
+    const res = await httpCreateGoal(year, name);
+    const data = await res.json();
+
+    if (!res.ok) {
+      toast.error(data.message);
+      return;
+    }
+
+    const newGoal = data.data as GoalModel;
+
+    setLocalGoals([...localGoals, newGoal]);
+  };
+
   useEffect(() => {
     setLocalGoals(goals);
   }, [goals]);
-
-  if (goals.length === 0) {
-    return (
-      <section className={classes.section}>
-        <p className={classes.noGoals}>No goals yet</p>
-      </section>
-    );
-  }
 
   return (
     <section className={classes.section}>
       <GoalsList
         goals={localGoals}
+        isAddNewGoal={isAddNewGoal}
+        updateIsAddNewGoal={updateIsAddNewGoal}
         canChangeGoal={canChangeGoal}
         updateGoal={updateGoal}
         removeGoal={removeGoal}
         changeNameGoal={changeNameGoal}
+        createGoal={createGoal}
       />
+
+      {year === new Date().getFullYear() && (
+        <div className={classes.addGoal} onClick={() => updateIsAddNewGoal(true)}>
+          <Button size="sm-2">Add goal</Button>
+        </div>
+      )}
     </section>
   );
 };

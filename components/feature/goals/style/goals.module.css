@@ -84,4 +84,12 @@
 
   border: none;
   border-radius: 12px;
+
+  padding: 6px 12px;
+
+  outline: 1px solid var(--gray-1-color);
+}
+
+.addGoal {
+  margin-top: 24px;
 }
