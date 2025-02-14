@@ -1,8 +1,7 @@
 import { prisma } from '@/lib/prisma';
 
-import { userController } from './user-controller';
-import { yearsController } from './years-controller';
 import { GoalModel } from '@/models/goals-model';
+import { yearsController } from './years-controller';
 
 type CreateGoalParams = Omit<
   GoalModel,
@@ -10,13 +9,14 @@ type CreateGoalParams = Omit<
 >;
 
 export const goalsController = {
+  getUserGoalsByYearId: async (yearId: number) => {
+    return await prisma.goals.findMany({
+      where: { year_id: yearId },
+      orderBy: { sort_order: 'asc' },
+    });
+  },
+
   getUserGoalsByYear: async (year: number, userId: number) => {
-    const user = await userController.getUserById(userId);
-
-    if (!user) {
-      return null;
-    }
-
     const yearModel = await yearsController.getYearByName(userId, year);
 
     if (!yearModel) {
@@ -54,12 +54,12 @@ export const goalsController = {
   createGoal: async ({ name, year_id }: CreateGoalParams) => {
     const now = new Date();
 
-    const goals = await prisma.goals.findMany({
+    const goals = await prisma.goals.findFirst({
       where: { year_id },
       orderBy: { sort_order: 'desc' },
     });
 
-    const sortOrder = goals.length > 0 ? goals[0].sort_order + 1 : 0;
+    const sortOrder = goals ? goals.sort_order + 1 : 0;
 
     return await prisma.goals.create({
       data: {
