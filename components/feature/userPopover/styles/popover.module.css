@@ -13,7 +13,7 @@
   flex-direction: column;
   gap: 12px;
 
-  background: var(--dark-color);
+  background: var(--popover-background);
 
   box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
 
@@ -23,6 +23,8 @@
 
   opacity: 0;
   visibility: hidden;
+
+  z-index: 99;
 
   transition:
     opacity 0.3s ease-in-out,
@@ -37,7 +39,7 @@
 .content_action {
   display: flex;
   align-items: center;
-  justify-content: center;
+  justify-content: flex-start;
   gap: 12px;
 
   width: 100%;
@@ -52,7 +54,7 @@
   font-size: 16px;
   font-weight: 400;
 
-  color: var(--light-color);
+  color: var(--popover-color);
 
   text-decoration: none;
 
@@ -64,7 +66,7 @@
 }
 
 .content_action:hover {
-  background: rgba(245, 245, 245, 0.05);
+  background: var(--header-tab-color-hover);
 }
 
 .content_title {
@@ -72,5 +74,5 @@
 }
 
 .content_action.active {
-  background: rgba(245, 245, 245, 0.05);
+  background: var(--header-tab-color-active);
 }

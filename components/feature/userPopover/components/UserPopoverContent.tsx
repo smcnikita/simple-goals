@@ -38,7 +38,7 @@ const UserPopoverContent: FC<Props> = ({ className }) => {
       <p className={classes.content_title}>Exit</p>
 
       <button type="button" className={classes.content_action} onClick={() => logout()}>
-        <BaseIcon color="white">
+        <BaseIcon>
           <ExitIcon />
         </BaseIcon>
         Exit

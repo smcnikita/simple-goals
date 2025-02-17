@@ -2,7 +2,7 @@
   width: 280px;
   height: calc(100dvh - 108px - 12px);
 
-  background: #222222;
+  background: var(--aside-background);
 
   padding: 30px 20px;
 

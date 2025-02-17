@@ -2,7 +2,7 @@
   position: sticky;
   top: 0;
 
-  background: var(--purple-dark-color);
+  background: var(--header-wrapper-background);
 
   height: 108px;
 
@@ -18,7 +18,7 @@
 
   border-radius: 12px;
 
-  background: var(--dark-color);
+  background: var(--header-background);
 
   box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
 }
@@ -44,7 +44,7 @@
   font-size: 16px;
   font-weight: 400;
 
-  color: var(--light-color);
+  color: var(--header-tab-color);
 
   text-decoration: none;
 
@@ -56,9 +56,9 @@
 }
 
 .tab:hover {
-  background: rgba(245, 245, 245, 0.05);
+  background: var(--header-tab-color-hover);
 }
 
 .tab__active {
-  background: rgba(245, 245, 245, 0.05);
+  background: var(--header-tab-color-active);
 }

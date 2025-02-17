@@ -1,0 +1,30 @@
+:root {
+  /* Body */
+  --body-color: var(--light-color);
+  --body-background: var(--purple-dark-color);
+
+  /* Header */
+  --header-wrapper-background: var(--body-background);
+  --header-background: var(--dark-color);
+  --header-tab-color: var(--light-color);
+  --header-tab-color-hover: rgba(245, 245, 245, 0.05);
+  --header-tab-color-active: rgba(245, 245, 245, 0.05);
+
+  /* Aside */
+  --aside-background: var(--dark-color);
+  --aside-item-color: var(--light-color);
+  --aside-item-hover-background: var(--dark-2-color);
+  --aside-item-active-background: var(--dark-2-color);
+
+  /* Checkbox */
+  --checkbox-color: var(--light-color);
+  --checkbox-background: var(--dark-color);
+  --checkbox-custom-after-background: var(--light-color);
+  --checkbox-checked-background: var(--dark-2-color);
+
+  /* Popover */
+  --popover-background: var(--dark-color);
+  --popover-color: var(--body-color);
+
+  /* Input */
+}

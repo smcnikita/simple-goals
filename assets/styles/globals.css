@@ -6,6 +6,7 @@
   --black-color-40: #00000066;
 
   --light-color: #f5f5f5;
+
   --dark-color: #222222;
   --dark-2-color: #333333;
   --dark-3-color: #262626;
@@ -35,6 +36,6 @@
 }
 
 body {
-  color: var(--light-color);
-  background: var(--purple-dark-color);
+  color: var(--body-color);
+  background: var(--body-background);
 }

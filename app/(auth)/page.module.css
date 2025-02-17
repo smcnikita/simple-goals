@@ -76,26 +76,36 @@
 
 .forgot-link {
   display: block;
+
   text-align: center;
+
+  /* TODO */
   color: #888;
+
   margin-top: 20px;
+
   text-decoration: none;
+
   transition: color 0.3s ease;
 }
 
 .forgot-link:hover {
+  /* TODO */
   color: #4c82d2;
 }
 
 .social {
-  margin: 25px 0;
   position: relative;
+
+  margin: 25px 0;
+
   text-align: center;
 }
 
 .buttons {
   display: flex;
   gap: 15px;
+
   margin-top: 25px;
 }
 

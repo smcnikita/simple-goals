@@ -11,7 +11,8 @@ import ThemeProvider from '@/components/providers/theme';
 import Container from '@/components/ui/container';
 import Header from '@/components/ui/header';
 
-import './globals.css';
+import '../assets/styles/globals.css';
+import '../assets/styles/colors/dark.css';
 
 const jost = localFont({
   src: '../assets/Jost-Regular.woff2',
