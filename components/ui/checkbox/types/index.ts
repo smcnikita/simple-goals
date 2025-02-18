@@ -6,6 +6,10 @@ type CheckboxProps = {
   disabled?: InputHTMLAttributes<HTMLInputElement>['disabled'];
   checked: boolean;
 
+  style?: InputHTMLAttributes<HTMLInputElement>['style'];
+
+  useLabel?: boolean;
+
   onChange?: InputHTMLAttributes<HTMLInputElement>['onChange'];
 };
 

@@ -7,7 +7,7 @@ import type { GoalModel } from '@/models/goals-model';
 
 import Checkbox from '@/components/ui/checkbox';
 import Button from '@/components/ui/button';
-import BaseIcon, { EditPencilIcon, TrashIcon } from '@/components/ui/icon';
+import BaseIcon, { TrashIcon } from '@/components/ui/icon';
 
 import GoalsItemEdit from './edit/GoalsItemEdit';
 
@@ -83,32 +83,34 @@ const GoalsItem: FC<Props> = ({ canChangeGoal, goal, remove, updateCompleted, up
     <li
       className={clsx(classes.item, {
         [classes.canEdit]: canChangeGoal,
+        [classes.isChecked]: goal.is_completed,
       })}
     >
       {!isEdit && (
         <>
-          <Checkbox
-            checked={goal.is_completed}
-            disabled={!canChangeGoal}
-            name={`checkbox-${goal.id}`}
-            id={`checkbox-${goal.id}`}
-            onChange={onChange}
-          >
-            {goal.name}
-          </Checkbox>
-
-          <div className={classes.item_actions}>
-            <Button
-              size="sm"
+          <div className={classes.checkbox_wrapper}>
+            <Checkbox
+              checked={goal.is_completed}
+              disabled={!canChangeGoal}
+              name={`checkbox-${goal.id}`}
+              id={`checkbox-${goal.id}`}
+              useLabel={false}
+              onChange={onChange}
+              style={{ width: '24px', height: '24px' }}
+            />
+            <button
+              type="button"
+              className={classes.goalAction}
               onClick={() => {
                 setNewName(goal.name);
                 setIsEdit(true);
               }}
             >
-              <BaseIcon size="14">
-                <EditPencilIcon />
-              </BaseIcon>
-            </Button>
+              {goal.name}
+            </button>
+          </div>
+
+          <div className={classes.item_actions}>
             <Button size="sm" isButtonError onClick={onRemove}>
               <BaseIcon size="14">
                 <TrashIcon />
@@ -126,6 +128,7 @@ const GoalsItem: FC<Props> = ({ canChangeGoal, goal, remove, updateCompleted, up
             onKeyDown={onKeyDownForEdit}
             onSave={onSaveForEdit}
             onCancel={onCancelForEdit}
+            onRemove={onRemove}
           />
         </>
       )}

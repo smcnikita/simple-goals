@@ -9,13 +9,24 @@ import classes from '../../style/goals.module.css';
 type Props = {
   value: string;
   placeholder?: string;
+  isAddNew?: boolean;
   updateValue: (value: string) => void;
   onKeyDown: (event: React.KeyboardEvent<HTMLInputElement>) => Promise<void>;
   onSave: (e: React.MouseEvent<HTMLButtonElement>) => Promise<void>;
   onCancel: () => void;
+  onRemove?: (event: React.MouseEvent<HTMLButtonElement>) => Promise<void>;
 };
 
-const BaseEditComponent: FC<Props> = ({ value, placeholder, updateValue, onKeyDown, onSave, onCancel }) => {
+const BaseEditComponent: FC<Props> = ({
+  value,
+  placeholder,
+  isAddNew = false,
+  updateValue,
+  onKeyDown,
+  onSave,
+  onCancel,
+  onRemove,
+}) => {
   const ref = useRef<HTMLInputElement>(null);
 
   useEffect(() => {
@@ -36,8 +47,20 @@ const BaseEditComponent: FC<Props> = ({ value, placeholder, updateValue, onKeyDo
 
       <div className={classes.editActions}>
         <Button size="sm-2" onClick={async (e) => await onSave(e)}>
-          Save
+          {isAddNew ? 'Add' : 'Save'}
         </Button>
+        {!isAddNew && onRemove && (
+          <Button
+            size="sm-2"
+            onClick={async (e) => {
+              await onRemove(e);
+            }}
+            className={classes.removeBtn}
+          >
+            Remove
+          </Button>
+        )}
+
         <Button size="sm-2" isButtonError onClick={onCancel}>
           Cancel
         </Button>

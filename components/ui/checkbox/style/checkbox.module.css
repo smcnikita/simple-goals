@@ -88,3 +88,9 @@
 .container input:disabled ~ .custom::after {
   background: rgba(119, 119, 119, 0.6);
 }
+
+@media (hover: hover) {
+  .custom:hover::after {
+    opacity: 0.3;
+  }
+}

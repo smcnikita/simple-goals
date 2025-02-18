@@ -48,6 +48,7 @@ const AddNewGoal: FC<Props> = ({ create, updateIsAddNewGoal }) => {
       onKeyDown={onKeyDown}
       onSave={onSave}
       onCancel={onCancel}
+      isAddNew={true}
     />
   );
 };
