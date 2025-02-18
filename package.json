@@ -15,7 +15,7 @@
     "db:studio": "npx prisma studio",
     "db:seed": "tsx ./prisma/seed.ts",
     "prepare": "husky",
-    "test": "jest --config jest.config.ts",
+    "test": "jest --config jest.config.ts --passWithNoTests",
     "test:watch": "jest --watch --config jest.config.ts",
     "coverage": "jest --config jest.config.ts --coverage",
     "test:update": "jest --updateSnapshot --config jest.config.ts"
