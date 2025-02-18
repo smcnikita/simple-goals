@@ -1,0 +1,16 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`AsideList should renders AsideList unchanged 1`] = `
+<div>
+  <ul
+    class="list"
+  >
+    <li>
+      Mocked Year
+    </li>
+    <li>
+      Mocked Year
+    </li>
+  </ul>
+</div>
+`;
