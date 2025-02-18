@@ -1,6 +1,6 @@
 import type { NextRequest } from 'next/server';
 
-import { middlewareController } from './controllers/middleware-controllers';
+import { middlewareController } from './controllers/middleware-controller';
 
 export function middleware(request: NextRequest) {
   const response = middlewareController.setCors(request);
