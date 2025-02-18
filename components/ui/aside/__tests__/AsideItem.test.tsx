@@ -5,7 +5,6 @@ import { PATHS } from '@/constants/paths';
 
 import AsideItem from '../components/AsideItem';
 
-// Мокаем usePathname
 jest.mock('next/navigation', () => ({
   usePathname: jest.fn(),
 }));
@@ -13,6 +12,11 @@ jest.mock('next/navigation', () => ({
 describe('AsideItem', () => {
   const year = 2023;
   const href = PATHS.goals.base + PATHS.goals.slug.replace(':slug', year.toString());
+
+  it('should renders AsideItem unchanged', () => {
+    const { container } = render(<AsideItem year={year} />);
+    expect(container).toMatchSnapshot();
+  });
 
   it('should render the year correctly', () => {
     (usePathname as jest.Mock).mockReturnValue('/some-other-path');
