@@ -16,7 +16,8 @@
     "db:seed": "tsx ./prisma/seed.ts",
     "prepare": "husky",
     "test": "jest --config jest.config.ts",
-    "test:watch": "jest --watch --config jest.config.ts"
+    "test:watch": "jest --watch --config jest.config.ts",
+    "coverage": "jest --config jest.config.ts --coverage"
   },
   "husky": {
     "hooks": {
