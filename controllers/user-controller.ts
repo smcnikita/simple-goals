@@ -1,6 +1,6 @@
 import { prisma } from '@/lib/prisma';
 
-import { UserModel } from '@/models/users-model';
+import type { UserModel } from '@/models/users-model';
 
 export const userController = {
   getUserById: async (id: number): Promise<UserModel | null> => {
