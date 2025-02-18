@@ -41,8 +41,6 @@ describe('updateGoalOrder', () => {
       },
     });
 
-    console.log(result);
-
     expect(result).toEqual(mockUpdatedGoal);
   });
 
