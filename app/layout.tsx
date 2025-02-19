@@ -25,15 +25,40 @@ export const metadata: Metadata = {
 
   icons: [
     {
-      rel: 'icon',
-      url: '/favicon.svg',
-      sizes: 'any',
-      type: 'image/svg+xml',
+      rel: 'apple-touch-icon',
+      url: '/76x76.png',
+      sizes: '76x76',
     },
     {
       rel: 'apple-touch-icon',
-      url: '/128x128.png',
-      sizes: '128x128',
+      url: '/120x120.png',
+      sizes: '120x120',
+    },
+    {
+      rel: 'apple-touch-icon',
+      url: '/152x152.png',
+      sizes: '152x152',
+    },
+    {
+      rel: 'apple-touch-icon',
+      url: '/180x180.png',
+      sizes: '180x180',
+    },
+
+    {
+      rel: 'shortcut icon',
+      url: '/16x16.png',
+      sizes: '16x16',
+    },
+    {
+      rel: 'shortcut icon',
+      url: '/32x32.png',
+      sizes: '32x32',
+    },
+    {
+      rel: 'shortcut icon',
+      url: '/192x192.png',
+      sizes: '192x192',
     },
   ],
 };
