@@ -2,6 +2,7 @@
 
 import { useState, type FC } from 'react';
 import BaseEditComponent from './BaseEditComponent';
+import { useTranslations } from 'next-intl';
 
 type Props = {
   isLoading: boolean;
@@ -10,6 +11,8 @@ type Props = {
 };
 
 const AddNewGoal: FC<Props> = ({ isLoading, create, updateIsAddNewGoal }) => {
+  const t = useTranslations('Goals');
+
   const [value, setValue] = useState('');
   const updateValue = (value: string) => setValue(value);
 
@@ -45,7 +48,7 @@ const AddNewGoal: FC<Props> = ({ isLoading, create, updateIsAddNewGoal }) => {
     <BaseEditComponent
       value={value}
       isLoading={isLoading}
-      placeholder={'Enter goal'}
+      placeholder={t('enterGoal')}
       updateValue={updateValue}
       onKeyDown={onKeyDown}
       onSave={onSave}

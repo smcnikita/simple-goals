@@ -6,6 +6,7 @@ import { httpChangeNameGoal, httpCreateGoal, httpRemoveGoal, httpUpdateGoal } fr
 
 import type { GoalModel } from '@/models/goals-model';
 import { useState } from 'react';
+import { useTranslations } from 'next-intl';
 
 type Props = {
   canChangeGoal: boolean;
@@ -15,6 +16,8 @@ type Props = {
 };
 
 const useGoalActions = ({ canChangeGoal, year, goals, updateGoals }: Props) => {
+  const t = useTranslations('Goals');
+
   const [isLoading, setIsLoading] = useState(false);
 
   const onLoadingStart = (message: string) => {
@@ -42,7 +45,7 @@ const useGoalActions = ({ canChangeGoal, year, goals, updateGoals }: Props) => {
       return;
     }
 
-    onLoadingStart('Creating goal...');
+    onLoadingStart(t('creatingGoal'));
 
     const res = await httpCreateGoal(year, name);
     const data = await res.json();
@@ -56,7 +59,7 @@ const useGoalActions = ({ canChangeGoal, year, goals, updateGoals }: Props) => {
 
     updateGoals([...goals, newGoal]);
 
-    onLoadingEnd('Goal created');
+    onLoadingEnd(t('goalCreated'));
   };
 
   const remove = async (goalId: number) => {
@@ -64,7 +67,7 @@ const useGoalActions = ({ canChangeGoal, year, goals, updateGoals }: Props) => {
       return;
     }
 
-    onLoadingStart('Removing goal...');
+    onLoadingStart(t('removingGoal'));
 
     const res = await httpRemoveGoal(goalId, year);
     const data = await res.json();
@@ -78,7 +81,7 @@ const useGoalActions = ({ canChangeGoal, year, goals, updateGoals }: Props) => {
 
     updateGoals(newGoals);
 
-    onLoadingEnd('Goal removed');
+    onLoadingEnd(t('goalRemoved'));
   };
 
   const updateCompleted = async (goalId: number, isCompleted: boolean) => {
@@ -86,7 +89,7 @@ const useGoalActions = ({ canChangeGoal, year, goals, updateGoals }: Props) => {
       return;
     }
 
-    onLoadingStart('Updating goal...');
+    onLoadingStart(t('updatingGoal'));
 
     const res = await httpUpdateGoal(goalId, isCompleted, year);
     const data = await res.json();
@@ -109,7 +112,7 @@ const useGoalActions = ({ canChangeGoal, year, goals, updateGoals }: Props) => {
 
     updateGoals(newGoals);
 
-    onLoadingEnd('Goal updated');
+    onLoadingEnd(t('goalUpdated'));
   };
 
   const updateName = async (goalId: number, newName: string) => {
@@ -117,7 +120,7 @@ const useGoalActions = ({ canChangeGoal, year, goals, updateGoals }: Props) => {
       return;
     }
 
-    onLoadingStart('Updating goal...');
+    onLoadingStart(t('updatingGoal'));
 
     const res = await httpChangeNameGoal(goalId, year, newName);
     const data = await res.json();
@@ -139,7 +142,7 @@ const useGoalActions = ({ canChangeGoal, year, goals, updateGoals }: Props) => {
 
     updateGoals(newGoals);
 
-    onLoadingEnd('Goal updated');
+    onLoadingEnd(t('goalUpdated'));
   };
 
   return { isLoading, create, remove, updateCompleted, updateName };

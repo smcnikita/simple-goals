@@ -1,5 +1,6 @@
 import { NextResponse } from 'next/server';
 import { compare } from 'bcryptjs';
+import { getTranslations } from 'next-intl/server';
 
 import { USER_ID } from '@/constants/headers';
 
@@ -12,8 +13,10 @@ export async function POST(req: Request) {
   const res = await req.json();
   const { email, password } = res;
 
+  const t = await getTranslations('Errors');
+
   if (!email || !password) {
-    return NextResponse.json({ message: 'Email and password are required' }, { status: 500 });
+    return NextResponse.json({ message: t('emailAndPasswordRequired') }, { status: 500 });
   }
 
   const validatedFields = SignInSchema.safeParse({ email, password });
@@ -27,13 +30,13 @@ export async function POST(req: Request) {
   });
 
   if (!user) {
-    return NextResponse.json({ message: 'Invalid email or password' }, { status: 500 });
+    return NextResponse.json({ message: t('invalidEmailOrPassword') }, { status: 500 });
   }
 
   const passwordValid = await compare(password, user.password);
 
   if (!passwordValid) {
-    return NextResponse.json({ message: 'Invalid email or password' }, { status: 500 });
+    return NextResponse.json({ message: t('invalidEmailOrPassword') }, { status: 500 });
   }
 
   const sub: SessionPayload = {
@@ -54,7 +57,7 @@ export async function POST(req: Request) {
 
   const response = NextResponse.json(
     {
-      message: 'Success',
+      message: t('success'),
       token,
     },
     { status: 200 }

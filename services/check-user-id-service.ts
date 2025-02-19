@@ -1,5 +1,7 @@
 'use server';
 
+import { getTranslations } from 'next-intl/server';
+
 import { TOKEN } from '@/constants/cookies';
 
 import { getUserIdFromToken } from '@/utils/getUserIdFromToken';
@@ -20,10 +22,12 @@ export const checkUserIdService = async (req: Request): Promise<Return> => {
   const cookiesStore = req.headers.get('cookie');
   const hasToken = cookiesStore?.includes(TOKEN);
 
+  const t = await getTranslations('Errors');
+
   if (!cookiesStore || !hasToken) {
     return {
       success: false,
-      error: 'Error',
+      error: t('error'),
     };
   }
 
@@ -35,7 +39,7 @@ export const checkUserIdService = async (req: Request): Promise<Return> => {
   if (!token) {
     return {
       success: false,
-      error: 'Error',
+      error: t('error'),
     };
   }
 
@@ -44,7 +48,7 @@ export const checkUserIdService = async (req: Request): Promise<Return> => {
   if (!userId) {
     return {
       success: false,
-      error: 'Error',
+      error: t('error'),
     };
   }
 

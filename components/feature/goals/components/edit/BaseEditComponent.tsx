@@ -6,6 +6,7 @@ import Button from '@/components/ui/button';
 import BaseIcon, { CheckIcon, PlusIcon, TrashIcon } from '@/components/ui/icon';
 
 import classes from '../../style/goals.module.css';
+import { useTranslations } from 'next-intl';
 
 type Props = {
   value: string;
@@ -30,6 +31,8 @@ const BaseEditComponent: FC<Props> = ({
   onCancel,
   onRemove,
 }) => {
+  const t = useTranslations('Goals');
+
   const ref = useRef<HTMLInputElement>(null);
 
   useEffect(() => {
@@ -55,14 +58,14 @@ const BaseEditComponent: FC<Props> = ({
               <BaseIcon size="20">
                 <PlusIcon />
               </BaseIcon>
-              Add
+              {t('add')}
             </>
           ) : (
             <>
               <BaseIcon size="20">
                 <CheckIcon />
               </BaseIcon>
-              Save
+              {t('save')}
             </>
           )}
         </Button>
@@ -78,12 +81,12 @@ const BaseEditComponent: FC<Props> = ({
             <BaseIcon size="20">
               <TrashIcon />
             </BaseIcon>
-            Remove
+            {t('remove')}
           </Button>
         )}
 
         <Button size="sm-2" isButtonError disabled={isLoading} onClick={onCancel}>
-          Cancel
+          {t('cancel')}
         </Button>
       </div>
     </div>

@@ -14,12 +14,13 @@ import classes from '@/components/ui/popover/styles/popover.module.css';
 
 const LogoutActions: FC = () => {
   const t = useTranslations('Auth');
+  const tErrors = useTranslations('Errors');
 
   const logout = async () => {
     const res = await httpLogout();
 
     if (!res.ok) {
-      toast.error('Something went wrong');
+      toast.error(tErrors('something'));
       return;
     }
 

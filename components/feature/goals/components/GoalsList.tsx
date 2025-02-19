@@ -8,6 +8,7 @@ import GoalsItem from './GoalsItem';
 import GoalsItemAddNew from './edit/GoalsItemAddNew';
 
 import classes from '../style/goals.module.css';
+import { useTranslations } from 'next-intl';
 
 type Props = {
   goals: GoalModel[];
@@ -36,6 +37,8 @@ const GoalsList: FC<Props> = (props) => {
     updateIsShowAddGoal,
   } = props;
 
+  const t = useTranslations('Goals');
+
   const uncompletedGoals = useMemo(() => {
     return goals.filter((goal) => !goal.is_completed && goal.completed_at === null);
   }, [goals]);
@@ -49,7 +52,7 @@ const GoalsList: FC<Props> = (props) => {
   if (goals.length === 0) {
     return (
       <>
-        <p className={classes.noGoals}>No goals yet</p>
+        <p className={classes.noGoals}>{t('noGoals')}</p>
 
         {isShowAddGoal && (
           <div className={classes.item}>
@@ -84,7 +87,7 @@ const GoalsList: FC<Props> = (props) => {
 
       {completedGoals.length > 0 && (
         <div className={classes.items_wrapper}>
-          <p className={classes.items_title}>Completed</p>
+          <p className={classes.items_title}>{t('completed')}</p>
           <ul className={classes.list}>
             {completedGoals.map((goal) => (
               <GoalsItem

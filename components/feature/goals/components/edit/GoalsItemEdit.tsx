@@ -1,6 +1,8 @@
 'use client';
 
 import type { FC } from 'react';
+import { useTranslations } from 'next-intl';
+
 import BaseEditComponent from './BaseEditComponent';
 
 type Props = {
@@ -14,9 +16,12 @@ type Props = {
 };
 
 const EditItem: FC<Props> = ({ value, isLoading, updateValue, onKeyDown, onSave, onCancel, onRemove }) => {
+  const t = useTranslations('Goals');
+
   return (
     <BaseEditComponent
       value={value}
+      placeholder={t('enterGoal')}
       isLoading={isLoading}
       updateValue={updateValue}
       onKeyDown={onKeyDown}
