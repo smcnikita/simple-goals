@@ -17,7 +17,18 @@ import '../assets/styles/colors/dark.css';
 import '../assets/styles/colors/light.css';
 
 const jost = localFont({
-  src: '../assets/Jost-Regular.woff2',
+  src: [
+    {
+      path: '../assets/Jost-Regular.woff2',
+      weight: '400',
+      style: 'normal',
+    },
+    {
+      path: '../assets/Jost-Medium.woff2',
+      weight: '500',
+      style: 'normal',
+    },
+  ],
   variable: '--font-jost',
 });
 

@@ -38,4 +38,11 @@
 body {
   color: var(--body-color);
   background: var(--body-background);
+
+  min-width: 414px;
+}
+
+h1 {
+  font-weight: 500;
+  font-size: 32px;
 }
