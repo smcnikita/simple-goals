@@ -22,6 +22,20 @@ const jost = localFont({
 export const metadata: Metadata = {
   title: 'Simple Goals',
   description: 'An app for creating and tracking yearly goals',
+
+  icons: [
+    {
+      rel: 'icon',
+      url: '/favicon.svg',
+      sizes: 'any',
+      type: 'image/svg+xml',
+    },
+    {
+      rel: 'apple-touch-icon',
+      url: '/128x128.png',
+      sizes: '128x128',
+    },
+  ],
 };
 
 type Props = Readonly<{
