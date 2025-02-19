@@ -91,7 +91,7 @@
 
 @media (hover: hover) {
   .custom:hover::after {
-    background: black;
+    background: var(--checkbox-custom-hover-bg);
     opacity: 0.3;
   }
 }

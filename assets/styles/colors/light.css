@@ -18,6 +18,7 @@
   /* Checkbox */
   --checkbox-color: var(--black-color);
   --checkbox-background: var(--light-color);
+  --checkbox-custom-hover-bg: var(--black-color);
   --checkbox-custom-after-background: var(--light-color);
   --checkbox-checked-background: var(--dark-2-color);
   --checkbox-disabled-bg: #dadada;
