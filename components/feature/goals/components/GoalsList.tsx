@@ -53,7 +53,7 @@ const GoalsList: FC<Props> = (props) => {
 
         {isShowAddGoal && (
           <div className={classes.item}>
-            <GoalsItemAddNew create={create} updateIsAddNewGoal={updateIsShowAddGoal} />
+            <GoalsItemAddNew isLoading={isLoading} create={create} updateIsAddNewGoal={updateIsShowAddGoal} />
           </div>
         )}
       </>
@@ -78,7 +78,7 @@ const GoalsList: FC<Props> = (props) => {
 
       {isShowAddGoal && (
         <div className={classes.item}>
-          <GoalsItemAddNew create={create} updateIsAddNewGoal={updateIsShowAddGoal} />
+          <GoalsItemAddNew isLoading={isLoading} create={create} updateIsAddNewGoal={updateIsShowAddGoal} />
         </div>
       )}
 

@@ -4,11 +4,12 @@ import { useState, type FC } from 'react';
 import BaseEditComponent from './BaseEditComponent';
 
 type Props = {
+  isLoading: boolean;
   create: (name: string) => Promise<void>;
   updateIsAddNewGoal: (value: boolean) => void;
 };
 
-const AddNewGoal: FC<Props> = ({ create, updateIsAddNewGoal }) => {
+const AddNewGoal: FC<Props> = ({ isLoading, create, updateIsAddNewGoal }) => {
   const [value, setValue] = useState('');
   const updateValue = (value: string) => setValue(value);
 
@@ -43,6 +44,7 @@ const AddNewGoal: FC<Props> = ({ create, updateIsAddNewGoal }) => {
   return (
     <BaseEditComponent
       value={value}
+      isLoading={isLoading}
       placeholder={'Enter goal'}
       updateValue={updateValue}
       onKeyDown={onKeyDown}
