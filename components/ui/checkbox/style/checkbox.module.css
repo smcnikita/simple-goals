@@ -94,4 +94,13 @@
     background: var(--checkbox-custom-hover-bg);
     opacity: 0.3;
   }
+
+  input:checked + .custom:hover::after {
+    opacity: 1;
+    background: var(--checkbox-custom-after-background);
+  }
+
+  input:disabled + .custom:hover::after {
+    background: rgba(119, 119, 119, 0.6);
+  }
 }
