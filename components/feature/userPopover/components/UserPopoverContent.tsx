@@ -3,6 +3,7 @@
 import type { FC } from 'react';
 import toast from 'react-hot-toast';
 import clsx from 'clsx';
+import { useTranslations } from 'next-intl';
 
 import { PATHS } from '@/constants/paths';
 
@@ -17,6 +18,8 @@ type Props = {
 };
 
 const UserPopoverContent: FC<Props> = ({ className }) => {
+  const t = useTranslations('Auth');
+
   const logout = async () => {
     const res = await httpLogout();
 
@@ -34,7 +37,7 @@ const UserPopoverContent: FC<Props> = ({ className }) => {
         <BaseIcon>
           <ExitIcon />
         </BaseIcon>
-        Exit
+        {t('exit')}
       </button>
     </div>
   );

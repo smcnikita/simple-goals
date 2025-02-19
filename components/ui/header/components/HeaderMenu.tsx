@@ -1,4 +1,5 @@
 import type { FC } from 'react';
+import { useTranslations } from 'next-intl';
 
 import { PATHS } from '@/constants/paths';
 
@@ -11,14 +12,16 @@ type Props = {
 };
 
 const HeaderMenu: FC<Props> = ({ isAuth }) => {
+  const t = useTranslations('NavLinks');
+
   const nowYear = new Date().getFullYear();
 
   return (
     <nav className={classes.tabs}>
-      <HeaderMenuItem href={PATHS.home}>Home</HeaderMenuItem>
+      <HeaderMenuItem href={PATHS.home}>{t('home')}</HeaderMenuItem>
       {isAuth && (
         <HeaderMenuItem href={PATHS.goals.base + PATHS.goals.slug.replace(':slug', nowYear.toString())}>
-          Goals
+          {t('goals')}
         </HeaderMenuItem>
       )}
     </nav>

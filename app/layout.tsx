@@ -2,6 +2,8 @@ import type { Metadata } from 'next';
 import { cookies, headers } from 'next/headers';
 import localFont from 'next/font/local';
 import { Toaster } from 'react-hot-toast';
+import { NextIntlClientProvider } from 'next-intl';
+import { getMessages } from 'next-intl/server';
 
 import { TOKEN } from '@/constants/cookies';
 import { USER_ID } from '@/constants/headers';
@@ -41,16 +43,20 @@ export default async function RootLayout({ children }: Props) {
 
   const isAuth = !!token && !!userId;
 
+  const messages = await getMessages();
+
   return (
     <html lang="en">
       <ThemeProvider />
-      <body className={`${jost.className}`}>
-        <Toaster />
-        <Container>
-          <Header isAuth={isAuth} />
-          {children}
-        </Container>
-      </body>
+      <NextIntlClientProvider messages={messages}>
+        <body className={`${jost.className}`}>
+          <Toaster />
+          <Container>
+            <Header isAuth={isAuth} />
+            {children}
+          </Container>
+        </body>
+      </NextIntlClientProvider>
     </html>
   );
 }

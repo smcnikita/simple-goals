@@ -3,6 +3,7 @@
 import type { FC } from 'react';
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
+import { useTranslations } from 'next-intl';
 
 import { PATHS } from '@/constants/paths';
 
@@ -22,6 +23,7 @@ type Props = {
 const Header: FC<Props> = ({ isAuth }) => {
   const pathname = usePathname();
   const isShowHeader = showHeader(pathname);
+  const t = useTranslations('Auth');
 
   if (!isShowHeader) {
     return null;
@@ -40,10 +42,10 @@ const Header: FC<Props> = ({ isAuth }) => {
           ) : (
             <>
               <Link href={PATHS.auth.signIn} type="button" className={classes.tab}>
-                Sign In
+                {t('signIn')}
               </Link>
               {/* <Link href={PATHS.auth.signUp} type="button" className={classes.tab}>
-                Sign Up
+                {t('signUp')}
               </Link> */}
             </>
           )}

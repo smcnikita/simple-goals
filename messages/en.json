@@ -1,0 +1,16 @@
+{
+  "NavLinks": {
+    "home": "Home",
+    "goals": "Goals"
+  },
+
+  "Auth": {
+    "signIn": "Sign In",
+    "signUp": "Sign Up",
+    "exit": "Exit"
+  },
+
+  "HomePage": {
+    "title": "Home page"
+  }
+}
