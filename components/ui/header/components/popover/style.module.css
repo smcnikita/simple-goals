@@ -1,0 +1,15 @@
+.section {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.section:not(:last-child) {
+  margin-bottom: 12px;
+}
+
+.title {
+  font-size: 16px;
+
+  opacity: 0.5;
+}

@@ -9,11 +9,8 @@ import { PATHS } from '@/constants/paths';
 
 import { showHeader } from '../utils/showHeader';
 
-import UserPopover from '@/components/feature/userPopover';
-import ThemePopover from '@/components/feature/themePopover';
-import LangPopover from '@/components/feature/langPopover';
-
 import HeaderMenu from './HeaderMenu';
+import BasePopover from './popover/Popover';
 
 import classes from '../styles/header.module.css';
 
@@ -35,13 +32,8 @@ const Header: FC<Props> = ({ isAuth }) => {
       <div className={classes.header}>
         <HeaderMenu isAuth={isAuth} />
         <div className={classes.tabs}>
-          <ThemePopover className={classes.tab} />
-          <LangPopover className={classes.tab} />
-          {isAuth ? (
-            <>
-              <UserPopover className={classes.tab} />
-            </>
-          ) : (
+          <BasePopover isAuth={isAuth} />
+          {!isAuth && (
             <>
               <Link href={PATHS.auth.signIn} type="button" className={classes.tab}>
                 {t('signIn')}

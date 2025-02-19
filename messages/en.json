@@ -4,6 +4,13 @@
     "goals": "Goals"
   },
 
+  "Theme": {
+    "theme": "Theme",
+    "system": "System theme",
+    "light": "Light theme",
+    "dark": "Dark theme"
+  },
+
   "Auth": {
     "signIn": "Sign In",
     "signUp": "Sign Up",

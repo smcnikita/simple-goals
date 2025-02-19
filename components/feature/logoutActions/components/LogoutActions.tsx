@@ -12,11 +12,7 @@ import BaseIcon, { ExitIcon } from '@/components/ui/icon';
 
 import classes from '@/components/ui/popover/styles/popover.module.css';
 
-type Props = {
-  className?: string;
-};
-
-const UserPopoverContent: FC<Props> = ({ className }) => {
+const LogoutActions: FC = () => {
   const t = useTranslations('Auth');
 
   const logout = async () => {
@@ -31,19 +27,15 @@ const UserPopoverContent: FC<Props> = ({ className }) => {
   };
 
   return (
-    <div className={className}>
-      <div className={classes.content_wrapper}>
-        <p className={classes.content_title}> {t('exit')}</p>
-
-        <button type="button" className={classes.content_action} onClick={() => logout()}>
-          <BaseIcon>
-            <ExitIcon />
-          </BaseIcon>
-          {t('exit')}
-        </button>
-      </div>
-    </div>
+    <>
+      <button type="button" className={classes.content_action} onClick={() => logout()}>
+        <BaseIcon>
+          <ExitIcon />
+        </BaseIcon>
+        {t('exit')}
+      </button>
+    </>
   );
 };
 
-export default UserPopoverContent;
+export default LogoutActions;

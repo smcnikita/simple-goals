@@ -12,3 +12,4 @@ export { default as UserIcon } from './components/UserIcon';
 export { default as PlusIcon } from './components/PlusIcon';
 export { default as TranslateIcon } from './components/TranslateIcon';
 export { default as MenuDuoIcon } from './components/MenuDuoIcon';
+export { default as MoreGridSmallIcon } from './components/MoreGridSmallIcon';
