@@ -1,0 +1,48 @@
+.theme_light {
+  /* Body */
+  --body-color: var(--black-color);
+  --body-background: var(--light-color);
+
+  /* Header */
+  --header-background: var(--light-color);
+  --header-tab-color: var(--black-color);
+  --header-tab-color-hover: #e7e7e7;
+  --header-tab-color-active: #e7e7e7;
+
+  /* Aside */
+  --aside-background: var(--light-color);
+  --aside-item-color: var(--black-color);
+  --aside-item-hover-background: #dadada;
+  --aside-item-active-background: #dadada;
+
+  /* Checkbox */
+  --checkbox-color: var(--black-color);
+  --checkbox-background: var(--light-color);
+  --checkbox-custom-after-background: var(--light-color);
+  --checkbox-checked-background: var(--dark-2-color);
+  --checkbox-disabled-bg: #dadada;
+
+  /* Popover */
+  --popover-background: var(--light-color);
+  --popover-color: var(--body-color);
+
+  /* Input */
+  --input-color: var(--body-color);
+  --input-bg: #dcdcdc;
+
+  /* Auth Form */
+  --auth-bg: var(--light-color);
+
+  /* Primary button */
+  --btn-primary-color: var(--black-color);
+  --btn-primary-bg: var(--light-color);
+  --btn-primary-before-bg: rgba(0, 0, 0, 0.05);
+  --btn-primary-error-bg: #d17070;
+
+  /* Github logo */
+  --github-logo-dark: none;
+  --github-logo-light: block;
+
+  /* Goal */
+  --goal-border-bottom-color: #dddddd;
+}

@@ -35,7 +35,7 @@
   justify-content: space-between;
   gap: 12px;
 
-  border-bottom: 1px solid var(--purple-dark-2-color);
+  border-bottom: 1px solid var(--goal-border-bottom-color);
 
   padding: 12px 0;
 }
@@ -87,7 +87,7 @@
 .isChecked .goalAction {
   text-decoration: line-through;
 
-  color: var(--gray-3-color);
+  color: var(--gray-2-color);
 }
 
 .editWrapper {
@@ -105,7 +105,7 @@
 }
 
 .editInput {
-  color: var(--light-color);
+  color: var(--input-color);
   background: none;
 
   font-size: 16px;

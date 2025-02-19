@@ -107,7 +107,20 @@ const SignIn: FC = () => {
               <Image src="/images/google.png" width={20} height={20} alt="Sign in with Google" />
             </Button> */}
             <Button size="sm" className={classes.button} disabled={isLoading}>
-              <Image src="/images/github-white.png" width={20} height={20} alt="Sign in with Github" />
+              <Image
+                className={classes.githubIcon__dark}
+                src="/images/github-white.png"
+                width={20}
+                height={20}
+                alt="Sign in with Github"
+              />
+              <Image
+                className={classes.githubIcon__light}
+                src="/images/github-mark.png"
+                width={20}
+                height={20}
+                alt="Sign in with Github"
+              />
             </Button>
           </div>
         </div>

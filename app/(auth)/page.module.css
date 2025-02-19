@@ -9,7 +9,7 @@
 }
 
 .container {
-  background: var(--dark-color);
+  background: var(--auth-bg);
 
   padding: 40px;
 
@@ -39,7 +39,7 @@
 
   display: block;
 
-  color: var(--light-color);
+  color: var(--body-color);
 
   text-align: center;
 
@@ -90,8 +90,7 @@
 }
 
 .forgot-link:hover {
-  /* TODO */
-  color: #4c82d2;
+  color: var(--info-1-color);
 }
 
 .social {
@@ -136,4 +135,12 @@
     margin: 20px;
     padding: 25px;
   }
+}
+
+.githubIcon__dark {
+  display: var(--github-logo-dark);
+}
+
+.githubIcon__light {
+  display: var(--github-logo-light);
 }

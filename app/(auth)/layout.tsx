@@ -1,8 +1,9 @@
 import type { FC, PropsWithChildren } from 'react';
+import Link from 'next/link';
+
+import { PATHS } from '@/constants/paths';
 
 import classes from './page.module.css';
-import Link from 'next/link';
-import { PATHS } from '@/constants/paths';
 
 const AuthLayout: FC<PropsWithChildren> = ({ children }) => {
   return (

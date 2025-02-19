@@ -20,10 +20,29 @@
   --checkbox-background: var(--dark-color);
   --checkbox-custom-after-background: var(--light-color);
   --checkbox-checked-background: var(--dark-2-color);
+  --checkbox-disabled-bg: var(--gray-2-color);
 
   /* Popover */
   --popover-background: var(--dark-color);
   --popover-color: var(--body-color);
 
   /* Input */
+  --input-color: var(--body-color);
+  --input-bg: var(--dark-2-color);
+
+  /* Auth Form */
+  --auth-bg: var(--dark-color);
+
+  /* Primary button */
+  --btn-primary-color: var(--light-color);
+  --btn-primary-bg: var(--dark-2-color);
+  --btn-primary-before-bg: rgba(255, 255, 255, 0.05);
+  --btn-primary-error-bg: var(--error-2-color);
+
+  /* Github logo */
+  --github-logo-dark: block;
+  --github-logo-light: none;
+
+  /* Goal */
+  --goal-border-bottom-color: var(--purple-dark-2-color);
 }

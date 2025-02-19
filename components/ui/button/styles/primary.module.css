@@ -4,8 +4,8 @@
   justify-content: center;
   gap: 6px;
 
-  color: var(--light-color);
-  background: var(--dark-2-color);
+  color: var(--btn-primary-color);
+  background: var(--btn-primary-bg);
 
   transition: all 0.3s ease;
 }
@@ -20,7 +20,7 @@
   width: 100%;
   height: 100%;
 
-  background: rgba(255, 255, 255, 0.05);
+  background: var(--btn-primary-before-bg);
 
   transition: all 0.3s ease;
 }
@@ -39,7 +39,7 @@
 }
 
 .button__primary.button__error:hover {
-  background: var(--error-2-color);
+  background: var(--btn-primary-error-bg);
 }
 
 .button__primary:disabled {

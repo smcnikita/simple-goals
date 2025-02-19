@@ -13,6 +13,7 @@ import Header from '@/components/ui/header';
 
 import '../assets/styles/globals.css';
 import '../assets/styles/colors/dark.css';
+import '../assets/styles/colors/light.css';
 
 const jost = localFont({
   src: '../assets/Jost-Regular.woff2',
