@@ -58,6 +58,8 @@ const SignIn: FC = () => {
       }
 
       setIsLoading(false);
+
+      return;
     }
 
     setErrors(defaultErrors);

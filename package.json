@@ -38,6 +38,7 @@
   },
   "dependencies": {
     "@prisma/client": "^6.3.1",
+    "bcryptjs": "^3.0.2",
     "clsx": "^2.1.1",
     "jose": "^5.9.6",
     "next": "15.1.6",
@@ -52,6 +53,7 @@
     "@eslint/eslintrc": "^3",
     "@testing-library/jest-dom": "^6.6.3",
     "@testing-library/react": "^16.2.0",
+    "@types/bcryptjs": "^2.4.6",
     "@types/jest": "^29.5.14",
     "@types/node": "^20",
     "@types/react": "^19",

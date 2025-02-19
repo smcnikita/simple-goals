@@ -1,4 +1,6 @@
 import { NextResponse } from 'next/server';
+import { compare } from 'bcryptjs';
+
 import { USER_ID } from '@/constants/headers';
 
 import { SignInSchema } from '@/lib/definitions/auth';
@@ -16,7 +18,6 @@ export async function POST(req: Request) {
 
   const validatedFields = SignInSchema.safeParse({ email, password });
 
-  // If any form fields are invalid, return early
   if (!validatedFields.success) {
     return NextResponse.json({ errors: validatedFields.error.flatten().fieldErrors }, { status: 500 });
   }
@@ -29,12 +30,19 @@ export async function POST(req: Request) {
     return NextResponse.json({ message: 'Invalid email or password' }, { status: 500 });
   }
 
+  const passwordValid = await compare(password, user.password);
+
+  if (!passwordValid) {
+    return NextResponse.json({ message: 'Invalid email or password' }, { status: 500 });
+  }
+
   const sub: SessionPayload = {
     userId: user.id.toString(),
     name: user.name,
   };
 
   const token = await encrypt({ sub: JSON.stringify(sub) });
+
   const cookieOptions = {
     name: 'token',
     value: token,
