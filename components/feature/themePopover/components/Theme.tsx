@@ -7,14 +7,15 @@ import { getThemeFromLocalstorage, updateThemeInLocalstorage } from '@/utils/upd
 
 import type { Theme } from '@/types/theme';
 
-import classes from '../styles/popover.module.css';
+import classes from '@/components/ui/popover/styles/popover.module.css';
 
 const ThemeComponent: FC = () => {
   const [theme, setTheme] = useState<Theme>('dark');
 
-  const themes = ['dark'] as Theme[];
+  const themes = ['light', 'dark'] as Theme[];
 
-  const updateTheme = (selectedTheme: Theme) => {
+  const updateTheme = (value: Theme | null) => {
+    const selectedTheme = value ?? 'dark';
     const classList = document.documentElement.classList;
 
     classList.forEach((el) => {
@@ -45,7 +46,7 @@ const ThemeComponent: FC = () => {
           })}
           onClick={() => updateTheme(el)}
         >
-          {el.charAt(0).toUpperCase() + el.slice(1)}
+          {el.charAt(0).toUpperCase() + el.slice(1)} theme
         </button>
       ))}
     </>
