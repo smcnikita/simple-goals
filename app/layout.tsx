@@ -22,27 +22,9 @@ const jost = localFont({
 export const metadata: Metadata = {
   title: 'Simple Goals',
   description: 'An app for creating and tracking yearly goals',
-
-  icons: [
-    {
-      rel: 'apple-touch-icon',
-      url: '/icons/180x180.png',
-      type: 'image/png',
-      sizes: '180x180',
-    },
-    {
-      rel: 'shortcut icon',
-      url: '/icons/16x16.png',
-      sizes: '16x16',
-      type: 'image/png',
-    },
-    {
-      rel: 'shortcut icon',
-      url: '/icons/32x32.png',
-      sizes: '32x32',
-      type: 'image/png',
-    },
-  ],
+  other: {
+    'apple-mobile-web-app-title': 'Simple Goals',
+  },
 };
 
 type Props = Readonly<{
