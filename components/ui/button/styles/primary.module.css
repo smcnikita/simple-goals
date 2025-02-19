@@ -2,6 +2,7 @@
   display: flex;
   align-items: center;
   justify-content: center;
+  gap: 6px;
 
   color: var(--light-color);
   background: var(--dark-2-color);
@@ -39,4 +40,15 @@
 
 .button__primary.button__error:hover {
   background: var(--error-2-color);
+}
+
+.button__primary:disabled {
+  cursor: not-allowed;
+  transform: none;
+  background: var(--dark-2-color);
+  opacity: 0.5;
+}
+
+.button__primary:disabled::before {
+  left: -100%;
 }

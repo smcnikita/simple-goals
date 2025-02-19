@@ -5,6 +5,7 @@ import BaseEditComponent from './BaseEditComponent';
 
 type Props = {
   value: string;
+  isLoading: boolean;
   updateValue: (value: string) => void;
   onKeyDown: (event: React.KeyboardEvent<HTMLInputElement>) => Promise<void>;
   onSave: (e: React.MouseEvent<HTMLButtonElement>) => Promise<void>;
@@ -12,10 +13,11 @@ type Props = {
   onRemove: (event: React.MouseEvent<HTMLButtonElement>) => Promise<void>;
 };
 
-const EditItem: FC<Props> = ({ value, updateValue, onKeyDown, onSave, onCancel, onRemove }) => {
+const EditItem: FC<Props> = ({ value, isLoading, updateValue, onKeyDown, onSave, onCancel, onRemove }) => {
   return (
     <BaseEditComponent
       value={value}
+      isLoading={isLoading}
       updateValue={updateValue}
       onKeyDown={onKeyDown}
       onSave={onSave}

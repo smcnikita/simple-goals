@@ -4,7 +4,6 @@
   --body-background: var(--purple-dark-color);
 
   /* Header */
-  --header-wrapper-background: var(--body-background);
   --header-background: var(--dark-color);
   --header-tab-color: var(--light-color);
   --header-tab-color-hover: rgba(245, 245, 245, 0.05);

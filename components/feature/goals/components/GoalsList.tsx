@@ -13,6 +13,7 @@ type Props = {
   goals: GoalModel[];
   canChangeGoal: boolean;
   isShowAddGoal: boolean;
+  isLoading: boolean;
 
   create: (name: string) => Promise<void>;
   remove: (goalId: number) => Promise<void>;
@@ -23,8 +24,17 @@ type Props = {
 };
 
 const GoalsList: FC<Props> = (props) => {
-  const { goals, canChangeGoal, isShowAddGoal, updateCompleted, remove, updateName, create, updateIsShowAddGoal } =
-    props;
+  const {
+    goals,
+    canChangeGoal,
+    isShowAddGoal,
+    isLoading,
+    updateCompleted,
+    remove,
+    updateName,
+    create,
+    updateIsShowAddGoal,
+  } = props;
 
   const uncompletedGoals = useMemo(() => {
     return goals.filter((goal) => !goal.is_completed && goal.completed_at === null);
@@ -56,6 +66,7 @@ const GoalsList: FC<Props> = (props) => {
         {uncompletedGoals.map((goal) => (
           <GoalsItem
             key={goal.id}
+            isLoading={isLoading}
             goal={goal}
             canChangeGoal={canChangeGoal}
             remove={remove}
@@ -79,6 +90,7 @@ const GoalsList: FC<Props> = (props) => {
               <GoalsItem
                 key={goal.id}
                 goal={goal}
+                isLoading={isLoading}
                 canChangeGoal={canChangeGoal}
                 remove={remove}
                 updateCompleted={updateCompleted}

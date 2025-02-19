@@ -16,13 +16,14 @@ import classes from '../style/goals.module.css';
 type Props = {
   goal: GoalModel;
   canChangeGoal: boolean;
+  isLoading: boolean;
 
   remove: (goalId: number) => Promise<void>;
   updateCompleted: (goalId: number, isCompleted: boolean) => Promise<void>;
   updateName: (goalId: number, newName: string) => Promise<void>;
 };
 
-const GoalsItem: FC<Props> = ({ canChangeGoal, goal, remove, updateCompleted, updateName }) => {
+const GoalsItem: FC<Props> = ({ canChangeGoal, goal, isLoading, remove, updateCompleted, updateName }) => {
   const [isEdit, setIsEdit] = useState(false);
   const [newName, setNewName] = useState('');
 
@@ -91,7 +92,7 @@ const GoalsItem: FC<Props> = ({ canChangeGoal, goal, remove, updateCompleted, up
           <div className={classes.checkbox_wrapper}>
             <Checkbox
               checked={goal.is_completed}
-              disabled={!canChangeGoal}
+              disabled={!canChangeGoal || isLoading}
               name={`checkbox-${goal.id}`}
               id={`checkbox-${goal.id}`}
               useLabel={false}
@@ -101,6 +102,7 @@ const GoalsItem: FC<Props> = ({ canChangeGoal, goal, remove, updateCompleted, up
             <button
               type="button"
               className={classes.goalAction}
+              disabled={!canChangeGoal || isLoading}
               onClick={() => {
                 setNewName(goal.name);
                 setIsEdit(true);
@@ -111,7 +113,7 @@ const GoalsItem: FC<Props> = ({ canChangeGoal, goal, remove, updateCompleted, up
           </div>
 
           <div className={classes.item_actions}>
-            <Button size="sm" isButtonError onClick={onRemove}>
+            <Button size="sm" isButtonError onClick={onRemove} disabled={!canChangeGoal || isLoading}>
               <BaseIcon size="14">
                 <TrashIcon />
               </BaseIcon>
@@ -124,6 +126,7 @@ const GoalsItem: FC<Props> = ({ canChangeGoal, goal, remove, updateCompleted, up
         <>
           <GoalsItemEdit
             value={newName}
+            isLoading={isLoading}
             updateValue={updateNewName}
             onKeyDown={onKeyDownForEdit}
             onSave={onSaveForEdit}

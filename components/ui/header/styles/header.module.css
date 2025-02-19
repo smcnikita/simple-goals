@@ -2,9 +2,11 @@
   position: sticky;
   top: 0;
 
-  background: var(--header-wrapper-background);
+  background: var(--body-background);
 
   height: 108px;
+
+  z-index: 1;
 
   padding: 12px 0;
 }

@@ -20,7 +20,12 @@ type Props = {
 const Goals: FC<Props> = ({ goals: serverGoals, year }) => {
   const { goals, canChangeGoal, updateGoals } = useGoals({ year });
   const { isShowAddGoal, isShowAddGoalButton, updateIsShowAddGoal } = useAddGoal({ year });
-  const { create, remove, updateCompleted, updateName } = useGoalActions({ canChangeGoal, goals, year, updateGoals });
+  const { isLoading, create, remove, updateCompleted, updateName } = useGoalActions({
+    canChangeGoal,
+    goals,
+    year,
+    updateGoals,
+  });
 
   useEffect(() => {
     updateGoals(serverGoals);
@@ -37,11 +42,14 @@ const Goals: FC<Props> = ({ goals: serverGoals, year }) => {
         updateName={updateName}
         isShowAddGoal={isShowAddGoal}
         updateIsShowAddGoal={updateIsShowAddGoal}
+        isLoading={isLoading}
       />
 
       {isShowAddGoalButton && (
         <div className={classes.addGoal} onClick={() => updateIsShowAddGoal(true)}>
-          <Button size="sm-2">Add goal</Button>
+          <Button size="sm-2" disabled={isShowAddGoal || isLoading}>
+            Add goal
+          </Button>
         </div>
       )}
     </section>

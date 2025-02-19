@@ -148,6 +148,6 @@
   }
 
   .removeBtn {
-    display: block;
+    display: flex;
   }
 }
