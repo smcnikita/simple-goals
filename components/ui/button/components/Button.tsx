@@ -10,6 +10,7 @@ import classesSecondary from '../styles/secondary.module.css';
 const Button: FC<PropsWithChildren<Props>> = (props) => {
   const {
     children,
+    style,
     type = 'button',
     className,
     variant = 'primary',
@@ -21,6 +22,7 @@ const Button: FC<PropsWithChildren<Props>> = (props) => {
   return (
     <button
       type={type}
+      style={style}
       className={clsx(
         classes.button,
         {

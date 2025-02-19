@@ -11,6 +11,7 @@ import { httpSignIn } from '@/lib/http/auth';
 
 import Input from '@/components/ui/input';
 import Button from '@/components/ui/button';
+import Spinner from '@/components/ui/spinner';
 
 import classes from '../page.module.css';
 
@@ -23,6 +24,8 @@ const defaultErrors: ErrorsType = {
   email: null,
   password: null,
 };
+
+const isShowForgotPassword = false;
 
 const SignIn: FC = () => {
   const [isLoading, setIsLoading] = useState(false);
@@ -94,24 +97,26 @@ const SignIn: FC = () => {
         </Input>
 
         {/* Submit button */}
-        <Button type="submit" variant="secondary" disabled={isLoading}>
-          Sign In
+        <Button type="submit" variant="secondary" disabled={isLoading} style={{ height: 56 }}>
+          {isLoading ? <Spinner /> : 'Sign In'}
         </Button>
 
         <div className={classes.social}>
           <div className={classes.buttons}>
-            <Button size="sm" className={classes.button} disabled={isLoading}>
+            {/* <Button size="sm" className={classes.button} disabled={isLoading}>
               <Image src="/images/google.png" width={20} height={20} alt="Sign in with Google" />
-            </Button>
+            </Button> */}
             <Button size="sm" className={classes.button} disabled={isLoading}>
               <Image src="/images/github-white.png" width={20} height={20} alt="Sign in with Github" />
             </Button>
           </div>
         </div>
 
-        <Link href="/forgot-password" className={classes.link}>
-          Forgot your password?
-        </Link>
+        {isShowForgotPassword && (
+          <Link href="/forgot-password" className={classes.link}>
+            Forgot your password?
+          </Link>
+        )}
       </form>
     </>
   );

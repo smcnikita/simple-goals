@@ -1,6 +1,11 @@
 .button__secondary {
   width: 100%;
 
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+
   padding: 16px;
 
   color: white;
@@ -41,4 +46,15 @@
 
 .button__secondary:active {
   transform: scale(0.98);
+}
+
+.button__secondary:disabled {
+  opacity: 0.6;
+
+  cursor: not-allowed;
+}
+
+.button__secondary:disabled::after {
+  width: 0;
+  height: 0;
 }

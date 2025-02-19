@@ -37,9 +37,9 @@ const Header: FC<Props> = ({ isAuth }) => {
               <Link href={PATHS.auth.signIn} type="button" className={classes.tab}>
                 Sign In
               </Link>
-              <Link href={PATHS.auth.signUp} type="button" className={classes.tab}>
+              {/* <Link href={PATHS.auth.signUp} type="button" className={classes.tab}>
                 Sign Up
-              </Link>
+              </Link> */}
             </>
           )}
         </div>

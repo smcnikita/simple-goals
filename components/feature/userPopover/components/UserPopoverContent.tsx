@@ -9,7 +9,7 @@ import { PATHS } from '@/constants/paths';
 import { httpLogout } from '@/lib/http/auth';
 
 import BaseIcon, { ExitIcon } from '@/components/ui/icon';
-import ThemeComponent from './Theme';
+// import ThemeComponent from './Theme';
 
 import classes from '../styles/popover.module.css';
 
@@ -31,9 +31,8 @@ const UserPopoverContent: FC<Props> = ({ className }) => {
 
   return (
     <div className={clsx(classes.content, className)}>
-      <p className={classes.content_title}>Themes</p>
-
-      <ThemeComponent />
+      {/* <p className={classes.content_title}>Themes</p> */}
+      {/* <ThemeComponent /> */}
 
       <p className={classes.content_title}>Exit</p>
 
