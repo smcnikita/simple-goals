@@ -10,3 +10,4 @@ export { default as SunIcon } from './components/SunIcon';
 export { default as MoonIcon } from './components/MoonIcon';
 export { default as UserIcon } from './components/UserIcon';
 export { default as PlusIcon } from './components/PlusIcon';
+export { default as TranslateIcon } from './components/TranslateIcon';

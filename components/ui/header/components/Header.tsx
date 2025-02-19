@@ -11,6 +11,7 @@ import { showHeader } from '../utils/showHeader';
 
 import UserPopover from '@/components/feature/userPopover';
 import ThemePopover from '@/components/feature/themePopover';
+import LangPopover from '@/components/feature/langPopover';
 
 import HeaderMenu from './HeaderMenu';
 
@@ -35,6 +36,7 @@ const Header: FC<Props> = ({ isAuth }) => {
         <HeaderMenu isAuth={isAuth} />
         <div className={classes.tabs}>
           <ThemePopover className={classes.tab} />
+          <LangPopover className={classes.tab} />
           {isAuth ? (
             <>
               <UserPopover className={classes.tab} />

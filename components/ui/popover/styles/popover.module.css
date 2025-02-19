@@ -36,6 +36,18 @@
   visibility: visible;
 }
 
+.content > div {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.content_wrapper {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
 .content_action {
   display: flex;
   align-items: center;

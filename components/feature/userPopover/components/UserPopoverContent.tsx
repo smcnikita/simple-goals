@@ -2,7 +2,6 @@
 
 import type { FC } from 'react';
 import toast from 'react-hot-toast';
-import clsx from 'clsx';
 import { useTranslations } from 'next-intl';
 
 import { PATHS } from '@/constants/paths';
@@ -32,13 +31,17 @@ const UserPopoverContent: FC<Props> = ({ className }) => {
   };
 
   return (
-    <div className={clsx(className)}>
-      <button type="button" className={classes.content_action} onClick={() => logout()}>
-        <BaseIcon>
-          <ExitIcon />
-        </BaseIcon>
-        {t('exit')}
-      </button>
+    <div className={className}>
+      <div className={classes.content_wrapper}>
+        <p className={classes.content_title}> {t('exit')}</p>
+
+        <button type="button" className={classes.content_action} onClick={() => logout()}>
+          <BaseIcon>
+            <ExitIcon />
+          </BaseIcon>
+          {t('exit')}
+        </button>
+      </div>
     </div>
   );
 };
