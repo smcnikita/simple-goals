@@ -138,7 +138,7 @@
   }
 
   .goalAction:hover {
-    background: rgba(245, 245, 245, 0.05);
+    background: var(--goal-goalAction-hover-bg);
   }
 }
 

@@ -45,4 +45,5 @@
 
   /* Goal */
   --goal-border-bottom-color: var(--purple-dark-2-color);
+  --goal-goalAction-hover-bg: rgba(245, 245, 245, 0.05);
 }
