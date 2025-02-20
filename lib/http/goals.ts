@@ -16,12 +16,12 @@ export const httpRemoveGoal = async (goalId: number, year: number) => {
 
 export const httpChangeNameGoal = async (goalId: number, year: number, newName: string) => {
   const apiUrl = API_PATHS.goals.changeName;
-  const body = JSON.stringify({ id: goalId, year, name: newName });
+  const body = JSON.stringify({ id: goalId, year, name: newName.trim() });
   return fetchFromAPI(apiUrl, { method: 'PUT', body });
 };
 
 export const httpCreateGoal = async (year: number, name: string) => {
   const apiUrl = API_PATHS.goals.create;
-  const body = JSON.stringify({ year, name });
+  const body = JSON.stringify({ year, name: name.trim() });
   return fetchFromAPI(apiUrl, { method: 'POST', body });
 };

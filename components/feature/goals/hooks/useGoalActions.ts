@@ -134,7 +134,7 @@ const useGoalActions = ({ canChangeGoal, year, goals, updateGoals }: Props) => {
       if (goal.id === goalId) {
         return {
           ...goal,
-          name: newName,
+          name: newName.trim(),
         };
       }
       return goal;
