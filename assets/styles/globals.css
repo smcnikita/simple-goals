@@ -40,6 +40,8 @@ body {
   background: var(--body-background);
 
   min-width: 414px;
+
+  font-size: 16px;
 }
 
 h1 {

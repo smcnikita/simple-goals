@@ -2,10 +2,37 @@
 
 exports[`Home should renders Home unchanged 1`] = `
 <div>
-  <div>
+  <div
+    class="section"
+  >
     <h1>
       Test Title
     </h1>
+    <section
+      class="section"
+    >
+      <p>
+        Section 1
+      </p>
+      <p>
+        Section 2
+      </p>
+      <p>
+        Section 3
+      </p>
+      <p>
+        Section 4
+         
+        <a
+          href="https://github.com/smcnikita/simple-goals"
+          target="_blank"
+        >
+          Github
+        </a>
+        . 
+        Section 5
+      </p>
+    </section>
   </div>
 </div>
 `;
