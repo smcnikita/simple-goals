@@ -1,19 +1,19 @@
 .theme_light {
   /* Body */
-  --body-color: var(--black-color);
-  --body-background: var(--light-color);
+  --body-color: #2f445d;
+  --body-background: #c8d5d6;
 
   /* Header */
-  --header-background: var(--light-color);
+  --header-background: #d5dddd;
   --header-tab-color: var(--black-color);
-  --header-tab-color-hover: #e7e7e7;
-  --header-tab-color-active: #e7e7e7;
+  --header-tab-color-hover: #c4c7cc;
+  --header-tab-color-active: #c4c7cc;
 
   /* Aside */
-  --aside-background: var(--light-color);
+  --aside-background: #d5dddd;
   --aside-item-color: var(--black-color);
-  --aside-item-hover-background: #dadada;
-  --aside-item-active-background: #dadada;
+  --aside-item-hover-background: #c4c7cc;
+  --aside-item-active-background: #c4c7cc;
 
   /* Checkbox */
   --checkbox-color: var(--black-color);
