@@ -4,6 +4,13 @@
     "goals": "Цели"
   },
 
+  "Theme": {
+    "theme": "Тема",
+    "system": "Системная тема",
+    "light": "Светлая тема",
+    "dark": "Темная тема"
+  },
+
   "Auth": {
     "signIn": "Войти",
     "signUp": "Зарегистрироваться",
@@ -14,7 +21,37 @@
     "lang": "Язык"
   },
 
+  "Errors": {
+    "success": "Успешно",
+    "error": "Ошибка",
+    "something": "Что-то пошло не так",
+    "required": "{field} является обязательным",
+    "yearNotFound": "Год не найден",
+    "emailAndPasswordRequired": "Email и пароль - обязательные поля",
+    "invalidEmailOrPassword": "Неверный email или пароль"
+  },
+
   "HomePage": {
     "title": "Главная страница"
+  },
+
+  "Goals": {
+    "title": "Цели на {year} год",
+    "add": "Добавить",
+    "addGoal": "Добавить цель",
+    "save": "Сохранить",
+    "remove": "Удалить",
+    "cancel": "Отменить",
+    "enterGoal": "Введите цель",
+    "completed": "Выполенные",
+    "noGoals": "Нет целей",
+
+    "creatingGoal": "Создание цели...",
+    "updatingGoal": "Обновление цели...",
+    "removingGoal": "Удаление цели...",
+
+    "goalCreated": "Цель создана",
+    "goalUpdated": "Цель обновлена",
+    "goalRemoved": "Цель удалена"
   }
 }

@@ -4,6 +4,13 @@
     "goals": "Goals"
   },
 
+  "Theme": {
+    "theme": "Theme",
+    "system": "System theme",
+    "light": "Light theme",
+    "dark": "Dark theme"
+  },
+
   "Auth": {
     "signIn": "Sign In",
     "signUp": "Sign Up",
@@ -14,7 +21,38 @@
     "lang": "Language"
   },
 
+  "Errors": {
+    "success": "Success",
+    "error": "Error",
+    "something": "Something went wrong",
+    "required": "{field} is required",
+    "yearNotFound": "Year not found",
+    "emailAndPasswordRequired": "Email and password are required",
+    "invalidEmailOrPassword": "Invalid email or password"
+  },
+
   "HomePage": {
     "title": "Home page"
+  },
+
+  "Goals": {
+    "title": "Goals for {year}",
+    "add": "Add",
+    "addGoal": "Add goal",
+    "save": "Save",
+    "remove": "Remove",
+    "cancel": "Cancel",
+    "delete": "Delete",
+    "enterGoal": "Enter goal",
+    "completed": "Completed",
+    "noGoals": "No goals yet",
+
+    "creatingGoal": "Creating goal...",
+    "updatingGoal": "Updating goal...",
+    "removingGoal": "Removing goal...",
+
+    "goalCreated": "Goal created",
+    "goalUpdated": "Goal updated",
+    "goalRemoved": "Goal removed"
   }
 }

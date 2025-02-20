@@ -2,6 +2,7 @@
 
 import { useEffect, useState, type FC } from 'react';
 import clsx from 'clsx';
+import { useTranslations } from 'next-intl';
 
 import { getThemeFromLocalstorage, updateThemeInLocalstorage } from '@/utils/updateTheme';
 
@@ -10,6 +11,7 @@ import type { Theme } from '@/types/theme';
 import classes from '@/components/ui/popover/styles/popover.module.css';
 
 const ThemeComponent: FC = () => {
+  const t = useTranslations('Theme');
   const [theme, setTheme] = useState<Theme>('dark');
 
   const themes = ['light', 'dark'] as Theme[];
@@ -46,7 +48,7 @@ const ThemeComponent: FC = () => {
           })}
           onClick={() => updateTheme(el)}
         >
-          {el.charAt(0).toUpperCase() + el.slice(1)} theme
+          {t(el)}
         </button>
       ))}
     </>

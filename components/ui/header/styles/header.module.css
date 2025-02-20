@@ -64,3 +64,32 @@
 .tab__active {
   background: var(--header-tab-color-active);
 }
+
+.asideToggle {
+  display: none;
+}
+
+.asideToggle.active svg {
+  transform: rotate(15deg);
+}
+
+@media (max-width: 900px) {
+  .asideToggle {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    width: 43px;
+    height: 43px;
+
+    border: none;
+    border-radius: 12px;
+
+    cursor: pointer;
+
+    color: var(--body-color);
+    background: transparent;
+
+    transition: all 0.3s ease-in-out;
+  }
+}

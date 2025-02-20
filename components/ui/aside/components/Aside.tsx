@@ -12,7 +12,7 @@ type Props = {
 
 const Aside: FC<Props> = ({ years }) => {
   return (
-    <aside className={classes.aside}>
+    <aside className={classes.aside} id="aside">
       <nav>
         <AsideList years={years} />
       </nav>

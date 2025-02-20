@@ -11,6 +11,7 @@ import Button from '@/components/ui/button';
 import useGoals from '../hooks/useGoals';
 import useAddGoal from '../hooks/useAddGoal';
 import useGoalActions from '../hooks/useGoalActions';
+import { useTranslations } from 'next-intl';
 
 type Props = {
   goals: GoalModel[];
@@ -18,6 +19,8 @@ type Props = {
 };
 
 const Goals: FC<Props> = ({ goals: serverGoals, year }) => {
+  const t = useTranslations('Goals');
+
   const { goals, canChangeGoal, updateGoals } = useGoals({ year });
   const { isShowAddGoal, isShowAddGoalButton, updateIsShowAddGoal } = useAddGoal({ year });
   const { isLoading, create, remove, updateCompleted, updateName } = useGoalActions({
@@ -48,7 +51,7 @@ const Goals: FC<Props> = ({ goals: serverGoals, year }) => {
       {isShowAddGoalButton && (
         <div className={classes.addGoal} onClick={() => updateIsShowAddGoal(true)}>
           <Button size="sm-2" disabled={isShowAddGoal || isLoading}>
-            Add goal
+            {t('addGoal')}
           </Button>
         </div>
       )}

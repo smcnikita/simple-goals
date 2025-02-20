@@ -4,6 +4,7 @@ exports[`Aside should renders Aside unchanged 1`] = `
 <div>
   <aside
     class="aside"
+    id="aside"
   >
     <nav>
       <div
