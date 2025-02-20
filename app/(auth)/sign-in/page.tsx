@@ -4,6 +4,7 @@ import Image from 'next/image';
 import Link from 'next/link';
 import { useState, type FC } from 'react';
 import { toast } from 'react-hot-toast';
+import { useTranslations } from 'next-intl';
 
 import { PATHS } from '@/constants/paths';
 
@@ -28,6 +29,8 @@ const defaultErrors: ErrorsType = {
 const isShowForgotPassword = false;
 
 const SignIn: FC = () => {
+  const t = useTranslations('Auth');
+
   const [isLoading, setIsLoading] = useState(false);
   const [errors, setErrors] = useState<ErrorsType>(defaultErrors);
   const onSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
@@ -70,7 +73,7 @@ const SignIn: FC = () => {
 
   return (
     <>
-      <p className={classes.subtitle}>Sign in → Continue → Achieve</p>
+      <p className={classes.subtitle}>{t('description')}</p>
 
       <form onSubmit={onSubmit}>
         {/* Email */}
@@ -83,7 +86,7 @@ const SignIn: FC = () => {
           disabled={isLoading}
           message={errors.email ?? undefined}
         >
-          Email
+          {t('email')}
         </Input>
         {/* Password */}
         <Input
@@ -95,12 +98,12 @@ const SignIn: FC = () => {
           disabled={isLoading}
           message={errors.password ?? undefined}
         >
-          Password
+          {t('password')}
         </Input>
 
         {/* Submit button */}
         <Button type="submit" variant="secondary" disabled={isLoading} style={{ height: 56 }}>
-          {isLoading ? <Spinner /> : 'Sign In'}
+          {isLoading ? <Spinner /> : t('signIn')}
         </Button>
 
         <div className={classes.social}>
@@ -114,14 +117,14 @@ const SignIn: FC = () => {
                 src="/images/github-white.png"
                 width={20}
                 height={20}
-                alt="Sign in with Github"
+                alt={t('github')}
               />
               <Image
                 className={classes.githubIcon__light}
                 src="/images/github-mark.png"
                 width={20}
                 height={20}
-                alt="Sign in with Github"
+                alt={t('github')}
               />
             </Button>
           </div>
@@ -129,7 +132,7 @@ const SignIn: FC = () => {
 
         {isShowForgotPassword && (
           <Link href="/forgot-password" className={classes.link}>
-            Forgot your password?
+            {t('forgotPassword')}
           </Link>
         )}
       </form>

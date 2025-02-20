@@ -14,7 +14,13 @@
   "Auth": {
     "signIn": "Sign In",
     "signUp": "Sign Up",
-    "exit": "Exit"
+    "exit": "Exit",
+
+    "email": "Email",
+    "password": "Password",
+    "description": "Sign in → Continue → Achieve",
+    "github": "Sign in with GitHub",
+    "forgotPassword": "Forgot your password?"
   },
 
   "Lang": {
