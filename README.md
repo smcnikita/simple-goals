@@ -27,3 +27,32 @@ improve!
 | `npm run dev`   | Starts the development server |
 | `npm run build` | Builds the production package |
 | `npm run start` | Starts the production server  |
+
+## Running with Docker
+
+To launch the application, run the following command:
+
+```bash
+docker-compose up --build -d
+```
+
+If this is the first time you're running the app (the database is not yet set up), you need to initialize the database:
+
+```bash
+docker exec -it simple_goals_app npx prisma db push
+```
+
+To create a user manually, you can use Prisma Studio. Start it with the following command:
+
+```bash
+docker exec -it simple_goals_app npx prisma studio
+```
+
+After that, open Prisma Studio in your browser (by default, it is available at http://localhost:5555) and create a user
+through the intuitive interface.
+
+To stop the application, use the command:
+
+```bash
+docker-compose down
+```

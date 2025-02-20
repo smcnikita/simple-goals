@@ -1,0 +1,34 @@
+services:
+  db:
+    image: postgres:latest
+    container_name: postgres_container
+    restart: always
+    environment:
+      POSTGRES_USER: ${POSTGRES_USER}
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD}
+      POSTGRES_DB: ${POSTGRES_DB}
+    ports:
+      - '5432:5432'
+    volumes:
+      - pgdata:/var/lib/postgresql/data
+    env_file:
+      - .env
+
+  app:
+    build: .
+    container_name: simple_goals_app
+    restart: always
+    depends_on:
+      - db
+    environment:
+      DATABASE_URL: postgresql://myuser:mypassword@db:5432/mydatabase
+      DIRECT_URL: postgresql://myuser:mypassword@db:5432/mydatabase
+      NODE_ENV: production
+    ports:
+      - '3000:3000'
+      - '5555:5555'
+    env_file:
+      - .env
+
+volumes:
+  pgdata:
