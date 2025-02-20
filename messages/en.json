@@ -59,6 +59,8 @@
 
     "goalCreated": "Goal created",
     "goalUpdated": "Goal updated",
-    "goalRemoved": "Goal removed"
+    "goalRemoved": "Goal removed",
+
+    "count": "Completed {completed} of {goals}"
   }
 }

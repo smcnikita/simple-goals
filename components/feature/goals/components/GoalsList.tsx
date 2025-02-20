@@ -65,19 +65,24 @@ const GoalsList: FC<Props> = (props) => {
 
   return (
     <div className={classes.items}>
-      <ul className={classes.list}>
-        {uncompletedGoals.map((goal) => (
-          <GoalsItem
-            key={goal.id}
-            isLoading={isLoading}
-            goal={goal}
-            canChangeGoal={canChangeGoal}
-            remove={remove}
-            updateCompleted={updateCompleted}
-            updateName={updateName}
-          />
-        ))}
-      </ul>
+      <div className={classes.items_wrapper}>
+        {goals.length > 0 && (
+          <p className={classes.items_title}>{t('count', { completed: completedGoals.length, goals: goals.length })}</p>
+        )}
+        <ul className={classes.list}>
+          {uncompletedGoals.map((goal) => (
+            <GoalsItem
+              key={goal.id}
+              isLoading={isLoading}
+              goal={goal}
+              canChangeGoal={canChangeGoal}
+              remove={remove}
+              updateCompleted={updateCompleted}
+              updateName={updateName}
+            />
+          ))}
+        </ul>
+      </div>
 
       {isShowAddGoal && (
         <div className={classes.item}>

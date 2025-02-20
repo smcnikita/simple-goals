@@ -58,6 +58,8 @@
 
     "goalCreated": "Цель создана",
     "goalUpdated": "Цель обновлена",
-    "goalRemoved": "Цель удалена"
+    "goalRemoved": "Цель удалена",
+
+    "count": "Выполнено {completed} из {goals}"
   }
 }
