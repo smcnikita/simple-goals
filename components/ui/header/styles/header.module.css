@@ -69,6 +69,10 @@
   display: none;
 }
 
+.asideToggle.active svg {
+  transform: rotate(15deg);
+}
+
 @media (max-width: 900px) {
   .asideToggle {
     display: flex;

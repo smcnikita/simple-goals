@@ -1,6 +1,6 @@
 'use client';
 
-import { useMemo, type FC } from 'react';
+import { useMemo, useRef, type FC } from 'react';
 import { useTranslations } from 'next-intl';
 import { usePathname } from 'next/navigation';
 
@@ -21,6 +21,8 @@ const HeaderMenu: FC<Props> = ({ isAuth }) => {
   const t = useTranslations('NavLinks');
   const pathname = usePathname();
 
+  const ref = useRef<HTMLButtonElement>(null);
+
   const nowYear = new Date().getFullYear();
 
   const showMenuDuo = useMemo(() => {
@@ -30,17 +32,18 @@ const HeaderMenu: FC<Props> = ({ isAuth }) => {
   const onToggleAside = () => {
     const aside = document.getElementById('aside');
 
-    if (!aside) {
+    if (!aside || !ref || !ref.current) {
       return;
     }
 
     aside.classList.toggle(classesAside.aside__open);
+    ref.current.classList.toggle(classes.active);
   };
 
   return (
     <nav className={classes.tabs}>
       {showMenuDuo && (
-        <button type="button" className={classes.asideToggle} onClick={onToggleAside}>
+        <button type="button" className={classes.asideToggle} ref={ref} onClick={onToggleAside}>
           <BaseIcon>
             <MenuDuoIcon />
           </BaseIcon>
