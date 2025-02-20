@@ -9,6 +9,7 @@ import { TOKEN } from '@/constants/cookies';
 import { USER_ID } from '@/constants/headers';
 
 import ThemeProvider from '@/components/providers/theme';
+import LangProvider from '@/components/providers/lang';
 import Container from '@/components/ui/container';
 import Header from '@/components/ui/header';
 
@@ -59,6 +60,7 @@ export default async function RootLayout({ children }: Props) {
   return (
     <html lang={locale}>
       <ThemeProvider />
+      <LangProvider />
       <NextIntlClientProvider messages={messages}>
         <body className={`${jost.className}`}>
           <Toaster />

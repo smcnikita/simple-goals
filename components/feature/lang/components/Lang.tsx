@@ -19,6 +19,7 @@ const Lang: FC = () => {
           [classes.active]: locale === 'en',
         })}
         onClick={() => {
+          localStorage.lang = 'en';
           setUserLocale('en');
         }}
       >
@@ -30,6 +31,7 @@ const Lang: FC = () => {
           [classes.active]: locale === 'ru',
         })}
         onClick={() => {
+          localStorage.lang = 'ru';
           setUserLocale('ru');
         }}
       >
