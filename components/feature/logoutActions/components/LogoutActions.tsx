@@ -24,6 +24,7 @@ const LogoutActions: FC = () => {
       return;
     }
 
+    localStorage.removeItem('latestCSRFToken');
     window.location.href = PATHS.auth.signIn;
   };
 

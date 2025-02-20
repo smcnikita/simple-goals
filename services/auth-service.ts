@@ -10,7 +10,7 @@ import { decrypt } from '@/lib/session';
 import { USER_ID, USER_NAME } from '@/constants/headers';
 
 const allowPaths = [PATHS.home];
-const onlyNotAuthPaths = [PATHS.auth.signIn, PATHS.auth.signUp];
+const onlyNotAuthPaths = [PATHS.auth.signIn, PATHS.auth.signUp, PATHS.auth.github];
 
 export async function authService(request: NextRequest, response: NextResponse) {
   const pathname = request.nextUrl.pathname;

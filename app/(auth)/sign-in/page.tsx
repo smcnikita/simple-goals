@@ -2,9 +2,10 @@
 
 import Image from 'next/image';
 import Link from 'next/link';
-import { useState, type FC } from 'react';
+import { useCallback, useState, type FC } from 'react';
 import { toast } from 'react-hot-toast';
 import { useTranslations } from 'next-intl';
+import { randomBytes } from 'crypto';
 
 import { PATHS } from '@/constants/paths';
 
@@ -33,6 +34,32 @@ const SignIn: FC = () => {
 
   const [isLoading, setIsLoading] = useState(false);
   const [errors, setErrors] = useState<ErrorsType>(defaultErrors);
+
+  const githubClientId = process.env.NEXT_PUBLIC_GITHUB_CLIENT_ID;
+
+  const handleGithubAuthClick = useCallback(() => {
+    if (!githubClientId) {
+      console.error('GitHub Client ID is missing');
+      return;
+    }
+
+    const currentOrigin = window.location.origin;
+    const csrfToken = randomBytes(16).toString('hex');
+
+    const queryParams = new URLSearchParams({
+      client_id: githubClientId,
+      response_type: 'code',
+      redirect_uri: `${currentOrigin}/integrations/github/oauth2/callback`,
+      state: csrfToken,
+      scope: 'read:user user:email',
+    });
+
+    const authUrl = `https://github.com/login/oauth/authorize?${queryParams.toString()}`;
+
+    localStorage.setItem('latestCSRFToken', csrfToken);
+    window.location.assign(authUrl);
+  }, [githubClientId]);
+
   const onSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
 
@@ -111,7 +138,7 @@ const SignIn: FC = () => {
             {/* <Button size="sm" className={classes.button} disabled={isLoading}>
               <Image src="/images/google.png" width={20} height={20} alt="Sign in with Google" />
             </Button> */}
-            <Button size="sm" className={classes.button} disabled={isLoading}>
+            <Button size="sm" className={classes.button} disabled={isLoading} onClick={handleGithubAuthClick}>
               <Image
                 className={classes.githubIcon__dark}
                 src="/images/github-white.png"

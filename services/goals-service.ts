@@ -25,7 +25,7 @@ export const userGoalsByYearService = async (year: number): Promise<GoalModel[]>
   const goals = await getUserGoalsByYear(year, userId);
 
   if (goals === null) {
-    redirect(PATHS.home);
+    return [];
   }
 
   return goals;

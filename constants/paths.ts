@@ -4,6 +4,7 @@ export const PATHS = {
   auth: {
     signIn: '/sign-in',
     signUp: '/sign-up',
+    github: '/integrations/github/oauth2/callback',
   },
 
   goals: {
