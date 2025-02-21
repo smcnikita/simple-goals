@@ -36,6 +36,7 @@ const SignIn: FC = () => {
   const [errors, setErrors] = useState<ErrorsType>(defaultErrors);
 
   const githubClientId = process.env.NEXT_PUBLIC_GITHUB_CLIENT_ID;
+  const yandexClientId = process.env.NEXT_PUBLIC_YANDEX_CLIENT_ID;
 
   const handleGithubAuthClick = useCallback(() => {
     if (!githubClientId) {
@@ -59,6 +60,28 @@ const SignIn: FC = () => {
     localStorage.setItem('latestCSRFToken', csrfToken);
     window.location.assign(authUrl);
   }, [githubClientId]);
+
+  const handleYandexAuthClick = useCallback(() => {
+    if (!yandexClientId) {
+      console.error('Yandex Client ID is missing');
+      return;
+    }
+
+    const currentOrigin = window.location.origin;
+    const csrfToken = randomBytes(16).toString('hex');
+
+    const queryParams = new URLSearchParams({
+      client_id: yandexClientId,
+      response_type: 'code',
+      redirect_uri: `${currentOrigin}/integrations/yandex/oauth2/callback`,
+      state: csrfToken,
+    });
+
+    const authUrl = `https://oauth.yandex.ru/authorize?${queryParams.toString()}`;
+
+    localStorage.setItem('latestCSRFToken', csrfToken);
+    window.location.assign(authUrl);
+  }, [yandexClientId]);
 
   const onSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
@@ -153,6 +176,9 @@ const SignIn: FC = () => {
                 height={20}
                 alt={t('github')}
               />
+            </Button>
+            <Button size="sm" className={classes.button} disabled={isLoading} onClick={handleYandexAuthClick}>
+              <Image src="/images/yandex.png" width={20} height={20} alt={t('github')} />
             </Button>
           </div>
         </div>

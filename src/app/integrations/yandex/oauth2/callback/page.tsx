@@ -1,8 +1,8 @@
 import Spinner from '@/components/ui/spinner';
 
-import GithubClient from './_Client';
+import YandexClient from './_Client';
 
-export default async function GithubPage({
+export default async function YandexPage({
   searchParams,
 }: {
   searchParams: Promise<{
@@ -17,7 +17,7 @@ export default async function GithubPage({
 
   return (
     <>
-      <GithubClient code={code} state={state} />
+      <YandexClient code={code} state={state} />
       <div
         style={{
           position: 'absolute',

@@ -10,7 +10,7 @@ import { decrypt } from '@/lib/session';
 import { USER_ID, USER_NAME } from '@/constants/headers';
 
 const allowPaths = [PATHS.home];
-const onlyNotAuthPaths = [PATHS.auth.signIn, PATHS.auth.signUp, PATHS.auth.github];
+const onlyNotAuthPaths = [PATHS.auth.signIn, PATHS.auth.signUp, PATHS.auth.github, PATHS.auth.yandex];
 
 export async function authService(request: NextRequest, response: NextResponse) {
   const pathname = request.nextUrl.pathname;
@@ -24,8 +24,10 @@ export async function authService(request: NextRequest, response: NextResponse) 
 
     if (sub) {
       const { userId, name } = JSON.parse(sub);
+      const encodedName = encodeURIComponent(name);
+
       response.headers.set(USER_ID, userId);
-      response.headers.set(USER_NAME, name);
+      response.headers.set(USER_NAME, encodedName);
     }
   } else {
     response.headers.delete(USER_ID);
