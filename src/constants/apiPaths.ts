@@ -6,6 +6,7 @@ export const API_PATHS = {
   },
 
   goals: {
+    get: '/goals',
     update: '/goals/change',
     remove: '/goals',
     changeName: '/goals/change-name',

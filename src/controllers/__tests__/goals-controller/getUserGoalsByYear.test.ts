@@ -32,8 +32,8 @@ describe('getUserGoalsByYear', () => {
     const mockUserId = 1;
     const mockYearModel = { id: 1, year: mockYear, user_id: mockUserId };
     const mockGoals = [
-      { id: 1, year_id: mockYearModel.id, title: 'Goal 1', sort_order: 1 },
-      { id: 2, year_id: mockYearModel.id, title: 'Goal 2', sort_order: 2 },
+      { id: 1, year_id: mockYearModel.id, title: 'Goal 1', user_id: mockUserId },
+      { id: 2, year_id: mockYearModel.id, title: 'Goal 2', user_id: mockUserId },
     ];
 
     mockGetYearByName.mockResolvedValue(mockYearModel);
@@ -45,7 +45,7 @@ describe('getUserGoalsByYear', () => {
 
     expect(mockFindMany).toHaveBeenCalledWith({
       where: { year_id: mockYearModel.id },
-      orderBy: { sort_order: 'asc' },
+      orderBy: { created_at: 'asc' },
     });
 
     expect(result).toEqual(mockGoals);
@@ -80,7 +80,7 @@ describe('getUserGoalsByYear', () => {
 
     expect(mockFindMany).toHaveBeenCalledWith({
       where: { year_id: mockYearModel.id },
-      orderBy: { sort_order: 'asc' },
+      orderBy: { created_at: 'asc' },
     });
   });
 

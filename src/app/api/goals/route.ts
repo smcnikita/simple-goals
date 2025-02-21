@@ -1,4 +1,4 @@
-import { NextResponse } from 'next/server';
+import { NextRequest, NextResponse } from 'next/server';
 import { getTranslations } from 'next-intl/server';
 
 import { goalsController } from '@/controllers/goals-controller';
@@ -74,6 +74,45 @@ export async function POST(req: Request) {
     {
       message: t('success'),
       data: newGoal,
+    },
+    { status: 200 }
+  );
+
+  return response;
+}
+
+export async function GET(req: NextRequest) {
+  const checkUserId = await checkUserIdService(req);
+
+  const t = await getTranslations('Errors');
+
+  if (!checkUserId.success) {
+    return NextResponse.json({ message: checkUserId.error }, { status: 500 });
+  }
+
+  const userId = checkUserId.userId;
+
+  const searchParams = req.nextUrl.searchParams;
+  const query = searchParams.get('year');
+
+  const year = query ? Number(query) : undefined;
+
+  if (!year) {
+    return NextResponse.json({ message: t('required', { field: 'year' }) }, { status: 500 });
+  }
+
+  const yearModel = await yearsController.getYearByName(userId, year);
+
+  if (!yearModel) {
+    return NextResponse.json({ message: t('yearNotFound') }, { status: 500 });
+  }
+
+  const goals = await goalsController.getUserGoalsByYearId(yearModel.id, userId);
+
+  const response = NextResponse.json(
+    {
+      message: t('success'),
+      data: goals,
     },
     { status: 200 }
   );

@@ -3,7 +3,7 @@ import { getTranslations } from 'next-intl/server';
 
 import { PATHS } from '@/constants/paths';
 
-import { userGoalsByYearService } from '@/services/goals-service';
+// import { userGoalsByYearService } from '@/services/goals-service';
 
 import Goals from '@/components/feature/goals';
 
@@ -21,7 +21,7 @@ export default async function GoalsSlugPage({ params }: { params: Promise<{ slug
     redirect(PATHS.home);
   }
 
-  const goals = await userGoalsByYearService(year);
+  // const goals = await userGoalsByYearService(year);
 
   const t = await getTranslations('Goals');
 
@@ -29,7 +29,7 @@ export default async function GoalsSlugPage({ params }: { params: Promise<{ slug
     <div>
       <h1>{t('title', { year })}</h1>
 
-      <Goals year={year} goals={goals} />
+      <Goals year={year} />
     </div>
   );
 }

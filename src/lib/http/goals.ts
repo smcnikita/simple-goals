@@ -2,6 +2,12 @@ import { API_PATHS } from '@/constants/apiPaths';
 
 import { fetchFromAPI } from '@/lib/http';
 
+export const httpGetGoal = async (year: number) => {
+  const queryParams = new URLSearchParams({ year: year.toString() });
+  const apiUrl = API_PATHS.goals.get + '?' + queryParams.toString();
+  return fetchFromAPI(apiUrl, { method: 'GET' });
+};
+
 export const httpUpdateGoal = async (goalId: number, isCompleted: boolean, year: number) => {
   const apiUrl = API_PATHS.goals.update;
   const body = JSON.stringify({ id: goalId, isCompleted, year });

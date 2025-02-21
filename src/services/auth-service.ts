@@ -15,6 +15,7 @@ const onlyNotAuthPaths = [PATHS.auth.signIn, PATHS.auth.signUp, PATHS.auth.githu
 export async function authService(request: NextRequest, response: NextResponse) {
   const pathname = request.nextUrl.pathname;
   const cookies = request.cookies;
+
   const token = cookies.get(TOKEN);
 
   if (token) {

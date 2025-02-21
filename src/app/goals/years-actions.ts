@@ -8,7 +8,9 @@ import { yearsController } from '@/controllers/years-controller';
 
 export async function getYears() {
   const cookiesStore = await cookies();
+
   const token = cookiesStore.get(TOKEN);
+
   const userId = await getUserIdFromToken(token);
 
   if (!userId) {

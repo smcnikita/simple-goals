@@ -1,27 +1,29 @@
 'use client';
 
 import { useEffect, type FC } from 'react';
+import { useTranslations } from 'next-intl';
 
-import type { GoalModel } from '@/models/goals-model';
+// import type { GoalModel } from '@/models/goals-model';
+
+import useGoals from '../hooks/useGoals';
+import useAddGoal from '../hooks/useAddGoal';
+import useGoalActions from '../hooks/useGoalActions';
+
+import Button from '@/components/ui/button';
 
 import GoalsList from './GoalsList';
 
 import classes from '../style/goals.module.css';
-import Button from '@/components/ui/button';
-import useGoals from '../hooks/useGoals';
-import useAddGoal from '../hooks/useAddGoal';
-import useGoalActions from '../hooks/useGoalActions';
-import { useTranslations } from 'next-intl';
+import Spinner from '@/components/ui/spinner';
 
 type Props = {
-  goals: GoalModel[];
   year: number;
 };
 
-const Goals: FC<Props> = ({ goals: serverGoals, year }) => {
+const Goals: FC<Props> = ({ year }) => {
   const t = useTranslations('Goals');
 
-  const { goals, canChangeGoal, updateGoals } = useGoals({ year });
+  const { goals, canChangeGoal, isGlobalLoading, updateGoals, getGoals } = useGoals({ year });
   const { isShowAddGoal, isShowAddGoalButton, updateIsShowAddGoal } = useAddGoal({ year });
   const { isLoading, create, remove, updateCompleted, updateName } = useGoalActions({
     canChangeGoal,
@@ -31,8 +33,16 @@ const Goals: FC<Props> = ({ goals: serverGoals, year }) => {
   });
 
   useEffect(() => {
-    updateGoals(serverGoals);
-  }, [serverGoals, updateGoals]);
+    getGoals();
+  }, [getGoals]);
+
+  if (isGlobalLoading) {
+    return (
+      <section className={classes.section}>
+        <Spinner />
+      </section>
+    );
+  }
 
   return (
     <section className={classes.section}>

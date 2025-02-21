@@ -10,8 +10,8 @@ type Props = Readonly<{
 }>;
 
 const LayoutGoals = async ({ children }: Props) => {
-  const res = (await getYears()) as YearItem[] | undefined;
-  const years = res ?? [];
+  const res = await getYears();
+  const years: YearItem[] = res ?? [];
 
   return (
     <div className={classes.wrapper}>

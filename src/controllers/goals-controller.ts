@@ -9,9 +9,9 @@ type CreateGoalParams = Omit<
 >;
 
 export const goalsController = {
-  getUserGoalsByYearId: async (yearId: number) => {
+  getUserGoalsByYearId: async (yearId: number, userId: number) => {
     return await prisma.goals.findMany({
-      where: { year_id: yearId },
+      where: { year_id: yearId, user_id: userId },
       orderBy: { created_at: 'asc' },
     });
   },

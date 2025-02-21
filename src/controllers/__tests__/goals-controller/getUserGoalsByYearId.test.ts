@@ -20,19 +20,20 @@ describe('getUserGoalsByYearId', () => {
   });
 
   it('should return goals sorted by sort_order for the given yearId', async () => {
+    const userId = 1;
     const yearId = 2025;
     const mockGoals = [
-      { id: 1, name: 'Goal 1', year_id: yearId, sort_order: 1 },
-      { id: 2, name: 'Goal 2', year_id: yearId, sort_order: 2 },
+      { id: 1, name: 'Goal 1', year_id: yearId, user_id: userId },
+      { id: 2, name: 'Goal 2', year_id: yearId, user_id: userId },
     ];
 
     mockFindMany.mockResolvedValue(mockGoals);
 
-    const result = await goalsController.getUserGoalsByYearId(yearId);
+    const result = await goalsController.getUserGoalsByYearId(yearId, userId);
 
     expect(mockFindMany).toHaveBeenCalledWith({
-      where: { year_id: yearId },
-      orderBy: { sort_order: 'asc' },
+      where: { year_id: yearId, user_id: userId },
+      orderBy: { created_at: 'asc' },
     });
     expect(result).toEqual(mockGoals);
   });
@@ -40,7 +41,7 @@ describe('getUserGoalsByYearId', () => {
   it('should return an empty array if no goals are found', async () => {
     mockFindMany.mockResolvedValue([]);
 
-    const result = await goalsController.getUserGoalsByYearId(2025);
+    const result = await goalsController.getUserGoalsByYearId(2025, 1);
 
     expect(mockFindMany).toHaveBeenCalledTimes(1);
     expect(result).toEqual([]);
@@ -49,6 +50,6 @@ describe('getUserGoalsByYearId', () => {
   it('should throw an error if Prisma call fails', async () => {
     mockFindMany.mockRejectedValue(new Error('Database error'));
 
-    await expect(goalsController.getUserGoalsByYearId(2025)).rejects.toThrow('Database error');
+    await expect(goalsController.getUserGoalsByYearId(2025, 1)).rejects.toThrow('Database error');
   });
 });
