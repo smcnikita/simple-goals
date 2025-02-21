@@ -30,10 +30,10 @@ model goals {
   name         String
   is_completed Boolean   @default(false)
   completed_at DateTime?
-  sort_order   Int
   year_id      Int
+  user_id      Int
   created_at   DateTime  @default(now())
   updated_at   DateTime
 
-  @@index([year_id])
+  @@index([year_id, user_id])
 }
