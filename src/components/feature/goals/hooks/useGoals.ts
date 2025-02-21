@@ -13,7 +13,9 @@ type Props = {
 
 const useGoals = ({ year }: Props) => {
   const [goals, setGoals] = useState<GoalModel[]>([]);
-  const [isGlobalLoading, setIsGlobalLoading] = useState(false);
+  const [isGlobalLoading, setIsGlobalLoading] = useState(true);
+
+  const updateIsGlobalLoading = useCallback((value: boolean) => setIsGlobalLoading(value), []);
 
   const updateGoals = useCallback((value: GoalModel[]) => setGoals(value), []);
 
@@ -23,25 +25,20 @@ const useGoals = ({ year }: Props) => {
   }, [year]);
 
   const getGoals = useCallback(async () => {
-    setIsGlobalLoading(true);
-
     try {
       const res = await httpGetGoal(year);
       const goals = await res.json();
 
       if (!res.ok) {
+        toast.error(goals.message);
         throw new Error(goals.message);
       }
 
       updateGoals(goals.data);
-      setIsGlobalLoading(false);
-    } catch (error) {
-      console.log(error);
-      toast.error('Error getting goals');
-    }
+    } catch (error) {}
   }, [updateGoals, year]);
 
-  return { goals, canChangeGoal, isGlobalLoading, getGoals, updateGoals };
+  return { goals, canChangeGoal, isGlobalLoading, getGoals, updateIsGlobalLoading, updateGoals };
 };
 
 export default useGoals;

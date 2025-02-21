@@ -3,18 +3,16 @@
 import { useEffect, type FC } from 'react';
 import { useTranslations } from 'next-intl';
 
-// import type { GoalModel } from '@/models/goals-model';
-
 import useGoals from '../hooks/useGoals';
 import useAddGoal from '../hooks/useAddGoal';
 import useGoalActions from '../hooks/useGoalActions';
 
+import Spinner from '@/components/ui/spinner';
 import Button from '@/components/ui/button';
 
 import GoalsList from './GoalsList';
 
 import classes from '../style/goals.module.css';
-import Spinner from '@/components/ui/spinner';
 
 type Props = {
   year: number;
@@ -23,7 +21,7 @@ type Props = {
 const Goals: FC<Props> = ({ year }) => {
   const t = useTranslations('Goals');
 
-  const { goals, canChangeGoal, isGlobalLoading, updateGoals, getGoals } = useGoals({ year });
+  const { goals, canChangeGoal, isGlobalLoading, updateGoals, getGoals, updateIsGlobalLoading } = useGoals({ year });
   const { isShowAddGoal, isShowAddGoalButton, updateIsShowAddGoal } = useAddGoal({ year });
   const { isLoading, create, remove, updateCompleted, updateName } = useGoalActions({
     canChangeGoal,
@@ -33,8 +31,11 @@ const Goals: FC<Props> = ({ year }) => {
   });
 
   useEffect(() => {
-    getGoals();
-  }, [getGoals]);
+    updateIsGlobalLoading(true);
+    getGoals().then(() => {
+      updateIsGlobalLoading(false);
+    });
+  }, [getGoals, updateIsGlobalLoading]);
 
   if (isGlobalLoading) {
     return (

@@ -10,16 +10,20 @@ type Props = {
 
 const GithubClient: FC<Props> = ({ code, state }) => {
   const handleOauthToken = useCallback(async () => {
-    const res = await fetch('/api/oauth-token/github', {
-      method: 'POST',
-      body: JSON.stringify({ code }),
-    });
+    try {
+      const res = await fetch('/api/oauth-token/github', {
+        method: 'POST',
+        body: JSON.stringify({ code }),
+      });
 
-    const data = await res.json();
+      const data = await res.json();
 
-    if (data.token) {
-      window.location.href = PATHS.home;
-    } else {
+      if (data.token) {
+        window.location.href = PATHS.home;
+      } else {
+        window.location.href = PATHS.auth.signIn;
+      }
+    } catch (error) {
       window.location.href = PATHS.auth.signIn;
     }
   }, [code]);

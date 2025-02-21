@@ -3,8 +3,6 @@ import { getTranslations } from 'next-intl/server';
 
 import { PATHS } from '@/constants/paths';
 
-// import { userGoalsByYearService } from '@/services/goals-service';
-
 import Goals from '@/components/feature/goals';
 
 export default async function GoalsSlugPage({ params }: { params: Promise<{ slug: string }> }) {
@@ -20,8 +18,6 @@ export default async function GoalsSlugPage({ params }: { params: Promise<{ slug
   if (year < 1900 || year > currentYear) {
     redirect(PATHS.home);
   }
-
-  // const goals = await userGoalsByYearService(year);
 
   const t = await getTranslations('Goals');
 
