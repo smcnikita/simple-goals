@@ -1,6 +1,7 @@
 {
-  "name": "Simple Golas",
-  "short_name": "Simple Golas",
+  "name": "Simple Goals",
+  "short_name": "Simple Goals",
+  "start_url": "/",
   "icons": [
     {
       "src": "/web-app-manifest-192x192.png",

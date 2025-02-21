@@ -63,6 +63,10 @@ export default async function RootLayout({ children }: Props) {
 
   return (
     <html lang={locale}>
+      <head>
+        <link rel="yandex-tableau-widget" href="/tableau.json" />
+      </head>
+
       <ThemeProvider />
       <LangProvider />
 
