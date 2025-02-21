@@ -16,6 +16,8 @@ import Header from '@/components/ui/header';
 import '../assets/styles/globals.css';
 import '../assets/styles/colors/dark.css';
 import '../assets/styles/colors/light.css';
+import { YandexMetrika } from '@/components/feature/analytics';
+import { Suspense } from 'react';
 
 const jost = localFont({
   src: [
@@ -57,10 +59,13 @@ export default async function RootLayout({ children }: Props) {
   const locale = await getLocale();
   const messages = await getMessages();
 
+  const isProd = process.env.NODE_ENV === 'production';
+
   return (
     <html lang={locale}>
       <ThemeProvider />
       <LangProvider />
+
       <NextIntlClientProvider messages={messages}>
         <body className={`${jost.className}`}>
           <Toaster />
@@ -68,6 +73,12 @@ export default async function RootLayout({ children }: Props) {
             <Header isAuth={isAuth} />
             {children}
           </Container>
+
+          {isProd && (
+            <Suspense>
+              <YandexMetrika />
+            </Suspense>
+          )}
         </body>
       </NextIntlClientProvider>
     </html>
