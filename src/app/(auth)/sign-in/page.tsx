@@ -178,7 +178,7 @@ const SignIn: FC = () => {
               />
             </Button>
             <Button size="sm" className={classes.button} disabled={isLoading} onClick={handleYandexAuthClick}>
-              <Image src="/images/yandex.png" width={20} height={20} alt={t('github')} />
+              <Image src="/images/yandex.png" width={20} height={20} alt={t('yandex')} />
             </Button>
           </div>
         </div>
