@@ -12,7 +12,7 @@ export const goalsController = {
   getUserGoalsByYearId: async (yearId: number) => {
     return await prisma.goals.findMany({
       where: { year_id: yearId },
-      orderBy: { sort_order: 'asc' },
+      orderBy: { created_at: 'asc' },
     });
   },
 
@@ -25,15 +25,16 @@ export const goalsController = {
 
     return await prisma.goals.findMany({
       where: { year_id: yearModel.id },
-      orderBy: { sort_order: 'asc' },
+      orderBy: { created_at: 'asc' },
     });
   },
 
-  updateGoal: async (goalId: number, isCompleted: boolean, yearId: number) => {
+  updateGoal: async (goalId: number, isCompleted: boolean, yearId: number, userId: number) => {
     return await prisma.goals.update({
       where: {
         id: goalId,
         year_id: yearId,
+        user_id: userId,
       },
       data: {
         is_completed: isCompleted,
@@ -42,49 +43,39 @@ export const goalsController = {
     });
   },
 
-  removeGoal: async (goalId: number, yearId: number) => {
+  removeGoal: async (goalId: number, yearId: number, userId: number) => {
     return await prisma.goals.delete({
       where: {
         id: goalId,
         year_id: yearId,
+        user_id: userId,
       },
     });
   },
 
-  createGoal: async ({ name, year_id }: CreateGoalParams) => {
+  createGoal: async ({ name, year_id, user_id }: CreateGoalParams) => {
     const now = new Date();
-
-    const goals = await prisma.goals.findFirst({
-      where: { year_id },
-      orderBy: { sort_order: 'desc' },
-    });
-
-    const sortOrder = goals ? goals.sort_order + 1 : 0;
 
     return await prisma.goals.create({
       data: {
         name,
         year_id,
+        user_id,
         is_completed: false,
         completed_at: null,
-        sort_order: sortOrder,
         created_at: now,
         updated_at: now,
       },
     });
   },
 
-  editGoal: async (goalId: number, name: string) => {
+  editGoal: async (goalId: number, name: string, userId: number) => {
     return await prisma.goals.update({
-      where: { id: goalId },
+      where: {
+        id: goalId,
+        user_id: userId,
+      },
       data: { name },
-    });
-  },
-
-  updateGoalOrder: async (goalId: number, sortOrder: number) => {
-    return await prisma.goals.update({
-      where: { id: goalId },
-      data: { sort_order: sortOrder },
     });
   },
 };

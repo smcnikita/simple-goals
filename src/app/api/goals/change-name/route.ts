@@ -28,7 +28,8 @@ export async function PUT(req: Request) {
   if (!yearModel) {
     return NextResponse.json({ message: t('yearNotFound') }, { status: 500 });
   }
-  const goal = await goalsController.editGoal(id, name);
+
+  const goal = await goalsController.editGoal(id, name, userId);
 
   const response = NextResponse.json(
     {

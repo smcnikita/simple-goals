@@ -84,6 +84,7 @@ export async function POST(req: NextRequest) {
   }
 
   const user = await userController.getUserByEmail(email);
+
   let userId;
   let userName = 'undefined';
 
@@ -96,7 +97,7 @@ export async function POST(req: NextRequest) {
       data: {
         email,
         name,
-        password: '',
+        password: 'no-password',
         updated_at: now,
         created_at: now,
       },

@@ -47,7 +47,7 @@ export async function POST(req: Request) {
     return NextResponse.json({ message: t('yearNotFound') }, { status: 500 });
   }
 
-  const updatedGoal = await goalsController.updateGoal(id, isCompleted, yearModel.id);
+  const updatedGoal = await goalsController.updateGoal(id, isCompleted, yearModel.id, userId);
 
   const response = NextResponse.json(
     {

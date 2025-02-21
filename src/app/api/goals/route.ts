@@ -31,7 +31,7 @@ export async function DELETE(req: Request) {
     return NextResponse.json({ message: t('yearNotFound') }, { status: 500 });
   }
 
-  await goalsController.removeGoal(id, yearModel.id);
+  await goalsController.removeGoal(id, yearModel.id, userId);
 
   const response = NextResponse.json(
     {
@@ -68,7 +68,7 @@ export async function POST(req: Request) {
     return NextResponse.json({ message: t('yearNotFound') }, { status: 500 });
   }
 
-  const newGoal = await goalsController.createGoal({ name, year_id: yearModel.id });
+  const newGoal = await goalsController.createGoal({ name, year_id: yearModel.id, user_id: userId });
 
   const response = NextResponse.json(
     {

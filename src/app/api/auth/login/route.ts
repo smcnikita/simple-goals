@@ -29,7 +29,7 @@ export async function POST(req: Request) {
     where: { email },
   });
 
-  if (!user) {
+  if (!user || !user.password) {
     return NextResponse.json({ message: t('invalidEmailOrPassword') }, { status: 500 });
   }
 
