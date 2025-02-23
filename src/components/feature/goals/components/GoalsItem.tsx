@@ -1,6 +1,6 @@
 'use client';
 
-import { useState, type FC } from 'react';
+import { useState, useCallback, type FC } from 'react';
 import clsx from 'clsx';
 
 import type { GoalModel } from '@/models/goals-model';
@@ -27,58 +27,62 @@ const GoalsItem: FC<Props> = ({ canChangeGoal, goal, isLoading, remove, updateCo
   const [isEdit, setIsEdit] = useState(false);
   const [newName, setNewName] = useState('');
 
-  const updateNewName = (value: string) => setNewName(value);
+  const handleChange = useCallback(
+    async (event: React.ChangeEvent<HTMLInputElement>) => {
+      event.preventDefault();
+      event.stopPropagation();
 
-  const onChange = async (event: React.ChangeEvent<HTMLInputElement>) => {
-    event.preventDefault();
-    event.stopPropagation();
+      if (!canChangeGoal) return;
+      await updateCompleted(goal.id, event.target.checked);
+    },
+    [canChangeGoal, goal.id, updateCompleted]
+  );
 
-    if (!canChangeGoal) {
-      return;
-    }
+  const handleRemove = useCallback(
+    async (event: React.MouseEvent<HTMLButtonElement>) => {
+      event.preventDefault();
+      event.stopPropagation();
 
-    await updateCompleted(goal.id, event.target.checked);
-  };
+      if (!canChangeGoal) return;
+      await remove(goal.id);
+    },
+    [canChangeGoal, goal.id, remove]
+  );
 
-  const onRemove = async (event: React.MouseEvent<HTMLButtonElement>) => {
-    event.preventDefault();
-    event.stopPropagation();
+  const handleSave = useCallback(
+    async (event: React.MouseEvent<HTMLButtonElement> | React.KeyboardEvent<HTMLInputElement>) => {
+      event.preventDefault();
+      event.stopPropagation();
 
-    if (!canChangeGoal) {
-      return;
-    }
-
-    await remove(goal.id);
-  };
-
-  const onSave = async (event: React.MouseEvent<HTMLButtonElement> | React.KeyboardEvent<HTMLInputElement>) => {
-    event.preventDefault();
-    event.stopPropagation();
-
-    if (!canChangeGoal) {
-      return;
-    }
-
-    await updateName(goal.id, newName);
-    setIsEdit(false);
-  };
-
-  const onKeyDownForEdit = async (event: React.KeyboardEvent<HTMLInputElement>) => {
-    if (event.key === 'Enter') {
-      onSave(event);
-    }
-    if (event.key === 'Escape') {
+      if (!canChangeGoal) return;
+      await updateName(goal.id, newName);
       setIsEdit(false);
-      setNewName('');
-    }
-  };
+    },
+    [canChangeGoal, goal.id, newName, updateName]
+  );
 
-  const onSaveForEdit = async (e: React.MouseEvent<HTMLButtonElement>) => await onSave(e);
+  const handleKeyDown = useCallback(
+    async (event: React.KeyboardEvent<HTMLInputElement>) => {
+      if (event.key === 'Enter') {
+        await handleSave(event);
+      }
+      if (event.key === 'Escape') {
+        setIsEdit(false);
+        setNewName('');
+      }
+    },
+    [handleSave]
+  );
 
-  const onCancelForEdit = () => {
+  const handleCancel = useCallback(() => {
     setIsEdit(false);
     setNewName('');
-  };
+  }, []);
+
+  const handleEditClick = useCallback(() => {
+    setNewName(goal.name);
+    setIsEdit(true);
+  }, [goal.name]);
 
   return (
     <li
@@ -87,7 +91,17 @@ const GoalsItem: FC<Props> = ({ canChangeGoal, goal, isLoading, remove, updateCo
         [classes.isChecked]: goal.is_completed,
       })}
     >
-      {!isEdit && (
+      {isEdit ? (
+        <GoalsItemEdit
+          value={newName}
+          isLoading={isLoading}
+          updateValue={setNewName}
+          onKeyDown={handleKeyDown}
+          onSave={handleSave}
+          onCancel={handleCancel}
+          onRemove={handleRemove}
+        />
+      ) : (
         <>
           <div className={classes.checkbox_wrapper}>
             <Checkbox
@@ -96,43 +110,26 @@ const GoalsItem: FC<Props> = ({ canChangeGoal, goal, isLoading, remove, updateCo
               name={`checkbox-${goal.id}`}
               id={`checkbox-${goal.id}`}
               useLabel={false}
-              onChange={onChange}
+              onChange={handleChange}
               style={{ width: '24px', height: '24px' }}
             />
             <button
               type="button"
               className={classes.goalAction}
               disabled={!canChangeGoal || isLoading}
-              onClick={() => {
-                setNewName(goal.name);
-                setIsEdit(true);
-              }}
+              onClick={handleEditClick}
             >
               {goal.name}
             </button>
           </div>
 
           <div className={classes.item_actions}>
-            <Button size="sm" isButtonError onClick={onRemove} disabled={!canChangeGoal || isLoading}>
+            <Button size="sm" isButtonError onClick={handleRemove} disabled={!canChangeGoal || isLoading}>
               <BaseIcon size="14">
                 <TrashIcon />
               </BaseIcon>
             </Button>
           </div>
-        </>
-      )}
-
-      {isEdit && (
-        <>
-          <GoalsItemEdit
-            value={newName}
-            isLoading={isLoading}
-            updateValue={updateNewName}
-            onKeyDown={onKeyDownForEdit}
-            onSave={onSaveForEdit}
-            onCancel={onCancelForEdit}
-            onRemove={onRemove}
-          />
         </>
       )}
     </li>

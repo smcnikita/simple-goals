@@ -1,6 +1,6 @@
 'use client';
 
-import { useEffect, type FC } from 'react';
+import { useEffect, useCallback, type FC } from 'react';
 import { useTranslations } from 'next-intl';
 
 import useGoals from '../hooks/useGoals';
@@ -30,12 +30,19 @@ const Goals: FC<Props> = ({ year }) => {
     updateGoals,
   });
 
-  useEffect(() => {
+  const fetchGoals = useCallback(async () => {
     updateIsGlobalLoading(true);
-    getGoals().then(() => {
-      updateIsGlobalLoading(false);
-    });
+    await getGoals();
+    updateIsGlobalLoading(false);
   }, [getGoals, updateIsGlobalLoading]);
+
+  useEffect(() => {
+    fetchGoals();
+  }, [fetchGoals]);
+
+  const handleAddGoalClick = useCallback(() => {
+    updateIsShowAddGoal(true);
+  }, [updateIsShowAddGoal]);
 
   if (isGlobalLoading) {
     return (
@@ -60,7 +67,7 @@ const Goals: FC<Props> = ({ year }) => {
       />
 
       {isShowAddGoalButton && (
-        <div className={classes.addGoal} onClick={() => updateIsShowAddGoal(true)}>
+        <div className={classes.addGoal} onClick={handleAddGoalClick}>
           <Button size="sm-2" disabled={isShowAddGoal || isLoading}>
             {t('addGoal')}
           </Button>

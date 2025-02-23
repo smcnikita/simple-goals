@@ -76,6 +76,8 @@
   border: none;
   border-radius: 6px;
 
+  overflow-wrap: anywhere;
+
   padding: 4px;
 
   cursor: pointer;
