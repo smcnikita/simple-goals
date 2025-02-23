@@ -7,11 +7,11 @@ import { corsService } from '@/services/cors-service';
 import { authService } from '@/services/auth-service';
 
 export const middlewareController = {
-  setCors: (request: NextRequest) => {
+  setCors: (request: NextRequest): NextResponse => {
     return corsService(request);
   },
 
-  setAuth: (request: NextRequest, response: NextResponse) => {
-    return authService(request, response);
+  setAuth: async (request: NextRequest, response: NextResponse): Promise<NextResponse> => {
+    return await authService(request, response);
   },
 };
