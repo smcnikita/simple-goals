@@ -2,10 +2,14 @@
 
 import { useEffect, type FC } from 'react';
 
+import { THEME_PREFIX } from '@/constants/theme';
+
+import { getThemeFromLocalStorage } from '@/utils/updateTheme';
+
 const ThemeProvider: FC = () => {
   useEffect(() => {
-    const theme = localStorage.theme ?? 'dark';
-    document.documentElement.classList.add(`theme_${theme}`);
+    const theme = getThemeFromLocalStorage();
+    document.documentElement.classList.add(`${THEME_PREFIX}${theme}`);
   }, []);
 
   return null;

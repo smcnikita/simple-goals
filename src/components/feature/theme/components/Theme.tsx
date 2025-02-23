@@ -1,10 +1,12 @@
 'use client';
 
-import { useEffect, useState, type FC } from 'react';
+import { useCallback, useEffect, useState, type FC } from 'react';
 import clsx from 'clsx';
 import { useTranslations } from 'next-intl';
 
-import { getThemeFromLocalstorage, updateThemeInLocalstorage } from '@/utils/updateTheme';
+import { SUPPORTED_THEMES, THEME_PREFIX, DEFAULT_APP_THEME } from '@/constants/theme';
+
+import { getThemeFromLocalStorage, saveThemeToLocalStorage } from '@/utils/updateTheme';
 
 import type { Theme } from '@/types/theme';
 
@@ -12,43 +14,44 @@ import classes from '@/components/ui/popover/styles/popover.module.css';
 
 const ThemeComponent: FC = () => {
   const t = useTranslations('Theme');
-  const [theme, setTheme] = useState<Theme>('dark');
 
-  const themes = ['light', 'dark'] as Theme[];
+  const [theme, setTheme] = useState<Theme>(DEFAULT_APP_THEME);
 
-  const updateTheme = (value: Theme | null) => {
-    const selectedTheme = value ?? 'dark';
-    const classList = document.documentElement.classList;
-
-    classList.forEach((el) => {
-      if (el.includes('theme_')) {
-        document.documentElement.classList.remove(el);
+  const updateTheme = useCallback(
+    (newTheme: Theme) => {
+      if (newTheme === theme) {
+        return;
       }
-    });
 
-    document.documentElement.classList.add(`theme_${selectedTheme}`);
+      document.documentElement.classList.remove(`${THEME_PREFIX}${theme}`);
+      document.documentElement.classList.add(`${THEME_PREFIX}${newTheme}`);
 
-    setTheme(selectedTheme);
-    updateThemeInLocalstorage(selectedTheme);
-  };
+      setTheme(newTheme);
+      saveThemeToLocalStorage(newTheme);
+    },
+    [theme]
+  );
 
   useEffect(() => {
-    const theme = getThemeFromLocalstorage();
-    updateTheme(theme);
-  }, []);
+    const savedTheme = getThemeFromLocalStorage();
+
+    if (savedTheme !== theme) {
+      setTheme(savedTheme);
+    }
+  }, [theme]);
 
   return (
     <>
-      {themes.map((el) => (
+      {SUPPORTED_THEMES.map((item) => (
         <button
-          key={el}
+          key={item}
           type="button"
           className={clsx(classes.content_action, {
-            [classes.active]: theme === el,
+            [classes.active]: theme === item,
           })}
-          onClick={() => updateTheme(el)}
+          onClick={() => updateTheme(item)}
         >
-          {t(el)}
+          {t(item)}
         </button>
       ))}
     </>

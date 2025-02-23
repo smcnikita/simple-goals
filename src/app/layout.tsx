@@ -1,3 +1,4 @@
+import { Suspense } from 'react';
 import type { Metadata } from 'next';
 import { cookies, headers } from 'next/headers';
 import localFont from 'next/font/local';
@@ -12,12 +13,11 @@ import ThemeProvider from '@/components/providers/theme';
 import LangProvider from '@/components/providers/lang';
 import Container from '@/components/ui/container';
 import Header from '@/components/ui/header';
+import { YandexMetrika } from '@/components/feature/analytics';
 
 import '../assets/styles/globals.css';
 import '../assets/styles/colors/dark.css';
 import '../assets/styles/colors/light.css';
-import { YandexMetrika } from '@/components/feature/analytics';
-import { Suspense } from 'react';
 
 const jost = localFont({
   src: [
