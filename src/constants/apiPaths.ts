@@ -5,6 +5,10 @@ export const API_PATHS = {
     logout: '/auth/logout',
   },
 
+  years: {
+    get: '/years',
+  },
+
   goals: {
     get: '/goals',
     update: '/goals/change',

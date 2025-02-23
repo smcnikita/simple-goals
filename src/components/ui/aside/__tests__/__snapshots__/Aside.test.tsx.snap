@@ -10,7 +10,7 @@ exports[`Aside should renders Aside unchanged 1`] = `
       <div
         data-testid="aside-list-mock"
       >
-        Mocked AsideList with 0 items
+        Mocked AsideList with 1 items
       </div>
     </nav>
   </aside>

@@ -1,20 +1,17 @@
-import type { FC } from 'react';
-
-import type { YearItem } from '@/types/years';
+import { type FC } from 'react';
 
 import AsideList from './AsideList';
 
 import classes from '../styles/aside.module.css';
 
-type Props = {
-  years: YearItem[];
-};
+const Aside: FC = () => {
+  const currentYear = new Date().getFullYear();
+  const years = [currentYear];
 
-const Aside: FC<Props> = ({ years }) => {
   return (
     <aside className={classes.aside} id="aside">
       <nav>
-        <AsideList years={years} />
+        <AsideList defaultYears={years} />
       </nav>
     </aside>
   );
