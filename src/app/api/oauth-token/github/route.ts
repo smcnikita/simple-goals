@@ -1,9 +1,14 @@
-import { USER_ID } from '@/constants/headers';
-import { userController } from '@/controllers/user-controller';
-import { SessionPayload } from '@/lib/definitions/session';
-import { prisma } from '@/lib/prisma';
-import { encrypt } from '@/lib/session';
 import { NextRequest, NextResponse } from 'next/server';
+
+import { userController } from '@/controllers/user-controller';
+import { createTokenAndAuth } from '@/services/auth-service';
+import { fetchOrCreateUser } from '@/services/user-service';
+
+const GITHUB_TOKEN_URL = 'https://github.com/login/oauth/access_token';
+const GITHUB_USER_URL = 'https://api.github.com/user';
+const GITHUB_USER_EMAILS_URL = 'https://api.github.com/user/emails';
+const ERROR_RESPONSE = { message: 'error' };
+const STATUS_ERROR = 500;
 
 type Email = {
   email: string;
@@ -12,121 +17,98 @@ type Email = {
   visibility: string;
 };
 
-export async function POST(req: NextRequest) {
-  const res = await req.json();
-  const { code } = res;
-
-  const codeStr = code as string;
-
-  const NEXT_PUBLIC_GITHUB_CLIENT_ID = process.env.NEXT_PUBLIC_GITHUB_CLIENT_ID;
-  const GITHUB_CLIENT_SECRET = process.env.GITHUB_CLIENT_SECRET;
-
-  if (!codeStr || !NEXT_PUBLIC_GITHUB_CLIENT_ID || !GITHUB_CLIENT_SECRET) {
-    return NextResponse.json({ message: 'error' }, { status: 500 });
-  }
-
+async function fetchGitHubToken(code: string, clientId: string, clientSecret: string) {
   const queryParams = new URLSearchParams({
-    code: codeStr,
-    client_id: NEXT_PUBLIC_GITHUB_CLIENT_ID,
-    client_secret: GITHUB_CLIENT_SECRET,
+    code,
+    client_id: clientId,
+    client_secret: clientSecret,
   });
 
-  const response = await fetch(`https://github.com/login/oauth/access_token?${queryParams}`, {
+  const response = await fetch(`${GITHUB_TOKEN_URL}?${queryParams}`, {
     method: 'GET',
     headers: {
       Accept: 'application/json',
-      'Accept-Encoding': 'application/json',
     },
   });
 
-  const data = await response.json();
+  return response.json();
+}
 
-  if (data.error) {
-    return NextResponse.json({ message: 'error' }, { status: 500 });
-  }
-
-  const responseUser = await fetch('https://api.github.com/user', {
+async function fetchGitHubUserInfo(accessToken: string) {
+  const response = await fetch(GITHUB_USER_URL, {
     method: 'GET',
     headers: {
       Accept: 'application/json',
-      'Accept-Encoding': 'application/json',
-      Authorization: `Bearer ${data.access_token}`,
+      Authorization: `Bearer ${accessToken}`,
     },
   });
 
-  const userData = await responseUser.json();
+  return response.json();
+}
 
-  if (userData.error) {
-    return NextResponse.json({ message: 'error' }, { status: 500 });
-  }
-
-  const name = userData.name;
-
-  const responseUserEmail = await fetch('https://api.github.com/user/emails', {
+async function fetchGitHubUserEmails(accessToken: string) {
+  const response = await fetch(GITHUB_USER_EMAILS_URL, {
     method: 'GET',
     headers: {
       Accept: 'application/json',
-      'Accept-Encoding': 'application/json',
-      Authorization: `Bearer ${data.access_token}`,
+      Authorization: `Bearer ${accessToken}`,
     },
   });
 
-  const userDataEmail = await responseUserEmail.json();
+  return response.json();
+}
 
-  if (userDataEmail.error) {
-    return NextResponse.json({ message: 'error' }, { status: 500 });
-  }
+export async function POST(req: NextRequest) {
+  try {
+    const { code } = await req.json();
 
-  const email = userDataEmail.find((email: Email) => email.primary)?.email;
+    const clientId = process.env.NEXT_PUBLIC_GITHUB_CLIENT_ID;
+    const clientSecret = process.env.GITHUB_CLIENT_SECRET;
 
-  if (!email) {
-    return NextResponse.json({ message: 'error' }, { status: 500 });
-  }
+    if (!code || !clientId || !clientSecret) {
+      return NextResponse.json(ERROR_RESPONSE, { status: STATUS_ERROR });
+    }
 
-  const user = await userController.getUserByEmail(email);
+    const tokenData = await fetchGitHubToken(code, clientId, clientSecret);
 
-  let userId;
-  let userName = 'undefined';
+    if (tokenData.error) {
+      return NextResponse.json(ERROR_RESPONSE, { status: STATUS_ERROR });
+    }
 
-  if (user) {
-    userId = user.id;
-    userName = user.name;
-  } else {
-    const now = new Date();
-    const newUser = await prisma.users.create({
-      data: {
-        email,
+    const userInfo = await fetchGitHubUserInfo(tokenData.access_token);
+
+    if (userInfo.error) {
+      return NextResponse.json(ERROR_RESPONSE, { status: STATUS_ERROR });
+    }
+
+    const userEmails = await fetchGitHubUserEmails(tokenData.access_token);
+
+    if (userEmails.error) {
+      return NextResponse.json(ERROR_RESPONSE, { status: STATUS_ERROR });
+    }
+
+    const primaryEmail = userEmails.find((email: Email) => email.primary)?.email;
+
+    if (!primaryEmail) {
+      return NextResponse.json(ERROR_RESPONSE, { status: STATUS_ERROR });
+    }
+
+    const { name } = userInfo;
+
+    const user = await userController.getUserByEmail(primaryEmail);
+
+    const { id: userId, name: userName } = await fetchOrCreateUser({
+      user,
+      options: {
+        email: primaryEmail,
         name,
         password: 'no-password-github',
-        updated_at: now,
-        created_at: now,
       },
     });
 
-    userId = newUser.id;
-    userName = newUser.name;
+    return await createTokenAndAuth(userId, userName);
+  } catch (error) {
+    console.error('Error in POST handler:', error);
+    return NextResponse.json(ERROR_RESPONSE, { status: STATUS_ERROR });
   }
-
-  const sub: SessionPayload = {
-    userId: userId.toString(),
-    name: userName,
-  };
-
-  const token = await encrypt({ sub: JSON.stringify(sub) });
-
-  const cookieOptions = {
-    name: 'token',
-    value: token,
-    httpOnly: true,
-    path: '/',
-    secure: process.env.NODE_ENV !== 'development',
-    maxAge: 7 * 24 * 60 * 60,
-  };
-
-  const newResponse = NextResponse.json({ success: true, token }, { status: 200 });
-
-  newResponse.cookies.set(cookieOptions);
-  newResponse.headers.set(USER_ID, userId.toString());
-
-  return newResponse;
 }

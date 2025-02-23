@@ -1,110 +1,82 @@
 import { NextRequest, NextResponse } from 'next/server';
 
-import { USER_ID } from '@/constants/headers';
-
-import type { SessionPayload } from '@/lib/definitions/session';
-
-import { prisma } from '@/lib/prisma';
-import { encrypt } from '@/lib/session';
-
 import { userController } from '@/controllers/user-controller';
+import { fetchOrCreateUser } from '@/services/user-service';
+import { createTokenAndAuth } from '@/services/auth-service';
 
-export async function POST(req: NextRequest) {
-  const res = await req.json();
-  const { code } = res;
+const YANDEX_TOKEN_URL = 'https://oauth.yandex.ru/token';
+const YANDEX_USER_INFO_URL = 'https://login.yandex.ru/info';
+const ERROR_RESPONSE = { message: 'error' };
+const STATUS_ERROR = 500;
 
-  const codeStr = code as string;
+async function fetchYandexToken(code: string, clientId: string, clientSecret: string) {
+  const params = new URLSearchParams({
+    grant_type: 'authorization_code',
+    code,
+  });
 
-  const NEXT_PUBLIC_YANDEX_CLIENT_ID = process.env.NEXT_PUBLIC_YANDEX_CLIENT_ID;
-  const YANDEX_CLIENT_SECRET = process.env.YANDEX_CLIENT_SECRET;
-
-  if (!codeStr || !NEXT_PUBLIC_YANDEX_CLIENT_ID || !YANDEX_CLIENT_SECRET) {
-    return NextResponse.json({ message: 'error' }, { status: 500 });
-  }
-
-  // const queryParams = new URLSearchParams({
-  //   code: codeStr,
-  //   client_id: NEXT_PUBLIC_YANDEX_CLIENT_ID,
-  //   client_secret: YANDEX_CLIENT_SECRET,
-  // });
-
-  const params = new URLSearchParams();
-  params.append('grant_type', 'authorization_code');
-  params.append('code', codeStr);
-
-  const response = await fetch('https://oauth.yandex.ru/token', {
+  const response = await fetch(YANDEX_TOKEN_URL, {
     method: 'POST',
     headers: {
-      Authorization: 'Basic ' + btoa(`${NEXT_PUBLIC_YANDEX_CLIENT_ID}:${YANDEX_CLIENT_SECRET}`),
+      Authorization: `Basic ${btoa(`${clientId}:${clientSecret}`)}`,
       'Content-Type': 'application/x-www-form-urlencoded',
     },
     body: params,
   });
 
-  const data = await response.json();
+  return response.json();
+}
 
-  if (data.error) {
-    return NextResponse.json({ message: 'error' }, { status: 500 });
-  }
-
-  const responseUser = await fetch('https://login.yandex.ru/info', {
+async function fetchYandexUserInfo(accessToken: string) {
+  const response = await fetch(YANDEX_USER_INFO_URL, {
     method: 'GET',
     headers: {
-      Authorization: 'Bearer ' + data.access_token,
+      Authorization: `Bearer ${accessToken}`,
     },
   });
 
-  const dataUser = await responseUser.json();
+  return response.json();
+}
 
-  if (dataUser.error) {
-    return NextResponse.json({ message: 'error' }, { status: 500 });
-  }
+export async function POST(req: NextRequest) {
+  try {
+    const { code } = await req.json();
 
-  const name = dataUser.real_name;
-  const email = dataUser.default_email;
+    const clientId = process.env.NEXT_PUBLIC_YANDEX_CLIENT_ID;
+    const clientSecret = process.env.YANDEX_CLIENT_SECRET;
 
-  let userId;
+    if (!code || !clientId || !clientSecret) {
+      return NextResponse.json(ERROR_RESPONSE, { status: STATUS_ERROR });
+    }
 
-  const user = await userController.getUserByEmail(email);
+    const tokenData = await fetchYandexToken(code, clientId, clientSecret);
 
-  if (user) {
-    userId = user.id;
-  } else {
-    const now = new Date();
+    if (tokenData.error) {
+      return NextResponse.json(ERROR_RESPONSE, { status: STATUS_ERROR });
+    }
 
-    const newUser = await prisma.users.create({
-      data: {
+    const userInfo = await fetchYandexUserInfo(tokenData.access_token);
+
+    if (userInfo.error) {
+      return NextResponse.json(ERROR_RESPONSE, { status: STATUS_ERROR });
+    }
+
+    const { real_name: name, default_email: email } = userInfo;
+
+    const user = await userController.getUserByEmail(email);
+
+    const { id: userId, name: userName } = await fetchOrCreateUser({
+      user,
+      options: {
         email,
         name,
         password: 'no-password-yandex',
-        updated_at: now,
-        created_at: now,
       },
     });
 
-    userId = newUser.id;
+    return await createTokenAndAuth(userId, userName);
+  } catch (error) {
+    console.error('Error in POST handler:', error);
+    return NextResponse.json(ERROR_RESPONSE, { status: STATUS_ERROR });
   }
-
-  const sub: SessionPayload = {
-    userId: userId.toString(),
-    name,
-  };
-
-  const token = await encrypt({ sub: JSON.stringify(sub) });
-
-  const cookieOptions = {
-    name: 'token',
-    value: token,
-    httpOnly: true,
-    path: '/',
-    secure: process.env.NODE_ENV !== 'development',
-    maxAge: 7 * 24 * 60 * 60,
-  };
-
-  const newResponse = NextResponse.json({ success: true, token }, { status: 200 });
-
-  newResponse.cookies.set(cookieOptions);
-  newResponse.headers.set(USER_ID, userId.toString());
-
-  return newResponse;
 }

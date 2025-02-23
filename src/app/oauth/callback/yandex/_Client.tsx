@@ -8,10 +8,10 @@ type Props = {
   state: string;
 };
 
-const GithubClient: FC<Props> = ({ code, state }) => {
+const YandexClient: FC<Props> = ({ code, state }) => {
   const handleOauthToken = useCallback(async () => {
     try {
-      const res = await fetch('/api/oauth-token/github', {
+      const res = await fetch('/api/oauth-token/yandex', {
         method: 'POST',
         body: JSON.stringify({ code }),
       });
@@ -35,7 +35,7 @@ const GithubClient: FC<Props> = ({ code, state }) => {
     }
   }, [handleOauthToken, state]);
 
-  return <></>;
+  return null;
 };
 
-export default GithubClient;
+export default YandexClient;

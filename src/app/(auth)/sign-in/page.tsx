@@ -2,10 +2,9 @@
 
 import Image from 'next/image';
 import Link from 'next/link';
-import { useCallback, useState, type FC } from 'react';
+import { useState, type FC } from 'react';
 import { toast } from 'react-hot-toast';
 import { useTranslations } from 'next-intl';
-import { randomBytes } from 'crypto';
 
 import { PATHS } from '@/constants/paths';
 
@@ -16,6 +15,7 @@ import Button from '@/components/ui/button';
 import Spinner from '@/components/ui/spinner';
 
 import classes from '../page.module.css';
+import { useAuthHandlers } from '@/hooks/useAuthHandlers';
 
 type ErrorsType = {
   email: null | string;
@@ -38,50 +38,7 @@ const SignIn: FC = () => {
   const githubClientId = process.env.NEXT_PUBLIC_GITHUB_CLIENT_ID;
   const yandexClientId = process.env.NEXT_PUBLIC_YANDEX_CLIENT_ID;
 
-  const handleGithubAuthClick = useCallback(() => {
-    if (!githubClientId) {
-      console.error('GitHub Client ID is missing');
-      return;
-    }
-
-    const currentOrigin = window.location.origin;
-    const csrfToken = randomBytes(16).toString('hex');
-
-    const queryParams = new URLSearchParams({
-      client_id: githubClientId,
-      response_type: 'code',
-      redirect_uri: `${currentOrigin}/integrations/github/oauth2/callback`,
-      state: csrfToken,
-      scope: 'read:user user:email',
-    });
-
-    const authUrl = `https://github.com/login/oauth/authorize?${queryParams.toString()}`;
-
-    localStorage.setItem('latestCSRFToken', csrfToken);
-    window.location.assign(authUrl);
-  }, [githubClientId]);
-
-  const handleYandexAuthClick = useCallback(() => {
-    if (!yandexClientId) {
-      console.error('Yandex Client ID is missing');
-      return;
-    }
-
-    const currentOrigin = window.location.origin;
-    const csrfToken = randomBytes(16).toString('hex');
-
-    const queryParams = new URLSearchParams({
-      client_id: yandexClientId,
-      response_type: 'code',
-      redirect_uri: `${currentOrigin}/integrations/yandex/oauth2/callback`,
-      state: csrfToken,
-    });
-
-    const authUrl = `https://oauth.yandex.ru/authorize?${queryParams.toString()}`;
-
-    localStorage.setItem('latestCSRFToken', csrfToken);
-    window.location.assign(authUrl);
-  }, [yandexClientId]);
+  const { handleGithubAuthClick, handleYandexAuthClick } = useAuthHandlers({ githubClientId, yandexClientId });
 
   const onSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();

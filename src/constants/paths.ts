@@ -4,8 +4,11 @@ export const PATHS = {
   auth: {
     signIn: '/sign-in',
     signUp: '/sign-up',
-    github: '/integrations/github/oauth2/callback',
-    yandex: '/integrations/yandex/oauth2/callback',
+
+    oauth: {
+      github: '/oauth/callback/github',
+      yandex: '/oauth/callback/yandex',
+    },
   },
 
   goals: {
