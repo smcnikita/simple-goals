@@ -1,4 +1,3 @@
-import { Suspense } from 'react';
 import type { Metadata } from 'next';
 import { cookies, headers } from 'next/headers';
 import localFont from 'next/font/local';
@@ -9,11 +8,12 @@ import { getLocale, getMessages } from 'next-intl/server';
 import { TOKEN } from '@/constants/cookies';
 import { USER_ID } from '@/constants/headers';
 
-import ThemeProvider from '@/components/providers/theme';
-import LangProvider from '@/components/providers/lang';
 import Container from '@/components/ui/container';
 import Header from '@/components/ui/header';
-import { YandexMetrika } from '@/components/feature/analytics';
+
+import { ThemeInitializer } from '@/components/feature/theme';
+import { LangInitializer } from '@/components/feature/lang';
+import { AnalyticsInitializer } from '@/components/feature/analytics';
 
 import '../assets/styles/globals.css';
 import '../assets/styles/colors/dark.css';
@@ -59,30 +59,25 @@ export default async function RootLayout({ children }: Props) {
   const locale = await getLocale();
   const messages = await getMessages();
 
-  const isProd = process.env.NODE_ENV === 'production';
-
   return (
     <html lang={locale}>
       <head>
         <link rel="yandex-tableau-widget" href="/tableau.json" />
       </head>
 
-      <ThemeProvider />
-      <LangProvider />
+      <ThemeInitializer />
+      <LangInitializer />
 
       <NextIntlClientProvider messages={messages}>
         <body className={`${jost.className}`}>
           <Toaster />
+
           <Container>
             <Header isAuth={isAuth} />
             {children}
           </Container>
 
-          {isProd && (
-            <Suspense>
-              <YandexMetrika />
-            </Suspense>
-          )}
+          <AnalyticsInitializer />
         </body>
       </NextIntlClientProvider>
     </html>

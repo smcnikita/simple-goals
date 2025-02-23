@@ -6,7 +6,7 @@ import { THEME_PREFIX } from '@/constants/theme';
 
 import { getThemeFromLocalStorage } from '@/utils/updateTheme';
 
-const ThemeProvider: FC = () => {
+const ThemeInitializer: FC = () => {
   useEffect(() => {
     const theme = getThemeFromLocalStorage();
     document.documentElement.classList.add(`${THEME_PREFIX}${theme}`);
@@ -15,4 +15,4 @@ const ThemeProvider: FC = () => {
   return null;
 };
 
-export default ThemeProvider;
+export default ThemeInitializer;

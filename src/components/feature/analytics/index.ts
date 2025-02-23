@@ -1,1 +1,1 @@
-export { default as YandexMetrika } from './components/YandexMetrika';
+export { default as AnalyticsInitializer } from './components/AnalyticsInitializer';

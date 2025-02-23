@@ -1,15 +1,16 @@
 'use client';
 
 import { useEffect, type FC } from 'react';
-import { type Locale } from '@/i18n/config';
 
 import { setUserLocale } from '@/services/locale-service';
 
-const LangProvider: FC = () => {
-  useEffect(() => {
-    const lang: Locale = localStorage.lang;
+import { isLocale } from '@/utils/locale';
 
-    if (lang) {
+const LangInitializer: FC = () => {
+  useEffect(() => {
+    const lang = localStorage.getItem('lang');
+
+    if (lang && isLocale(lang)) {
       setUserLocale(lang);
     }
   }, []);
@@ -17,4 +18,4 @@ const LangProvider: FC = () => {
   return null;
 };
 
-export default LangProvider;
+export default LangInitializer;
