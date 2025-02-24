@@ -5,6 +5,7 @@ import { goalsController } from '@/controllers/goals-controller';
 import { yearsController } from '@/controllers/years-controller';
 
 import { checkUserIdService } from '@/services/check-user-id-service';
+import { logout } from '@/services/auth-service';
 
 export async function DELETE(req: Request) {
   const checkUserId = await checkUserIdService(req);
@@ -12,7 +13,7 @@ export async function DELETE(req: Request) {
   const t = await getTranslations('Errors');
 
   if (!checkUserId.success) {
-    return NextResponse.json({ message: checkUserId.error }, { status: 500 });
+    return await logout();
   }
 
   const userId = checkUserId.userId;
@@ -49,7 +50,7 @@ export async function POST(req: Request) {
   const t = await getTranslations('Errors');
 
   if (!checkUserId.success) {
-    return NextResponse.json({ message: checkUserId.error }, { status: 500 });
+    return await logout();
   }
 
   const userId = checkUserId.userId;
@@ -87,7 +88,7 @@ export async function GET(req: NextRequest) {
   const t = await getTranslations('Errors');
 
   if (!checkUserId.success) {
-    return NextResponse.json({ message: checkUserId.error }, { status: 500 });
+    return await logout();
   }
 
   const userId = checkUserId.userId;

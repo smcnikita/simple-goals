@@ -2,6 +2,7 @@ import 'server-only';
 
 import { NextResponse } from 'next/server';
 import type { NextRequest } from 'next/server';
+import { getTranslations } from 'next-intl/server';
 
 import { PATHS } from '@/constants/paths';
 import { TOKEN } from '@/constants/cookies';
@@ -80,4 +81,16 @@ export async function createTokenAndAuth(userId: number, userName: string) {
   newResponse.headers.set(USER_ID, userId.toString());
 
   return newResponse;
+}
+
+export async function logout() {
+  const t = await getTranslations('Errors');
+
+  const response = NextResponse.json({ message: t('success') }, { status: 200 });
+
+  response.cookies.delete(TOKEN);
+  response.headers.delete(USER_ID);
+  response.headers.delete(USER_NAME);
+
+  return response;
 }
