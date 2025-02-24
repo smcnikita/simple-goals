@@ -34,13 +34,12 @@
     ]
   },
   "dependencies": {
-    "@prisma/client": "^6.3.1",
+    "@prisma/client": "^6.4.1",
     "bcryptjs": "^3.0.2",
     "clsx": "^2.1.1",
     "jose": "^5.9.6",
     "next": "15.1.6",
     "next-intl": "^3.26.4",
-    "prisma": "^6.3.1",
     "react": "^19.0.0",
     "react-dom": "^19.0.0",
     "react-hot-toast": "^2.5.1",
@@ -64,6 +63,7 @@
     "jest-environment-jsdom": "^29.7.0",
     "lint-staged": "^15.4.3",
     "prettier": "^3.4.2",
+    "prisma": "^6.4.1",
     "rimraf": "^6.0.1",
     "ts-jest": "^29.2.5",
     "ts-node": "^10.9.2",
