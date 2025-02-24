@@ -1,27 +1,24 @@
-# Указываем базовый образ Node.js
-FROM node:22.14.0-alpine
-
-# Устанавливаем рабочую директорию внутри контейнера
+FROM node:22.14.0-alpine AS builder
 WORKDIR /app
-
-# Копируем package.json и package-lock.json (если есть)
 COPY package*.json ./
-
-# Устанавливаем зависимости
-RUN npm install
-
-# Копируем все файлы проекта
+RUN npm ci
 COPY . .
+RUN npm run db:generate && npm run build
 
-# Собираем приложение
-RUN npm run db:generate
-RUN npm run build
+FROM node:22.14.0-alpine AS production
+WORKDIR /app
+COPY --from=builder /app/package*.json ./
+COPY --from=builder /app/node_modules ./node_modules
+COPY --from=builder /app/.next ./.next
+COPY --from=builder /app/public ./public
+COPY --from=builder /app/package.json ./package.json
+COPY --from=builder /app/next.config.js ./next.config.js
 
-# Указываем переменную среды для запуска в production-режиме
+RUN addgroup -S appgroup && adduser -S appuser -G appgroup
+USER appuser
+
 ENV NODE_ENV=production
 
-# Открываем порт для контейнера
 EXPOSE 3000
 
-# Команда запуска приложения
-CMD ["npm", "run", "start"]
+CMD ["node", "node_modules/.bin/next", "start"]

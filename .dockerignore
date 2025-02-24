@@ -1,4 +1,8 @@
 node_modules
 .next
+.git
+Dockerfile
+.dockerignore
 .DS_Store
 .env
+_TODO.md
