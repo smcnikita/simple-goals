@@ -1,37 +1,22 @@
 import { NextResponse } from 'next/server';
 import { getTranslations } from 'next-intl/server';
 
-import { TOKEN } from '@/constants/cookies';
-
 import { goalsController } from '@/controllers/goals-controller';
 import { yearsController } from '@/controllers/years-controller';
 
-import { getUserIdFromToken } from '@/utils/getUserIdFromToken';
+import { checkUserIdService } from '@/services/check-user-id-service';
+import { logout } from '@/services/auth-service';
 
 export async function POST(req: Request) {
-  const cookiesStore = req.headers.get('cookie');
-  const hasToken = cookiesStore?.includes(TOKEN);
+  const checkUserId = await checkUserIdService(req);
 
   const t = await getTranslations('Errors');
 
-  if (!cookiesStore || !hasToken) {
-    return NextResponse.json({ message: t('error') }, { status: 500 });
+  if (!checkUserId.success) {
+    return await logout();
   }
 
-  const token = cookiesStore
-    .split(';')
-    .find((cookie) => cookie.includes(TOKEN))
-    ?.split('=')[1];
-
-  if (!token) {
-    return NextResponse.json({ message: t('error') }, { status: 500 });
-  }
-
-  const userId = await getUserIdFromToken({ name: TOKEN, value: token });
-
-  if (!userId) {
-    return NextResponse.json({ message: t('error') }, { status: 500 });
-  }
+  const userId = checkUserId.userId;
 
   const res = await req.json();
 
