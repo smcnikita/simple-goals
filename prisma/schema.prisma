@@ -36,3 +36,8 @@ model goals {
 
   @@index([year_id, user_id])
 }
+
+model statistics {
+  id    Int @id @default(autoincrement())
+  count Int
+}

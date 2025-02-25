@@ -39,7 +39,7 @@ docker-compose up --build -d
 If this is the first time you're running the app (the database is not yet set up), you need to initialize the database:
 
 ```bash
-docker exec -it simple_goals_app npx prisma db push
+docker exec -it simple_goals_app npx prisma migrate deploy
 ```
 
 To create a user manually, you can use Prisma Studio. Start it with the following command:

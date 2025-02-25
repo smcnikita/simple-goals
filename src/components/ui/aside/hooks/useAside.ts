@@ -22,11 +22,8 @@ const useAside = (defaultYears: number[]) => {
     setIsLoading(true);
 
     try {
-      const res = await httpGetYears();
-      const { data } = await res.json();
-
+      const { data } = await httpGetYears().then((res) => res.json());
       const uniqueSortedYears = Array.from(new Set([...defaultYears, ...data])).sort((a, b) => b - a);
-
       updateYears(uniqueSortedYears);
     } catch (error) {
       toast.error('Failed to fetch years');

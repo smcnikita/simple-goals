@@ -47,6 +47,6 @@ next-env.d.ts
 .idea
 .zed
 
-*.sql
+./*.sql
 
 _TODO.md
