@@ -16,7 +16,7 @@ export const yearsController = {
   getUserYearsFormatted: async (userId: number) => {
     const existingYears = await yearsController.getUserYearsFromDatabase(userId);
 
-    return await yearsService.getFormattedYears({ userId, existingYears });
+    return await yearsService.getFormattedYears({ existingYears });
   },
 
   getYearByName: async (userId: number, year: number) => {

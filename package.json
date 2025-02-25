@@ -10,13 +10,15 @@
     "lint": "next lint .",
     "format": "prettier -c .",
     "format:fix": "prettier -w .",
-    "db:seed": "tsx ./prisma/seed.ts",
     "prepare": "husky",
     "test": "jest --config jest.config.ts --passWithNoTests",
     "test:watch": "jest --watch --config jest.config.ts",
     "coverage": "jest --config jest.config.ts --coverage",
     "test:update": "jest --updateSnapshot --config jest.config.ts",
     "check": "npm run format && npm run lint && npm run test"
+  },
+  "prisma": {
+    "seed": "ts-node --compiler-options {\"module\":\"CommonJS\"} prisma/seeders/seed.ts"
   },
   "husky": {
     "hooks": {

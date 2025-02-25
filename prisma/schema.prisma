@@ -38,6 +38,6 @@ model goals {
 }
 
 model statistics {
-  id    Int @id @default(autoincrement())
+  id    Int @id @default(1)
   count Int
 }

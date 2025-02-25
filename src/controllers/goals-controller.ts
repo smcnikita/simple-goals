@@ -56,6 +56,11 @@ export const goalsController = {
   createGoal: async ({ name, year_id, user_id }: CreateGoalParams) => {
     const now = new Date();
 
+    await prisma.statistics.update({
+      where: { id: 1 },
+      data: { count: { increment: 1 } },
+    });
+
     return await prisma.goals.create({
       data: {
         name,

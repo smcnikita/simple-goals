@@ -103,12 +103,22 @@ export async function GET(req: NextRequest) {
   }
 
   const yearModel = await yearsController.getYearByName(userId, year);
+  const currentYear = new Date().getFullYear();
 
-  if (!yearModel) {
-    return NextResponse.json({ message: t('yearNotFound') }, { status: 500 });
+  let yearId: number;
+
+  if (yearModel) {
+    yearId = yearModel.id;
+  } else {
+    if (currentYear === year) {
+      const newYear = await yearsController.createYear(userId, year);
+      yearId = newYear.id;
+    } else {
+      return NextResponse.json({ message: t('yearNotFound') }, { status: 500 });
+    }
   }
 
-  const goals = await goalsController.getUserGoalsByYearId(yearModel.id, userId);
+  const goals = await goalsController.getUserGoalsByYearId(yearId, userId);
 
   const response = NextResponse.json(
     {
