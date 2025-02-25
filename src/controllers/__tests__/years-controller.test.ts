@@ -65,7 +65,6 @@ describe('years-controller', () => {
 
       expect(findMany).toHaveBeenCalledWith({ where: { user_id: MOCK_USER_ID } });
       expect(getFormattedYears).toHaveBeenCalledWith({
-        userId: MOCK_USER_ID,
         existingYears: MOCK_YEARS,
       });
       expect(result).toEqual(['Formatted Year']);
