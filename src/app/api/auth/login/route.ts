@@ -3,6 +3,7 @@ import { compare } from 'bcryptjs';
 import { getTranslations } from 'next-intl/server';
 
 import { USER_ID } from '@/constants/headers';
+import { cookieOptions as tokenOptions } from '@/constants/cookies';
 
 import { SignInSchema } from '@/lib/definitions/auth';
 import { prisma } from '@/lib/prisma';
@@ -47,12 +48,8 @@ export async function POST(req: Request) {
   const token = await encrypt({ sub: JSON.stringify(sub) });
 
   const cookieOptions = {
-    name: 'token',
+    ...tokenOptions,
     value: token,
-    httpOnly: true,
-    path: '/',
-    secure: process.env.NODE_ENV !== 'development',
-    maxAge: 7 * 24 * 60 * 60,
   };
 
   const response = NextResponse.json(

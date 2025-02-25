@@ -5,7 +5,7 @@ import type { NextRequest } from 'next/server';
 import { getTranslations } from 'next-intl/server';
 
 import { PATHS } from '@/constants/paths';
-import { TOKEN } from '@/constants/cookies';
+import { TOKEN, cookieOptions as tokenOptions } from '@/constants/cookies';
 import { USER_ID, USER_NAME } from '@/constants/headers';
 
 import { decrypt, encrypt } from '@/lib/session';
@@ -67,12 +67,8 @@ export async function createTokenAndAuth(userId: number, userName: string) {
   const token = await encrypt({ sub: JSON.stringify(sub) });
 
   const cookieOptions = {
-    name: 'token',
+    ...tokenOptions,
     value: token,
-    httpOnly: true,
-    path: '/',
-    secure: process.env.NODE_ENV !== 'development',
-    maxAge: 7 * 24 * 60 * 60,
   };
 
   const newResponse = NextResponse.json({ success: true, token }, { status: 200 });
