@@ -1,19 +1,19 @@
 'use client';
 
 import type { FC } from 'react';
+import { useTranslations } from 'next-intl';
 
 import LogoutActions from '@/components/feature/logoutActions';
 import Theme from '@/components/feature/theme';
 import Lang from '@/components/feature/lang';
 
 import classes from './style.module.css';
-import { useTranslations } from 'next-intl';
 
 type Props = {
   isAuth: boolean;
 };
 
-const Content: FC<Props> = ({ isAuth }) => {
+const PopoverContent: FC<Props> = ({ isAuth }) => {
   const t = useTranslations('Theme');
   const tAuth = useTranslations('Auth');
   const tLang = useTranslations('Lang');
@@ -40,4 +40,4 @@ const Content: FC<Props> = ({ isAuth }) => {
   );
 };
 
-export default Content;
+export default PopoverContent;

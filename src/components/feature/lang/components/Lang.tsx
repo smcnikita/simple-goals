@@ -2,7 +2,11 @@
 
 import type { FC } from 'react';
 import { clsx } from 'clsx';
-import { useLocale } from 'next-intl';
+import { useLocale, useTranslations } from 'next-intl';
+
+import { LOCAL_STORAGE_LANG_KEY } from '@/constants/localstorage';
+
+import { locales } from '@/i18n/config';
 
 import { setUserLocale } from '@/services/locale-service';
 
@@ -10,33 +14,25 @@ import classes from '@/components/ui/popover/styles/popover.module.css';
 
 const Lang: FC = () => {
   const locale = useLocale();
+  const t = useTranslations('Lang');
 
   return (
     <>
-      <button
-        type="button"
-        className={clsx(classes.content_action, {
-          [classes.active]: locale === 'en',
-        })}
-        onClick={() => {
-          localStorage.lang = 'en';
-          setUserLocale('en');
-        }}
-      >
-        English
-      </button>
-      <button
-        type="button"
-        className={clsx(classes.content_action, {
-          [classes.active]: locale === 'ru',
-        })}
-        onClick={() => {
-          localStorage.lang = 'ru';
-          setUserLocale('ru');
-        }}
-      >
-        Русский
-      </button>
+      {locales.map((lang) => (
+        <button
+          key={lang}
+          type="button"
+          className={clsx(classes.content_action, {
+            [classes.active]: lang === locale,
+          })}
+          onClick={() => {
+            localStorage.setItem(LOCAL_STORAGE_LANG_KEY, lang);
+            setUserLocale(lang);
+          }}
+        >
+          {t(lang)}
+        </button>
+      ))}
     </>
   );
 };

@@ -5,7 +5,7 @@ import { useState, type FC } from 'react';
 import BasePopover from '@/components/ui/popover';
 import BaseIcon, { MoreGridSmallIcon } from '@/components/ui/icon';
 
-import Content from './Content';
+import PopoverContent from './PopoverContent';
 
 import classes from '../../styles/header.module.css';
 
@@ -18,7 +18,7 @@ const Popover: FC<Props> = ({ isAuth }) => {
   const updateIsShow = (value: boolean) => setIsShow(value);
 
   return (
-    <BasePopover isShow={isShow} updateIsShow={updateIsShow} popover={<Content isAuth={isAuth} />}>
+    <BasePopover isShow={isShow} updateIsShow={updateIsShow} popover={<PopoverContent isAuth={isAuth} />}>
       <button type="button" className={classes.tab} onClick={() => setIsShow(!isShow)}>
         <BaseIcon>
           <MoreGridSmallIcon />

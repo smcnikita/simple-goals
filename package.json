@@ -32,7 +32,7 @@
     "*.(ts|tsx)": [
       "npm run format",
       "npm run lint",
-      "npm run test:run"
+      "vitest related --run"
     ]
   },
   "dependencies": {
