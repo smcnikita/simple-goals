@@ -4,19 +4,19 @@ import { getTranslations } from 'next-intl/server';
 import { goalsController } from '@/controllers/goals-controller';
 import { yearsController } from '@/controllers/years-controller';
 
-import { checkUserIdService } from '@/services/check-user-id-service';
-import { logout } from '@/services/auth-service';
+import { getServerSession } from 'next-auth';
+import { authOptions } from '@/lib/auth';
 
 export async function POST(req: Request) {
-  const checkUserId = await checkUserIdService(req);
+  const session = await getServerSession(authOptions);
 
   const t = await getTranslations('Errors');
 
-  if (!checkUserId.success) {
-    return await logout();
+  if (!session) {
+    return NextResponse.json({ message: 'Unauthorized' }, { status: 401 });
   }
 
-  const userId = checkUserId.userId;
+  const userId = parseInt(session.user.id);
 
   const res = await req.json();
 

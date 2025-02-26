@@ -1,18 +1,20 @@
 import { yearsController } from '@/controllers/years-controller';
-import { checkUserIdService } from '@/services/check-user-id-service';
 import { getTranslations } from 'next-intl/server';
-import { NextRequest, NextResponse } from 'next/server';
+import { NextResponse } from 'next/server';
+import { getServerSession } from 'next-auth';
 
-export async function GET(req: NextRequest) {
-  const checkUserId = await checkUserIdService(req);
+import { authOptions } from '@/lib/auth';
+
+export async function GET() {
+  const session = await getServerSession(authOptions);
 
   const t = await getTranslations('Errors');
 
-  if (!checkUserId.success) {
-    return NextResponse.json({ message: checkUserId.error }, { status: 500 });
+  if (!session) {
+    return NextResponse.json({ message: 'Unauthorized' }, { status: 401 });
   }
 
-  const userId = checkUserId.userId;
+  const userId = parseInt(session.user.id);
 
   const years = await yearsController.getUserYearsFormatted(userId);
 

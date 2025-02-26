@@ -4,6 +4,7 @@ import type { FC } from 'react';
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
 import { useTranslations } from 'next-intl';
+import { useSession } from 'next-auth/react';
 
 import { PATHS } from '@/constants/paths';
 
@@ -14,14 +15,13 @@ import BasePopover from './popover/Popover';
 
 import classes from '../styles/header.module.css';
 
-type Props = {
-  isAuth: boolean;
-};
-
-const Header: FC<Props> = ({ isAuth }) => {
+const Header: FC = () => {
   const pathname = usePathname();
   const isShowHeader = showHeader(pathname);
   const t = useTranslations('Auth');
+
+  const { data: session } = useSession();
+  const isAuth = !!session;
 
   if (!isShowHeader) {
     return null;
