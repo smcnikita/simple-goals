@@ -1,9 +1,14 @@
+import { compare } from 'bcryptjs';
 import { NextAuthOptions } from 'next-auth';
 import CredentialsProvider from 'next-auth/providers/credentials';
 import GitHubProvider from 'next-auth/providers/github';
-import { compare } from 'bcryptjs';
+import YandexProvider from 'next-auth/providers/yandex';
+
+import { PATHS } from '@/constants/paths';
 
 import { prisma } from './prisma';
+
+import { findOrCreateUserByOAuth } from '@/services/auth-service';
 
 type GithubEmail = {
   email: string;
@@ -57,29 +62,31 @@ export const authOptions: NextAuthOptions = {
         };
       },
     }),
+    YandexProvider({
+      clientId: process.env.NEXT_PUBLIC_YANDEX_CLIENT_ID!,
+      clientSecret: process.env.YANDEX_CLIENT_SECRET!,
+      profile: async (profile) => {
+        return {
+          id: profile.id.toString(),
+          name: profile.real_name || profile.login,
+          email: profile.default_email,
+        };
+      },
+    }),
   ],
   callbacks: {
     async signIn({ user, account }) {
-      if (account?.provider === 'github') {
-        if (!user.email) return false;
+      if (!user.email) return false;
 
-        const existingUser = await prisma.users.findUnique({
-          where: { email: user.email },
-        });
+      const id = await findOrCreateUserByOAuth(user, account);
 
-        if (!existingUser) return false;
-        user.id = existingUser.id.toString();
+      if (id) {
+        user.id = id;
       }
+
       return true;
     },
-    async redirect({ url, baseUrl }) {
-      // Если URL является внутренним, перенаправляем на него
-      if (url.startsWith(baseUrl)) return url;
-
-      // Проверяем URL на основе разных OAuth провайдеров
-      if (url.includes('github')) return '/oauth/callback/github';
-
-      // По умолчанию отправляем на главную
+    async redirect() {
       return '/';
     },
     async session({ session, token }) {
@@ -94,6 +101,6 @@ export const authOptions: NextAuthOptions = {
   session: { strategy: 'jwt' },
   secret: process.env.NEXTAUTH_SECRET,
   pages: {
-    signIn: '/sign-in', // Укажите страницу входа, если нужно
+    signIn: PATHS.auth.signIn,
   },
 };

@@ -8,8 +8,6 @@ import { signIn } from 'next-auth/react';
 
 import { PATHS } from '@/constants/paths';
 
-import { useAuthHandlers } from '@/hooks/useAuthHandlers';
-
 import Input from '@/components/ui/input';
 import Button from '@/components/ui/button';
 import Spinner from '@/components/ui/spinner';
@@ -33,11 +31,6 @@ const SignIn: FC = () => {
 
   const [isLoading, setIsLoading] = useState(false);
   const [errors, setErrors] = useState<ErrorsType>(defaultErrors);
-
-  const githubClientId = process.env.NEXT_PUBLIC_GITHUB_CLIENT_ID;
-  const yandexClientId = process.env.NEXT_PUBLIC_YANDEX_CLIENT_ID;
-
-  const { handleYandexAuthClick } = useAuthHandlers({ githubClientId, yandexClientId });
 
   const onSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
@@ -120,7 +113,12 @@ const SignIn: FC = () => {
                 alt={t('github')}
               />
             </Button>
-            <Button size="sm" className={classes.button} disabled={isLoading} onClick={handleYandexAuthClick}>
+            <Button
+              size="sm"
+              className={classes.button}
+              disabled={isLoading}
+              onClick={async () => await signIn('yandex')}
+            >
               <Image src="/images/yandex.png" width={20} height={20} alt={t('yandex')} />
             </Button>
           </div>
