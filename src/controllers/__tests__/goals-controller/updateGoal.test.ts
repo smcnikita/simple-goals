@@ -30,12 +30,13 @@ describe('updateGoal', () => {
 
     mockUpdate.mockResolvedValue(mockUpdatedGoal);
 
-    const result = await goalsController.updateGoal(mockGoalId, mockIsCompleted, mockYearId);
+    const result = await goalsController.updateGoal(mockGoalId, mockIsCompleted, mockYearId, 1);
 
     expect(mockUpdate).toHaveBeenCalledWith({
       where: {
         id: mockGoalId,
         year_id: mockYearId,
+        user_id: 1,
       },
       data: {
         is_completed: mockIsCompleted,
@@ -59,12 +60,13 @@ describe('updateGoal', () => {
 
     mockUpdate.mockResolvedValue(mockUpdatedGoal);
 
-    const result = await goalsController.updateGoal(mockGoalId, mockIsCompleted, mockYearId);
+    const result = await goalsController.updateGoal(mockGoalId, mockIsCompleted, mockYearId, 1);
 
     expect(mockUpdate).toHaveBeenCalledWith({
       where: {
         id: mockGoalId,
         year_id: mockYearId,
+        user_id: 1,
       },
       data: {
         is_completed: mockIsCompleted,
@@ -78,6 +80,6 @@ describe('updateGoal', () => {
   it('should throw an error if Prisma call fails', async () => {
     mockUpdate.mockRejectedValue(new Error('Database error'));
 
-    await expect(goalsController.updateGoal(1, true, 1)).rejects.toThrow('Database error');
+    await expect(goalsController.updateGoal(1, true, 1, 1)).rejects.toThrow('Database error');
   });
 });
