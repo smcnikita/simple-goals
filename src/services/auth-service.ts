@@ -2,7 +2,6 @@ import 'server-only';
 
 import { NextResponse } from 'next/server';
 import type { NextRequest } from 'next/server';
-import { getTranslations } from 'next-intl/server';
 import type { Account, User } from 'next-auth';
 import type { AdapterUser } from 'next-auth/adapters';
 
@@ -124,16 +123,4 @@ export async function createUser(email: string, name: string, password: string) 
       updated_at: now,
     },
   });
-}
-
-export async function logout() {
-  const t = await getTranslations('Errors');
-
-  const response = NextResponse.json({ message: t('success') }, { status: 200 });
-
-  response.cookies.delete(TOKEN);
-  response.headers.delete(USER_ID);
-  response.headers.delete(USER_NAME);
-
-  return response;
 }

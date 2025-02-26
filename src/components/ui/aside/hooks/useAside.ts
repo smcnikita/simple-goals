@@ -2,12 +2,11 @@
 
 import { useCallback, useState } from 'react';
 import toast from 'react-hot-toast';
+import { signOut } from 'next-auth/react';
 
 import { LOCAL_STORAGE_YEARS_KEY } from '@/constants/localstorage';
 
 import { httpGetYears } from '@/lib/http/years';
-
-import { logoutClient } from '@/utils/logout';
 
 const useAside = (defaultYears: number[]) => {
   const [isLoading, setIsLoading] = useState(true);
@@ -27,7 +26,7 @@ const useAside = (defaultYears: number[]) => {
       updateYears(uniqueSortedYears);
     } catch (error) {
       toast.error('Failed to fetch years');
-      await logoutClient('Error logout');
+      await signOut();
       console.error('Failed to fetch years:', error);
     } finally {
       setIsLoading(false);
