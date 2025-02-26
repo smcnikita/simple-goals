@@ -1,12 +1,8 @@
 import type { Metadata } from 'next';
-import { cookies, headers } from 'next/headers';
 import localFont from 'next/font/local';
 import { Toaster } from 'react-hot-toast';
 import { NextIntlClientProvider } from 'next-intl';
 import { getLocale, getMessages } from 'next-intl/server';
-
-import { TOKEN } from '@/constants/cookies';
-import { USER_ID } from '@/constants/headers';
 
 import Container from '@/components/ui/container';
 import Header from '@/components/ui/header';
@@ -14,6 +10,7 @@ import Header from '@/components/ui/header';
 import { ThemeInitializer } from '@/components/feature/theme';
 import { LangInitializer } from '@/components/feature/lang';
 import { AnalyticsInitializer } from '@/components/feature/analytics';
+import Providers from '@/components/feature/providers';
 
 import '../assets/styles/globals.css';
 import '../assets/styles/colors/dark.css';
@@ -48,14 +45,6 @@ type Props = Readonly<{
 }>;
 
 export default async function RootLayout({ children }: Props) {
-  const cookiesStore = await cookies();
-  const headersStore = await headers();
-
-  const token = cookiesStore.get(TOKEN);
-  const userId = headersStore.get(USER_ID);
-
-  const isAuth = !!token && !!userId;
-
   const locale = await getLocale();
   const messages = await getMessages();
 
@@ -69,16 +58,18 @@ export default async function RootLayout({ children }: Props) {
       <LangInitializer />
 
       <NextIntlClientProvider messages={messages}>
-        <body className={`${jost.className}`}>
-          <Toaster />
+        <Providers>
+          <body className={`${jost.className}`}>
+            <Toaster />
 
-          <Container>
-            <Header isAuth={isAuth} />
-            {children}
-          </Container>
+            <Container>
+              <Header />
+              {children}
+            </Container>
 
-          <AnalyticsInitializer />
-        </body>
+            <AnalyticsInitializer />
+          </body>
+        </Providers>
       </NextIntlClientProvider>
     </html>
   );

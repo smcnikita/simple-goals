@@ -1,15 +1,15 @@
-import type { NextRequest } from 'next/server';
+import { withAuth } from 'next-auth/middleware';
+import { PATHS } from './constants/paths';
 
-import { middlewareController } from './controllers/middleware-controller';
-
-export async function middleware(request: NextRequest) {
-  const response = middlewareController.setCors(request);
-
-  return await middlewareController.setAuth(request, response);
-}
+export default withAuth({
+  callbacks: {
+    authorized: ({ token }) => !!token,
+  },
+  pages: {
+    signIn: PATHS.auth.signIn,
+  },
+});
 
 export const config = {
-  matcher: [
-    '/((?!api|_next/static|_next/image|images|favicon.ico|sitemap.xml|robots.txt|manifest.json|apple-icon.png|icon.png|icon.svg|web-app-manifest-192x192.png|web-app-manifest-512x512.png| tableau.json|tableau.png).*)',
-  ],
+  matcher: ['/goals/:path*'],
 };
