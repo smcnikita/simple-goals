@@ -1,42 +1,56 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import { render, screen } from '@testing-library/react';
-import { useTranslations } from 'next-intl';
-
 import Home from '../page';
+import { useTranslations } from 'next-intl';
+import { vi, describe, it, expect, type Mock } from 'vitest';
 
-jest.mock('next-intl', () => ({
-  useTranslations: jest.fn(),
+vi.mock('next-intl', () => ({
+  useTranslations: vi.fn(),
 }));
 
-const mockUseTranslations = useTranslations as jest.Mock;
+describe('Home Component', () => {
+  it('should renders the title and sections with translated text', () => {
+    const mockTranslations = {
+      title: 'Welcome to My App',
+      sections: {
+        section_1: 'This is section 1.',
+        section_2: 'This is section 2.',
+        section_3: 'This is section 3.',
+        section_4: 'Check out the',
+        section_5: 'Enjoy!',
+      },
+    };
 
-describe('Home', () => {
-  it('should renders Home unchanged', () => {
-    mockUseTranslations.mockReturnValue((key: string) => {
-      if (key === 'title') return 'Test Title';
-      if (key === 'sections.section_1') return 'Section 1';
-      if (key === 'sections.section_2') return 'Section 2';
-      if (key === 'sections.section_3') return 'Section 3';
-      if (key === 'sections.section_4') return 'Section 4';
-      if (key === 'sections.section_5') return 'Section 5';
+    (useTranslations as Mock).mockReturnValue((key: string) => {
+      const keys = key.split('.');
+
+      let value: any = mockTranslations;
+      for (const k of keys) {
+        if (typeof value === 'object' && value !== null && k in value) {
+          value = value[k];
+        } else {
+          return key;
+        }
+      }
+      if (typeof value === 'string') {
+        return value;
+      }
       return key;
     });
-    const { container } = render(<Home />);
-    expect(container).toMatchSnapshot();
-  });
 
-  it('should renders the translated title', () => {
-    mockUseTranslations.mockReturnValue((key: string) => {
-      if (key === 'title') return 'Test Title';
-      if (key === 'sections.section_1') return 'Section 1';
-      if (key === 'sections.section_2') return 'Section 2';
-      if (key === 'sections.section_3') return 'Section 3';
-      if (key === 'sections.section_4') return 'Section 4';
-      if (key === 'sections.section_5') return 'Section 5';
-      return key;
-    });
+    const result = render(<Home />);
 
-    render(<Home />);
+    expect(result).toMatchSnapshot();
 
-    expect(screen.getByRole('heading', { level: 1 })).toHaveTextContent('Test Title');
+    expect(screen.getByRole('heading', { name: 'Welcome to My App' })).toBeInTheDocument();
+    expect(screen.getByText('This is section 1.')).toBeInTheDocument();
+    expect(screen.getByText('This is section 2.')).toBeInTheDocument();
+    expect(screen.getByText('This is section 3.')).toBeInTheDocument();
+    expect(screen.getByText(/Check out the/)).toBeInTheDocument();
+    expect(screen.getByText(/Enjoy!/)).toBeInTheDocument();
+    expect(screen.getByRole('link', { name: 'Github' })).toHaveAttribute(
+      'href',
+      'https://github.com/smcnikita/simple-goals'
+    );
   });
 });
