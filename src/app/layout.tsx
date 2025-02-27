@@ -13,8 +13,8 @@ import { AnalyticsInitializer } from '@/components/feature/analytics';
 import Providers from '@/components/feature/providers';
 
 import '../assets/styles/globals.css';
-import '../assets/styles/colors/dark.css';
 import '../assets/styles/colors/light.css';
+import '../assets/styles/colors/dark.css';
 
 const jost = localFont({
   src: [

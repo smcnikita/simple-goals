@@ -1,4 +1,4 @@
-:root {
+.dark {
   /* Body */
   --body-color: var(--light-color);
   --body-background: var(--purple-dark-color);
