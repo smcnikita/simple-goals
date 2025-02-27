@@ -14,7 +14,7 @@ type Props = {
   canChangeGoal: boolean;
   isLoading: boolean;
 
-  handleSave: (id: number, name: string) => Promise<void>;
+  handleSave: (id: number, name: string, description: string) => Promise<void>;
   handleCancel: () => void;
 
   updateCompleted: (goalId: number, isCompleted: boolean) => Promise<void>;

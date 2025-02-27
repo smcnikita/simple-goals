@@ -2,7 +2,13 @@
 
 import toast from 'react-hot-toast';
 
-import { httpChangeNameGoal, httpCreateGoal, httpRemoveGoal, httpUpdateGoal } from '@/lib/http/goals';
+import {
+  httpChangeNameAndDescriptionGoal,
+  httpChangeNameGoal,
+  httpCreateGoal,
+  httpRemoveGoal,
+  httpUpdateGoal,
+} from '@/lib/http/goals';
 
 import type { GoalModel } from '@/models/goals-model';
 import { useState } from 'react';
@@ -145,7 +151,38 @@ const useGoalActions = ({ canChangeGoal, year, goals, updateGoals }: Props) => {
     onLoadingEnd(t('goalUpdated'));
   };
 
-  return { isLoading, create, remove, updateCompleted, updateName };
+  const updateNameAndDescription = async (goalId: number, newName: string, newDescription: string) => {
+    if (!canChangeGoal) {
+      return;
+    }
+
+    onLoadingStart(t('updatingGoal'));
+
+    const res = await httpChangeNameAndDescriptionGoal(goalId, year, newName, newDescription);
+    const data = await res.json();
+
+    if (!res.ok) {
+      onError(data.message);
+      return;
+    }
+
+    const newGoals = goals.map((goal) => {
+      if (goal.id === goalId) {
+        return {
+          ...goal,
+          name: newName.trim(),
+          description: newDescription.trim(),
+        };
+      }
+      return goal;
+    });
+
+    updateGoals(newGoals);
+
+    onLoadingEnd(t('goalUpdated'));
+  };
+
+  return { isLoading, create, remove, updateCompleted, updateName, updateNameAndDescription };
 };
 
 export default useGoalActions;

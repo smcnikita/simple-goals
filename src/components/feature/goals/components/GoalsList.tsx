@@ -22,6 +22,7 @@ type Props = {
   remove: (goalId: number) => Promise<void>;
   updateCompleted: (goalId: number, isCompleted: boolean) => Promise<void>;
   updateName: (goalId: number, newName: string) => Promise<void>;
+  updateNameAndDescription: (goalId: number, newName: string, newDescription: string) => Promise<void>;
 
   updateIsShowAddGoal: (value: boolean) => void;
 };
@@ -37,6 +38,7 @@ const GoalsList: FC<Props> = (props) => {
     updateName,
     create,
     updateIsShowAddGoal,
+    updateNameAndDescription,
   } = props;
 
   const t = useTranslations('Goals');
@@ -62,18 +64,19 @@ const GoalsList: FC<Props> = (props) => {
     setGoalDataForModal(null); // TODO: мб надо убрать
   };
 
-  const handleSave = async (id: number, name: string) => {
+  const handleSave = async (id: number, name: string, description: string) => {
     if (!canChangeGoal || isLoading) {
       return;
     }
 
-    const trimmedName = name;
+    const trimmedName = name.trim();
+    const trimmedDescription = description.trim();
 
     if (!trimmedName) {
       return;
     }
 
-    await updateName(id, trimmedName);
+    await updateNameAndDescription(id, trimmedName, trimmedDescription);
 
     setIsOpenModal(false);
     setGoalDataForModal(null);

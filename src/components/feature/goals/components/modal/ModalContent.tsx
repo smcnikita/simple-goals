@@ -16,7 +16,7 @@ type Props = {
   canChangeGoal: boolean;
   isLoading: boolean;
 
-  handleSave: (id: number, name: string) => Promise<void>;
+  handleSave: (id: number, name: string, description: string) => Promise<void>;
   handleCancel: () => void;
   updateCompleted: (goalId: number, isCompleted: boolean) => Promise<void>;
 };
@@ -24,15 +24,20 @@ type Props = {
 const ModalContent: FC<Props> = ({ goalData, canChangeGoal, isLoading, handleSave, handleCancel, updateCompleted }) => {
   const [data, setData] = useState<GoalModalSaveParams | null>(null);
   const [newName, setNewName] = useState('');
+  const [newDescription, setNewDescription] = useState('');
 
   useEffect(() => {
     setData(goalData);
-    setNewName(goalData ? goalData.name : '');
+
+    if (goalData) {
+      setNewName(goalData.name);
+      setNewDescription(goalData.description ? goalData.description : '');
+    }
   }, [goalData]);
 
   const handleSaveGoal = async () => {
     if (data) {
-      await handleSave(data.id, newName);
+      await handleSave(data.id, newName, newDescription);
     }
   };
 
@@ -70,9 +75,9 @@ const ModalContent: FC<Props> = ({ goalData, canChangeGoal, isLoading, handleSav
           id="goal-edit-description"
           rows={10}
           className={clGoals.editInput}
-          defaultValue={
-            'Lorem ipsum dolor sit amet consectetur adipisicing elit. Laudantium vel nobis architecto quaerat? Recusandae temporibus perspiciatis ad doloremque itaque facilis! Maiores quis quos consequuntur recusandae minima nobis itaque, dignissimos blanditiis.'
-          }
+          value={newDescription}
+          placeholder="Введите описание"
+          onChange={(e) => setNewDescription(e.target.value)}
         />
       </div>
 

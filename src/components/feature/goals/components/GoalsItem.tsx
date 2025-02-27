@@ -123,7 +123,14 @@ const GoalsItem: FC<Props> = ({
               type="button"
               className={classes.goalAction}
               disabled={!canChangeGoal || isLoading}
-              onClick={() => handleOpenModal({ id: goal.id, name: goal.name, isCompleted: goal.is_completed })}
+              onClick={() =>
+                handleOpenModal({
+                  id: goal.id,
+                  name: goal.name,
+                  isCompleted: goal.is_completed,
+                  description: goal.description,
+                })
+              }
             >
               {goal.name}
             </button>

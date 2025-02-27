@@ -23,7 +23,7 @@ const Goals: FC<Props> = ({ year }) => {
 
   const { goals, canChangeGoal, isGlobalLoading, updateGoals, getGoals, updateIsGlobalLoading } = useGoals({ year });
   const { isShowAddGoal, isShowAddGoalButton, updateIsShowAddGoal } = useAddGoal({ year });
-  const { isLoading, create, remove, updateCompleted, updateName } = useGoalActions({
+  const { isLoading, create, remove, updateCompleted, updateName, updateNameAndDescription } = useGoalActions({
     canChangeGoal,
     goals,
     year,
@@ -63,6 +63,7 @@ const Goals: FC<Props> = ({ year }) => {
         updateName={updateName}
         isShowAddGoal={isShowAddGoal}
         updateIsShowAddGoal={updateIsShowAddGoal}
+        updateNameAndDescription={updateNameAndDescription}
         isLoading={isLoading}
       />
 

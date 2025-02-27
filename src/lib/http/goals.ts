@@ -26,6 +26,17 @@ export const httpChangeNameGoal = async (goalId: number, year: number, newName: 
   return fetchFromAPI(apiUrl, { method: 'PUT', body });
 };
 
+export const httpChangeNameAndDescriptionGoal = async (
+  goalId: number,
+  year: number,
+  newName: string,
+  newDescription: string
+) => {
+  const apiUrl = API_PATHS.goals.updateNameAndDescription;
+  const body = JSON.stringify({ id: goalId, year, name: newName.trim(), description: newDescription.trim() });
+  return fetchFromAPI(apiUrl, { method: 'PUT', body });
+};
+
 export const httpCreateGoal = async (year: number, name: string) => {
   const apiUrl = API_PATHS.goals.create;
   const body = JSON.stringify({ year, name: name.trim() });

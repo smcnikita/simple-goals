@@ -27,6 +27,7 @@ model years {
 model goals {
   id           Int       @id @default(autoincrement())
   name         String
+  description  String?
   is_completed Boolean   @default(false)
   completed_at DateTime?
   year_id      Int

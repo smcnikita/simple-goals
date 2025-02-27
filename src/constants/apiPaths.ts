@@ -8,6 +8,7 @@ export const API_PATHS = {
     update: '/goals/change',
     remove: '/goals',
     changeName: '/goals/change-name',
+    updateNameAndDescription: '/goals/update-name-and-description',
     create: '/goals',
   },
 };
