@@ -62,8 +62,11 @@
     "cancel": "Cancel",
     "delete": "Delete",
     "enterGoal": "Enter goal",
+    "enterDescription": "Enter goal description",
     "completed": "Completed",
     "noGoals": "No goals yet",
+
+    "description": "Description",
 
     "creatingGoal": "Creating goal...",
     "updatingGoal": "Updating goal...",

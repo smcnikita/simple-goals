@@ -60,14 +60,16 @@ export default async function RootLayout({ children }: Props) {
       <NextIntlClientProvider messages={messages}>
         <Providers>
           <body className={`${jost.className}`}>
-            <Toaster />
+            <div id="global-app">
+              <Toaster />
 
-            <Container>
-              <Header />
-              {children}
-            </Container>
+              <Container>
+                <Header />
+                {children}
+              </Container>
 
-            <AnalyticsInitializer />
+              <AnalyticsInitializer />
+            </div>
           </body>
         </Providers>
       </NextIntlClientProvider>

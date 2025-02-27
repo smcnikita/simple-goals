@@ -1,11 +1,11 @@
 'use client';
 
 import { useCallback, useMemo, useState } from 'react';
+import toast from 'react-hot-toast';
 
 import type { GoalModel } from '@/models/goals-model';
 
 import { httpGetGoal } from '@/lib/http/goals';
-import toast from 'react-hot-toast';
 
 type Props = {
   year: number;
@@ -14,8 +14,10 @@ type Props = {
 const useGoals = ({ year }: Props) => {
   const [goals, setGoals] = useState<GoalModel[]>([]);
   const [isGlobalLoading, setIsGlobalLoading] = useState(true);
+  const [isLoading, setIsLoading] = useState(false);
 
   const updateIsGlobalLoading = useCallback((value: boolean) => setIsGlobalLoading(value), []);
+  const updateIsLoading = useCallback((value: boolean) => setIsLoading(value), []);
 
   const updateGoals = useCallback((value: GoalModel[]) => setGoals(value), []);
 
@@ -38,7 +40,16 @@ const useGoals = ({ year }: Props) => {
     } catch (error) {}
   }, [updateGoals, year]);
 
-  return { goals, canChangeGoal, isGlobalLoading, getGoals, updateIsGlobalLoading, updateGoals };
+  return {
+    goals,
+    canChangeGoal,
+    isGlobalLoading,
+    isLoading,
+    updateIsLoading,
+    getGoals,
+    updateIsGlobalLoading,
+    updateGoals,
+  };
 };
 
 export default useGoals;

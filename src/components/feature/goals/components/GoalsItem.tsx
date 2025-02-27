@@ -11,23 +11,35 @@ import BaseIcon, { TrashIcon } from '@/components/ui/icon';
 
 import GoalsItemEdit from './edit/GoalsItemEdit';
 
-import classes from '../style/goals.module.css';
+import type { GoalModalSaveParams, RemoveGoalProps, UpdateCompletedProps, UpdateNameGoalProps } from '../types';
+
+import cl from '../style/goals.module.css';
 
 type Props = {
   goal: GoalModel;
   canChangeGoal: boolean;
   isLoading: boolean;
 
-  remove: (goalId: number) => Promise<void>;
-  updateCompleted: (goalId: number, isCompleted: boolean) => Promise<void>;
-  updateName: (goalId: number, newName: string) => Promise<void>;
+  remove: RemoveGoalProps;
+  updateCompleted: UpdateCompletedProps;
+  updateName: UpdateNameGoalProps;
+
+  handleOpenModal: (goal: GoalModalSaveParams) => void;
 };
 
-const GoalsItem: FC<Props> = ({ canChangeGoal, goal, isLoading, remove, updateCompleted, updateName }) => {
+const GoalsItem: FC<Props> = ({
+  canChangeGoal,
+  goal,
+  isLoading,
+  remove,
+  updateCompleted,
+  updateName,
+  handleOpenModal,
+}) => {
   const [isEdit, setIsEdit] = useState(false);
   const [newName, setNewName] = useState('');
 
-  const handleChange = useCallback(
+  const onChangeCheckbox = useCallback(
     async (event: React.ChangeEvent<HTMLInputElement>) => {
       event.preventDefault();
       event.stopPropagation();
@@ -38,7 +50,7 @@ const GoalsItem: FC<Props> = ({ canChangeGoal, goal, isLoading, remove, updateCo
     [canChangeGoal, goal.id, updateCompleted]
   );
 
-  const handleRemove = useCallback(
+  const onRemove = useCallback(
     async (event: React.MouseEvent<HTMLButtonElement>) => {
       event.preventDefault();
       event.stopPropagation();
@@ -49,46 +61,45 @@ const GoalsItem: FC<Props> = ({ canChangeGoal, goal, isLoading, remove, updateCo
     [canChangeGoal, goal.id, remove]
   );
 
-  const handleSave = useCallback(
+  const onUpdateNameGoal = useCallback(
     async (event: React.MouseEvent<HTMLButtonElement> | React.KeyboardEvent<HTMLInputElement>) => {
       event.preventDefault();
       event.stopPropagation();
 
-      if (!canChangeGoal) return;
+      if (!canChangeGoal) {
+        return;
+      }
+
       await updateName(goal.id, newName);
+
       setIsEdit(false);
     },
     [canChangeGoal, goal.id, newName, updateName]
   );
 
-  const handleKeyDown = useCallback(
+  const onKeyDown = useCallback(
     async (event: React.KeyboardEvent<HTMLInputElement>) => {
       if (event.key === 'Enter') {
-        await handleSave(event);
+        await onUpdateNameGoal(event);
       }
       if (event.key === 'Escape') {
         setIsEdit(false);
         setNewName('');
       }
     },
-    [handleSave]
+    [onUpdateNameGoal]
   );
 
-  const handleCancel = useCallback(() => {
+  const onCancel = () => {
     setIsEdit(false);
     setNewName('');
-  }, []);
-
-  const handleEditClick = useCallback(() => {
-    setNewName(goal.name);
-    setIsEdit(true);
-  }, [goal.name]);
+  };
 
   return (
     <li
-      className={clsx(classes.item, {
-        [classes.canEdit]: canChangeGoal,
-        [classes.isChecked]: goal.is_completed,
+      className={clsx(cl.item, {
+        [cl.canEdit]: canChangeGoal,
+        [cl.isChecked]: goal.is_completed,
       })}
     >
       {isEdit ? (
@@ -96,35 +107,41 @@ const GoalsItem: FC<Props> = ({ canChangeGoal, goal, isLoading, remove, updateCo
           value={newName}
           isLoading={isLoading}
           updateValue={setNewName}
-          onKeyDown={handleKeyDown}
-          onSave={handleSave}
-          onCancel={handleCancel}
-          onRemove={handleRemove}
+          onKeyDown={onKeyDown}
+          onSave={onUpdateNameGoal}
+          onCancel={onCancel}
         />
       ) : (
         <>
-          <div className={classes.checkbox_wrapper}>
+          <div className={cl.checkbox_wrapper}>
             <Checkbox
               checked={goal.is_completed}
               disabled={!canChangeGoal || isLoading}
               name={`checkbox-${goal.id}`}
               id={`checkbox-${goal.id}`}
               useLabel={false}
-              onChange={handleChange}
+              onChange={onChangeCheckbox}
               style={{ width: '24px', height: '24px' }}
             />
             <button
               type="button"
-              className={classes.goalAction}
+              className={cl.goalAction}
               disabled={!canChangeGoal || isLoading}
-              onClick={handleEditClick}
+              onClick={() =>
+                handleOpenModal({
+                  id: goal.id,
+                  name: goal.name,
+                  isCompleted: goal.is_completed,
+                  description: goal.description,
+                })
+              }
             >
               {goal.name}
             </button>
           </div>
 
-          <div className={classes.item_actions}>
-            <Button size="sm" isButtonError onClick={handleRemove} disabled={!canChangeGoal || isLoading}>
+          <div className={cl.item_actions}>
+            <Button size="sm" isButtonError onClick={onRemove} disabled={!canChangeGoal || isLoading}>
               <BaseIcon size="14">
                 <TrashIcon />
               </BaseIcon>

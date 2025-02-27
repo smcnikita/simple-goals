@@ -61,8 +61,11 @@
     "remove": "Удалить",
     "cancel": "Отменить",
     "enterGoal": "Введите цель",
+    "enterDescription": "Введите описание цели",
     "completed": "Выполенные",
     "noGoals": "Нет целей",
+
+    "description": "Описание",
 
     "creatingGoal": "Создание цели...",
     "updatingGoal": "Обновление цели...",

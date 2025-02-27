@@ -5,8 +5,13 @@ import { yearsController } from './years-controller';
 
 type CreateGoalParams = Omit<
   GoalModel,
-  'id' | 'sort_order' | 'is_completed' | 'completed_at' | 'created_at' | 'updated_at'
+  'id' | 'sort_order' | 'is_completed' | 'completed_at' | 'created_at' | 'updated_at' | 'description'
 >;
+
+type EditData = {
+  name: string;
+  description?: string;
+};
 
 export const goalsController = {
   getUserGoalsByYearId: async (yearId: number, userId: number) => {
@@ -74,13 +79,19 @@ export const goalsController = {
     });
   },
 
-  editGoal: async (goalId: number, name: string, userId: number) => {
+  editGoal: async (goalId: number, name: string, userId: number, description?: string) => {
+    const data: EditData = { name };
+
+    if (description !== undefined) {
+      data['description'] = description;
+    }
+
     return await prisma.goals.update({
       where: {
         id: goalId,
         user_id: userId,
       },
-      data: { name },
+      data,
     });
   },
 };

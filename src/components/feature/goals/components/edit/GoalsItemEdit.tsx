@@ -12,10 +12,9 @@ type Props = {
   onKeyDown: (event: React.KeyboardEvent<HTMLInputElement>) => Promise<void>;
   onSave: (e: React.MouseEvent<HTMLButtonElement>) => Promise<void>;
   onCancel: () => void;
-  onRemove: (event: React.MouseEvent<HTMLButtonElement>) => Promise<void>;
 };
 
-const EditItem: FC<Props> = ({ value, isLoading, updateValue, onKeyDown, onSave, onCancel, onRemove }) => {
+const GoalsItemEdit: FC<Props> = ({ value, isLoading, updateValue, onKeyDown, onSave, onCancel }) => {
   const t = useTranslations('Goals');
 
   return (
@@ -27,9 +26,8 @@ const EditItem: FC<Props> = ({ value, isLoading, updateValue, onKeyDown, onSave,
       onKeyDown={onKeyDown}
       onSave={onSave}
       onCancel={onCancel}
-      onRemove={onRemove}
     />
   );
 };
 
-export default EditItem;
+export default GoalsItemEdit;

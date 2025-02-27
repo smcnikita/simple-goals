@@ -3,10 +3,11 @@
 import { useEffect, useRef, type FC } from 'react';
 
 import Button from '@/components/ui/button';
-import BaseIcon, { CheckIcon, PlusIcon, TrashIcon } from '@/components/ui/icon';
+import BaseIcon, { CheckIcon, PlusIcon } from '@/components/ui/icon';
 
 import classes from '../../style/goals.module.css';
 import { useTranslations } from 'next-intl';
+import { GoalModel } from '@/models/goals-model';
 
 type Props = {
   value: string;
@@ -17,7 +18,8 @@ type Props = {
   onKeyDown: (event: React.KeyboardEvent<HTMLInputElement>) => Promise<void>;
   onSave: (e: React.MouseEvent<HTMLButtonElement>) => Promise<void>;
   onCancel: () => void;
-  onRemove?: (event: React.MouseEvent<HTMLButtonElement>) => Promise<void>;
+
+  handleOpenModal?: (goal: GoalModel) => void;
 };
 
 const BaseEditComponent: FC<Props> = ({
@@ -29,7 +31,6 @@ const BaseEditComponent: FC<Props> = ({
   onKeyDown,
   onSave,
   onCancel,
-  onRemove,
 }) => {
   const t = useTranslations('Goals');
 
@@ -69,21 +70,6 @@ const BaseEditComponent: FC<Props> = ({
             </>
           )}
         </Button>
-        {!isAddNew && onRemove && (
-          <Button
-            size="sm-2"
-            disabled={isLoading}
-            onClick={async (e) => {
-              await onRemove(e);
-            }}
-            className={classes.removeBtn}
-          >
-            <BaseIcon size="20">
-              <TrashIcon />
-            </BaseIcon>
-            {t('remove')}
-          </Button>
-        )}
 
         <Button size="sm-2" isButtonError disabled={isLoading} onClick={onCancel}>
           {t('cancel')}

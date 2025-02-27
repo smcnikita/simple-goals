@@ -1,27 +1,44 @@
 'use client';
 
-import { useMemo, type FC } from 'react';
+import { type FC } from 'react';
+import { useTranslations } from 'next-intl';
 
 import type { GoalModel } from '@/models/goals-model';
 
-import GoalsItem from './GoalsItem';
-import GoalsItemAddNew from './edit/GoalsItemAddNew';
+import useGoal from '../hooks/useGoal';
 
-import classes from '../style/goals.module.css';
-import { useTranslations } from 'next-intl';
+import GoalsItemAddNew from './edit/GoalsItemAddNew';
+import BaseList from './list/BaseList';
+import GoalItemModal from './GoalItemModal';
+
+import type {
+  CreateGoalProps,
+  GoalModalSaveParams,
+  RemoveGoalProps,
+  UpdateCompletedProps,
+  UpdateGoalProps,
+  UpdateNameGoalProps,
+} from '../types';
+
+import cl from '../style/goals.module.css';
 
 type Props = {
   goals: GoalModel[];
   canChangeGoal: boolean;
   isShowAddGoal: boolean;
   isLoading: boolean;
+  isOpenModal: boolean;
+  goalDataForModal: GoalModalSaveParams | null;
 
-  create: (name: string) => Promise<void>;
-  remove: (goalId: number) => Promise<void>;
-  updateCompleted: (goalId: number, isCompleted: boolean) => Promise<void>;
-  updateName: (goalId: number, newName: string) => Promise<void>;
-
+  create: CreateGoalProps;
+  remove: RemoveGoalProps;
+  updateCompleted: UpdateCompletedProps;
+  updateName: UpdateNameGoalProps;
+  handleSave: UpdateGoalProps;
   updateIsShowAddGoal: (value: boolean) => void;
+  handleUpdateCompleted: UpdateCompletedProps;
+  handleOpenModal: (goal: GoalModalSaveParams) => void;
+  handleCancelModal: () => void;
 };
 
 const GoalsList: FC<Props> = (props) => {
@@ -30,32 +47,30 @@ const GoalsList: FC<Props> = (props) => {
     canChangeGoal,
     isShowAddGoal,
     isLoading,
+    isOpenModal,
+    goalDataForModal,
     updateCompleted,
     remove,
     updateName,
+    handleSave,
     create,
+    handleUpdateCompleted,
     updateIsShowAddGoal,
+    handleOpenModal,
+    handleCancelModal,
   } = props;
 
   const t = useTranslations('Goals');
 
-  const uncompletedGoals = useMemo(() => {
-    return goals.filter((goal) => !goal.is_completed && goal.completed_at === null);
-  }, [goals]);
-
-  const completedGoals = useMemo(() => {
-    return goals
-      .filter((goal) => goal.is_completed && goal.completed_at !== null)
-      .sort((a, b) => new Date(a.completed_at!).getTime() - new Date(b.completed_at!).getTime());
-  }, [goals]);
+  const { completedGoals, uncompletedGoals } = useGoal({ goals });
 
   if (goals.length === 0) {
     return (
       <>
-        <p className={classes.noGoals}>{t('noGoals')}</p>
+        <p className={cl.noGoals}>{t('noGoals')}</p>
 
         {isShowAddGoal && (
-          <div className={classes.item}>
+          <div className={cl.item}>
             <GoalsItemAddNew isLoading={isLoading} create={create} updateIsAddNewGoal={updateIsShowAddGoal} />
           </div>
         )}
@@ -64,50 +79,46 @@ const GoalsList: FC<Props> = (props) => {
   }
 
   return (
-    <div className={classes.items}>
-      <div className={classes.items_wrapper}>
-        {goals.length > 0 && (
-          <p className={classes.items_title}>{t('count', { completed: completedGoals.length, goals: goals.length })}</p>
-        )}
-        <ul className={classes.list}>
-          {uncompletedGoals.map((goal) => (
-            <GoalsItem
-              key={goal.id}
-              isLoading={isLoading}
-              goal={goal}
-              canChangeGoal={canChangeGoal}
-              remove={remove}
-              updateCompleted={updateCompleted}
-              updateName={updateName}
-            />
-          ))}
-        </ul>
-      </div>
+    <div className={cl.items}>
+      <BaseList
+        title={t('count', { completed: completedGoals.length, goals: goals.length })}
+        goals={uncompletedGoals}
+        isLoading={isLoading}
+        canChangeGoal={canChangeGoal}
+        remove={remove}
+        updateCompleted={updateCompleted}
+        updateName={updateName}
+        handleOpenModal={handleOpenModal}
+      />
 
       {isShowAddGoal && (
-        <div className={classes.item}>
+        <div className={cl.item}>
           <GoalsItemAddNew isLoading={isLoading} create={create} updateIsAddNewGoal={updateIsShowAddGoal} />
         </div>
       )}
 
       {completedGoals.length > 0 && (
-        <div className={classes.items_wrapper}>
-          <p className={classes.items_title}>{t('completed')}</p>
-          <ul className={classes.list}>
-            {completedGoals.map((goal) => (
-              <GoalsItem
-                key={goal.id}
-                goal={goal}
-                isLoading={isLoading}
-                canChangeGoal={canChangeGoal}
-                remove={remove}
-                updateCompleted={updateCompleted}
-                updateName={updateName}
-              />
-            ))}
-          </ul>
-        </div>
+        <BaseList
+          title={t('completed')}
+          goals={completedGoals}
+          isLoading={isLoading}
+          canChangeGoal={canChangeGoal}
+          remove={remove}
+          updateCompleted={updateCompleted}
+          updateName={updateName}
+          handleOpenModal={handleOpenModal}
+        />
       )}
+
+      <GoalItemModal
+        isOpenModal={isOpenModal}
+        goalData={goalDataForModal}
+        canChangeGoal={canChangeGoal}
+        isLoading={isLoading}
+        handleCancel={handleCancelModal}
+        handleSave={handleSave}
+        updateCompleted={handleUpdateCompleted}
+      />
     </div>
   );
 };
