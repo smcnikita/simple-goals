@@ -1,19 +1,19 @@
-.theme_light {
+:root {
   /* Body */
-  --body-color: #2f445d;
-  --body-background: #c8d5d6;
+  --body-color: #1c1917;
+  --body-background: #fff;
 
   /* Header */
-  --header-background: #d5dddd;
-  --header-tab-color: var(--black-color);
-  --header-tab-color-hover: #c4c7cc;
-  --header-tab-color-active: #c4c7cc;
+  --header-background: #fafaf9;
+  --header-tab-color: #292524;
+  --header-tab-color-hover: #e4e4e4;
+  --header-tab-color-active: #e4e4e4;
 
   /* Aside */
-  --aside-background: #d5dddd;
-  --aside-item-color: var(--black-color);
-  --aside-item-hover-background: #c4c7cc;
-  --aside-item-active-background: #c4c7cc;
+  --aside-background: #fafaf9;
+  --aside-item-color: #292524;
+  --aside-item-hover-background: #e4e4e4;
+  --aside-item-active-background: #e4e4e4;
 
   /* Checkbox */
   --checkbox-color: var(--black-color);
@@ -38,7 +38,7 @@
   --btn-primary-color: var(--black-color);
   --btn-primary-bg: var(--light-color);
   --btn-primary-before-bg: rgba(0, 0, 0, 0.05);
-  --btn-primary-error-bg: #d17070;
+  --btn-primary-error-bg: #fcd7d7;
 
   /* Github logo */
   --github-logo-dark: none;

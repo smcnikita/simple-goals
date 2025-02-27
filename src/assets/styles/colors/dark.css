@@ -1,7 +1,7 @@
-:root {
+.dark {
   /* Body */
   --body-color: var(--light-color);
-  --body-background: var(--purple-dark-color);
+  --body-background: #161617;
 
   /* Header */
   --header-background: var(--dark-color);

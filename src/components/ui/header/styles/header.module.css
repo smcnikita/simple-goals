@@ -72,7 +72,7 @@
   transform: rotate(15deg);
 }
 
-@media (max-width: 900px) {
+@media (max-width: 768px) {
   .asideToggle {
     display: flex;
     align-items: center;
