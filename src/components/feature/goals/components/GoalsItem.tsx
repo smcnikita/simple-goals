@@ -110,7 +110,6 @@ const GoalsItem: FC<Props> = ({
           onKeyDown={onKeyDown}
           onSave={onUpdateNameGoal}
           onCancel={onCancel}
-          onRemove={onRemove}
         />
       ) : (
         <>

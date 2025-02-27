@@ -10,6 +10,7 @@ import type { GoalModalSaveParams, UpdateCompletedProps, UpdateGoalProps } from 
 
 import cl from './modal-content.module.css';
 import cl_goals from '../../style/goals.module.css';
+import { useTranslations } from 'next-intl';
 
 type Props = {
   goalData: GoalModalSaveParams | null;
@@ -21,6 +22,8 @@ type Props = {
 };
 
 const ModalContent: FC<Props> = ({ goalData, canChangeGoal, isLoading, handleSave, handleCancel, updateCompleted }) => {
+  const t = useTranslations('Goals');
+
   const [data, setData] = useState<GoalModalSaveParams | null>(null);
   const [newName, setNewName] = useState('');
   const [newDescription, setNewDescription] = useState('');
@@ -68,21 +71,21 @@ const ModalContent: FC<Props> = ({ goalData, canChangeGoal, isLoading, handleSav
 
       {/* Description */}
       <div className={cl.blockDescription}>
-        <p className={cl.subtitle}>Описание</p>
+        <p className={cl.subtitle}>{t('description')}</p>
         <textarea
           name="goal-edit-description"
           id="goal-edit-description"
           rows={10}
           className={cl_goals.editInput}
           value={newDescription}
-          placeholder="Введите описание"
+          placeholder={t('enterDescription')}
           onChange={(e) => setNewDescription(e.target.value)}
         />
       </div>
 
       <div className={cl.blockActions}>
         <Button type="button" size="sm-2" isButtonError disabled={!canChangeGoal || isLoading} onClick={handleCancel}>
-          Отменить
+          {t('cancel')}
         </Button>
         <Button
           type="button"
@@ -90,7 +93,7 @@ const ModalContent: FC<Props> = ({ goalData, canChangeGoal, isLoading, handleSav
           disabled={!canChangeGoal || isLoading}
           onClick={async () => await handleSaveGoal()}
         >
-          Сохранить
+          {t('save')}
         </Button>
       </div>
     </div>
