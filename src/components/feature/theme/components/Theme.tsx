@@ -23,12 +23,15 @@ const ThemeComponent: FC = () => {
         return;
       }
 
-      if (newTheme === 'system') {
-        const userSystemTheme = window.matchMedia('(prefers-color-scheme: dark)').matches;
-        const systemTheme = userSystemTheme ? 'dark' : 'light';
+      const userSystemTheme = window.matchMedia('(prefers-color-scheme: dark)').matches;
+      const systemTheme = userSystemTheme ? 'dark' : 'light';
 
+      if (newTheme === 'system') {
         document.documentElement.classList.remove(`${THEME_PREFIX}${theme}`);
-        document.documentElement.classList.add(`${THEME_PREFIX}${systemTheme}`);
+
+        if (systemTheme !== 'light') {
+          document.documentElement.classList.add(`${THEME_PREFIX}${systemTheme}`);
+        }
 
         setTheme('system');
         removeThemeToLocalStorage();
@@ -36,6 +39,7 @@ const ThemeComponent: FC = () => {
       }
 
       document.documentElement.classList.remove(`${THEME_PREFIX}${theme}`);
+      document.documentElement.classList.remove(`${THEME_PREFIX}${systemTheme}`);
       document.documentElement.classList.add(`${THEME_PREFIX}${newTheme}`);
 
       setTheme(newTheme);
@@ -46,7 +50,7 @@ const ThemeComponent: FC = () => {
 
   useEffect(() => {
     const savedTheme = getThemeFromLocalStorage();
-    setTheme(savedTheme ? savedTheme : DEFAULT_APP_THEME);
+    setTheme(savedTheme ? savedTheme : 'system');
   }, [theme]);
 
   return (
