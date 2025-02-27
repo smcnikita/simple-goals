@@ -6,19 +6,18 @@ import clsx from 'clsx';
 import Checkbox from '@/components/ui/checkbox';
 import Button from '@/components/ui/button';
 
-import type { GoalModalSaveParams } from '../../types';
+import type { GoalModalSaveParams, UpdateCompletedProps, UpdateGoalProps } from '../../types';
 
 import cl from './modal-content.module.css';
-import clGoals from '../../style/goals.module.css';
+import cl_goals from '../../style/goals.module.css';
 
 type Props = {
   goalData: GoalModalSaveParams | null;
   canChangeGoal: boolean;
   isLoading: boolean;
-
-  handleSave: (id: number, name: string, description: string) => Promise<void>;
+  handleSave: UpdateGoalProps;
   handleCancel: () => void;
-  updateCompleted: (goalId: number, isCompleted: boolean) => Promise<void>;
+  updateCompleted: UpdateCompletedProps;
 };
 
 const ModalContent: FC<Props> = ({ goalData, canChangeGoal, isLoading, handleSave, handleCancel, updateCompleted }) => {
@@ -63,7 +62,7 @@ const ModalContent: FC<Props> = ({ goalData, canChangeGoal, isLoading, handleSav
           value={newName}
           disabled={!canChangeGoal || isLoading}
           onChange={(e) => setNewName(e.target.value)}
-          className={clsx(clGoals.editInput, cl.blockCheckbox_text)}
+          className={clsx(cl_goals.editInput, cl.blockCheckbox_text)}
         />
       </div>
 
@@ -74,7 +73,7 @@ const ModalContent: FC<Props> = ({ goalData, canChangeGoal, isLoading, handleSav
           name="goal-edit-description"
           id="goal-edit-description"
           rows={10}
-          className={clGoals.editInput}
+          className={cl_goals.editInput}
           value={newDescription}
           placeholder="Введите описание"
           onChange={(e) => setNewDescription(e.target.value)}

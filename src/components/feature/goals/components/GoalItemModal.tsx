@@ -6,7 +6,7 @@ import ModalComponent from '@/components/ui/modal';
 
 import ModalContent from './modal/ModalContent';
 
-import type { GoalModalSaveParams } from '../types';
+import type { GoalModalSaveParams, UpdateCompletedProps, UpdateGoalProps } from '../types';
 
 type Props = {
   isOpenModal: boolean;
@@ -14,10 +14,10 @@ type Props = {
   canChangeGoal: boolean;
   isLoading: boolean;
 
-  handleSave: (id: number, name: string, description: string) => Promise<void>;
+  handleSave: UpdateGoalProps;
   handleCancel: () => void;
 
-  updateCompleted: (goalId: number, isCompleted: boolean) => Promise<void>;
+  updateCompleted: UpdateCompletedProps;
 };
 
 const GoalItemModal: FC<Props> = (props) => {

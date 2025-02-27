@@ -1,6 +1,7 @@
 'use client';
 
 import toast from 'react-hot-toast';
+import { useTranslations } from 'next-intl';
 
 import {
   httpChangeNameAndDescriptionGoal,
@@ -11,23 +12,34 @@ import {
 } from '@/lib/http/goals';
 
 import type { GoalModel } from '@/models/goals-model';
-import { useState } from 'react';
-import { useTranslations } from 'next-intl';
+
+import type {
+  CreateGoalProps,
+  GoalModalSaveParams,
+  RemoveGoalProps,
+  UpdateCompletedProps,
+  UpdateGoalProps,
+  UpdateNameGoalProps,
+} from '../types';
 
 type Props = {
   canChangeGoal: boolean;
   year: number;
   goals: GoalModel[];
+
+  updateIsLoading: (value: boolean) => void;
   updateGoals: (value: GoalModel[]) => void;
+  updateIsOpenModal: (value: boolean) => void;
+  updateGoalDataForModal: (value: GoalModalSaveParams | null) => void;
 };
 
-const useGoalActions = ({ canChangeGoal, year, goals, updateGoals }: Props) => {
+const useGoalActions = (props: Props) => {
+  const { canChangeGoal, year, goals, updateGoals, updateIsOpenModal, updateGoalDataForModal, updateIsLoading } = props;
+
   const t = useTranslations('Goals');
 
-  const [isLoading, setIsLoading] = useState(false);
-
   const onLoadingStart = (message: string) => {
-    setIsLoading(true);
+    updateIsLoading(true);
 
     toast.loading(message);
   };
@@ -36,17 +48,17 @@ const useGoalActions = ({ canChangeGoal, year, goals, updateGoals }: Props) => {
     toast.remove();
     toast.success(message);
 
-    setIsLoading(false);
+    updateIsLoading(false);
   };
 
   const onError = (message: string) => {
     toast.remove();
     toast.error(message);
 
-    setIsLoading(false);
+    updateIsLoading(false);
   };
 
-  const create = async (name: string) => {
+  const create: CreateGoalProps = async (name: string) => {
     if (!canChangeGoal) {
       return;
     }
@@ -68,7 +80,7 @@ const useGoalActions = ({ canChangeGoal, year, goals, updateGoals }: Props) => {
     onLoadingEnd(t('goalCreated'));
   };
 
-  const remove = async (goalId: number) => {
+  const remove: RemoveGoalProps = async (goalId: number) => {
     if (!canChangeGoal) {
       return;
     }
@@ -90,7 +102,7 @@ const useGoalActions = ({ canChangeGoal, year, goals, updateGoals }: Props) => {
     onLoadingEnd(t('goalRemoved'));
   };
 
-  const updateCompleted = async (goalId: number, isCompleted: boolean) => {
+  const updateCompleted: UpdateCompletedProps = async (goalId: number, isCompleted: boolean) => {
     if (!canChangeGoal) {
       return;
     }
@@ -118,10 +130,12 @@ const useGoalActions = ({ canChangeGoal, year, goals, updateGoals }: Props) => {
 
     updateGoals(newGoals);
 
+    updateIsOpenModal(false);
+
     onLoadingEnd(t('goalUpdated'));
   };
 
-  const updateName = async (goalId: number, newName: string) => {
+  const updateName: UpdateNameGoalProps = async (goalId: number, newName: string) => {
     if (!canChangeGoal) {
       return;
     }
@@ -151,14 +165,14 @@ const useGoalActions = ({ canChangeGoal, year, goals, updateGoals }: Props) => {
     onLoadingEnd(t('goalUpdated'));
   };
 
-  const updateNameAndDescription = async (goalId: number, newName: string, newDescription: string) => {
+  const updateNameAndDescription: UpdateGoalProps = async (goalId: number, newName: string, newDescription: string) => {
     if (!canChangeGoal) {
       return;
     }
 
     onLoadingStart(t('updatingGoal'));
 
-    const res = await httpChangeNameAndDescriptionGoal(goalId, year, newName, newDescription);
+    const res = await httpChangeNameAndDescriptionGoal(goalId, year, newName.trim(), newDescription.trim());
     const data = await res.json();
 
     if (!res.ok) {
@@ -179,10 +193,13 @@ const useGoalActions = ({ canChangeGoal, year, goals, updateGoals }: Props) => {
 
     updateGoals(newGoals);
 
+    updateIsOpenModal(false);
+    updateGoalDataForModal(null);
+
     onLoadingEnd(t('goalUpdated'));
   };
 
-  return { isLoading, create, remove, updateCompleted, updateName, updateNameAndDescription };
+  return { create, remove, updateCompleted, updateName, updateNameAndDescription };
 };
 
 export default useGoalActions;
