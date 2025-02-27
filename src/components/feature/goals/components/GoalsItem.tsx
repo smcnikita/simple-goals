@@ -12,6 +12,7 @@ import BaseIcon, { TrashIcon } from '@/components/ui/icon';
 import GoalsItemEdit from './edit/GoalsItemEdit';
 
 import classes from '../style/goals.module.css';
+import { GoalModalSaveParams } from '../types';
 
 type Props = {
   goal: GoalModel;
@@ -21,9 +22,19 @@ type Props = {
   remove: (goalId: number) => Promise<void>;
   updateCompleted: (goalId: number, isCompleted: boolean) => Promise<void>;
   updateName: (goalId: number, newName: string) => Promise<void>;
+
+  handleOpenModal: (goal: GoalModalSaveParams) => void;
 };
 
-const GoalsItem: FC<Props> = ({ canChangeGoal, goal, isLoading, remove, updateCompleted, updateName }) => {
+const GoalsItem: FC<Props> = ({
+  canChangeGoal,
+  goal,
+  isLoading,
+  remove,
+  updateCompleted,
+  updateName,
+  handleOpenModal,
+}) => {
   const [isEdit, setIsEdit] = useState(false);
   const [newName, setNewName] = useState('');
 
@@ -79,11 +90,6 @@ const GoalsItem: FC<Props> = ({ canChangeGoal, goal, isLoading, remove, updateCo
     setNewName('');
   }, []);
 
-  const handleEditClick = useCallback(() => {
-    setNewName(goal.name);
-    setIsEdit(true);
-  }, [goal.name]);
-
   return (
     <li
       className={clsx(classes.item, {
@@ -117,7 +123,7 @@ const GoalsItem: FC<Props> = ({ canChangeGoal, goal, isLoading, remove, updateCo
               type="button"
               className={classes.goalAction}
               disabled={!canChangeGoal || isLoading}
-              onClick={handleEditClick}
+              onClick={() => handleOpenModal({ id: goal.id, name: goal.name, isCompleted: goal.is_completed })}
             >
               {goal.name}
             </button>

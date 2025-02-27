@@ -7,6 +7,7 @@ import BaseIcon, { CheckIcon, PlusIcon, TrashIcon } from '@/components/ui/icon';
 
 import classes from '../../style/goals.module.css';
 import { useTranslations } from 'next-intl';
+import { GoalModel } from '@/models/goals-model';
 
 type Props = {
   value: string;
@@ -18,6 +19,8 @@ type Props = {
   onSave: (e: React.MouseEvent<HTMLButtonElement>) => Promise<void>;
   onCancel: () => void;
   onRemove?: (event: React.MouseEvent<HTMLButtonElement>) => Promise<void>;
+
+  handleOpenModal?: (goal: GoalModel) => void;
 };
 
 const BaseEditComponent: FC<Props> = ({

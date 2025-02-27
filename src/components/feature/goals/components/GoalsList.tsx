@@ -1,6 +1,6 @@
 'use client';
 
-import { useMemo, type FC } from 'react';
+import { useMemo, useState, type FC } from 'react';
 
 import type { GoalModel } from '@/models/goals-model';
 
@@ -9,6 +9,8 @@ import GoalsItemAddNew from './edit/GoalsItemAddNew';
 
 import classes from '../style/goals.module.css';
 import { useTranslations } from 'next-intl';
+import GoalItemModal from './GoalItemModal';
+import type { GoalModalSaveParams } from '../types';
 
 type Props = {
   goals: GoalModel[];
@@ -38,6 +40,53 @@ const GoalsList: FC<Props> = (props) => {
   } = props;
 
   const t = useTranslations('Goals');
+
+  const [isOpenModal, setIsOpenModal] = useState(false);
+  const [goalDataForModal, setGoalDataForModal] = useState<GoalModalSaveParams | null>(null);
+
+  const handleOpenModal = (goal: GoalModalSaveParams) => {
+    if (!canChangeGoal || isLoading) {
+      return;
+    }
+
+    setIsOpenModal(true);
+    setGoalDataForModal(goal);
+  };
+
+  const handleCancel = () => {
+    if (!canChangeGoal || isLoading) {
+      return;
+    }
+
+    setIsOpenModal(false);
+    setGoalDataForModal(null); // TODO: мб надо убрать
+  };
+
+  const handleSave = async (id: number, name: string) => {
+    if (!canChangeGoal || isLoading) {
+      return;
+    }
+
+    const trimmedName = name;
+
+    if (!trimmedName) {
+      return;
+    }
+
+    await updateName(id, trimmedName);
+
+    setIsOpenModal(false);
+    setGoalDataForModal(null);
+  };
+
+  const handleUpdateCompleted = async (goalId: number, isCompleted: boolean) => {
+    if (!canChangeGoal || isLoading) {
+      return;
+    }
+
+    await updateCompleted(goalId, isCompleted);
+    setIsOpenModal(false);
+  };
 
   const uncompletedGoals = useMemo(() => {
     return goals.filter((goal) => !goal.is_completed && goal.completed_at === null);
@@ -79,6 +128,7 @@ const GoalsList: FC<Props> = (props) => {
               remove={remove}
               updateCompleted={updateCompleted}
               updateName={updateName}
+              handleOpenModal={handleOpenModal}
             />
           ))}
         </ul>
@@ -103,11 +153,22 @@ const GoalsList: FC<Props> = (props) => {
                 remove={remove}
                 updateCompleted={updateCompleted}
                 updateName={updateName}
+                handleOpenModal={handleOpenModal}
               />
             ))}
           </ul>
         </div>
       )}
+
+      <GoalItemModal
+        isOpenModal={isOpenModal}
+        goalData={goalDataForModal}
+        canChangeGoal={canChangeGoal}
+        isLoading={isLoading}
+        handleCancel={handleCancel}
+        handleSave={handleSave}
+        updateCompleted={handleUpdateCompleted}
+      />
     </div>
   );
 };
