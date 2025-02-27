@@ -1,5 +1,5 @@
 .aside {
-  width: 280px;
+  width: 250px;
   height: calc(100dvh - 108px - 12px);
 
   background: var(--aside-background);
@@ -20,10 +20,13 @@
 
   z-index: 50;
 
-  transition: all 0.2s ease-in-out;
+  transition:
+    left 0.2s ease-in-out,
+    opacity 0.2s ease-in-out,
+    visibility 0.2s ease-in-out;
 }
 
-@media (max-width: 900px) {
+@media (max-width: 768px) {
   .aside {
     position: fixed;
     left: -300px;
@@ -33,7 +36,7 @@
   }
 
   .aside__open {
-    left: 12px;
+    left: 24px;
 
     opacity: 1;
     visibility: visible;
