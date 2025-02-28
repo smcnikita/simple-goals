@@ -71,7 +71,8 @@ const ModalContent: FC<Props> = ({
           style={{ width: '24px', height: '24px', alignSelf: 'flex-start' }}
         />
         <TextareaAutosize
-          style={{ resize: 'none', overflow: 'hidden' }}
+          maxRows={4}
+          style={{ resize: 'none', overflow: 'hidden', overflowY: 'auto' }}
           value={newName}
           disabled={!canChangeGoal || isLoading}
           onChange={(e) => setNewName(e.target.value)}
@@ -83,9 +84,10 @@ const ModalContent: FC<Props> = ({
       <div className={cl.blockDescription}>
         <p className={cl.subtitle}>{t('description')}</p>
         <TextareaAutosize
+          maxRows={13}
           name="goal-edit-description"
           id="goal-edit-description"
-          style={{ resize: 'none', overflow: 'hidden' }}
+          style={{ resize: 'none', overflow: 'hidden', overflowY: 'auto' }}
           className={cl_goals.editInput}
           value={newDescription}
           placeholder={t('enterDescription')}

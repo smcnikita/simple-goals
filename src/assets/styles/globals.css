@@ -49,6 +49,10 @@ h1 {
   font-size: 32px;
 }
 
+.no-scroll {
+  overflow: hidden;
+}
+
 .ReactModal__Overlay {
   opacity: 0;
   transition: all 0.2s ease-in-out;

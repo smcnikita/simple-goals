@@ -1,6 +1,6 @@
 'use client';
 
-import type { FC, PropsWithChildren } from 'react';
+import { useEffect, type FC, type PropsWithChildren } from 'react';
 import Modal, { Props as ReactModalProps } from 'react-modal';
 
 import { DEFAULT_STYLES } from '../constants';
@@ -13,6 +13,16 @@ type Props = ReactModalProps & {
 
 const ModalComponent: FC<PropsWithChildren<Props>> = (props) => {
   const { children, trigger, isOpen, style = DEFAULT_STYLES, onRequestClose, ...rest } = props;
+
+  useEffect(() => {
+    const body = document.querySelector('body');
+
+    if (isOpen) {
+      body?.classList.add('no-scroll');
+    } else {
+      body?.classList.remove('no-scroll');
+    }
+  }, [isOpen]);
 
   return (
     <>

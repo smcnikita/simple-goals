@@ -44,9 +44,10 @@ const BaseEditComponent: FC<Props> = ({
     <div className={classes.editWrapper}>
       <TextareaAutosize
         ref={ref}
+        maxRows={4}
         className={classes.editInput}
         value={value}
-        style={{ resize: 'none', overflow: 'hidden' }}
+        style={{ resize: 'none', overflow: 'hidden', overflowY: 'auto' }}
         placeholder={placeholder}
         onChange={(e) => updateValue(e.target.value)}
       />
