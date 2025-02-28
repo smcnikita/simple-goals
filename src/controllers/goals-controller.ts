@@ -3,10 +3,7 @@ import { prisma } from '@/lib/prisma';
 import { GoalModel } from '@/models/goals-model';
 import { yearsController } from './years-controller';
 
-type CreateGoalParams = Omit<
-  GoalModel,
-  'id' | 'sort_order' | 'is_completed' | 'completed_at' | 'created_at' | 'updated_at' | 'description'
->;
+type CreateGoalParams = Pick<GoalModel, 'name' | 'year_id' | 'user_id'>;
 
 type EditData = {
   name: string;
