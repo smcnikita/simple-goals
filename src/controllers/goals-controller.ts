@@ -1,7 +1,10 @@
 import { prisma } from '@/lib/prisma';
 
 import { GoalModel } from '@/models/goals-model';
+
 import { yearsController } from './years-controller';
+
+import type { Month } from '@/types/month';
 
 type CreateGoalParams = Pick<GoalModel, 'name' | 'year_id' | 'user_id'>;
 
@@ -11,9 +14,22 @@ type EditData = {
 };
 
 export const goalsController = {
+  // TODO: rename
   getUserGoalsByYearId: async (yearId: number, userId: number) => {
     return await prisma.goals.findMany({
-      where: { year_id: yearId, user_id: userId },
+      where: { year_id: yearId, user_id: userId, month: null },
+      orderBy: { created_at: 'asc' },
+    });
+  },
+
+  // TODO: rename
+  getUserGoalsMonthByYearId: async (yearId: number, userId: number, month: Month) => {
+    return await prisma.goals.findMany({
+      where: {
+        year_id: yearId,
+        user_id: userId,
+        month,
+      },
       orderBy: { created_at: 'asc' },
     });
   },

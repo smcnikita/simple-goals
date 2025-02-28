@@ -24,6 +24,12 @@
   transition: all 0.3s ease-in-out;
 }
 
+.item__small {
+  margin-left: 16px;
+  padding: 8px 12px;
+  font-size: 14px;
+}
+
 .link:hover {
   background: var(--aside-item-hover-background);
 
@@ -52,4 +58,8 @@
 
 .link:hover::after {
   opacity: 1;
+}
+
+.item__small::after {
+  display: none;
 }

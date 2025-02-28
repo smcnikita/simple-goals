@@ -8,6 +8,12 @@ export const httpGetGoal = async (year: number) => {
   return fetchFromAPI(apiUrl, { method: 'GET' });
 };
 
+export const httpGetGoalMonth = async (year: number, month: string) => {
+  const queryParams = new URLSearchParams({ year: year.toString(), month });
+  const apiUrl = API_PATHS.goals.getMonth + '?' + queryParams.toString();
+  return fetchFromAPI(apiUrl, { method: 'GET' });
+};
+
 export const httpUpdateGoal = async (goalId: number, isCompleted: boolean, year: number) => {
   const apiUrl = API_PATHS.goals.update;
   const body = JSON.stringify({ id: goalId, isCompleted, year });
