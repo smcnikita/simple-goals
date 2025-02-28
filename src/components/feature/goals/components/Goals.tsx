@@ -34,7 +34,7 @@ const Goals: FC<Props> = ({ year, month }) => {
     updateIsGlobalLoading,
   } = useGoals({ year, month });
 
-  const { isShowAddGoal, isShowAddGoalButton, updateIsShowAddGoal } = useAddGoal({ year });
+  const { isShowAddGoal, isShowAddGoalButton, updateIsShowAddGoal } = useAddGoal({ year, month });
 
   const actionsModal = useGoalModalAction({ canChangeGoal, isLoading });
 
@@ -42,6 +42,7 @@ const Goals: FC<Props> = ({ year, month }) => {
     canChangeGoal,
     goals,
     year,
+    month,
     updateGoals,
     updateIsLoading,
     updateGoalDataForModal: actionsModal.updateGoalDataForModal,

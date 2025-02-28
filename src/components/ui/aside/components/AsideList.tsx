@@ -41,7 +41,7 @@ const AsideList: FC<Props> = ({ defaultYears }) => {
           <AsideItem
             value={year.year.toString()}
             href={`/goals/${year.year}`}
-            isActive={year.year === selectedYear.year && year.months === undefined}
+            isActive={year.year === selectedYear.year && selectedYear.month === null}
           />
           {year.months &&
             year.months.map((month) => (

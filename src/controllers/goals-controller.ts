@@ -6,7 +6,9 @@ import { yearsController } from './years-controller';
 
 import type { Month } from '@/types/month';
 
-type CreateGoalParams = Pick<GoalModel, 'name' | 'year_id' | 'user_id'>;
+type CreateGoalParams = Pick<GoalModel, 'name' | 'year_id' | 'user_id'> & {
+  month?: GoalModel['month'];
+};
 
 type EditData = {
   name: string;
@@ -71,7 +73,7 @@ export const goalsController = {
     });
   },
 
-  createGoal: async ({ name, year_id, user_id }: CreateGoalParams) => {
+  createGoal: async ({ name, year_id, user_id, month }: CreateGoalParams) => {
     const now = new Date();
 
     await prisma.statistics.update({
@@ -86,6 +88,7 @@ export const goalsController = {
         user_id,
         is_completed: false,
         completed_at: null,
+        month: month ?? null,
         created_at: now,
         updated_at: now,
       },

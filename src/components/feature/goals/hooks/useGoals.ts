@@ -5,7 +5,7 @@ import toast from 'react-hot-toast';
 
 import type { GoalModel } from '@/models/goals-model';
 
-import { httpGetGoal, httpGetGoalMonth } from '@/lib/http/goals';
+import { httpGetGoal } from '@/lib/http/goals';
 
 type Props = {
   year: number;
@@ -29,7 +29,7 @@ const useGoals = ({ year, month }: Props) => {
 
   const getGoals = useCallback(async () => {
     try {
-      const res = month ? await httpGetGoalMonth(year, month) : await httpGetGoal(year);
+      const res = await httpGetGoal(year, month);
       const goals = await res.json();
 
       if (!res.ok) {

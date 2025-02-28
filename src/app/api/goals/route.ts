@@ -6,6 +6,7 @@ import { yearsController } from '@/controllers/years-controller';
 
 import { getServerSession } from 'next-auth';
 import { authOptions } from '@/lib/auth';
+import { Month } from '@/types/month';
 
 export async function DELETE(req: Request) {
   const session = await getServerSession(authOptions);
@@ -57,7 +58,7 @@ export async function POST(req: Request) {
 
   const res = await req.json();
 
-  const { name, year } = res as { name: string; year: number };
+  const { name, year, month } = res as { name: string; year: number; month?: string };
 
   if (!name || !year) {
     return NextResponse.json({ message: t('required', { field: 'name' }) }, { status: 500 });
@@ -69,7 +70,12 @@ export async function POST(req: Request) {
     return NextResponse.json({ message: t('yearNotFound') }, { status: 500 });
   }
 
-  const newGoal = await goalsController.createGoal({ name, year_id: yearModel.id, user_id: userId });
+  const newGoal = await goalsController.createGoal({
+    name,
+    year_id: yearModel.id,
+    user_id: userId,
+    month: month ? Number(month) : undefined,
+  });
 
   const response = NextResponse.json(
     {
@@ -95,8 +101,10 @@ export async function GET(req: NextRequest) {
 
   const searchParams = req.nextUrl.searchParams;
   const query = searchParams.get('year');
+  const queryMonth = searchParams.get('month');
 
   const year = query ? Number(query) : undefined;
+  const month = query ? (Number(queryMonth) as Month) : undefined;
 
   if (!year) {
     return NextResponse.json({ message: t('required', { field: 'year' }) }, { status: 500 });
@@ -118,7 +126,9 @@ export async function GET(req: NextRequest) {
     }
   }
 
-  const goals = await goalsController.getUserGoalsByYearId(yearId, userId);
+  const goals = month
+    ? await goalsController.getUserGoalsMonthByYearId(yearId, userId, month)
+    : await goalsController.getUserGoalsByYearId(yearId, userId);
 
   const response = NextResponse.json(
     {

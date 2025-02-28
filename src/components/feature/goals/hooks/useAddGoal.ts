@@ -4,6 +4,7 @@ import { useCallback, useMemo, useState } from 'react';
 
 type Props = {
   year: number;
+  month?: string;
 };
 
 const useAddGoal = ({ year }: Props) => {

@@ -25,6 +25,7 @@ import type {
 type Props = {
   canChangeGoal: boolean;
   year: number;
+  month?: string;
   goals: GoalModel[];
 
   updateIsLoading: (value: boolean) => void;
@@ -34,7 +35,8 @@ type Props = {
 };
 
 const useGoalActions = (props: Props) => {
-  const { canChangeGoal, year, goals, updateGoals, updateIsOpenModal, updateGoalDataForModal, updateIsLoading } = props;
+  const { canChangeGoal, year, month, goals, updateGoals, updateIsOpenModal, updateGoalDataForModal, updateIsLoading } =
+    props;
 
   const t = useTranslations('Goals');
 
@@ -65,7 +67,7 @@ const useGoalActions = (props: Props) => {
 
     onLoadingStart(t('creatingGoal'));
 
-    const res = await httpCreateGoal(year, name);
+    const res = await httpCreateGoal(year, name, month);
     const data = await res.json();
 
     if (!res.ok) {
