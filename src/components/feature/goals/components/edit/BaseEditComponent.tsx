@@ -46,7 +46,7 @@ const BaseEditComponent: FC<Props> = ({
         ref={ref}
         className={classes.editInput}
         value={value}
-        style={{ resize: 'none' }}
+        style={{ resize: 'none', overflow: 'hidden' }}
         placeholder={placeholder}
         onChange={(e) => updateValue(e.target.value)}
       />
