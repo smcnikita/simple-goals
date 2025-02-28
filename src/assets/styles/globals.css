@@ -65,3 +65,11 @@ h1 {
 .ReactModal__Overlay--before-close {
   opacity: 0;
 }
+
+.base-link {
+  color: var(--info-1-color);
+}
+
+.base-link:hover {
+  opacity: 0.8;
+}

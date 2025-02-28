@@ -4,6 +4,11 @@
     "goals": "Goals"
   },
 
+  "Aside": {
+    "toggle": "Toggle sidebar",
+    "togglePopover": "Toggle menu"
+  },
+
   "Theme": {
     "theme": "Theme",
     "system": "System theme",

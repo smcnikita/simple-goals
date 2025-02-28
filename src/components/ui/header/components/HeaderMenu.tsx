@@ -19,6 +19,7 @@ type Props = {
 
 const HeaderMenu: FC<Props> = ({ isAuth }) => {
   const t = useTranslations('NavLinks');
+  const t_aside = useTranslations('Aside');
   const pathname = usePathname();
 
   const ref = useRef<HTMLButtonElement>(null);
@@ -43,7 +44,13 @@ const HeaderMenu: FC<Props> = ({ isAuth }) => {
   return (
     <nav className={classes.tabs}>
       {showMenuDuo && (
-        <button type="button" className={classes.asideToggle} ref={ref} onClick={onToggleAside}>
+        <button
+          type="button"
+          className={classes.asideToggle}
+          ref={ref}
+          onClick={onToggleAside}
+          aria-label={t_aside('toggle')}
+        >
           <BaseIcon>
             <MenuDuoIcon />
           </BaseIcon>

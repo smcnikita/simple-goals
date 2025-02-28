@@ -15,7 +15,7 @@ export default function Home() {
         <p>{t('sections.section_3')}</p>
         <p>
           {t('sections.section_4')}{' '}
-          <a href="https://github.com/smcnikita/simple-goals" target="_blank">
+          <a href="https://github.com/smcnikita/simple-goals" target="_blank" className="base-link">
             Github
           </a>
           . {t('sections.section_5')}
