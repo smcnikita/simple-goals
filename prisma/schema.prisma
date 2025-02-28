@@ -32,6 +32,7 @@ model goals {
   completed_at DateTime?
   year_id      Int
   user_id      Int
+  month        Int?
   created_at   DateTime  @default(now())
   updated_at   DateTime
 

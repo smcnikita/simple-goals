@@ -1,12 +1,14 @@
 import { prisma } from '@/lib/prisma';
 
 import { GoalModel } from '@/models/goals-model';
+
 import { yearsController } from './years-controller';
 
-type CreateGoalParams = Omit<
-  GoalModel,
-  'id' | 'sort_order' | 'is_completed' | 'completed_at' | 'created_at' | 'updated_at' | 'description'
->;
+import type { Month } from '@/types/month';
+
+type CreateGoalParams = Pick<GoalModel, 'name' | 'year_id' | 'user_id'> & {
+  month?: GoalModel['month'];
+};
 
 type EditData = {
   name: string;
@@ -14,9 +16,22 @@ type EditData = {
 };
 
 export const goalsController = {
+  // TODO: rename
   getUserGoalsByYearId: async (yearId: number, userId: number) => {
     return await prisma.goals.findMany({
-      where: { year_id: yearId, user_id: userId },
+      where: { year_id: yearId, user_id: userId, month: null },
+      orderBy: { created_at: 'asc' },
+    });
+  },
+
+  // TODO: rename
+  getUserGoalsMonthByYearId: async (yearId: number, userId: number, month: Month) => {
+    return await prisma.goals.findMany({
+      where: {
+        year_id: yearId,
+        user_id: userId,
+        month,
+      },
       orderBy: { created_at: 'asc' },
     });
   },
@@ -58,7 +73,7 @@ export const goalsController = {
     });
   },
 
-  createGoal: async ({ name, year_id, user_id }: CreateGoalParams) => {
+  createGoal: async ({ name, year_id, user_id, month }: CreateGoalParams) => {
     const now = new Date();
 
     await prisma.statistics.update({
@@ -73,6 +88,7 @@ export const goalsController = {
         user_id,
         is_completed: false,
         completed_at: null,
+        month: month ?? null,
         created_at: now,
         updated_at: now,
       },

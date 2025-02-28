@@ -17,9 +17,10 @@ import cl from '../style/goals.module.css';
 
 type Props = {
   year: number;
+  month?: string;
 };
 
-const Goals: FC<Props> = ({ year }) => {
+const Goals: FC<Props> = ({ year, month }) => {
   const t = useTranslations('Goals');
 
   const {
@@ -31,9 +32,9 @@ const Goals: FC<Props> = ({ year }) => {
     updateGoals,
     getGoals,
     updateIsGlobalLoading,
-  } = useGoals({ year });
+  } = useGoals({ year, month });
 
-  const { isShowAddGoal, isShowAddGoalButton, updateIsShowAddGoal } = useAddGoal({ year });
+  const { isShowAddGoal, isShowAddGoalButton, updateIsShowAddGoal } = useAddGoal({ year, month });
 
   const actionsModal = useGoalModalAction({ canChangeGoal, isLoading });
 
@@ -41,6 +42,7 @@ const Goals: FC<Props> = ({ year }) => {
     canChangeGoal,
     goals,
     year,
+    month,
     updateGoals,
     updateIsLoading,
     updateGoalDataForModal: actionsModal.updateGoalDataForModal,

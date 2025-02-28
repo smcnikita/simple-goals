@@ -5,6 +5,7 @@ export const API_PATHS = {
 
   goals: {
     get: '/goals',
+    getMonth: '/goals/month',
     update: '/goals/change',
     remove: '/goals',
     changeName: '/goals/change-name',

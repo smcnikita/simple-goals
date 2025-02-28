@@ -9,9 +9,10 @@ import { httpGetGoal } from '@/lib/http/goals';
 
 type Props = {
   year: number;
+  month?: string;
 };
 
-const useGoals = ({ year }: Props) => {
+const useGoals = ({ year, month }: Props) => {
   const [goals, setGoals] = useState<GoalModel[]>([]);
   const [isGlobalLoading, setIsGlobalLoading] = useState(true);
   const [isLoading, setIsLoading] = useState(false);
@@ -28,7 +29,7 @@ const useGoals = ({ year }: Props) => {
 
   const getGoals = useCallback(async () => {
     try {
-      const res = await httpGetGoal(year);
+      const res = await httpGetGoal(year, month);
       const goals = await res.json();
 
       if (!res.ok) {
@@ -38,7 +39,7 @@ const useGoals = ({ year }: Props) => {
 
       updateGoals(goals.data);
     } catch (error) {}
-  }, [updateGoals, year]);
+  }, [month, updateGoals, year]);
 
   return {
     goals,

@@ -2,8 +2,8 @@ import { API_PATHS } from '@/constants/apiPaths';
 
 import { fetchFromAPI } from '@/lib/http';
 
-export const httpGetGoal = async (year: number) => {
-  const queryParams = new URLSearchParams({ year: year.toString() });
+export const httpGetGoal = async (year: number, month?: string) => {
+  const queryParams = new URLSearchParams({ year: year.toString(), month: month ?? '' });
   const apiUrl = API_PATHS.goals.get + '?' + queryParams.toString();
   return fetchFromAPI(apiUrl, { method: 'GET' });
 };
@@ -37,8 +37,8 @@ export const httpChangeNameAndDescriptionGoal = async (
   return fetchFromAPI(apiUrl, { method: 'PUT', body });
 };
 
-export const httpCreateGoal = async (year: number, name: string) => {
+export const httpCreateGoal = async (year: number, name: string, month?: string) => {
   const apiUrl = API_PATHS.goals.create;
-  const body = JSON.stringify({ year, name: name.trim() });
+  const body = JSON.stringify({ year, name: name.trim(), month: month ?? undefined });
   return fetchFromAPI(apiUrl, { method: 'POST', body });
 };

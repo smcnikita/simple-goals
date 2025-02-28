@@ -1,22 +1,28 @@
 'use client';
 
-import { useEffect, type FC } from 'react';
+import { Fragment, useEffect, type FC } from 'react';
 
 import { LOCAL_STORAGE_YEARS_KEY } from '@/constants/localstorage';
+
+import useAside from '../hooks/useAside';
 
 import Spinner from '@/components/ui/spinner';
 
 import AsideItem from './AsideItem';
 
-import classes from '../styles/list.module.css';
-import useAside from '../hooks/useAside';
+import { useTranslations } from 'next-intl';
+
+import cl from '../styles/list.module.css';
+import cl_item from '../styles/item.module.css';
 
 type Props = {
   defaultYears: number[];
 };
 
 const AsideList: FC<Props> = ({ defaultYears }) => {
-  const { years, isLoading, fetchYears, updateYears } = useAside(defaultYears);
+  const { years, isLoading, selectedYear, fetchYears, updateYears } = useAside(defaultYears);
+
+  const t = useTranslations('Months');
 
   useEffect(() => {
     const savedYears = localStorage.getItem(LOCAL_STORAGE_YEARS_KEY);
@@ -29,9 +35,25 @@ const AsideList: FC<Props> = ({ defaultYears }) => {
   }, [defaultYears, fetchYears, updateYears]);
 
   return (
-    <ul className={classes.list}>
+    <ul className={cl.list}>
       {years.map((year) => (
-        <AsideItem key={year} year={year} />
+        <Fragment key={year.year}>
+          <AsideItem
+            value={year.year.toString()}
+            href={`/goals/${year.year}`}
+            isActive={year.year === selectedYear.year && selectedYear.month === null}
+          />
+          {year.months &&
+            year.months.map((month) => (
+              <AsideItem
+                key={month}
+                value={t(month)}
+                href={`/goals/${year.year}/${month}`}
+                isActive={month === selectedYear.month}
+                className={cl_item.item__small}
+              />
+            ))}
+        </Fragment>
       ))}
 
       {isLoading && (
