@@ -11,6 +11,7 @@ export const DEFAULT_STYLES: Styles = {
     color: 'var(--body-color)',
     background: 'var(--body-background)',
     border: '1px solid rgba(0, 0, 0, 0.1)',
+    padding: '32px 24px',
   },
   overlay: {
     display: 'flex',

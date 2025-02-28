@@ -1,6 +1,7 @@
 'use client';
 
 import { useEffect, useRef, type FC } from 'react';
+import TextareaAutosize from 'react-textarea-autosize';
 
 import Button from '@/components/ui/button';
 import BaseIcon, { CheckIcon, PlusIcon } from '@/components/ui/icon';
@@ -28,13 +29,12 @@ const BaseEditComponent: FC<Props> = ({
   isLoading,
   isAddNew = false,
   updateValue,
-  onKeyDown,
   onSave,
   onCancel,
 }) => {
   const t = useTranslations('Goals');
 
-  const ref = useRef<HTMLInputElement>(null);
+  const ref = useRef<HTMLTextAreaElement>(null);
 
   useEffect(() => {
     ref.current?.focus();
@@ -42,14 +42,13 @@ const BaseEditComponent: FC<Props> = ({
 
   return (
     <div className={classes.editWrapper}>
-      <input
+      <TextareaAutosize
         ref={ref}
         className={classes.editInput}
         value={value}
-        type="text"
+        style={{ resize: 'none' }}
         placeholder={placeholder}
         onChange={(e) => updateValue(e.target.value)}
-        onKeyDown={async (e) => await onKeyDown(e)}
       />
 
       <div className={classes.editActions}>

@@ -13,3 +13,6 @@ export { default as PlusIcon } from './components/PlusIcon';
 export { default as TranslateIcon } from './components/TranslateIcon';
 export { default as MenuDuoIcon } from './components/MenuDuoIcon';
 export { default as MoreGridSmallIcon } from './components/MoreGridSmallIcon';
+export { default as LaptopIcon } from './components/LaptopIcon';
+export { default as USIcon } from './components/USIcon';
+export { default as RussiaIcon } from './components/RussiaIcon';

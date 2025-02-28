@@ -118,6 +118,7 @@ const GoalsList: FC<Props> = (props) => {
         handleCancel={handleCancelModal}
         handleSave={handleSave}
         updateCompleted={handleUpdateCompleted}
+        onRemove={remove}
       />
     </div>
   );

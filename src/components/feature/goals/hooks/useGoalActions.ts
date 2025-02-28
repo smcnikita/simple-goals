@@ -99,6 +99,8 @@ const useGoalActions = (props: Props) => {
 
     updateGoals(newGoals);
 
+    updateIsOpenModal(false);
+
     onLoadingEnd(t('goalRemoved'));
   };
 

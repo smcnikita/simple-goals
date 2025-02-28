@@ -8,6 +8,8 @@ import { DEFAULT_APP_THEME, SUPPORTED_THEMES, THEME_PREFIX } from '@/constants/t
 
 import { getThemeFromLocalStorage, removeThemeToLocalStorage, saveThemeToLocalStorage } from '@/utils/updateTheme';
 
+import BaseIcon, { MoonIcon, SunIcon, LaptopIcon } from '@/components/ui/icon';
+
 import type { Theme } from '@/types/theme';
 
 import classes from '@/components/ui/popover/styles/popover.module.css';
@@ -54,20 +56,26 @@ const ThemeComponent: FC = () => {
   }, [theme]);
 
   return (
-    <>
+    <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', gap: '6px' }}>
       {SUPPORTED_THEMES.map((item) => (
         <button
           key={item}
           type="button"
+          style={{ justifyContent: 'center' }}
           className={clsx(classes.content_action, {
             [classes.active]: item === theme,
           })}
           onClick={() => updateTheme(item)}
+          aria-label={t(item)}
         >
-          {t(item)}
+          <BaseIcon size="16">
+            {item === 'light' && <SunIcon />}
+            {item === 'system' && <LaptopIcon />}
+            {item === 'dark' && <MoonIcon />}
+          </BaseIcon>
         </button>
       ))}
-    </>
+    </div>
   );
 };
 

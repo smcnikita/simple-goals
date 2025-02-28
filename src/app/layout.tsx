@@ -3,6 +3,7 @@ import localFont from 'next/font/local';
 import { Toaster } from 'react-hot-toast';
 import { NextIntlClientProvider } from 'next-intl';
 import { getLocale, getMessages } from 'next-intl/server';
+import { getServerSession } from 'next-auth/next';
 
 import Container from '@/components/ui/container';
 import Header from '@/components/ui/header';
@@ -15,6 +16,7 @@ import Providers from '@/components/feature/providers';
 import '../assets/styles/globals.css';
 import '../assets/styles/colors/light.css';
 import '../assets/styles/colors/dark.css';
+import { authOptions } from '@/lib/auth';
 
 const jost = localFont({
   src: [
@@ -48,6 +50,10 @@ export default async function RootLayout({ children }: Props) {
   const locale = await getLocale();
   const messages = await getMessages();
 
+  const session = await getServerSession(authOptions);
+
+  const isAuth = !!session;
+
   return (
     <html lang={locale}>
       <head>
@@ -64,7 +70,7 @@ export default async function RootLayout({ children }: Props) {
               <Toaster />
 
               <Container>
-                <Header />
+                <Header isAuth={isAuth} />
                 {children}
               </Container>
 

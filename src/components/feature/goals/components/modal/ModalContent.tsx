@@ -2,11 +2,12 @@
 
 import { useEffect, useState, type FC } from 'react';
 import clsx from 'clsx';
+import TextareaAutosize from 'react-textarea-autosize';
 
 import Checkbox from '@/components/ui/checkbox';
 import Button from '@/components/ui/button';
 
-import type { GoalModalSaveParams, UpdateCompletedProps, UpdateGoalProps } from '../../types';
+import type { GoalModalSaveParams, RemoveGoalProps, UpdateCompletedProps, UpdateGoalProps } from '../../types';
 
 import cl from './modal-content.module.css';
 import cl_goals from '../../style/goals.module.css';
@@ -19,9 +20,18 @@ type Props = {
   handleSave: UpdateGoalProps;
   handleCancel: () => void;
   updateCompleted: UpdateCompletedProps;
+  onRemove: RemoveGoalProps;
 };
 
-const ModalContent: FC<Props> = ({ goalData, canChangeGoal, isLoading, handleSave, handleCancel, updateCompleted }) => {
+const ModalContent: FC<Props> = ({
+  goalData,
+  canChangeGoal,
+  isLoading,
+  handleSave,
+  handleCancel,
+  updateCompleted,
+  onRemove,
+}) => {
   const t = useTranslations('Goals');
 
   const [data, setData] = useState<GoalModalSaveParams | null>(null);
@@ -58,10 +68,10 @@ const ModalContent: FC<Props> = ({ goalData, canChangeGoal, isLoading, handleSav
           disabled={!canChangeGoal || isLoading}
           useLabel={false}
           onChange={async (e) => await updateCompleted(data.id, e.target.checked)}
-          style={{ width: '24px', height: '24px' }}
+          style={{ width: '24px', height: '24px', alignSelf: 'flex-start' }}
         />
-        <input
-          type="text"
+        <TextareaAutosize
+          style={{ resize: 'none' }}
           value={newName}
           disabled={!canChangeGoal || isLoading}
           onChange={(e) => setNewName(e.target.value)}
@@ -72,10 +82,10 @@ const ModalContent: FC<Props> = ({ goalData, canChangeGoal, isLoading, handleSav
       {/* Description */}
       <div className={cl.blockDescription}>
         <p className={cl.subtitle}>{t('description')}</p>
-        <textarea
+        <TextareaAutosize
           name="goal-edit-description"
           id="goal-edit-description"
-          rows={10}
+          style={{ resize: 'none' }}
           className={cl_goals.editInput}
           value={newDescription}
           placeholder={t('enterDescription')}
@@ -84,6 +94,15 @@ const ModalContent: FC<Props> = ({ goalData, canChangeGoal, isLoading, handleSav
       </div>
 
       <div className={cl.blockActions}>
+        <Button
+          type="button"
+          size="sm-2"
+          isButtonError
+          disabled={!canChangeGoal || isLoading}
+          onClick={async () => await onRemove(data.id)}
+        >
+          {t('remove')}
+        </Button>
         <Button type="button" size="sm-2" isButtonError disabled={!canChangeGoal || isLoading} onClick={handleCancel}>
           {t('cancel')}
         </Button>

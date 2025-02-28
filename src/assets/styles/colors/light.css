@@ -47,4 +47,6 @@
   /* Goal */
   --goal-border-bottom-color: #dddddd;
   --goal-goalAction-hover-bg: rgba(0, 0, 0, 0.05);
+
+  --edit-input-outline: #c5c5c5;
 }

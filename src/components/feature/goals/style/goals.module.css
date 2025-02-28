@@ -121,7 +121,7 @@
 
   padding: 6px 12px;
 
-  outline: 1px solid var(--gray-2-color);
+  outline: 1px solid var(--edit-input-outline);
 }
 
 .addGoal {
