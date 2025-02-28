@@ -53,8 +53,10 @@ export async function generateMetadata({ params }: PageParams) {
   const year = validateYear(slug);
   const month = validateMonth(monthSlug);
 
+  const t = await getTranslations('Months');
+
   return {
-    title: `Simple Goals - ${year} / ${month}`,
+    title: `Simple Goals - ${year} / ${t(month)}`,
   };
 }
 
