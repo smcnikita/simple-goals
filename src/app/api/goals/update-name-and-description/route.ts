@@ -1,10 +1,10 @@
 import { NextResponse } from 'next/server';
 import { getTranslations } from 'next-intl/server';
+import { getServerSession } from 'next-auth';
 
 import { goalsController } from '@/controllers/goals-controller';
 import { yearsController } from '@/controllers/years-controller';
 
-import { getServerSession } from 'next-auth';
 import { authOptions } from '@/lib/auth';
 
 export async function PUT(req: Request) {

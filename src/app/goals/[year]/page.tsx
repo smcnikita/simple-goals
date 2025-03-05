@@ -1,10 +1,12 @@
 import { redirect } from 'next/navigation';
 import { getTranslations } from 'next-intl/server';
+
 import { PATHS } from '@/constants/paths';
+
 import Goals from '@/components/feature/goals';
 
 type Params = Promise<{
-  slug: string;
+  year: string;
 }>;
 
 type PageParams = {
@@ -14,23 +16,23 @@ type PageParams = {
 const MIN_YEAR = 1900;
 const CURRENT_YEAR = new Date().getFullYear();
 
-function validateYear(slug: string): number {
-  if (!/^\d{4}$/.test(slug)) {
+function validateYear(year: string): number {
+  if (!/^\d{4}$/.test(year)) {
     redirect(PATHS.home);
   }
 
-  const year = Number(slug);
+  const yearNum = Number(year);
 
-  if (year < MIN_YEAR || year > CURRENT_YEAR) {
+  if (yearNum < MIN_YEAR || yearNum > CURRENT_YEAR) {
     redirect(PATHS.home);
   }
 
-  return year;
+  return yearNum;
 }
 
 export async function generateMetadata({ params }: PageParams) {
-  const { slug } = await params;
-  const year = validateYear(slug);
+  const { year: yearSlug } = await params;
+  const year = validateYear(yearSlug);
 
   return {
     title: `Simple Goals - ${year}`,
@@ -38,8 +40,8 @@ export async function generateMetadata({ params }: PageParams) {
 }
 
 export default async function GoalsSlugPage({ params }: PageParams) {
-  const { slug } = await params;
-  const year = validateYear(slug);
+  const { year: yearSlug } = await params;
+  const year = validateYear(yearSlug);
   const t = await getTranslations('Goals');
 
   return (
