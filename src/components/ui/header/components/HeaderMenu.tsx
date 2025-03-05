@@ -56,7 +56,6 @@ const HeaderMenu: FC<Props> = ({ isAuth }) => {
           </BaseIcon>
         </button>
       )}
-      <HeaderMenuItem href={PATHS.home}>{t('home')}</HeaderMenuItem>
       {isAuth && (
         <HeaderMenuItem href={PATHS.goals.base + PATHS.goals.slug.replace(':slug', nowYear.toString())}>
           {t('goals')}

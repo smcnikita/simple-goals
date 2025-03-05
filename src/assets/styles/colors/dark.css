@@ -49,4 +49,7 @@
   --goal-goalAction-hover-bg: rgba(245, 245, 245, 0.05);
 
   --edit-input-outline: var(--gray-2-color);
+
+  --popover-user-color: var(--body-color);
+  --popover-user-bg: #1d1d1d;
 }

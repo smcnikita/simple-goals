@@ -25,8 +25,10 @@ const PopoverContent: FC<Props> = ({ isAuth }) => {
     <div>
       {isAuth && (
         <div className={classes.section}>
-          <p className={classes.title}>{session?.user.name}</p>
-          <p className={classes.title}>{session?.user.email}</p>
+          <div className={classes.section_user}>
+            <p className={classes.title}>{session?.user.name}</p>
+            <p className={classes.title}>{session?.user.email}</p>
+          </div>
         </div>
       )}
 

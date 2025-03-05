@@ -21,6 +21,7 @@ type Props = {
 const Header: FC<Props> = ({ isAuth }) => {
   const pathname = usePathname();
   const isShowHeader = showHeader(pathname);
+
   const t = useTranslations('Auth');
 
   if (!isShowHeader) {

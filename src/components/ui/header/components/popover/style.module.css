@@ -15,3 +15,16 @@
 
   overflow-wrap: anywhere;
 }
+
+.section_user {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+
+  padding: 4px 8px;
+
+  color: var(--popover-user-color);
+  background: var(--popover-user-bg);
+
+  border-radius: 12px;
+}
