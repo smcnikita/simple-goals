@@ -6,11 +6,11 @@ import { signOut } from 'next-auth/react';
 import { usePathname } from 'next/navigation';
 
 import { LOCAL_STORAGE_YEARS_KEY } from '@/constants/localstorage';
+import { MONTHS } from '@/constants/months';
 
 import { httpGetYears } from '@/lib/http/years';
 
 import type { MonthKey } from '@/types/month';
-import { MONTHS } from '@/constants/months';
 
 type YearItem = {
   year: number;

@@ -1,12 +1,13 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { getTranslations } from 'next-intl/server';
+import { getServerSession } from 'next-auth';
 
 import { goalsController } from '@/controllers/goals-controller';
 import { yearsController } from '@/controllers/years-controller';
 
-import { getServerSession } from 'next-auth';
 import { authOptions } from '@/lib/auth';
-import { Month } from '@/types/month';
+
+import type { Month } from '@/types/month';
 
 export async function DELETE(req: Request) {
   const session = await getServerSession(authOptions);

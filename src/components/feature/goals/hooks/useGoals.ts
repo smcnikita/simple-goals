@@ -24,8 +24,14 @@ const useGoals = ({ year, month }: Props) => {
 
   const canChangeGoal = useMemo(() => {
     const currentYear = new Date().getFullYear();
-    return year === currentYear;
-  }, [year]);
+    const nowMonth = new Date().getMonth() + 1;
+
+    if (month === undefined) {
+      return year === currentYear;
+    }
+
+    return year === currentYear && nowMonth <= Number(month);
+  }, [year, month]);
 
   const getGoals = useCallback(async () => {
     try {

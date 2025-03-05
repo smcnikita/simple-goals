@@ -7,15 +7,21 @@ type Props = {
   month?: string;
 };
 
-const useAddGoal = ({ year }: Props) => {
+const useAddGoal = ({ year, month }: Props) => {
   const [isShowAddGoal, setIsShowAddGoal] = useState(false);
 
   const updateIsShowAddGoal = useCallback((value: boolean) => setIsShowAddGoal(value), []);
 
   const isShowAddGoalButton = useMemo(() => {
     const currentYear = new Date().getFullYear();
-    return year === currentYear;
-  }, [year]);
+    const nowMonth = new Date().getMonth() + 1;
+
+    if (month === undefined) {
+      return year === currentYear;
+    }
+
+    return year === currentYear && nowMonth <= Number(month);
+  }, [month, year]);
 
   return { isShowAddGoal, isShowAddGoalButton, updateIsShowAddGoal };
 };

@@ -1,12 +1,14 @@
 import { redirect } from 'next/navigation';
 import { getTranslations } from 'next-intl/server';
+
 import { PATHS } from '@/constants/paths';
+
 import Goals from '@/components/feature/goals';
 
 import type { MonthKey } from '@/types/month';
 
 type Params = Promise<{
-  slug: string;
+  year: string;
   month: string;
 }>;
 
@@ -20,37 +22,37 @@ const CURRENT_YEAR = new Date().getFullYear();
 const MIN_MONTH = 1;
 const MAX_MONTH = 12;
 
-function validateYear(slug: string): number {
-  if (!/^\d{4}$/.test(slug)) {
+function validateYear(year: string): number {
+  if (!/^\d{4}$/.test(year)) {
     redirect(PATHS.home);
   }
 
-  const year = Number(slug);
+  const yearNum = Number(year);
 
-  if (year < MIN_YEAR || year > CURRENT_YEAR) {
+  if (yearNum < MIN_YEAR || yearNum > CURRENT_YEAR) {
     redirect(PATHS.home);
   }
 
-  return year;
+  return yearNum;
 }
 
-function validateMonth(slug: string): MonthKey {
-  if (!/^\d{1,2}$/.test(slug)) {
+function validateMonth(month: string): MonthKey {
+  if (!/^\d{1,2}$/.test(month)) {
     redirect(PATHS.home);
   }
 
-  const month = Number(slug);
+  const monthNum = Number(month);
 
-  if (month < MIN_MONTH || month > MAX_MONTH) {
+  if (monthNum < MIN_MONTH || monthNum > MAX_MONTH) {
     redirect(PATHS.home);
   }
 
-  return month.toString() as MonthKey;
+  return monthNum.toString() as MonthKey;
 }
 
 export async function generateMetadata({ params }: PageParams) {
-  const { slug, month: monthSlug } = await params;
-  const year = validateYear(slug);
+  const { year: yearSlug, month: monthSlug } = await params;
+  const year = validateYear(yearSlug);
   const month = validateMonth(monthSlug);
 
   const t = await getTranslations('Months');
@@ -61,8 +63,8 @@ export async function generateMetadata({ params }: PageParams) {
 }
 
 export default async function Page({ params }: PageParams) {
-  const { slug, month: monthSlug } = await params;
-  const year = validateYear(slug);
+  const { year: yearSlug, month: monthSlug } = await params;
+  const year = validateYear(yearSlug);
   const month = validateMonth(monthSlug);
 
   const t = await getTranslations('Goals');
