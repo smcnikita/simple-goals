@@ -7,8 +7,7 @@ import {
   SelectTrigger,
   SelectValue,
 } from '@/components/ui/select';
-import { Button } from '@/components/ui/button';
-import { Plus } from 'lucide-react';
+import CreateGoalDialog from '@/components/createGoalDialog/CreateGoalDialog';
 
 const data = [
   {
@@ -59,9 +58,7 @@ export default function Home() {
               </SelectGroup>
             </SelectContent>
           </Select>
-          <Button className="cursor-pointer">
-            <Plus /> Add goal
-          </Button>
+          <CreateGoalDialog />
         </div>
       </div>
 
