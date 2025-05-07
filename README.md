@@ -3,23 +3,27 @@
 ## Start Dev
 
 ```bash
-npx prisma db push
+pnpm i
 ```
 
 ```bash
-npx prisma generate
+pnpx prisma db push
 ```
 
 ```bash
-npx prisma db seed
+pnpx prisma generate
 ```
 
 ```bash
-npm run dev
+pnpx prisma db seed
+```
+
+```bash
+pnpm dev
 ```
 
 ## Prod Migrate DB
 
 ```bash
-npx prisma migrate deploy
+pnpx prisma migrate deploy
 ```
