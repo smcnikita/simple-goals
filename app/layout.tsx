@@ -1,6 +1,8 @@
 import type { Metadata } from 'next';
 import localFont from 'next/font/local';
 
+import Providers from '@/components/Providers';
+
 import './globals.css';
 
 const notoSans = localFont({
@@ -48,7 +50,9 @@ export default function RootLayout({
         <link rel="yandex-tableau-widget" href="/tableau.json" />
       </head>
 
-      <body className={`${notoSans.className} antialiased`}>{children}</body>
+      <Providers>
+        <body className={`${notoSans.className} antialiased`}>{children}</body>
+      </Providers>
     </html>
   );
 }
