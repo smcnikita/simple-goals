@@ -1,4 +1,6 @@
 import type { FC } from 'react';
+import Link from 'next/link';
+
 import {
   Sidebar,
   SidebarContent,
@@ -24,7 +26,6 @@ const items = [
 const Aside: FC = () => {
   return (
     <Sidebar className="left-auto">
-      {/* Content */}
       <SidebarContent>
         <SidebarGroup>
           <SidebarGroupLabel>Years</SidebarGroupLabel>
@@ -32,10 +33,10 @@ const Aside: FC = () => {
             <SidebarMenu>
               {items.map((item) => (
                 <SidebarMenuItem key={item.title}>
-                  <SidebarMenuButton asChild>
-                    <a href={item.url}>
+                  <SidebarMenuButton asChild isActive={item.title === '2025'}>
+                    <Link href={item.url}>
                       <span>{item.title}</span>
-                    </a>
+                    </Link>
                   </SidebarMenuButton>
                 </SidebarMenuItem>
               ))}

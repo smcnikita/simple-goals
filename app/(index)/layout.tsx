@@ -1,3 +1,5 @@
+import { Toaster } from '@/components/ui/sonner';
+
 import Aside from '@/components/Aside';
 import { SidebarProvider } from '@/components/ui/sidebar';
 import { Separator } from '@/components/ui/separator';
@@ -17,6 +19,7 @@ const Layout = async ({ children }: Props) => {
           <Header />
           <Separator />
           <main className="py-4 px-3">{children}</main>
+          <Toaster />
         </Content>
       </SidebarProvider>
     </div>

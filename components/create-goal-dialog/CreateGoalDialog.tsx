@@ -1,7 +1,9 @@
 import type { FC } from 'react';
+import { Plus } from 'lucide-react';
+
 import { Button } from '@/components/ui/button';
 import { Dialog, DialogTrigger } from '@/components/ui/dialog';
-import { Plus } from 'lucide-react';
+
 import CreateGoalDialogContent from './CreateGoalDialogContent';
 
 const CreateGoalDialog: FC = () => {

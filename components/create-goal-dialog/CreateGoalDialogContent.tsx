@@ -1,10 +1,12 @@
 'use client';
 
 import type { FC } from 'react';
+
 import { DialogClose, DialogContent, DialogFooter, DialogHeader, DialogTitle } from '@/components/ui/dialog';
 import { Button } from '@/components/ui/button';
-import GoalForm from '@/components/goalForm/GoalForm';
-import type { FormSchema } from '@/types/formGoal';
+import GoalForm from '@/components/goal-form/GoalForm';
+
+import type { FormSchema } from '@/types/form-goal.types';
 
 const CreateGoalDialogContent: FC = () => {
   const onSubmit = async (values: FormSchema) => {

@@ -1,6 +1,8 @@
 import type { FC } from 'react';
-import { SidebarTrigger } from './ui/sidebar';
+import { User2, LogOut } from 'lucide-react';
 import Link from 'next/link';
+
+import { SidebarTrigger } from '@/components/ui/sidebar';
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -9,7 +11,6 @@ import {
   DropdownMenuSeparator,
   DropdownMenuTrigger,
 } from '@/components/ui/dropdown-menu';
-import { User2, LogOut } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 
 const Header: FC = () => {
