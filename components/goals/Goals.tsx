@@ -1,6 +1,8 @@
 'use client';
 
-import { useEffect, useState, type FC } from 'react';
+import { useEffect, useMemo, useState, type FC } from 'react';
+
+import { STATUS, STATUS_TOTAL } from '@/constants/statuses';
 
 import {
   Select,
@@ -16,44 +18,40 @@ import CreateGoalDialog from '@/components/create-goal-dialog/CreateGoalDialog';
 import GoalsList from './GoalsList';
 
 import type { Goals } from '@/types/goals.types';
+import type { Statuses, StatusKeys } from '@/types/statuses.types';
 
 type Props = {
   year: number;
+  statuses: Statuses;
 };
 
-const data = [
-  {
-    count: 7,
-    status: 'Total',
-  },
-  {
-    count: 2,
-    status: 'In Progress',
-  },
-  {
-    count: 3,
-    status: 'Completed',
-  },
-  {
-    count: 1,
-    status: 'Not Completed',
-  },
-  {
-    count: 1,
-    status: 'Canceled',
-  },
-];
-
-const Goals: FC<Props> = ({ year }) => {
+const Goals: FC<Props> = ({ year, statuses }) => {
   const [goals, setGoals] = useState<Goals>([]);
   const [isLoading, setIsLoading] = useState(true);
+  const [selectedStatus, setSelectedStatus] = useState<StatusKeys>(STATUS_TOTAL.key);
+
+  const [statusOptions, setStatusOptions] = useState<Statuses>([]);
+
+  const filteredGoals = useMemo(() => {
+    if (selectedStatus === STATUS.Total) {
+      return goals;
+    }
+
+    return goals.filter((goal) => goal.status === selectedStatus);
+  }, [goals, selectedStatus]);
 
   useEffect(() => {
+    setStatusOptions([STATUS_TOTAL, ...statuses]);
+
     setGoals([]);
     setTimeout(() => {
       setIsLoading(false);
     }, 1000);
-  }, []);
+  }, [statuses]);
+
+  const onValueChange = (value: StatusKeys) => {
+    setSelectedStatus(value);
+  };
 
   return (
     <>
@@ -64,7 +62,7 @@ const Goals: FC<Props> = ({ year }) => {
         </div>
 
         <div className="flex items-center gap-3">
-          <Select defaultValue="Total">
+          <Select defaultValue={STATUS_TOTAL.key} onValueChange={onValueChange}>
             <SelectTrigger className="w-[180px]">
               <SelectValue placeholder="Select a fruit" />
             </SelectTrigger>
@@ -72,9 +70,9 @@ const Goals: FC<Props> = ({ year }) => {
             <SelectContent>
               <SelectGroup>
                 <SelectLabel>Statuses</SelectLabel>
-                {data.map((el) => (
-                  <SelectItem key={el.status} value={el.status}>
-                    {el.status === 'Total' ? 'All goals' : el.status}
+                {statusOptions.map((el) => (
+                  <SelectItem key={el.id} value={el.key}>
+                    {el.name}
                   </SelectItem>
                 ))}
               </SelectGroup>
@@ -84,7 +82,7 @@ const Goals: FC<Props> = ({ year }) => {
         </div>
       </div>
 
-      <GoalsList goals={goals} isLoading={isLoading} />
+      <GoalsList goals={filteredGoals} isLoading={isLoading} />
     </>
   );
 };

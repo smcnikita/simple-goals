@@ -21,9 +21,7 @@ const GoalsList: FC<Props> = ({ goals, isLoading }) => {
 
   return (
     <div className="space-y-2">
-      {goals.length === 0 && (
-        <p className="flex justify-center text-gray-400 text-sm">Create your first goal to get started</p>
-      )}
+      {goals.length === 0 && <p className="flex justify-center text-gray-400 text-sm">There are no goals</p>}
 
       {goals.length > 0 &&
         goals.map((el) => (

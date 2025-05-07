@@ -28,3 +28,10 @@ model Years {
 
   @@index([user_id])
 }
+
+model Statuses {
+  id         Int      @id @default(autoincrement())
+  key        String   @unique
+  created_at DateTime @default(now()) @map("created_at")
+  updated_at DateTime @updatedAt @map("updated_at")
+}
