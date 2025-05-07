@@ -1,7 +1,8 @@
 import { API_PATHS } from '@/constants/api-paths';
 
 import { fetchFromAPI } from '@/lib/http';
-import { GoalsWithStatus } from '@/types/goals.types';
+
+import type { GoalsWithStatus, GoalsWithStatusItem } from '@/types/goals.types';
 
 type GetGoalsResponse = {
   data: {
@@ -14,4 +15,26 @@ export const httpGetGoal = async (year: number) => {
   const apiUrl = `${API_PATHS.GOALS.GET}?${queryParams.toString()}`;
 
   return fetchFromAPI<GetGoalsResponse>(apiUrl, { method: 'GET' });
+};
+
+type HttpCreateGoalParams = {
+  name: string;
+  description?: string;
+  status: string;
+  year: number;
+};
+
+type CreateGoalResponse = {
+  data: GoalsWithStatusItem;
+};
+
+export const httpCreateGoal = async ({ name, description, status, year }: HttpCreateGoalParams) => {
+  const apiUrl = API_PATHS.GOALS.CREATE_GOAL;
+  const body = JSON.stringify({
+    year,
+    name: name.trim(),
+    description: description ?? undefined,
+    status,
+  });
+  return fetchFromAPI<CreateGoalResponse>(apiUrl, { method: 'POST', body });
 };

@@ -14,7 +14,7 @@ import GoalForm from '@/components/goal-form/GoalForm';
 import StatusItem from '../StatusItem';
 
 import type { Status, Description, FormSchema } from '@/types/form-goal.types';
-import { StatusOptionItem } from '@/types/statuses.types';
+import type { StatusOptionItem } from '@/types/statuses.types';
 
 type Props = {
   status: Status;

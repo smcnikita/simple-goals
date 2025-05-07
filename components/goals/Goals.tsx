@@ -1,8 +1,10 @@
 'use client';
 
 import { useCallback, useEffect, useMemo, useState, type FC } from 'react';
+import { toast } from 'sonner';
 
 import { STATUS, STATUS_TOTAL } from '@/constants/statuses';
+import { httpGetGoal } from '@/lib/http/goals.http';
 
 import {
   Select,
@@ -17,10 +19,8 @@ import CreateGoalDialog from '@/components/create-goal-dialog/CreateGoalDialog';
 
 import GoalsList from './GoalsList';
 
-import type { GoalsWithStatus } from '@/types/goals.types';
+import type { GoalsWithStatus, GoalsWithStatusItem } from '@/types/goals.types';
 import type { Statuses, StatusKeys, StatusOptionItem } from '@/types/statuses.types';
-import { httpGetGoal } from '@/lib/http/goals.http';
-import { toast } from 'sonner';
 
 type Props = {
   year: number;
@@ -55,6 +55,10 @@ const Goals: FC<Props> = ({ year, statuses }) => {
       setIsLoading(false);
     }
   }, [year]);
+
+  const updateGoals = (goal: GoalsWithStatusItem) => {
+    setGoals((prev) => [...prev, goal]);
+  };
 
   useEffect(() => {
     setFilterOptions([STATUS_TOTAL, ...statuses]);
@@ -97,7 +101,7 @@ const Goals: FC<Props> = ({ year, statuses }) => {
               </SelectGroup>
             </SelectContent>
           </Select>
-          <CreateGoalDialog statusOption={statusOption} />
+          <CreateGoalDialog statusOption={statusOption} year={year} updateGoals={updateGoals} />
         </div>
       </div>
 

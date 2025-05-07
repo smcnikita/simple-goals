@@ -1,13 +1,18 @@
-import type { Status } from '@/types/statuses.types';
 import { getStatusName } from '@/utils/get-status-name';
 
-export enum STATUS {
-  InProgress = 'in_progress',
-  Completed = 'completed',
-  NotCompleted = 'not_completed',
-  Canceled = 'canceled',
-  Total = 'total',
-}
+import type { Status } from '@/types/statuses.types';
+
+export const STATUS_DB = {
+  InProgress: 'in_progress',
+  Completed: 'completed',
+  NotCompleted: 'not_completed',
+  Canceled: 'canceled',
+};
+
+export const STATUS = {
+  ...STATUS_DB,
+  Total: 'total',
+};
 
 export const STATUS_TOTAL: Status = {
   id: -1,
