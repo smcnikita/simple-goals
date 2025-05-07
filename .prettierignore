@@ -10,6 +10,7 @@ public
 .next
 
 package-lock.json
+pnpm-lock.yaml
 
 .env
 .env.example

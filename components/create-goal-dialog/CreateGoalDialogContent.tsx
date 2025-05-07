@@ -1,6 +1,6 @@
 'use client';
 
-import { useCallback, useState, type FC } from 'react';
+import { useState, type FC } from 'react';
 import { toast } from 'sonner';
 
 import { httpCreateGoal } from '@/lib/http/goals.http';
@@ -23,35 +23,29 @@ type Props = {
 const CreateGoalDialogContent: FC<Props> = ({ statusOption, year, updateOpenDialog, updateGoals }) => {
   const [isLoading, setIsLoading] = useState(false);
 
-  const createGoal = useCallback(
-    async (values: FormSchema) => {
-      setIsLoading(true);
+  const createGoal = async (values: FormSchema) => {
+    setIsLoading(true);
 
-      try {
-        const res = await httpCreateGoal({
-          name: values.name,
-          description: values.description ?? undefined,
-          year,
-          status: values.status,
-        });
+    try {
+      const res = await httpCreateGoal({
+        name: values.name,
+        description: values.description ?? undefined,
+        year,
+        status: values.status,
+      });
 
-        updateGoals(res.data);
-      } catch (error: unknown) {
-        toast.error('Error');
-      } finally {
-        setIsLoading(false);
-        updateOpenDialog(false);
-      }
-    },
-    [year]
-  );
+      updateGoals(res.data);
+    } catch (error: unknown) {
+      toast.error('Error');
+    } finally {
+      setIsLoading(false);
+      updateOpenDialog(false);
+    }
+  };
 
-  const onSubmit = useCallback(
-    async (values: FormSchema) => {
-      await createGoal(values);
-    },
-    [createGoal]
-  );
+  const onSubmit = async (values: FormSchema) => {
+    await createGoal(values);
+  };
 
   return (
     <DialogContent>
