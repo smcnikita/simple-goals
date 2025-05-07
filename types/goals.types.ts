@@ -1,11 +1,8 @@
-export type GoalName = string;
-export type GoalDescription = string;
-export type GoalStatus = string;
+import { Goals as GoalsItemModel } from '@prisma/client';
+import { StatusKeys } from './statuses.types';
 
-export type Goal = {
-  name: GoalName;
-  description: GoalDescription;
-  status: GoalStatus;
+export type GoalsWithStatusItem = GoalsItemModel & {
+  status: StatusKeys;
 };
 
-export type Goals = Goal[];
+export type GoalsWithStatus = GoalsWithStatusItem[];

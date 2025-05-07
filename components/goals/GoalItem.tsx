@@ -4,6 +4,8 @@ import { useState, type FC, type PropsWithChildren } from 'react';
 import { Clock, CircleCheck, CircleX, CirclePause, SquarePen, Trash2, Loader2, X } from 'lucide-react';
 import { toast } from 'sonner';
 
+import { STATUS } from '@/constants/statuses';
+
 import { useIsMobile } from '@/hooks/use-mobile';
 
 import { Button } from '@/components/ui/button';
@@ -12,13 +14,15 @@ import GoalForm from '@/components/goal-form/GoalForm';
 import StatusItem from '../StatusItem';
 
 import type { Status, Description, FormSchema } from '@/types/form-goal.types';
+import { StatusOptionItem } from '@/types/statuses.types';
 
 type Props = {
   status: Status;
-  description: Description;
+  description: Description | null;
+  statusOption: StatusOptionItem[];
 };
 
-const GoalItem: FC<PropsWithChildren<Props>> = ({ children, status, description }) => {
+const GoalItem: FC<PropsWithChildren<Props>> = ({ children, statusOption, status, description }) => {
   const isMobile = useIsMobile();
 
   const [isEdit, setIsEdit] = useState(false);
@@ -64,6 +68,7 @@ const GoalItem: FC<PropsWithChildren<Props>> = ({ children, status, description 
     <div className="border border-gray-200 rounded flex items-start md:items-center gap-3 md:gap-1 justify-between flex-col md:flex-row px-4 py-3">
       {isEdit ? (
         <GoalForm
+          statusOption={statusOption}
           afterContent={
             <div className="flex items-center justify-between gap-1">
               <Button variant="outline" onClick={() => setIsEdit(false)} className="cursor-pointer">
@@ -85,10 +90,10 @@ const GoalItem: FC<PropsWithChildren<Props>> = ({ children, status, description 
       ) : (
         <div className="flex items-center gap-3">
           <div>
-            {status === 'In Progress' && <Clock size={16} className="text-blue-500" />}
-            {status === 'Completed' && <CircleCheck size={16} className="text-green-700" />}
-            {status === 'Not Completed' && <CircleX size={16} className="text-red-500" />}
-            {status === 'Canceled' && <CirclePause size={16} className="text-gray-500" />}
+            {status === STATUS.InProgress && <Clock size={16} className="text-blue-500" />}
+            {status === STATUS.Completed && <CircleCheck size={16} className="text-green-700" />}
+            {status === STATUS.NotCompleted && <CircleX size={16} className="text-red-500" />}
+            {status === STATUS.Canceled && <CirclePause size={16} className="text-gray-500" />}
           </div>
 
           <div className="flex flex-col gap-1">

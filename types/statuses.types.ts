@@ -9,3 +9,8 @@ export type Status = {
 };
 
 export type Statuses = Status[];
+
+export type StatusOptionItem = {
+  key: StatusKeys;
+  name: string;
+};

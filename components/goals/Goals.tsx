@@ -1,6 +1,6 @@
 'use client';
 
-import { useEffect, useMemo, useState, type FC } from 'react';
+import { useCallback, useEffect, useMemo, useState, type FC } from 'react';
 
 import { STATUS, STATUS_TOTAL } from '@/constants/statuses';
 
@@ -17,8 +17,10 @@ import CreateGoalDialog from '@/components/create-goal-dialog/CreateGoalDialog';
 
 import GoalsList from './GoalsList';
 
-import type { Goals } from '@/types/goals.types';
-import type { Statuses, StatusKeys } from '@/types/statuses.types';
+import type { GoalsWithStatus } from '@/types/goals.types';
+import type { Statuses, StatusKeys, StatusOptionItem } from '@/types/statuses.types';
+import { httpGetGoal } from '@/lib/http/goals.http';
+import { toast } from 'sonner';
 
 type Props = {
   year: number;
@@ -26,11 +28,11 @@ type Props = {
 };
 
 const Goals: FC<Props> = ({ year, statuses }) => {
-  const [goals, setGoals] = useState<Goals>([]);
+  const [goals, setGoals] = useState<GoalsWithStatus>([]);
   const [isLoading, setIsLoading] = useState(true);
   const [selectedStatus, setSelectedStatus] = useState<StatusKeys>(STATUS_TOTAL.key);
 
-  const [statusOptions, setStatusOptions] = useState<Statuses>([]);
+  const [filterOptions, setFilterOptions] = useState<Statuses>([]);
 
   const filteredGoals = useMemo(() => {
     if (selectedStatus === STATUS.Total) {
@@ -40,18 +42,35 @@ const Goals: FC<Props> = ({ year, statuses }) => {
     return goals.filter((goal) => goal.status === selectedStatus);
   }, [goals, selectedStatus]);
 
-  useEffect(() => {
-    setStatusOptions([STATUS_TOTAL, ...statuses]);
+  const getGoals = useCallback(async () => {
+    setIsLoading(true);
 
-    setGoals([]);
-    setTimeout(() => {
+    try {
+      const res = await httpGetGoal(year);
+      setGoals(res.data.goals);
+    } catch (error: unknown) {
+      setGoals([]);
+      toast.error('Error');
+    } finally {
       setIsLoading(false);
-    }, 1000);
-  }, [statuses]);
+    }
+  }, [year]);
+
+  useEffect(() => {
+    setFilterOptions([STATUS_TOTAL, ...statuses]);
+    getGoals();
+  }, [getGoals, statuses]);
 
   const onValueChange = (value: StatusKeys) => {
     setSelectedStatus(value);
   };
+
+  const statusOption = useMemo<StatusOptionItem[]>(() => {
+    return statuses.map((status) => ({
+      key: status.key,
+      name: status.name,
+    }));
+  }, [statuses]);
 
   return (
     <>
@@ -70,7 +89,7 @@ const Goals: FC<Props> = ({ year, statuses }) => {
             <SelectContent>
               <SelectGroup>
                 <SelectLabel>Statuses</SelectLabel>
-                {statusOptions.map((el) => (
+                {filterOptions.map((el) => (
                   <SelectItem key={el.id} value={el.key}>
                     {el.name}
                   </SelectItem>
@@ -78,11 +97,11 @@ const Goals: FC<Props> = ({ year, statuses }) => {
               </SelectGroup>
             </SelectContent>
           </Select>
-          <CreateGoalDialog />
+          <CreateGoalDialog statusOption={statusOption} />
         </div>
       </div>
 
-      <GoalsList goals={filteredGoals} isLoading={isLoading} />
+      <GoalsList goals={filteredGoals} isLoading={isLoading} statusOption={statusOption} />
     </>
   );
 };

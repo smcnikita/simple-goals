@@ -6,7 +6,13 @@ import { Dialog, DialogTrigger } from '@/components/ui/dialog';
 
 import CreateGoalDialogContent from './CreateGoalDialogContent';
 
-const CreateGoalDialog: FC = () => {
+import type { StatusOptionItem } from '@/types/statuses.types';
+
+type Props = {
+  statusOption: StatusOptionItem[];
+};
+
+const CreateGoalDialog: FC<Props> = ({ statusOption }) => {
   return (
     <Dialog>
       <DialogTrigger asChild>
@@ -14,7 +20,7 @@ const CreateGoalDialog: FC = () => {
           <Plus /> Add goal
         </Button>
       </DialogTrigger>
-      <CreateGoalDialogContent />
+      <CreateGoalDialogContent statusOption={statusOption} />
     </Dialog>
   );
 };

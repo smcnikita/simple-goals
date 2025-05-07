@@ -7,8 +7,13 @@ import { Button } from '@/components/ui/button';
 import GoalForm from '@/components/goal-form/GoalForm';
 
 import type { FormSchema } from '@/types/form-goal.types';
+import { StatusOptionItem } from '@/types/statuses.types';
 
-const CreateGoalDialogContent: FC = () => {
+type Props = {
+  statusOption: StatusOptionItem[];
+};
+
+const CreateGoalDialogContent: FC<Props> = ({ statusOption }) => {
   const onSubmit = async (values: FormSchema) => {
     console.log(values);
   };
@@ -21,6 +26,7 @@ const CreateGoalDialogContent: FC = () => {
 
       <GoalForm
         onSubmit={onSubmit}
+        statusOption={statusOption}
         afterContent={
           <DialogFooter>
             <DialogClose asChild>

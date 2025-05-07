@@ -3,14 +3,16 @@ import { Loader2 } from 'lucide-react';
 
 import GoalItem from './GoalItem';
 
-import type { Goals } from '@/types/goals.types';
+import type { GoalsWithStatus } from '@/types/goals.types';
+import { StatusOptionItem } from '@/types/statuses.types';
 
 type Props = {
-  goals: Goals;
+  goals: GoalsWithStatus;
   isLoading: boolean;
+  statusOption: StatusOptionItem[];
 };
 
-const GoalsList: FC<Props> = ({ goals, isLoading }) => {
+const GoalsList: FC<Props> = ({ goals, isLoading, statusOption }) => {
   if (isLoading) {
     return (
       <div className="flex justify-center">
@@ -24,9 +26,9 @@ const GoalsList: FC<Props> = ({ goals, isLoading }) => {
       {goals.length === 0 && <p className="flex justify-center text-gray-400 text-sm">There are no goals</p>}
 
       {goals.length > 0 &&
-        goals.map((el) => (
-          <GoalItem key={el.name} status={el.status} description={el.description}>
-            {el.name}
+        goals.map((goal) => (
+          <GoalItem key={goal.id} statusOption={statusOption} status={goal.status} description={goal.description}>
+            {goal.name}
           </GoalItem>
         ))}
     </div>

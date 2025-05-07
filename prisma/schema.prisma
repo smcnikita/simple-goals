@@ -35,3 +35,16 @@ model Statuses {
   created_at DateTime @default(now()) @map("created_at")
   updated_at DateTime @updatedAt @map("updated_at")
 }
+
+model Goals {
+  id          Int      @id @default(autoincrement())
+  name        String
+  description String?
+  status_id   Int
+  year_id     Int
+  user_id     Int
+  created_at  DateTime @default(now()) @map("created_at")
+  updated_at  DateTime @updatedAt @map("updated_at")
+
+  @@index([year_id, user_id, status_id])
+}
