@@ -21,6 +21,7 @@ import GoalsList from './GoalsList';
 
 import type { GoalsWithStatus, GoalsWithStatusItem } from '@/types/goals.types';
 import type { Statuses, StatusKeys, StatusOptionItem } from '@/types/statuses.types';
+import GoalStatisticsItem from './GoalStatisticsItem';
 
 type Props = {
   year: number;
@@ -103,6 +104,17 @@ const Goals: FC<Props> = ({ year, statuses }) => {
           </Select>
           <CreateGoalDialog statusOption={statusOption} year={year} updateGoals={updateGoals} />
         </div>
+      </div>
+
+      <div className="grid grid-cols-2 md:grid-cols-5 gap-3">
+        <GoalStatisticsItem text="Total" count={goals.length} />
+        <GoalStatisticsItem text="In Progress" count={goals.filter((el) => el.status === STATUS.InProgress).length} />
+        <GoalStatisticsItem text="Completed" count={goals.filter((el) => el.status === STATUS.Completed).length} />
+        <GoalStatisticsItem
+          text="Not Completed"
+          count={goals.filter((el) => el.status === STATUS.NotCompleted).length}
+        />
+        <GoalStatisticsItem text="Canceled" count={goals.filter((el) => el.status === STATUS.Canceled).length} />
       </div>
 
       <GoalsList goals={filteredGoals} isLoading={isLoading} statusOption={statusOption} />
