@@ -1,7 +1,14 @@
+import { compare } from 'bcryptjs';
 import { NextAuthOptions } from 'next-auth';
 import CredentialsProvider from 'next-auth/providers/credentials';
 import GitHubProvider from 'next-auth/providers/github';
 import YandexProvider from 'next-auth/providers/yandex';
+
+import { PATHS } from '@/constants/paths';
+
+import { prisma } from './prisma';
+
+import { findOrCreateUserByOAuth } from '@/services/auth-service';
 
 type GithubEmail = {
   email: string;
@@ -19,15 +26,22 @@ export const authOptions: NextAuthOptions = {
         password: { label: 'Password', type: 'password' },
       },
       async authorize(credentials) {
-        if (!credentials?.email || !credentials.password) {
-          return null;
-        }
+        if (!credentials?.email || !credentials.password) return null;
 
-        return {
-          id: '123',
-          email: credentials?.email,
-          name: '123',
-        };
+        const user = await prisma.users.findUnique({
+          where: { email: credentials.email as string },
+        });
+
+        if (!user) return null;
+
+        const isValid = await compare(credentials.password as string, user.password);
+        return isValid
+          ? {
+              id: user.id.toString(),
+              email: user.email,
+              name: user.name,
+            }
+          : null;
       },
     }),
     GitHubProvider({
@@ -61,9 +75,13 @@ export const authOptions: NextAuthOptions = {
     }),
   ],
   callbacks: {
-    async signIn({ user }) {
-      if (!user.email) {
-        return false;
+    async signIn({ user, account }) {
+      if (!user.email) return false;
+
+      const id = await findOrCreateUserByOAuth(user, account);
+
+      if (id) {
+        user.id = id;
       }
 
       return true;
@@ -71,7 +89,10 @@ export const authOptions: NextAuthOptions = {
     async redirect() {
       return '/';
     },
-    async session({ session }) {
+    async session({ session, token }) {
+      if (token.sub) {
+        session.user.id = token.sub;
+      }
       return session;
     },
     async jwt({ token, user }) {
@@ -82,6 +103,6 @@ export const authOptions: NextAuthOptions = {
   session: { strategy: 'jwt' },
   secret: process.env.NEXTAUTH_SECRET,
   pages: {
-    signIn: '/sign-in',
+    signIn: PATHS.auth.signIn,
   },
 };

@@ -4,6 +4,8 @@ import { useMemo, type FC } from 'react';
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
 
+import { PATHS } from '@/constants/paths';
+
 import {
   Sidebar,
   SidebarContent,
@@ -26,8 +28,8 @@ const Aside: FC<Props> = ({ years }) => {
 
   const yearsLinks = useMemo(() => {
     return years.map((year) => ({
-      title: year,
-      url: `/goals/${year}`,
+      title: year.year,
+      url: PATHS.goals.base + PATHS.goals.slugYear.replace(':year', year.year.toString()),
     }));
   }, [years]);
 

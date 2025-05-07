@@ -1,4 +1,6 @@
-import { Toaster } from '@/components/ui/sonner';
+import { getServerSession } from 'next-auth';
+
+import { authOptions } from '@/lib/auth';
 
 import { yearsController } from '@/controllers/years-controller';
 
@@ -7,13 +9,22 @@ import { SidebarProvider } from '@/components/ui/sidebar';
 import { Separator } from '@/components/ui/separator';
 import Header from '@/components/Header';
 import Content from '@/components/Content';
+import { Toaster } from '@/components/ui/sonner';
 
 type Props = Readonly<{
   children: React.ReactNode;
 }>;
 
 const Layout = async ({ children }: Props) => {
-  const years = await yearsController.getYears();
+  const session = await getServerSession(authOptions);
+
+  if (!session) {
+    throw new Error('Session is not defined. Please ensure that the session is initialized before proceeding.');
+  }
+
+  const years = await yearsController.getYears({
+    userId: Number(session.user.id),
+  });
 
   return (
     <div className="max-w-[1000px] mx-auto px-3">

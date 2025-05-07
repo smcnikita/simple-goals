@@ -39,3 +39,15 @@ yarn-error.log*
 # typescript
 *.tsbuildinfo
 next-env.d.ts
+
+.vscode
+.idea
+.zed
+
+*.sql
+*.db
+*.db-journal
+
+_TODO.md
+
+certificates

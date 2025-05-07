@@ -9,13 +9,12 @@ public
 
 .next
 
-pnpm-lock.yaml
+package-lock.json
 
 .env
 .env.example
 
-.gitlab-ci.yml
-
 *.db
+*.sql
 
 *.prisma

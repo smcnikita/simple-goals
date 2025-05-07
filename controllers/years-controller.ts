@@ -1,10 +1,13 @@
+import { getUserYears } from '@/services/years-service';
+
+type GetYearsParams = {
+  userId: number;
+};
+
 export const yearsController = {
-  getYears: async () => {
-    const nowYear = new Date().getFullYear();
-    const years: number[] = [nowYear];
+  getYears: async ({ userId }: GetYearsParams) => {
+    const years = await getUserYears({ userId });
 
-    const uniqueYears = Array.from(new Set([...years]));
-
-    return uniqueYears;
+    return years;
   },
 };
