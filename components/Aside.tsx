@@ -1,5 +1,8 @@
-import type { FC } from 'react';
+'use client';
+
+import { useMemo, type FC } from 'react';
 import Link from 'next/link';
+import { usePathname } from 'next/navigation';
 
 import {
   Sidebar,
@@ -12,18 +15,27 @@ import {
   SidebarMenuItem,
 } from '@/components/ui/sidebar';
 
-const items = [
-  {
-    title: '2025',
-    url: '#',
-  },
-  {
-    title: '2024',
-    url: '#',
-  },
-];
+import type { Years } from '@/types/years.types';
 
-const Aside: FC = () => {
+type Props = {
+  years: Years;
+};
+
+const Aside: FC<Props> = ({ years }) => {
+  const pathname = usePathname();
+
+  const yearsLinks = useMemo(() => {
+    return years.map((year) => ({
+      title: year,
+      url: `/goals/${year}`,
+    }));
+  }, [years]);
+
+  const selectedYear = useMemo(() => {
+    const segments = pathname.split('/');
+    return Number(segments[2]);
+  }, [pathname]);
+
   return (
     <Sidebar className="left-auto">
       <SidebarContent>
@@ -31,9 +43,9 @@ const Aside: FC = () => {
           <SidebarGroupLabel>Years</SidebarGroupLabel>
           <SidebarGroupContent>
             <SidebarMenu>
-              {items.map((item) => (
+              {yearsLinks.map((item) => (
                 <SidebarMenuItem key={item.title}>
-                  <SidebarMenuButton asChild isActive={item.title === '2025'}>
+                  <SidebarMenuButton asChild isActive={selectedYear === Number(item.title)}>
                     <Link href={item.url}>
                       <span>{item.title}</span>
                     </Link>

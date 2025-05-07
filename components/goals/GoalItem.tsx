@@ -9,7 +9,7 @@ import { useIsMobile } from '@/hooks/use-mobile';
 import { Button } from '@/components/ui/button';
 import GoalForm from '@/components/goal-form/GoalForm';
 
-import StatusItem from './StatusItem';
+import StatusItem from '../StatusItem';
 
 import type { Status, Description, FormSchema } from '@/types/form-goal.types';
 

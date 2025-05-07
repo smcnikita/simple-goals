@@ -1,5 +1,7 @@
 import { Toaster } from '@/components/ui/sonner';
 
+import { yearsController } from '@/controllers/years-controller';
+
 import Aside from '@/components/Aside';
 import { SidebarProvider } from '@/components/ui/sidebar';
 import { Separator } from '@/components/ui/separator';
@@ -11,10 +13,12 @@ type Props = Readonly<{
 }>;
 
 const Layout = async ({ children }: Props) => {
+  const years = await yearsController.getYears();
+
   return (
     <div className="max-w-[1000px] mx-auto px-3">
       <SidebarProvider>
-        <Aside />
+        <Aside years={years} />
         <Content>
           <Header />
           <Separator />
