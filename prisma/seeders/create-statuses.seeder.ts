@@ -1,6 +1,6 @@
 import { PrismaClient } from '@prisma/client';
 
-import { STATUS } from '../../constants/statuses';
+import { STATUS } from '@/constants/statuses';
 
 const prisma = new PrismaClient();
 
