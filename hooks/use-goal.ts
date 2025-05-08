@@ -1,29 +1,21 @@
-import { useCallback, useMemo, useState } from 'react';
-import { toast } from 'sonner';
+import { useMemo } from 'react';
 
 import { STATUS } from '@/constants/statuses';
 
-import { httpGetGoal } from '@/lib/http/goals.http';
+import { useFilterStatusStore } from '@/stores/filter-status-store';
+import { useGoalsStore } from '@/stores/goals-store';
 
-import type { GoalsWithStatus, GoalsWithStatusItem } from '@/types/goals.types';
-import type { StatusKeys } from '@/types/statuses.types';
-
-type Props = {
-  selectedFilter: StatusKeys;
-  year: number;
-};
-
-const useGoal = ({ selectedFilter, year }: Props) => {
-  const [isLoading, setIsLoading] = useState(true);
-  const [goals, setGoals] = useState<GoalsWithStatus>([]);
+const useGoal = () => {
+  const { selectedFilterStatus } = useFilterStatusStore();
+  const { goals } = useGoalsStore();
 
   const filteredGoals = useMemo(() => {
-    if (selectedFilter === STATUS.Total) {
+    if (selectedFilterStatus === STATUS.Total) {
       return goals;
     }
 
-    return goals.filter((goal) => goal.status === selectedFilter);
-  }, [goals, selectedFilter]);
+    return goals.filter((goal) => goal.status === selectedFilterStatus);
+  }, [goals, selectedFilterStatus]);
 
   const goalsStatistic = useMemo(() => {
     const stats = {
@@ -54,33 +46,7 @@ const useGoal = ({ selectedFilter, year }: Props) => {
     return stats;
   }, [goals, STATUS]);
 
-  const getGoals = useCallback(async () => {
-    setIsLoading(true);
-
-    try {
-      const res = await httpGetGoal(year);
-      setGoals(res.data.goals);
-    } catch (error: unknown) {
-      setGoals([]);
-      toast.error('Error');
-    } finally {
-      setIsLoading(false);
-    }
-  }, [year]);
-
-  const addGoal = (newGoal: GoalsWithStatusItem) => {
-    setGoals((prevGoals) => [...prevGoals, newGoal]);
-  };
-
-  const updateGoal = (updatedGoal: GoalsWithStatusItem) => {
-    setGoals((prevGoals) => prevGoals.map((goal) => (goal.id === updatedGoal.id ? updatedGoal : goal)));
-  };
-
-  const deleteGoals = (id: number) => {
-    setGoals((prev) => prev.filter((goal) => goal.id !== id));
-  };
-
-  return { isLoading, filteredGoals, goalsStatistic, getGoals, addGoal, updateGoal, deleteGoals };
+  return { filteredGoals, goalsStatistic };
 };
 
 export default useGoal;

@@ -7,25 +7,25 @@ import { z } from 'zod';
 
 import { STATUS } from '@/constants/statuses';
 
+import { useStatusStore } from '@/stores/status-store';
+
 import { Input } from '@/components/ui/input';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
 import { Textarea } from '@/components/ui/textarea';
 import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from '@/components/ui/form';
 
 import type { Status, Name, Description, FormSchema } from '@/types/form-goal.types';
-import type { StatusKeys, StatusOptionItem } from '@/types/statuses.types';
+import type { StatusKeys } from '@/types/statuses.types';
 
 type OldGoalData = {
   id: number;
   name: Name;
   description: Description;
   status: Status;
-  year: number;
 };
 
 type Props = {
   afterContent: ReactNode;
-  statusOption: StatusOptionItem[];
   isUpdateGoals?: boolean;
   oldGoalData?: OldGoalData;
   onSubmit: (values: FormSchema) => Promise<void>;
@@ -46,7 +46,9 @@ const DEFAULT_GOAL_VALUES = {
 };
 
 const GoalForm: FC<Props> = (props) => {
-  const { statusOption, afterContent, onSubmit: handleSubmit, isUpdateGoals = false, oldGoalData } = props;
+  const { afterContent, onSubmit: handleSubmit, isUpdateGoals = false, oldGoalData } = props;
+
+  const { statusOptions } = useStatusStore();
 
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
@@ -95,7 +97,7 @@ const GoalForm: FC<Props> = (props) => {
                     </SelectTrigger>
                   </FormControl>
                   <SelectContent>
-                    {statusOption.map((status) => (
+                    {statusOptions.map((status) => (
                       <SelectItem key={status.key} value={status.key}>
                         {status.name}
                       </SelectItem>

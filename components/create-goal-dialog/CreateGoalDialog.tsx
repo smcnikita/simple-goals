@@ -8,16 +8,7 @@ import { Dialog, DialogTrigger } from '@/components/ui/dialog';
 
 import CreateGoalDialogContent from './CreateGoalDialogContent';
 
-import type { StatusOptionItem } from '@/types/statuses.types';
-import type { GoalsWithStatusItem } from '@/types/goals.types';
-
-type Props = {
-  year: number;
-  statusOption: StatusOptionItem[];
-  updateGoals: (goal: GoalsWithStatusItem) => void;
-};
-
-const CreateGoalDialog: FC<Props> = ({ statusOption, year, updateGoals }) => {
+const CreateGoalDialog: FC = () => {
   const [openDialog, setOpenDialog] = useState(false);
 
   const updateOpenDialog = (isOpen: boolean) => {
@@ -31,12 +22,7 @@ const CreateGoalDialog: FC<Props> = ({ statusOption, year, updateGoals }) => {
           <Plus /> Add goal
         </Button>
       </DialogTrigger>
-      <CreateGoalDialogContent
-        statusOption={statusOption}
-        year={year}
-        updateOpenDialog={updateOpenDialog}
-        updateGoals={updateGoals}
-      />
+      <CreateGoalDialogContent updateOpenDialog={updateOpenDialog} />
     </Dialog>
   );
 };

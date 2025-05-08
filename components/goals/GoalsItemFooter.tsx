@@ -5,14 +5,17 @@ import { useIsMobile } from '@/hooks/use-mobile';
 
 import { Button } from '@/components/ui/button';
 
+import { useGoalsStore } from '@/stores/goals-store';
+
 type Props = {
-  isLoading: boolean;
   openUpdateForm: () => void;
   deleteGoal: () => Promise<void>;
 };
 
 const GoalsItemFooter: FC<Props> = (props) => {
-  const { isLoading, openUpdateForm, deleteGoal } = props;
+  const { openUpdateForm, deleteGoal } = props;
+
+  const { isLoadingDelete } = useGoalsStore();
 
   const isMobile = useIsMobile();
 
@@ -31,10 +34,10 @@ const GoalsItemFooter: FC<Props> = (props) => {
         size={isMobile ? 'default' : 'icon'}
         variant={isMobile ? 'secondary' : 'ghost'}
         className="cursor-pointer"
-        disabled={isLoading}
+        disabled={isLoadingDelete}
         onClick={async () => await deleteGoal()}
       >
-        {isLoading ? (
+        {isLoadingDelete ? (
           <Loader2 className="animate-spin" />
         ) : (
           <>

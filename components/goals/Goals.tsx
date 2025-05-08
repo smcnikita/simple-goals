@@ -3,10 +3,11 @@
 import { useEffect, type FC } from 'react';
 
 import { STATUS_TOTAL } from '@/constants/statuses';
-import useGoal from '@/hooks/use-goal';
-import useFilterStatus from '@/hooks/use-filter-status';
 
-import getStatusOptions from '@/utils/get-status-options';
+import useGoal from '@/hooks/use-goal';
+
+import { useGoalsStore } from '@/stores/goals-store';
+import { useFilterStatusStore } from '@/stores/filter-status-store';
 
 import {
   Select,
@@ -22,36 +23,31 @@ import CreateGoalDialog from '@/components/create-goal-dialog/CreateGoalDialog';
 import GoalsList from './GoalsList';
 import GoalStatisticsItem from './GoalStatisticsItem';
 
-import type { Statuses } from '@/types/statuses.types';
-
 type Props = {
-  year: number;
-  statuses: Statuses;
+  globalYear: number;
 };
 
-const Goals: FC<Props> = ({ year, statuses }) => {
-  const { selectedFilter, filterOptions, updateSelectedStatus } = useFilterStatus(statuses);
-  const statusOption = getStatusOptions(statuses);
-
-  const { isLoading, filteredGoals, goalsStatistic, getGoals, addGoal, deleteGoals, updateGoal } = useGoal({
-    year,
-    selectedFilter,
-  });
+const Goals: FC<Props> = ({ globalYear }) => {
+  const { filterStatusOptions, updateSelectedFilterStatus } = useFilterStatusStore();
+  const { filteredGoals, goalsStatistic } = useGoal();
+  const { fetchGoalsData } = useGoalsStore();
 
   useEffect(() => {
-    getGoals();
-  }, [getGoals]);
+    if (globalYear) {
+      fetchGoalsData(globalYear);
+    }
+  }, [globalYear, fetchGoalsData]);
 
   return (
     <>
       <div className="flex items-center justify-between gap-3 flex-wrap">
         <div>
-          <h1 className="text-2xl font-bold">{year} Goals</h1>
-          <p className="text-gray-500 text-sm mt-1">Track and manage your goals for {year}</p>
+          <h1 className="text-2xl font-bold">{globalYear} Goals</h1>
+          <p className="text-gray-500 text-sm mt-1">Track and manage your goals for {globalYear}</p>
         </div>
 
         <div className="flex items-center gap-3">
-          <Select defaultValue={STATUS_TOTAL.key} onValueChange={updateSelectedStatus}>
+          <Select defaultValue={STATUS_TOTAL.key} onValueChange={updateSelectedFilterStatus}>
             <SelectTrigger className="w-[180px]">
               <SelectValue placeholder="Select a fruit" />
             </SelectTrigger>
@@ -59,15 +55,15 @@ const Goals: FC<Props> = ({ year, statuses }) => {
             <SelectContent>
               <SelectGroup>
                 <SelectLabel>Statuses</SelectLabel>
-                {filterOptions.map((el) => (
-                  <SelectItem key={el.id} value={el.key}>
-                    {el.name}
+                {filterStatusOptions.map((filterStatus) => (
+                  <SelectItem key={filterStatus.key} value={filterStatus.key}>
+                    {filterStatus.name}
                   </SelectItem>
                 ))}
               </SelectGroup>
             </SelectContent>
           </Select>
-          <CreateGoalDialog statusOption={statusOption} year={year} updateGoals={addGoal} />
+          <CreateGoalDialog />
         </div>
       </div>
 
@@ -79,14 +75,7 @@ const Goals: FC<Props> = ({ year, statuses }) => {
         <GoalStatisticsItem text="Canceled" count={goalsStatistic.canceled} />
       </div>
 
-      <GoalsList
-        year={year}
-        goals={filteredGoals}
-        isLoading={isLoading}
-        statusOption={statusOption}
-        deleteGoals={deleteGoals}
-        updateGoals={updateGoal}
-      />
+      <GoalsList goals={filteredGoals} />
     </>
   );
 };

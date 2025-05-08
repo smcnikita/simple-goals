@@ -1,22 +1,22 @@
+'use client';
+
 import { type FC } from 'react';
 import { Loader2 } from 'lucide-react';
 
+import { useGoalsStore } from '@/stores/goals-store';
+
 import GoalItem from './GoalItem';
 
-import type { StatusOptionItem } from '@/types/statuses.types';
-import type { GoalsWithStatus, GoalsWithStatusItem } from '@/types/goals.types';
+import type { GoalsWithStatus } from '@/types/goals.types';
 
 type Props = {
-  year: number;
   goals: GoalsWithStatus;
-  isLoading: boolean;
-  statusOption: StatusOptionItem[];
-  deleteGoals: (id: number) => void;
-  updateGoals: (goal: GoalsWithStatusItem) => void;
 };
 
-const GoalsList: FC<Props> = ({ year, goals, isLoading, statusOption, deleteGoals, updateGoals }) => {
-  if (isLoading) {
+const GoalsList: FC<Props> = ({ goals }) => {
+  const { isLoadingFetch } = useGoalsStore();
+
+  if (isLoadingFetch) {
     return (
       <div className="flex justify-center">
         <Loader2 className="animate-spin text-gray-400" />
@@ -30,17 +30,7 @@ const GoalsList: FC<Props> = ({ year, goals, isLoading, statusOption, deleteGoal
 
       {goals.length > 0 &&
         goals.map((goal) => (
-          <GoalItem
-            key={goal.id}
-            id={goal.id}
-            name={goal.name}
-            description={goal.description}
-            year={year}
-            statusOption={statusOption}
-            status={goal.status}
-            deleteGoals={deleteGoals}
-            updateGoals={updateGoals}
-          >
+          <GoalItem key={goal.id} id={goal.id} name={goal.name} description={goal.description} status={goal.status}>
             {goal.name}
           </GoalItem>
         ))}
