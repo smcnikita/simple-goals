@@ -1,6 +1,6 @@
 'use client';
 
-import { useState, type FC } from 'react';
+import { type FC } from 'react';
 import { User2, LogOut } from 'lucide-react';
 import Link from 'next/link';
 import { useSession } from 'next-auth/react';
@@ -16,22 +16,11 @@ import {
   DropdownMenuTrigger,
 } from '@/components/ui/dropdown-menu';
 import { Button } from '@/components/ui/button';
-import Image from 'next/image';
-import { Select, SelectContent, SelectGroup, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
-import { type Locale, locales, localesInfo } from '@/i18n/config';
-import { setUserLocale } from '@/services/locale-service';
-import { useLocale } from 'next-intl';
+
+import LangSwitcher from './LangSwitcher';
 
 const Header: FC = () => {
   const { data: session } = useSession();
-  const locale = useLocale() as Locale;
-
-  const [langValue, setLangValue] = useState<Locale>(locale);
-
-  const onChangeLang = (value: Locale) => {
-    setLangValue(value);
-    setUserLocale(value);
-  };
 
   return (
     <header className="py-4 px-3 flex items-center justify-between gap-1">
@@ -43,24 +32,7 @@ const Header: FC = () => {
       </div>
 
       <div className="flex items-center gap-3">
-        <Select value={langValue} onValueChange={onChangeLang}>
-          <SelectTrigger className="w-[66px]">
-            <SelectValue>
-              <Image src={localesInfo[langValue].icon} alt={localesInfo[langValue].text} height={16} width={16} />
-            </SelectValue>
-          </SelectTrigger>
-
-          <SelectContent>
-            <SelectGroup>
-              {locales.map((lang) => (
-                <SelectItem key={lang} value={lang}>
-                  <Image src={localesInfo[lang].icon} alt={localesInfo[lang].text} height={16} width={16} />
-                  {localesInfo[lang].text}
-                </SelectItem>
-              ))}
-            </SelectGroup>
-          </SelectContent>
-        </Select>
+        <LangSwitcher />
 
         <DropdownMenu>
           <DropdownMenuTrigger asChild>
