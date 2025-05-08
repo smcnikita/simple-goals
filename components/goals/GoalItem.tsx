@@ -1,44 +1,60 @@
 'use client';
 
 import { useState, type FC, type PropsWithChildren } from 'react';
-import { Clock, CircleCheck, CircleX, CirclePause, SquarePen, Trash2, Loader2, X } from 'lucide-react';
+import { Clock, CircleCheck, CircleX, CirclePause, X } from 'lucide-react';
 import { toast } from 'sonner';
 
 import { STATUS } from '@/constants/statuses';
 
-import { useIsMobile } from '@/hooks/use-mobile';
-
-import { Button } from '@/components/ui/button';
-import GoalForm from '@/components/goal-form/GoalForm';
+import { httpDeleteGoal, httpUpdateGoal } from '@/lib/http/goals.http';
 
 import StatusItem from '../StatusItem';
+import GoalsUpdateFormWrapper from './GoalsUpdateFormWrapper';
+import GoalsItemFooter from './GoalsItemFooter';
 
 import type { Status, Description, FormSchema } from '@/types/form-goal.types';
 import type { StatusOptionItem } from '@/types/statuses.types';
+import type { GoalsWithStatusItem } from '@/types/goals.types';
 
 type Props = {
-  status: Status;
+  id: number;
+  name: string;
   description: Description | null;
+  status: Status;
+  year: number;
   statusOption: StatusOptionItem[];
+  deleteGoals: (id: number) => void;
+  updateGoals: (goal: GoalsWithStatusItem) => void;
 };
 
-const GoalItem: FC<PropsWithChildren<Props>> = ({ children, statusOption, status, description }) => {
-  const isMobile = useIsMobile();
+const GoalItem: FC<PropsWithChildren<Props>> = (props) => {
+  const { children, id, name, year, statusOption, status, description, deleteGoals, updateGoals } = props;
 
   const [isEdit, setIsEdit] = useState(false);
   const [isLoadingUpdate, setIsLoadingUpdate] = useState(false);
   const [isLoadingDelete, setIsLoadingDelete] = useState(false);
 
-  const onSubmit = async (values: FormSchema) => {
-    console.log(values);
+  const updateIsEdit = (isEdit: boolean) => {
+    setIsEdit(isEdit);
   };
 
-  const updateGoal = async () => {
+  const openUpdateForm = () => {
+    setIsEdit(true);
+  };
+
+  const onSubmitUpdateGoal = async (values: FormSchema) => {
     setIsLoadingUpdate(true);
 
-    setTimeout(() => {
-      setIsEdit(false);
-      setIsLoadingUpdate(false);
+    try {
+      const res = await httpUpdateGoal({
+        id,
+        name: values.name,
+        description: values.description ?? undefined,
+        status: values.status,
+        year,
+      });
+      updateGoals(res.data);
+      updateIsEdit(false);
       toast.success('Goal updated', {
         icon: <CircleCheck size={16} className="text-green-700" />,
         action: {
@@ -46,46 +62,46 @@ const GoalItem: FC<PropsWithChildren<Props>> = ({ children, statusOption, status
           onClick: () => {},
         },
       });
-    }, 2000);
+    } catch (error: unknown) {
+      toast.error('Error');
+    } finally {
+      setIsLoadingUpdate(false);
+    }
   };
 
   const deleteGoal = async () => {
     setIsLoadingDelete(true);
 
-    setTimeout(() => {
-      setIsLoadingDelete(false);
-      toast.success('Goal deleted', {
+    try {
+      const res = await httpDeleteGoal({ id, year });
+      deleteGoals(res.data.id);
+      toast.success('Goal delete', {
         icon: <CircleCheck size={16} className="text-green-700" />,
         action: {
           label: <X size={16} />,
           onClick: () => {},
         },
       });
-    }, 2000);
+    } catch (error: unknown) {
+      toast.error('Error');
+    } finally {
+      setIsLoadingDelete(false);
+    }
   };
 
   return (
     <div className="border border-gray-200 rounded flex items-start md:items-center gap-3 md:gap-1 justify-between flex-col md:flex-row px-4 py-3">
       {isEdit ? (
-        <GoalForm
+        <GoalsUpdateFormWrapper
+          isLoading={isLoadingUpdate}
           statusOption={statusOption}
-          afterContent={
-            <div className="flex items-center justify-between gap-1">
-              <Button variant="outline" onClick={() => setIsEdit(false)} className="cursor-pointer">
-                Cancel
-              </Button>
-              <Button
-                type="submit"
-                className="cursor-pointer"
-                disabled={isLoadingUpdate}
-                onClick={async () => await updateGoal()}
-              >
-                {!isLoadingUpdate && 'Update Goal'}
-                {isLoadingUpdate && <Loader2 className="animate-spin" />}
-              </Button>
-            </div>
-          }
-          onSubmit={onSubmit}
+          onSubmit={onSubmitUpdateGoal}
+          updateIsEdit={updateIsEdit}
+          id={id}
+          name={name}
+          description={description}
+          status={status}
+          year={year}
         />
       ) : (
         <div className="flex items-center gap-3">
@@ -105,33 +121,7 @@ const GoalItem: FC<PropsWithChildren<Props>> = ({ children, statusOption, status
       )}
 
       {!isEdit && (
-        <div className="flex items-center gap-3 md:gap-0">
-          <Button
-            size={isMobile ? 'default' : 'icon'}
-            variant={isMobile ? 'secondary' : 'ghost'}
-            className="cursor-pointer"
-            onClick={() => setIsEdit(true)}
-          >
-            <SquarePen />
-            {isMobile && 'Edit'}
-          </Button>
-          <Button
-            size={isMobile ? 'default' : 'icon'}
-            variant={isMobile ? 'secondary' : 'ghost'}
-            className="cursor-pointer"
-            disabled={isLoadingDelete}
-            onClick={async () => await deleteGoal()}
-          >
-            {!isLoadingDelete && (
-              <>
-                <Trash2 />
-                {isMobile && 'Delete'}
-              </>
-            )}
-
-            {isLoadingDelete && <Loader2 className="animate-spin" />}
-          </Button>
-        </div>
+        <GoalsItemFooter isLoading={isLoadingDelete} deleteGoal={deleteGoal} openUpdateForm={openUpdateForm} />
       )}
     </div>
   );

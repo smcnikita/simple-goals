@@ -1,6 +1,6 @@
 import { prisma } from '@/lib/prisma';
-import { createGoal } from '@/services/goals-service';
-import { GoalsWithStatus, GoalsWithStatusItem } from '@/types/goals.types';
+
+import { createGoal, updateGoal } from '@/services/goals-service';
 
 import type { StatusKeys } from '@/types/statuses.types';
 
@@ -10,6 +10,20 @@ type GetUserGoalsParams = {
 };
 
 type CreateGoalParams = {
+  userId: number;
+  yearId: number;
+  name: string;
+  description: string | null;
+  statusKey: StatusKeys;
+};
+
+type DeleteGoalsParams = {
+  id: number;
+  userId: number;
+};
+
+type UpdateGoalParams = {
+  id: number;
   userId: number;
   yearId: number;
   name: string;
@@ -55,6 +69,40 @@ export const goalsController = {
 
     return {
       data: await createGoal({
+        description,
+        name,
+        statusId: statusModel.id,
+        userId,
+        yearId,
+      }),
+      status: statusModel.key,
+    };
+  },
+
+  deleteGoal: async (params: DeleteGoalsParams) => {
+    const { id, userId } = params;
+
+    return await prisma.goals.delete({
+      where: { id, user_id: userId },
+    });
+  },
+
+  updateGoal: async (params: UpdateGoalParams) => {
+    const { id, name, description, statusKey, userId, yearId } = params;
+
+    const statusModel = await prisma.statuses.findFirst({
+      where: {
+        key: statusKey,
+      },
+    });
+
+    if (!statusModel) {
+      return null;
+    }
+
+    return {
+      data: await updateGoal({
+        id,
         description,
         name,
         statusId: statusModel.id,

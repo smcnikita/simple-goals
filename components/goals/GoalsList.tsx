@@ -3,16 +3,19 @@ import { Loader2 } from 'lucide-react';
 
 import GoalItem from './GoalItem';
 
-import type { GoalsWithStatus } from '@/types/goals.types';
-import { StatusOptionItem } from '@/types/statuses.types';
+import type { StatusOptionItem } from '@/types/statuses.types';
+import type { GoalsWithStatus, GoalsWithStatusItem } from '@/types/goals.types';
 
 type Props = {
+  year: number;
   goals: GoalsWithStatus;
   isLoading: boolean;
   statusOption: StatusOptionItem[];
+  deleteGoals: (id: number) => void;
+  updateGoals: (goal: GoalsWithStatusItem) => void;
 };
 
-const GoalsList: FC<Props> = ({ goals, isLoading, statusOption }) => {
+const GoalsList: FC<Props> = ({ year, goals, isLoading, statusOption, deleteGoals, updateGoals }) => {
   if (isLoading) {
     return (
       <div className="flex justify-center">
@@ -27,7 +30,17 @@ const GoalsList: FC<Props> = ({ goals, isLoading, statusOption }) => {
 
       {goals.length > 0 &&
         goals.map((goal) => (
-          <GoalItem key={goal.id} statusOption={statusOption} status={goal.status} description={goal.description}>
+          <GoalItem
+            key={goal.id}
+            id={goal.id}
+            name={goal.name}
+            description={goal.description}
+            year={year}
+            statusOption={statusOption}
+            status={goal.status}
+            deleteGoals={deleteGoals}
+            updateGoals={updateGoals}
+          >
             {goal.name}
           </GoalItem>
         ))}

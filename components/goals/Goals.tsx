@@ -4,6 +4,7 @@ import { useCallback, useEffect, useMemo, useState, type FC } from 'react';
 import { toast } from 'sonner';
 
 import { STATUS, STATUS_TOTAL } from '@/constants/statuses';
+
 import { httpGetGoal } from '@/lib/http/goals.http';
 
 import {
@@ -18,10 +19,10 @@ import {
 import CreateGoalDialog from '@/components/create-goal-dialog/CreateGoalDialog';
 
 import GoalsList from './GoalsList';
+import GoalStatisticsItem from './GoalStatisticsItem';
 
 import type { GoalsWithStatus, GoalsWithStatusItem } from '@/types/goals.types';
 import type { Statuses, StatusKeys, StatusOptionItem } from '@/types/statuses.types';
-import GoalStatisticsItem from './GoalStatisticsItem';
 
 type Props = {
   year: number;
@@ -59,6 +60,22 @@ const Goals: FC<Props> = ({ year, statuses }) => {
 
   const updateGoals = (goal: GoalsWithStatusItem) => {
     setGoals((prev) => [...prev, goal]);
+  };
+
+  const updateGoalData = (newValue: GoalsWithStatusItem) => {
+    setGoals((prev) => {
+      return prev.map((goal) => {
+        if (goal.id === newValue.id) {
+          return newValue;
+        } else {
+          return goal;
+        }
+      });
+    });
+  };
+
+  const deleteGoals = (id: number) => {
+    setGoals((prev) => prev.filter((goal) => goal.id !== id));
   };
 
   useEffect(() => {
@@ -117,7 +134,14 @@ const Goals: FC<Props> = ({ year, statuses }) => {
         <GoalStatisticsItem text="Canceled" count={goals.filter((el) => el.status === STATUS.Canceled).length} />
       </div>
 
-      <GoalsList goals={filteredGoals} isLoading={isLoading} statusOption={statusOption} />
+      <GoalsList
+        year={year}
+        goals={filteredGoals}
+        isLoading={isLoading}
+        statusOption={statusOption}
+        deleteGoals={deleteGoals}
+        updateGoals={updateGoalData}
+      />
     </>
   );
 };

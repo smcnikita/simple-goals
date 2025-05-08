@@ -12,19 +12,29 @@ import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@
 import { Textarea } from '@/components/ui/textarea';
 import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from '@/components/ui/form';
 
-import type { FormSchema } from '@/types/form-goal.types';
+import type { Status, Name, Description, FormSchema } from '@/types/form-goal.types';
 import type { StatusKeys, StatusOptionItem } from '@/types/statuses.types';
+
+type OldGoalData = {
+  id: number;
+  name: Name;
+  description: Description;
+  status: Status;
+  year: number;
+};
 
 type Props = {
   afterContent: ReactNode;
   statusOption: StatusOptionItem[];
+  isUpdateGoals?: boolean;
+  oldGoalData?: OldGoalData;
   onSubmit: (values: FormSchema) => Promise<void>;
 };
 
 const formSchema = z.object({
   name: z.string().min(2).max(100),
   description: z.string().max(500).nullable(),
-  status: z.enum([STATUS.InProgress, STATUS.Completed, STATUS.NotCompleted, STATUS.Canceled, STATUS.Total]),
+  status: z.enum([STATUS.InProgress, STATUS.Completed, STATUS.NotCompleted, STATUS.Canceled]),
 });
 
 const DEFAULT_STATUS: StatusKeys = STATUS.InProgress;
@@ -35,10 +45,19 @@ const DEFAULT_GOAL_VALUES = {
   status: DEFAULT_STATUS,
 };
 
-const GoalForm: FC<Props> = ({ statusOption, afterContent, onSubmit: handleSubmit }) => {
+const GoalForm: FC<Props> = (props) => {
+  const { statusOption, afterContent, onSubmit: handleSubmit, isUpdateGoals = false, oldGoalData } = props;
+
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
-    defaultValues: DEFAULT_GOAL_VALUES,
+    defaultValues:
+      isUpdateGoals && oldGoalData
+        ? {
+            name: oldGoalData.name,
+            description: oldGoalData.description,
+            status: oldGoalData.status,
+          }
+        : DEFAULT_GOAL_VALUES,
   });
 
   const onSubmit = async (values: z.infer<typeof formSchema>) => {
@@ -69,22 +88,20 @@ const GoalForm: FC<Props> = ({ statusOption, afterContent, onSubmit: handleSubmi
             render={({ field }) => (
               <FormItem>
                 <FormLabel>Status</FormLabel>
-                <FormControl>
-                  <Select onValueChange={field.onChange} defaultValue={field.value}>
-                    <FormControl className="w-full">
-                      <SelectTrigger>
-                        <SelectValue placeholder="Enter your goal" />
-                      </SelectTrigger>
-                    </FormControl>
-                    <SelectContent>
-                      {statusOption.map((status) => (
-                        <SelectItem key={status.key} value={status.key}>
-                          {status.name}
-                        </SelectItem>
-                      ))}
-                    </SelectContent>
-                  </Select>
-                </FormControl>
+                <Select onValueChange={field.onChange} value={field.value}>
+                  <FormControl className="w-full">
+                    <SelectTrigger>
+                      <SelectValue placeholder="Enter your goal" />
+                    </SelectTrigger>
+                  </FormControl>
+                  <SelectContent>
+                    {statusOption.map((status) => (
+                      <SelectItem key={status.key} value={status.key}>
+                        {status.name}
+                      </SelectItem>
+                    ))}
+                  </SelectContent>
+                </Select>
                 <FormMessage />
               </FormItem>
             )}
