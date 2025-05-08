@@ -14,7 +14,7 @@ const eslintConfig = [
   {
     rules: {
       semi: ['error', 'always'],
-      quotes: ['error', 'single'],
+      quotes: ['error', 'single', { avoidEscape: true, allowTemplateLiterals: true }],
       'linebreak-style': ['error', 'unix'],
       'no-unused-vars': 'off',
       '@typescript-eslint/no-unused-vars': ['error', { caughtErrors: 'none' }],
