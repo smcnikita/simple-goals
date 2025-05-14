@@ -1,0 +1,31 @@
+services:
+  app:
+    build: .
+    container_name: simple-goals-app
+    restart: unless-stopped
+    ports:
+      - '9096:3000'
+    env_file:
+      - .env
+    networks:
+      - app-net
+    depends_on:
+      - postgres
+
+  postgres:
+    image: postgres:16
+    container_name: simple-goals-postgres
+    restart: unless-stopped
+    environment:
+      POSTGRES_USER: ${POSTGRES_USER}
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD}
+      POSTGRES_DB: ${POSTGRES_DB}
+    volumes:
+      - ${POSTGRES_VOLUME_PATH:-./postgres-data}:/var/lib/postgresql/data
+    networks:
+      - app-net
+    ports:
+      - '5432:5432'
+
+networks:
+  app-net:

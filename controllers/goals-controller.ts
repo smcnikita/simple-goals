@@ -71,7 +71,7 @@ export const goalsController = {
 
     const nowYear = new Date().getFullYear();
 
-    if (nowYear !== year && canEditPastGoals) {
+    if (nowYear === year || canEditPastGoals) {
       return {
         data: await createGoal({
           description,
@@ -82,11 +82,11 @@ export const goalsController = {
         }),
         status: statusModel.key,
       };
-    } else {
-      return {
-        error: 'You cannot edit goals for this year',
-      };
     }
+
+    return {
+      error: 'You cannot edit goals for this year',
+    };
   },
 
   deleteGoal: async (params: DeleteGoalsParams) => {
