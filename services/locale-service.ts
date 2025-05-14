@@ -8,9 +8,9 @@ import { Locale, defaultLocale } from '@/i18n/config';
 // also read it from a database, backend service, or any other source.
 const COOKIE_NAME = 'NEXT_LOCALE';
 
-export async function getUserLocale() {
+export async function getUserLocale(): Promise<Locale> {
   const cookiesStore = await cookies();
-  return cookiesStore.get(COOKIE_NAME)?.value || defaultLocale;
+  return (cookiesStore.get(COOKIE_NAME)?.value as Locale) || defaultLocale;
 }
 
 export async function setUserLocale(locale: Locale) {

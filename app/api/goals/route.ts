@@ -6,6 +6,8 @@ import { authOptions } from '@/lib/auth';
 import { yearsController } from '@/controllers/years-controller';
 import { goalsController } from '@/controllers/goals-controller';
 
+import type { StatusKey } from '@/types/statuses.types';
+
 export async function GET(req: NextRequest) {
   const session = await getServerSession(authOptions);
 
@@ -62,7 +64,7 @@ export async function POST(req: Request) {
   const { name, year, description, status } = res as {
     name: string;
     year: number;
-    status: string;
+    status: StatusKey;
     description?: string;
   };
 
@@ -166,7 +168,7 @@ export async function PUT(req: Request) {
     id: number;
     name: string;
     year: number;
-    status: string;
+    status: StatusKey;
     description?: string;
   };
 

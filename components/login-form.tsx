@@ -1,40 +1,48 @@
 'use client';
 
+import { useMemo } from 'react';
 import Image from 'next/image';
 import { signIn } from 'next-auth/react';
 import { z } from 'zod';
+import { useTranslations } from 'next-intl';
+import { useForm } from 'react-hook-form';
 
 import { cn } from '@/lib/utils';
+
+import { zodResolver } from '@hookform/resolvers/zod';
 
 import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 import { Input } from '@/components/ui/input';
-import { useForm } from 'react-hook-form';
-import { zodResolver } from '@hookform/resolvers/zod';
 import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from '@/components/ui/form';
-import { useTranslations } from 'next-intl';
+
 import LangSwitcher from './LangSwitcher';
-
-export const loginSchema = z.object({
-  email: z
-    .string({
-      required_error: 'Email is required',
-      invalid_type_error: 'Email must be a string',
-    })
-    .email('Invalid email address')
-    .max(254, 'Email must be at most 254 characters long'),
-
-  password: z
-    .string({
-      required_error: 'Password is required',
-      invalid_type_error: 'Password must be a string',
-    })
-    .min(8, 'Password must be at least 8 characters long')
-    .max(100, 'Password must be at most 100 characters long'),
-});
 
 export function LoginForm({ className, ...props }: React.ComponentProps<'div'>) {
   const t = useTranslations('sign_in');
+  const tErrors = useTranslations('errors');
+
+  const loginSchema = useMemo(
+    () =>
+      z.object({
+        email: z
+          .string({
+            required_error: tErrors('email.required'),
+            invalid_type_error: tErrors('email.type'),
+          })
+          .email(tErrors('email.invalid'))
+          .max(254, tErrors('email.max', { max: 254 })),
+
+        password: z
+          .string({
+            required_error: tErrors('password.required'),
+            invalid_type_error: tErrors('password.type'),
+          })
+          .min(8, tErrors('password.min', { min: 8 }))
+          .max(100, tErrors('password.max', { max: 100 })),
+      }),
+    [tErrors]
+  );
 
   const form = useForm<z.infer<typeof loginSchema>>({
     resolver: zodResolver(loginSchema),
@@ -61,7 +69,7 @@ export function LoginForm({ className, ...props }: React.ComponentProps<'div'>) 
         </CardHeader>
         <CardContent>
           <Form {...form}>
-            <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-4 w-full">
+            <form noValidate onSubmit={form.handleSubmit(onSubmit)} className="space-y-4 w-full">
               <div className="grid gap-6">
                 <div className="flex flex-col gap-4">
                   <Button

@@ -8,12 +8,15 @@ import { useGoalsStore } from '@/stores/goals-store';
 import GoalItem from './GoalItem';
 
 import type { GoalsWithStatus } from '@/types/goals.types';
+import { useTranslations } from 'next-intl';
 
 type Props = {
   goals: GoalsWithStatus;
 };
 
 const GoalsList: FC<Props> = ({ goals }) => {
+  const t = useTranslations('goals_list');
+
   const { isLoadingFetch } = useGoalsStore();
 
   if (isLoadingFetch) {
@@ -26,7 +29,7 @@ const GoalsList: FC<Props> = ({ goals }) => {
 
   return (
     <div className="space-y-2">
-      {goals.length === 0 && <p className="flex justify-center text-gray-400 text-sm">There are no goals</p>}
+      {goals.length === 0 && <p className="flex justify-center text-gray-400 text-sm">{t('no_goals')}</p>}
 
       {goals.length > 0 &&
         goals.map((goal) => (

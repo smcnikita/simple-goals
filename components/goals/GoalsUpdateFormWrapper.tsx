@@ -9,6 +9,7 @@ import GoalForm from '@/components/goal-form/GoalForm';
 import { Button } from '@/components/ui/button';
 
 import type { Status, Description, FormSchema } from '@/types/form-goal.types';
+import { useTranslations } from 'next-intl';
 
 type Props = {
   id: number;
@@ -20,6 +21,8 @@ type Props = {
 
 const GoalsUpdateFormWrapper: FC<Props> = (props) => {
   const { id, name, description, status, updateIsEdit } = props;
+
+  const t = useTranslations('goals_list');
 
   const { isLoadingUpdate, updateGoal } = useGoalsStore();
 
@@ -51,10 +54,10 @@ const GoalsUpdateFormWrapper: FC<Props> = (props) => {
   const afterContent = (
     <div className="flex items-center justify-between gap-1">
       <Button type="button" variant="outline" className="cursor-pointer" onClick={() => updateIsEdit(false)}>
-        Cancel
+        {t('cancel')}
       </Button>
       <Button type="submit" className="cursor-pointer" disabled={isLoadingUpdate}>
-        {isLoadingUpdate ? <Loader2 className="animate-spin" /> : 'Update Goal'}
+        {isLoadingUpdate ? <Loader2 className="animate-spin" /> : t('update_goal')}
       </Button>
     </div>
   );

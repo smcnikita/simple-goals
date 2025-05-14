@@ -1,6 +1,7 @@
 'use client';
 
 import { useEffect, type FC } from 'react';
+import { useTranslations } from 'next-intl';
 
 import { STATUS_TOTAL } from '@/constants/statuses';
 
@@ -28,6 +29,8 @@ type Props = {
 };
 
 const Goals: FC<Props> = ({ globalYear }) => {
+  const t = useTranslations('goals_list');
+
   const { filterStatusOptions, updateSelectedFilterStatus } = useFilterStatusStore();
   const { filteredGoals, goalsStatistic } = useGoal();
   const { fetchGoalsData } = useGoalsStore();
@@ -42,37 +45,38 @@ const Goals: FC<Props> = ({ globalYear }) => {
     <>
       <div className="flex items-center justify-between gap-3 flex-wrap">
         <div>
-          <h1 className="text-2xl font-bold">{globalYear} Goals</h1>
-          <p className="text-gray-500 text-sm mt-1">Track and manage your goals for {globalYear}</p>
+          <h1 className="text-2xl font-bold">{t('title', { year: globalYear })}</h1>
+          <p className="text-gray-500 text-sm mt-1">{t('description', { year: globalYear })}</p>
         </div>
 
         <div className="flex items-center gap-3">
           <Select defaultValue={STATUS_TOTAL.key} onValueChange={updateSelectedFilterStatus}>
-            <SelectTrigger className="w-[180px]">
-              <SelectValue placeholder="Select a fruit" />
+            <SelectTrigger className="w-[150px]">
+              <SelectValue />
             </SelectTrigger>
 
             <SelectContent>
               <SelectGroup>
-                <SelectLabel>Statuses</SelectLabel>
+                <SelectLabel>{t('statuses')}</SelectLabel>
                 {filterStatusOptions.map((filterStatus) => (
                   <SelectItem key={filterStatus.key} value={filterStatus.key}>
-                    {filterStatus.name}
+                    {t(filterStatus.key)}
                   </SelectItem>
                 ))}
               </SelectGroup>
             </SelectContent>
           </Select>
+
           <CreateGoalDialog />
         </div>
       </div>
 
       <div className="grid grid-cols-2 md:grid-cols-5 gap-3">
-        <GoalStatisticsItem text="Total" count={goalsStatistic.total} />
-        <GoalStatisticsItem text="In Progress" count={goalsStatistic.inProgress} />
-        <GoalStatisticsItem text="Completed" count={goalsStatistic.completed} />
-        <GoalStatisticsItem text="Not Completed" count={goalsStatistic.notCompleted} />
-        <GoalStatisticsItem text="Canceled" count={goalsStatistic.canceled} />
+        <GoalStatisticsItem text={t('total')} count={goalsStatistic.total} />
+        <GoalStatisticsItem text={t('in_progress')} count={goalsStatistic.inProgress} />
+        <GoalStatisticsItem text={t('completed')} count={goalsStatistic.completed} />
+        <GoalStatisticsItem text={t('not_completed')} count={goalsStatistic.notCompleted} />
+        <GoalStatisticsItem text={t('canceled')} count={goalsStatistic.canceled} />
       </div>
 
       <GoalsList goals={filteredGoals} />

@@ -1,7 +1,5 @@
 import { prisma } from '@/lib/prisma';
 
-import { getStatusName } from '@/utils/get-status-name';
-
 import type { Statuses, StatusKeys } from '@/types/statuses.types';
 
 export async function getStatuses(): Promise<Statuses> {
@@ -11,7 +9,6 @@ export async function getStatuses(): Promise<Statuses> {
     return {
       id: status.id,
       key: status.key as StatusKeys,
-      name: getStatusName(status.key),
     };
   });
 }

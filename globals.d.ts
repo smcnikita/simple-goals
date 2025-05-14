@@ -1,9 +1,12 @@
-import en from './messages/en.json';
+import { routing } from './i18n/routing';
+import { formats } from './i18n/request';
 
-type Messages = typeof en;
+import messages from './messages/en.json';
 
-declare global {
-  // Use type safe message keys with `next-intl`
-  // eslint-disable-next-line @typescript-eslint/no-empty-object-type
-  interface IntlMessages extends Messages {}
+declare module 'next-intl' {
+  interface AppConfig {
+    Locale: (typeof routing.locales)[number];
+    Messages: typeof messages;
+    Formats: typeof formats;
+  }
 }

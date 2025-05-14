@@ -3,6 +3,7 @@
 import { useMemo, type FC } from 'react';
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
+import { useTranslations } from 'next-intl';
 
 import { PATHS } from '@/constants/paths';
 
@@ -25,6 +26,7 @@ type Props = {
 
 const Aside: FC<Props> = ({ years }) => {
   const pathname = usePathname();
+  const t = useTranslations('aside');
 
   const yearsLinks = useMemo(() => {
     return years.map((year) => ({
@@ -42,7 +44,7 @@ const Aside: FC<Props> = ({ years }) => {
     <Sidebar className="left-auto">
       <SidebarContent>
         <SidebarGroup>
-          <SidebarGroupLabel>Years</SidebarGroupLabel>
+          <SidebarGroupLabel>{t('years')}</SidebarGroupLabel>
           <SidebarGroupContent>
             <SidebarMenu>
               {yearsLinks.map((item) => (

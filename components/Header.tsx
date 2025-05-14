@@ -18,9 +18,12 @@ import {
 import { Button } from '@/components/ui/button';
 
 import LangSwitcher from './LangSwitcher';
+import { useTranslations } from 'next-intl';
 
 const Header: FC = () => {
   const { data: session } = useSession();
+
+  const t = useTranslations('auth');
 
   return (
     <header className="py-4 px-3 flex items-center justify-between gap-1">
@@ -51,7 +54,7 @@ const Header: FC = () => {
             <DropdownMenuSeparator />
             <DropdownMenuItem onClick={async () => await signOut()}>
               <LogOut />
-              Log Out
+              {t('log_out')}
             </DropdownMenuItem>
           </DropdownMenuContent>
         </DropdownMenu>
