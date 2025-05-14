@@ -17,12 +17,9 @@ const StoreInitializer: FC<PropsWithChildren<Props>> = ({ children, statuses }) 
   const { updateStatusOptions } = useStatusStore();
   const { updateFilterStatusOptions } = useFilterStatusStore();
 
-  const statusOptions = useMemo(() => statuses.map(({ key, name }) => ({ key, name })), [statuses]);
+  const statusOptions = useMemo(() => statuses.map(({ key }) => ({ key })), [statuses]);
 
-  const filterStatusOptions = useMemo(
-    () => [{ key: STATUS_TOTAL.key, name: STATUS_TOTAL.name }, ...statusOptions],
-    [statusOptions]
-  );
+  const filterStatusOptions = useMemo(() => [{ key: STATUS_TOTAL.key }, ...statusOptions], [statusOptions]);
 
   useEffect(() => {
     updateStatusOptions(statusOptions);

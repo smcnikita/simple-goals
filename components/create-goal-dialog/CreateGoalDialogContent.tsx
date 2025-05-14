@@ -11,12 +11,15 @@ import { Button } from '@/components/ui/button';
 import GoalForm from '@/components/goal-form/GoalForm';
 
 import type { FormSchema } from '@/types/form-goal.types';
+import { useTranslations } from 'next-intl';
 
 type Props = {
   updateOpenDialog: (isOpen: boolean) => void;
 };
 
 const CreateGoalDialogContent: FC<Props> = ({ updateOpenDialog }) => {
+  const t = useTranslations('goals_list');
+
   const { createGoal: createGoalStore, isLoadingCreate } = useGoalsStore();
   const { globalYear } = useGlobalYear();
 
@@ -36,7 +39,7 @@ const CreateGoalDialogContent: FC<Props> = ({ updateOpenDialog }) => {
   return (
     <DialogContent>
       <DialogHeader>
-        <DialogTitle>Add goal</DialogTitle>
+        <DialogTitle>{t('add_goal')}</DialogTitle>
       </DialogHeader>
 
       <GoalForm
@@ -44,10 +47,10 @@ const CreateGoalDialogContent: FC<Props> = ({ updateOpenDialog }) => {
         afterContent={
           <DialogFooter>
             <DialogClose asChild>
-              <Button variant="secondary">Close</Button>
+              <Button variant="secondary">{t('close')}</Button>
             </DialogClose>
             <Button type="submit" className="cursor-pointer" disabled={isLoadingCreate}>
-              Add goals
+              {t('add_goal')}
             </Button>
           </DialogFooter>
         }

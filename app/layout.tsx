@@ -1,5 +1,7 @@
 import type { Metadata } from 'next';
 import localFont from 'next/font/local';
+import { NextIntlClientProvider } from 'next-intl';
+import { getLocale, getMessages } from 'next-intl/server';
 
 import Providers from '@/components/Providers';
 
@@ -39,20 +41,25 @@ export const metadata: Metadata = {
   },
 };
 
-export default function RootLayout({
+export default async function RootLayout({
   children,
 }: Readonly<{
   children: React.ReactNode;
 }>) {
+  const locale = await getLocale();
+  const messages = await getMessages();
+
   return (
-    <html lang="en">
+    <html lang={locale}>
       <head>
         <link rel="yandex-tableau-widget" href="/tableau.json" />
       </head>
 
-      <Providers>
-        <body className={`${notoSans.className} antialiased`}>{children}</body>
-      </Providers>
+      <NextIntlClientProvider messages={messages}>
+        <Providers>
+          <body className={`${notoSans.className} antialiased`}>{children}</body>
+        </Providers>
+      </NextIntlClientProvider>
     </html>
   );
 }

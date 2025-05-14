@@ -1,9 +1,10 @@
 'use client';
 
-import { type FC, type ReactNode } from 'react';
+import { useMemo, type FC, type ReactNode } from 'react';
 import { useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { z } from 'zod';
+import { useTranslations } from 'next-intl';
 
 import { STATUS } from '@/constants/statuses';
 
@@ -31,12 +32,6 @@ type Props = {
   onSubmit: (values: FormSchema) => Promise<void>;
 };
 
-const formSchema = z.object({
-  name: z.string().min(2).max(100),
-  description: z.string().max(500).nullable(),
-  status: z.enum([STATUS.InProgress, STATUS.Completed, STATUS.NotCompleted, STATUS.Canceled]),
-});
-
 const DEFAULT_STATUS: StatusKeys = STATUS.InProgress;
 
 const DEFAULT_GOAL_VALUES = {
@@ -47,6 +42,29 @@ const DEFAULT_GOAL_VALUES = {
 
 const GoalForm: FC<Props> = (props) => {
   const { afterContent, onSubmit: handleSubmit, isUpdateGoals = false, oldGoalData } = props;
+
+  const t = useTranslations('goals_list');
+  const tErrors = useTranslations('errors');
+
+  const formSchema = useMemo(
+    () =>
+      z.object({
+        name: z
+          .string()
+          .min(2, { message: tErrors('name.min', { min: 2 }) })
+          .max(100, { message: tErrors('name.max', { max: 100 }) }),
+
+        description: z
+          .string()
+          .max(500, { message: tErrors('description.max', { max: 500 }) })
+          .nullable(),
+
+        status: z.enum([STATUS.InProgress, STATUS.Completed, STATUS.NotCompleted, STATUS.Canceled], {
+          message: tErrors('status.invalid'),
+        }),
+      }),
+    [tErrors]
+  );
 
   const { statusOptions } = useStatusStore();
 
@@ -75,9 +93,9 @@ const GoalForm: FC<Props> = (props) => {
             name="name"
             render={({ field }) => (
               <FormItem>
-                <FormLabel>Goal Title</FormLabel>
+                <FormLabel>{t('goal_title')}</FormLabel>
                 <FormControl>
-                  <Input placeholder="Enter your goal" {...field} />
+                  <Input placeholder={t('enter_goal')} {...field} />
                 </FormControl>
                 <FormMessage />
               </FormItem>
@@ -89,17 +107,17 @@ const GoalForm: FC<Props> = (props) => {
             name="status"
             render={({ field }) => (
               <FormItem>
-                <FormLabel>Status</FormLabel>
+                <FormLabel>{t('status')}</FormLabel>
                 <Select onValueChange={field.onChange} value={field.value}>
                   <FormControl className="w-full">
                     <SelectTrigger>
-                      <SelectValue placeholder="Enter your goal" />
+                      <SelectValue />
                     </SelectTrigger>
                   </FormControl>
                   <SelectContent>
                     {statusOptions.map((status) => (
                       <SelectItem key={status.key} value={status.key}>
-                        {status.name}
+                        {t(status.key)}
                       </SelectItem>
                     ))}
                   </SelectContent>
@@ -114,14 +132,9 @@ const GoalForm: FC<Props> = (props) => {
             name="description"
             render={({ field }) => (
               <FormItem>
-                <FormLabel>Comment</FormLabel>
+                <FormLabel>{t('comment')}</FormLabel>
                 <FormControl>
-                  <Textarea
-                    placeholder="Add a comment or note about this goal"
-                    rows={3}
-                    {...field}
-                    value={field.value ?? undefined}
-                  />
+                  <Textarea placeholder={t('add_comment')} rows={3} {...field} value={field.value ?? undefined} />
                 </FormControl>
                 <FormMessage />
               </FormItem>

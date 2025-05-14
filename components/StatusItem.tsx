@@ -1,9 +1,8 @@
 import type { FC } from 'react';
 import clsx from 'clsx';
+import { useTranslations } from 'next-intl';
 
 import { STATUS } from '@/constants/statuses';
-
-import { getStatusName } from '@/utils/get-status-name';
 
 import type { Status } from '@/types/form-goal.types';
 
@@ -12,7 +11,7 @@ type Props = {
 };
 
 const StatusItem: FC<Props> = ({ status }) => {
-  const statusName = getStatusName(status);
+  const t = useTranslations('goals_list');
 
   return (
     <p
@@ -23,7 +22,7 @@ const StatusItem: FC<Props> = ({ status }) => {
         'text-gray-500': status === STATUS.Canceled,
       })}
     >
-      {statusName}
+      {t(status)}
     </p>
   );
 };
