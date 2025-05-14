@@ -2,12 +2,12 @@
 
 import { useState, type FC } from 'react';
 import { Plus } from 'lucide-react';
+import { useTranslations } from 'next-intl';
 
 import { Button } from '@/components/ui/button';
 import { Dialog, DialogTrigger } from '@/components/ui/dialog';
 
 import CreateGoalDialogContent from './CreateGoalDialogContent';
-import { useTranslations } from 'next-intl';
 
 const CreateGoalDialog: FC = () => {
   const t = useTranslations('goals_list');

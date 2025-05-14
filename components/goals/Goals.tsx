@@ -23,6 +23,8 @@ import CreateGoalDialog from '@/components/create-goal-dialog/CreateGoalDialog';
 
 import GoalsList from './GoalsList';
 import GoalStatisticsItem from './GoalStatisticsItem';
+import useGoalYearSettings from '@/hooks/use-goal-year-settings';
+import GoalsSittingsDialog from '../goals-settings/GoalsSittingsDialog';
 
 type Props = {
   globalYear: number;
@@ -33,7 +35,8 @@ const Goals: FC<Props> = ({ globalYear }) => {
 
   const { filterStatusOptions, updateSelectedFilterStatus } = useFilterStatusStore();
   const { filteredGoals, goalsStatistic } = useGoal();
-  const { fetchGoalsData } = useGoalsStore();
+  const { fetchGoalsData, isShowStatistic, isLoadingFetch } = useGoalsStore();
+  const { isCanEditPastGoals } = useGoalYearSettings();
 
   useEffect(() => {
     if (globalYear) {
@@ -45,7 +48,10 @@ const Goals: FC<Props> = ({ globalYear }) => {
     <>
       <div className="flex items-center justify-between gap-3 flex-wrap">
         <div>
-          <h1 className="text-2xl font-bold">{t('title', { year: globalYear })}</h1>
+          <div className="flex items-center gap-1">
+            <h1 className="text-2xl font-bold">{t('title', { year: globalYear })}</h1>
+            <GoalsSittingsDialog />
+          </div>
           <p className="text-gray-500 text-sm mt-1">{t('description', { year: globalYear })}</p>
         </div>
 
@@ -67,17 +73,19 @@ const Goals: FC<Props> = ({ globalYear }) => {
             </SelectContent>
           </Select>
 
-          <CreateGoalDialog />
+          {isCanEditPastGoals && <CreateGoalDialog />}
         </div>
       </div>
 
-      <div className="grid grid-cols-2 md:grid-cols-5 gap-3">
-        <GoalStatisticsItem text={t('total')} count={goalsStatistic.total} />
-        <GoalStatisticsItem text={t('in_progress')} count={goalsStatistic.inProgress} />
-        <GoalStatisticsItem text={t('completed')} count={goalsStatistic.completed} />
-        <GoalStatisticsItem text={t('not_completed')} count={goalsStatistic.notCompleted} />
-        <GoalStatisticsItem text={t('canceled')} count={goalsStatistic.canceled} />
-      </div>
+      {!isLoadingFetch && isShowStatistic && (
+        <div className="grid grid-cols-2 md:grid-cols-5 gap-3">
+          <GoalStatisticsItem text={t('total')} count={goalsStatistic.total} />
+          <GoalStatisticsItem text={t('in_progress')} count={goalsStatistic.inProgress} />
+          <GoalStatisticsItem text={t('completed')} count={goalsStatistic.completed} />
+          <GoalStatisticsItem text={t('not_completed')} count={goalsStatistic.notCompleted} />
+          <GoalStatisticsItem text={t('canceled')} count={goalsStatistic.canceled} />
+        </div>
+      )}
 
       <GoalsList goals={filteredGoals} />
     </>

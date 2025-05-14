@@ -1,6 +1,8 @@
 'use client';
 
 import { type FC } from 'react';
+import { toast } from 'sonner';
+import { useTranslations } from 'next-intl';
 
 import { useGoalsStore } from '@/stores/goals-store';
 
@@ -11,7 +13,6 @@ import { Button } from '@/components/ui/button';
 import GoalForm from '@/components/goal-form/GoalForm';
 
 import type { FormSchema } from '@/types/form-goal.types';
-import { useTranslations } from 'next-intl';
 
 type Props = {
   updateOpenDialog: (isOpen: boolean) => void;
@@ -24,12 +25,18 @@ const CreateGoalDialogContent: FC<Props> = ({ updateOpenDialog }) => {
   const { globalYear } = useGlobalYear();
 
   const createGoal = async (values: FormSchema) => {
-    await createGoalStore({
-      ...values,
-      year: globalYear,
-    });
+    try {
+      await createGoalStore({
+        ...values,
+        year: globalYear,
+      });
 
-    updateOpenDialog(false);
+      updateOpenDialog(false);
+    } catch (err) {
+      if (err instanceof Error) {
+        toast.error(err.message);
+      }
+    }
   };
 
   const onSubmit = async (values: FormSchema) => {

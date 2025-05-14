@@ -9,6 +9,8 @@ import type { GoalsWithStatus, GoalsWithStatusItem } from '@/types/goals.types';
 type GetGoalsResponse = {
   data: {
     goals: GoalsWithStatus;
+    can_edit_past_goals: boolean;
+    show_statistic: boolean;
   };
 };
 

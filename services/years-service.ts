@@ -39,3 +39,11 @@ export async function getUserYears({ userId }: GetUserYearsParams): Promise<Year
 
   return years;
 }
+
+export async function onlyGetUserYears({ userId }: GetUserYearsParams): Promise<Years> {
+  const years = await prisma.years.findMany({
+    where: { user_id: userId },
+  });
+
+  return years;
+}

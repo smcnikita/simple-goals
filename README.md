@@ -19,7 +19,7 @@ npx prisma db seed
 ```
 
 ```bash
-npm dev
+npm run dev
 ```
 
 ## Prod Migrate DB
