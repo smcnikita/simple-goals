@@ -9,7 +9,13 @@ const useGlobalYear = () => {
     return Number(segments[2]);
   }, [pathname]);
 
-  return { globalYear };
+  const isNowYear = useMemo<boolean>(() => {
+    const nowYear = new Date().getFullYear();
+
+    return nowYear === globalYear;
+  }, [globalYear]);
+
+  return { globalYear, isNowYear };
 };
 
 export default useGlobalYear;

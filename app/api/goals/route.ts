@@ -42,6 +42,8 @@ export async function GET(req: NextRequest) {
       message: 'Success',
       data: {
         goals,
+        can_edit_past_goals: yearModel.can_edit_past,
+        show_statistic: yearModel.show_statistic,
       },
     },
     { status: 200 }
@@ -50,7 +52,7 @@ export async function GET(req: NextRequest) {
   return response;
 }
 
-export async function POST(req: Request) {
+export async function POST(req: NextRequest) {
   const session = await getServerSession(authOptions);
 
   if (!session) {
@@ -84,10 +86,16 @@ export async function POST(req: Request) {
     statusKey: status,
     userId,
     yearId: yearModel.id,
+    year: yearModel.year,
+    canEditPastGoals: yearModel.can_edit_past,
   });
 
   if (!newGoal) {
     return NextResponse.json({ message: 'Error' }, { status: 500 });
+  }
+
+  if (newGoal.error) {
+    return NextResponse.json({ message: newGoal.error }, { status: 500 });
   }
 
   const response = NextResponse.json(
@@ -104,7 +112,7 @@ export async function POST(req: Request) {
   return response;
 }
 
-export async function DELETE(req: Request) {
+export async function DELETE(req: NextRequest) {
   const session = await getServerSession(authOptions);
 
   if (!session) {
@@ -153,7 +161,7 @@ export async function DELETE(req: Request) {
   return response;
 }
 
-export async function PUT(req: Request) {
+export async function PUT(req: NextRequest) {
   const session = await getServerSession(authOptions);
 
   if (!session) {

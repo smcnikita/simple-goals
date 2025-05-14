@@ -12,9 +12,11 @@ type GetUserGoalsParams = {
 type CreateGoalParams = {
   userId: number;
   yearId: number;
+  year: number;
   name: string;
   description: string | null;
   statusKey: StatusKeys;
+  canEditPastGoals: boolean;
 };
 
 type DeleteGoalsParams = {
@@ -55,7 +57,7 @@ export const goalsController = {
   },
 
   createGoal: async (params: CreateGoalParams) => {
-    const { name, description, statusKey, userId, yearId } = params;
+    const { name, description, statusKey, userId, yearId, year, canEditPastGoals } = params;
 
     const statusModel = await prisma.statuses.findFirst({
       where: {
@@ -67,16 +69,24 @@ export const goalsController = {
       return null;
     }
 
-    return {
-      data: await createGoal({
-        description,
-        name,
-        statusId: statusModel.id,
-        userId,
-        yearId,
-      }),
-      status: statusModel.key,
-    };
+    const nowYear = new Date().getFullYear();
+
+    if (nowYear !== year && canEditPastGoals) {
+      return {
+        data: await createGoal({
+          description,
+          name,
+          statusId: statusModel.id,
+          userId,
+          yearId,
+        }),
+        status: statusModel.key,
+      };
+    } else {
+      return {
+        error: 'You cannot edit goals for this year',
+      };
+    }
   },
 
   deleteGoal: async (params: DeleteGoalsParams) => {

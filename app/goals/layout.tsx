@@ -1,4 +1,5 @@
 import { getServerSession } from 'next-auth';
+import { CircleCheck, CircleX } from 'lucide-react';
 
 import { authOptions } from '@/lib/auth';
 
@@ -22,7 +23,7 @@ const Layout = async ({ children }: Props) => {
     throw new Error('Session is not defined. Please ensure that the session is initialized before proceeding.');
   }
 
-  const years = await yearsController.getYears({
+  const years = await yearsController.onlyGetYears({
     userId: Number(session.user.id),
   });
 
@@ -34,7 +35,12 @@ const Layout = async ({ children }: Props) => {
           <Header />
           <Separator />
           <main className="py-4 px-3">{children}</main>
-          <Toaster />
+          <Toaster
+            icons={{
+              success: <CircleCheck size={16} className="text-green-700" />,
+              error: <CircleX size={16} className="text-red-500" />,
+            }}
+          />
         </Content>
       </SidebarProvider>
     </div>

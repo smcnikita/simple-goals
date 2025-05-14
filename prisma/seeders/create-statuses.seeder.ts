@@ -1,37 +1,35 @@
 import { PrismaClient } from '@prisma/client';
 
-import { STATUS } from '@/constants/statuses';
-
 const prisma = new PrismaClient();
 
 export const createStatuses = async () => {
   let statuses = await prisma.statuses.findMany();
 
-  const inProgressStatus = statuses.find((el) => el.key === STATUS.InProgress);
+  const inProgressStatus = statuses.find((el) => el.key === 'in_progress');
 
   if (!inProgressStatus) {
-    await prisma.statuses.create({ data: { key: STATUS.InProgress } });
+    await prisma.statuses.create({ data: { key: 'in_progress' } });
     console.log('-> The status "In Progress" has been created');
   }
 
-  const canceledStatus = statuses.find((el) => el.key === STATUS.Canceled);
+  const canceledStatus = statuses.find((el) => el.key === 'canceled');
 
   if (!canceledStatus) {
-    await prisma.statuses.create({ data: { key: STATUS.Canceled } });
+    await prisma.statuses.create({ data: { key: 'canceled' } });
     console.log('-> The status "Canceled" has been created');
   }
 
-  const completedStatus = statuses.find((el) => el.key === STATUS.Completed);
+  const completedStatus = statuses.find((el) => el.key === 'completed');
 
   if (!completedStatus) {
-    await prisma.statuses.create({ data: { key: STATUS.Completed } });
+    await prisma.statuses.create({ data: { key: 'completed' } });
     console.log('-> The status "Completed" has been created');
   }
 
-  const notCompletedStatus = statuses.find((el) => el.key === STATUS.NotCompleted);
+  const notCompletedStatus = statuses.find((el) => el.key === 'not_completed');
 
   if (!notCompletedStatus) {
-    await prisma.statuses.create({ data: { key: STATUS.NotCompleted } });
+    await prisma.statuses.create({ data: { key: 'not_completed' } });
     console.log('-> The status "Not Completed" has been created');
   }
 

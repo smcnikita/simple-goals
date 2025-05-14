@@ -73,5 +73,11 @@
       "min": "Password must be at least {min} {min, plural, one {character} other {characters}} long",
       "max": "Password must be at most {max} {max, plural, one {character} other {characters}} long"
     }
+  },
+
+  "settings": {
+    "goals_settings": "{year} Goals Settings",
+    "show_statistic": "Show statistics",
+    "can_edit_past_goals": "Allow editing past goals"
   }
 }

@@ -14,6 +14,7 @@ import GoalsUpdateFormWrapper from './GoalsUpdateFormWrapper';
 import GoalsItemFooter from './GoalsItemFooter';
 
 import type { Status, Description } from '@/types/form-goal.types';
+import useGoalYearSettings from '@/hooks/use-goal-year-settings';
 
 type Props = {
   id: number;
@@ -27,18 +28,28 @@ const GoalItem: FC<PropsWithChildren<Props>> = (props) => {
 
   const { deleteGoal: deleteGoalStore } = useGoalsStore();
   const { globalYear } = useGlobalYear();
+  const { isCanEditPastGoals } = useGoalYearSettings();
 
   const [isEdit, setIsEdit] = useState(false);
 
   const updateIsEdit = (isEdit: boolean) => {
+    if (!isCanEditPastGoals) {
+      return;
+    }
     setIsEdit(isEdit);
   };
 
   const openUpdateForm = () => {
+    if (!isCanEditPastGoals) {
+      return;
+    }
     setIsEdit(true);
   };
 
   const deleteGoal = async () => {
+    if (!isCanEditPastGoals) {
+      return;
+    }
     await deleteGoalStore(id, globalYear);
   };
 
@@ -69,7 +80,7 @@ const GoalItem: FC<PropsWithChildren<Props>> = (props) => {
         </div>
       )}
 
-      {!isEdit && <GoalsItemFooter deleteGoal={deleteGoal} openUpdateForm={openUpdateForm} />}
+      {isCanEditPastGoals && !isEdit && <GoalsItemFooter deleteGoal={deleteGoal} openUpdateForm={openUpdateForm} />}
     </div>
   );
 };
