@@ -1,8 +1,9 @@
-import { Goals as GoalsItemModel } from '@prisma/client';
-import { StatusKeys } from './statuses.types';
+import type { Goals } from '@prisma/client';
 
-export type GoalsWithStatusItem = GoalsItemModel & {
+import type { StatusKeys } from './status.types';
+
+export type GoalModel = Goals;
+
+export type GoalModelWithStatus = GoalModel & {
   status: StatusKeys;
 };
-
-export type GoalsWithStatus = GoalsWithStatusItem[];

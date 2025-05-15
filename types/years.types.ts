@@ -1,4 +1,3 @@
-import type { Years as yearsModel } from '@prisma/client';
+import type { Years } from '@prisma/client';
 
-export type Year = yearsModel;
-export type Years = Year[];
+export type YearModel = Years;

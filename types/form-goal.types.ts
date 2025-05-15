@@ -1,11 +1,10 @@
-import type { StatusKeys } from './statuses.types';
+import type { StatusKeys } from './status.types';
 
 export type Name = string;
 export type Description = string | null;
-export type Status = StatusKeys;
 
 export type FormSchema = {
   name: Name;
   description: Description;
-  status: Status;
+  status: StatusKeys;
 };
