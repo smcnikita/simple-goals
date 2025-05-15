@@ -8,7 +8,7 @@ import { PATHS } from '@/constants/paths';
 
 import { prisma } from './prisma';
 
-import { findOrCreateUserByOAuth } from '@/services/auth.service';
+import { authService } from '@/services/auth/auth.service';
 
 type GithubEmail = {
   email: string;
@@ -82,7 +82,7 @@ export const authOptions: NextAuthOptions = {
         return false;
       }
 
-      const id = await findOrCreateUserByOAuth(user, account);
+      const id = await authService.findOrCreateUserByOAuth(user, account);
 
       if (id) {
         user.id = id;
