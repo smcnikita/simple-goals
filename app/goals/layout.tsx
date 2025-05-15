@@ -3,7 +3,7 @@ import { CircleCheck, CircleX } from 'lucide-react';
 
 import { authOptions } from '@/lib/auth';
 
-import { yearsController } from '@/controllers/years-controller';
+import { yearsController } from '@/controllers/years/years.controller';
 
 import Aside from '@/components/Aside';
 import { SidebarProvider } from '@/components/ui/sidebar';
@@ -23,9 +23,7 @@ const Layout = async ({ children }: Props) => {
     throw new Error('Session is not defined. Please ensure that the session is initialized before proceeding.');
   }
 
-  const years = await yearsController.onlyGetYears({
-    userId: Number(session.user.id),
-  });
+  const years = await yearsController.findByUserId(Number(session.user.id));
 
   return (
     <div className="max-w-[1000px] mx-auto px-3">
