@@ -1,6 +1,6 @@
 import { prisma } from '@/lib/prisma';
 
-import { goalsService } from '@/services/goals/goals-service';
+import { goalsService } from '@/services/goals/goals.service';
 
 import type { StatusKeys } from '@/types/status.types';
 import type { CreateGoalParams } from './types';

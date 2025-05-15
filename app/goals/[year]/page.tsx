@@ -3,7 +3,7 @@ import { getServerSession } from 'next-auth';
 
 import { authOptions } from '@/lib/auth';
 
-import { getStatuses } from '@/services/statuses-service';
+import { getStatuses } from '@/services/status.service';
 
 import { yearsController } from '@/controllers/years/years.controller';
 

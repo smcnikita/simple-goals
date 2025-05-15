@@ -8,7 +8,7 @@ import { PATHS } from '@/constants/paths';
 
 import { prisma } from './prisma';
 
-import { findOrCreateUserByOAuth } from '@/services/auth-service';
+import { findOrCreateUserByOAuth } from '@/services/auth.service';
 
 type GithubEmail = {
   email: string;
