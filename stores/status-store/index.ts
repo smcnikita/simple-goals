@@ -1,11 +1,6 @@
 import { create } from 'zustand';
 
-import type { StatusOption } from '@/types/status.types';
-
-type Store = {
-  statusOptions: StatusOption[];
-  updateStatusOptions: (value: StatusOption[]) => void;
-};
+import type { Store } from './types';
 
 export const useStatusStore = create<Store>()((set) => ({
   statusOptions: [],

@@ -3,51 +3,20 @@ import { create } from 'zustand';
 import { httpCreateGoal, httpDeleteGoal, httpGetGoal, httpUpdateGoal } from '@/lib/http/goals.http';
 import { httpUpdateCanEditPast, httpUpdateShowStatistic } from '@/lib/http/years.http';
 
-import type { StatusKeys } from '@/types/status.types';
-import type { GoalModelWithStatus } from '@/types/goals.types';
-
-type Data = {
-  name: string;
-  description: string | null;
-  year: number;
-  status: StatusKeys;
-};
-
-type DataWithId = Data & {
-  id: number;
-};
-
-type HttpStore = {
-  fetchGoalsData: (year: number) => Promise<void>;
-  createGoal: (data: Data) => Promise<void>;
-  updateGoal: (data: DataWithId) => Promise<void>;
-  deleteGoal: (id: number, year: number) => Promise<void>;
-  updateCanEditPastGoals: (year: number) => Promise<void>;
-  updateIsShowStatistic: (year: number) => Promise<void>;
-};
-
-type Store = HttpStore & {
-  isLoadingFetch: boolean;
-  isLoadingCreate: boolean;
-  isLoadingUpdate: boolean;
-  isLoadingDelete: boolean;
-  goals: GoalModelWithStatus[];
-  canEditPastGoals: boolean;
-  isShowStatistic: boolean;
-  isLoadingUpdateCanEditPast: boolean;
-  isLoadingShowStatistic: boolean;
-};
+import type { Store, CreateGoalParams, UpdateGoalParams } from './types';
 
 export const useGoalsStore = create<Store>()((set) => ({
   isLoadingFetch: true,
   isLoadingCreate: false,
   isLoadingUpdate: false,
   isLoadingDelete: false,
-  goals: [],
-  canEditPastGoals: false,
-  isShowStatistic: true,
   isLoadingUpdateCanEditPast: false,
   isLoadingShowStatistic: false,
+
+  goals: [],
+
+  canEditPastGoals: false,
+  isShowStatistic: true,
 
   fetchGoalsData: async (year: number) => {
     set({ isLoadingFetch: true });
@@ -63,7 +32,7 @@ export const useGoalsStore = create<Store>()((set) => ({
     }
   },
 
-  createGoal: async (data: Data) => {
+  createGoal: async (data: CreateGoalParams) => {
     set({ isLoadingCreate: true });
 
     try {
@@ -98,7 +67,7 @@ export const useGoalsStore = create<Store>()((set) => ({
     }
   },
 
-  updateGoal: async (data: DataWithId) => {
+  updateGoal: async (data: UpdateGoalParams) => {
     set({ isLoadingUpdate: true });
 
     try {
