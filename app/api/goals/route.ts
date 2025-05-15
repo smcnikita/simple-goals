@@ -1,84 +1,59 @@
-import { getServerSession } from 'next-auth';
-import { NextResponse, NextRequest } from 'next/server';
+import { NextRequest } from 'next/server';
 
-import { authOptions } from '@/lib/auth';
+import { goalsController } from '@/controllers/goals/goals-controller';
 
-import { yearsController } from '@/controllers/years-controller';
-import { goalsController } from '@/controllers/goals-controller';
+import { createErrorResponse } from '@/lib/createErrorResponse';
+import { createSuccessResponse } from '@/lib/createSuccessResponse';
 
-import type { StatusKey } from '@/types/statuses.types';
+import type { StatusKeys } from '@/types/status.types';
+import { getUserAndYearModel } from '@/lib/getUserAndYearModel';
 
 export async function GET(req: NextRequest) {
-  const session = await getServerSession(authOptions);
-
-  if (!session) {
-    return NextResponse.json({ message: 'Unauthorized' }, { status: 401 });
-  }
-
-  const userId = Number(session.user.id);
-
   const searchParams = req.nextUrl.searchParams;
-  const query = searchParams.get('year');
 
-  const year = query ? Number(query) : undefined;
+  const year = Number(searchParams.get('year'));
 
-  if (!year) {
-    return NextResponse.json({ message: 'Error' }, { status: 500 });
+  const result = await getUserAndYearModel(year);
+
+  if (result instanceof Response) {
+    return result;
   }
 
-  const yearModel = await yearsController.getYearByName({ userId, year });
-
-  if (!yearModel) {
-    return NextResponse.json({ message: 'Error' }, { status: 500 });
-  }
+  const [userId, yearModel] = result;
 
   const goals = await goalsController.getUserGoals({
     userId,
     yearId: yearModel.id,
   });
 
-  const response = NextResponse.json(
-    {
-      message: 'Success',
-      data: {
-        goals,
-        can_edit_past_goals: yearModel.can_edit_past,
-        show_statistic: yearModel.show_statistic,
-      },
-    },
-    { status: 200 }
-  );
-
-  return response;
+  return createSuccessResponse({
+    goals,
+    can_edit_past_goals: yearModel.can_edit_past,
+    show_statistic: yearModel.show_statistic,
+  });
 }
 
+type GoalCreatePayload = {
+  name: string;
+  year: number;
+  status: StatusKeys;
+  description?: string;
+};
+
 export async function POST(req: NextRequest) {
-  const session = await getServerSession(authOptions);
-
-  if (!session) {
-    return NextResponse.json({ message: 'Unauthorized' }, { status: 401 });
-  }
-
-  const userId = Number(session.user.id);
-
-  const res = await req.json();
-
-  const { name, year, description, status } = res as {
-    name: string;
-    year: number;
-    status: StatusKey;
-    description?: string;
-  };
+  const { name, year, description, status } = (await req.json()) as GoalCreatePayload;
 
   if (!name || !year || !status) {
-    return NextResponse.json({ message: 'Error' }, { status: 500 });
+    return createErrorResponse('Missing required fields', 422);
   }
 
-  const yearModel = await yearsController.getYearByName({ userId, year });
+  const result = await getUserAndYearModel(year);
 
-  if (!yearModel) {
-    return NextResponse.json({ message: 'Error' }, { status: 500 });
+  if (result instanceof Response) {
+    return result;
   }
+
+  const [userId, yearModel] = result;
 
   const newGoal = await goalsController.createGoal({
     name,
@@ -91,104 +66,76 @@ export async function POST(req: NextRequest) {
   });
 
   if (!newGoal) {
-    return NextResponse.json({ message: 'Error' }, { status: 500 });
+    return createErrorResponse('Goal not found', 400);
   }
 
   if (newGoal.error) {
-    return NextResponse.json({ message: newGoal.error }, { status: 500 });
+    return createErrorResponse(newGoal.error, 500);
   }
 
-  const response = NextResponse.json(
-    {
-      message: 'Success',
-      data: {
-        ...newGoal.data,
-        status: newGoal.status,
-      },
-    },
-    { status: 200 }
-  );
-
-  return response;
+  return createSuccessResponse({
+    ...newGoal.data,
+    status: newGoal.status,
+  });
 }
 
+type GoalDeletePayload = {
+  id: number;
+  year: number;
+};
+
 export async function DELETE(req: NextRequest) {
-  const session = await getServerSession(authOptions);
-
-  if (!session) {
-    return NextResponse.json({ message: 'Unauthorized' }, { status: 401 });
-  }
-
-  const userId = Number(session.user.id);
-
-  const res = await req.json();
-
-  const { id, year } = res as {
-    id: number;
-    year: number;
-  };
+  const { id, year } = (await req.json()) as GoalDeletePayload;
 
   if (!id || !year) {
-    return NextResponse.json({ message: 'Error' }, { status: 500 });
+    return createErrorResponse('Missing required fields', 422);
   }
 
-  const yearModel = await yearsController.getYearByName({ userId, year });
+  const result = await getUserAndYearModel(year);
 
-  if (!yearModel) {
-    return NextResponse.json({ message: 'Error' }, { status: 500 });
+  if (result instanceof Response) {
+    return result;
   }
+
+  const [userId, yearModel] = result;
 
   const nowYear = new Date().getFullYear();
 
   if (nowYear !== yearModel.year) {
-    return NextResponse.json({ message: 'Error' }, { status: 500 });
+    return createErrorResponse('Invalid year', 422);
   }
 
   const deleteGoals = await goalsController.deleteGoal({ id, userId });
 
   if (!deleteGoals) {
-    return NextResponse.json({ message: 'Error' }, { status: 500 });
+    return createErrorResponse('Goal not found', 400);
   }
 
-  const response = NextResponse.json(
-    {
-      message: 'Success',
-      data: deleteGoals,
-    },
-    { status: 200 }
-  );
-
-  return response;
+  return createSuccessResponse(deleteGoals);
 }
 
+type GoalUpdatePayload = {
+  id: number;
+  name: string;
+  year: number;
+  status: StatusKeys;
+  description?: string;
+};
+
 export async function PUT(req: NextRequest) {
-  const session = await getServerSession(authOptions);
-
-  if (!session) {
-    return NextResponse.json({ message: 'Unauthorized' }, { status: 401 });
-  }
-
-  const userId = Number(session.user.id);
-
-  const res = await req.json();
-
-  const { id, name, year, description, status } = res as {
-    id: number;
-    name: string;
-    year: number;
-    status: StatusKey;
-    description?: string;
-  };
+  const { id, name, year, description, status } = (await req.json()) as GoalUpdatePayload;
 
   if (!id || !name || !year || !status) {
-    return NextResponse.json({ message: 'Error' }, { status: 500 });
+    return createErrorResponse('Missing required fields', 422);
   }
 
-  const yearModel = await yearsController.getYearByName({ userId, year });
+  const result = await getUserAndYearModel(year);
 
-  if (!yearModel) {
-    return NextResponse.json({ message: 'Error' }, { status: 500 });
+  if (result instanceof Response) {
+    return result;
   }
+
+  const [userId, yearModel] = result;
 
   const updatedGoal = await goalsController.updateGoal({
     id,
@@ -200,19 +147,11 @@ export async function PUT(req: NextRequest) {
   });
 
   if (!updatedGoal) {
-    return NextResponse.json({ message: 'Error' }, { status: 500 });
+    return createErrorResponse('Goal not found', 400);
   }
 
-  const response = NextResponse.json(
-    {
-      message: 'Success',
-      data: {
-        ...updatedGoal.data,
-        status: updatedGoal.status,
-      },
-    },
-    { status: 200 }
-  );
-
-  return response;
+  return createSuccessResponse({
+    ...updatedGoal.data,
+    status: updatedGoal.status,
+  });
 }

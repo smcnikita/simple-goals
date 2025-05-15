@@ -1,33 +1,25 @@
-import { NextRequest, NextResponse } from 'next/server';
-import { getServerSession } from 'next-auth';
+import { NextRequest } from 'next/server';
 
-import { authOptions } from '@/lib/auth';
-import { yearsController } from '@/controllers/years-controller';
+import { getUserAndYearModel } from '@/lib/getUserAndYearModel';
+
+import { yearsController } from '@/controllers/years/years.controller';
+import { createSuccessResponse } from '@/lib/createSuccessResponse';
+import { createErrorResponse } from '@/lib/createErrorResponse';
+
+type UpdateCanEditPastPayload = {
+  year: number;
+};
 
 export async function POST(req: NextRequest) {
-  const session = await getServerSession(authOptions);
+  const { year } = (await req.json()) as UpdateCanEditPastPayload;
 
-  if (!session) {
-    return NextResponse.json({ message: 'Unauthorized' }, { status: 401 });
+  const result = await getUserAndYearModel(year);
+
+  if (result instanceof Response) {
+    return result;
   }
 
-  const userId = Number(session.user.id);
-
-  const res = await req.json();
-
-  const { year } = res as {
-    year: number;
-  };
-
-  if (!year) {
-    return NextResponse.json({ message: 'Error' }, { status: 500 });
-  }
-
-  const yearModel = await yearsController.getYearByName({ userId, year });
-
-  if (!yearModel) {
-    return NextResponse.json({ message: 'Error' }, { status: 500 });
-  }
+  const [userId, yearModel] = result;
 
   const updatedYear = await yearsController.updateCanEditPast({
     id: yearModel.id,
@@ -36,18 +28,10 @@ export async function POST(req: NextRequest) {
   });
 
   if (!updatedYear) {
-    return NextResponse.json({ message: 'Error' }, { status: 500 });
+    return createErrorResponse('Year not found', 400);
   }
 
-  const response = NextResponse.json(
-    {
-      message: 'Success',
-      data: {
-        year: updatedYear,
-      },
-    },
-    { status: 200 }
-  );
-
-  return response;
+  return createSuccessResponse({
+    year: updatedYear,
+  });
 }
