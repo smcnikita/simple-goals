@@ -6,7 +6,7 @@ import { useLocale } from 'next-intl';
 
 import { type Locale, locales, localesInfo } from '@/i18n/config';
 
-import { setUserLocale } from '@/services/locale.service';
+import { localeService } from '@/services/locale/locale.service';
 
 import { Select, SelectContent, SelectGroup, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
 
@@ -17,7 +17,7 @@ const LangSwitcher: FC = () => {
 
   const onChangeLang = (value: Locale) => {
     setLangValue(value);
-    setUserLocale(value);
+    localeService.setUserLocale(value);
   };
 
   return (
