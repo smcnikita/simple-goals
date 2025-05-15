@@ -52,11 +52,11 @@ const GoalsSittingsDialog: FC = () => {
       </DialogTrigger>
 
       <DialogContent>
-        <DialogHeader>
+        <DialogHeader className="text-start">
           <DialogTitle>{t('goals_settings', { year: globalYear })}</DialogTitle>
         </DialogHeader>
 
-        <div className="space-y-4">
+        <div className="space-y-4 py-4">
           <div className="flex items-center space-x-2">
             {isLoadingShowStatistic && <Loader2 className="animate-spin text-gray-400" />}
             <Checkbox

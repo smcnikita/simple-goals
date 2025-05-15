@@ -75,7 +75,7 @@ const GoalItem: FC<PropsWithChildren<Props>> = (props) => {
           <div className="flex flex-col gap-1">
             <h3 className="text-base font-medium">{children}</h3>
             <StatusItem status={status} />
-            <p className="mt-1 text-xs line-clamp-2 text-gray-500">{description}</p>
+            <p className="mt-1 text-xs line-clamp-6 text-gray-500">{description}</p>
           </div>
         </div>
       )}
