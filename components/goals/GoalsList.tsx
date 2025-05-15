@@ -7,11 +7,11 @@ import { useGoalsStore } from '@/stores/goals-store';
 
 import GoalItem from './GoalItem';
 
-import type { GoalsWithStatus } from '@/types/goals.types';
+import type { GoalModelWithStatus } from '@/types/goals.types';
 import { useTranslations } from 'next-intl';
 
 type Props = {
-  goals: GoalsWithStatus;
+  goals: GoalModelWithStatus[];
 };
 
 const GoalsList: FC<Props> = ({ goals }) => {

@@ -1,16 +1,16 @@
 import { create } from 'zustand';
 
 import { httpCreateGoal, httpDeleteGoal, httpGetGoal, httpUpdateGoal } from '@/lib/http/goals.http';
-
-import type { StatusDBKeys } from '@/types/statuses.types';
-import type { GoalsWithStatus } from '@/types/goals.types';
 import { httpUpdateCanEditPast, httpUpdateShowStatistic } from '@/lib/http/years.http';
+
+import type { StatusKeys } from '@/types/status.types';
+import type { GoalModelWithStatus } from '@/types/goals.types';
 
 type Data = {
   name: string;
   description: string | null;
   year: number;
-  status: StatusDBKeys;
+  status: StatusKeys;
 };
 
 type DataWithId = Data & {
@@ -31,7 +31,7 @@ type Store = HttpStore & {
   isLoadingCreate: boolean;
   isLoadingUpdate: boolean;
   isLoadingDelete: boolean;
-  goals: GoalsWithStatus;
+  goals: GoalModelWithStatus[];
   canEditPastGoals: boolean;
   isShowStatistic: boolean;
   isLoadingUpdateCanEditPast: boolean;

@@ -6,7 +6,7 @@ import { zodResolver } from '@hookform/resolvers/zod';
 import { z } from 'zod';
 import { useTranslations } from 'next-intl';
 
-import { STATUS } from '@/constants/statuses';
+import { FILTER_STATUS_KEYS, STATUS_KEYS } from '@/constants/status';
 
 import { useStatusStore } from '@/stores/status-store';
 
@@ -15,14 +15,14 @@ import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@
 import { Textarea } from '@/components/ui/textarea';
 import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from '@/components/ui/form';
 
-import type { Status, Name, Description, FormSchema } from '@/types/form-goal.types';
-import type { StatusKeys } from '@/types/statuses.types';
+import type { Name, Description, FormSchema } from '@/types/form-goal.types';
+import type { StatusKeys } from '@/types/status.types';
 
 type OldGoalData = {
   id: number;
   name: Name;
   description: Description;
-  status: Status;
+  status: StatusKeys;
 };
 
 type Props = {
@@ -32,7 +32,7 @@ type Props = {
   onSubmit: (values: FormSchema) => Promise<void>;
 };
 
-const DEFAULT_STATUS: StatusKeys = STATUS.InProgress;
+const DEFAULT_STATUS: StatusKeys = FILTER_STATUS_KEYS.InProgress;
 
 const DEFAULT_GOAL_VALUES = {
   name: '',
@@ -59,9 +59,12 @@ const GoalForm: FC<Props> = (props) => {
           .max(500, { message: tErrors('description.max', { max: 500 }) })
           .nullable(),
 
-        status: z.enum([STATUS.InProgress, STATUS.Completed, STATUS.NotCompleted, STATUS.Canceled], {
-          message: tErrors('status.invalid'),
-        }),
+        status: z.enum(
+          [STATUS_KEYS.InProgress, STATUS_KEYS.Completed, STATUS_KEYS.NotCompleted, STATUS_KEYS.Canceled],
+          {
+            message: tErrors('status.invalid'),
+          }
+        ),
       }),
     [tErrors]
   );

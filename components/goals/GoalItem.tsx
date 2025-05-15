@@ -3,24 +3,25 @@
 import { useState, type FC, type PropsWithChildren } from 'react';
 import { Clock, CircleCheck, CircleX, CirclePause } from 'lucide-react';
 
-import { STATUS } from '@/constants/statuses';
+import { FILTER_STATUS_KEYS } from '@/constants/status';
 
 import { useGoalsStore } from '@/stores/goals-store';
 
 import useGlobalYear from '@/hooks/use-global-year';
+import useGoalYearSettings from '@/hooks/use-goal-year-settings';
 
 import StatusItem from '../StatusItem';
 import GoalsUpdateFormWrapper from './GoalsUpdateFormWrapper';
 import GoalsItemFooter from './GoalsItemFooter';
 
-import type { Status, Description } from '@/types/form-goal.types';
-import useGoalYearSettings from '@/hooks/use-goal-year-settings';
+import type { Description } from '@/types/form-goal.types';
+import type { StatusKeys } from '@/types/status.types';
 
 type Props = {
   id: number;
   name: string;
   description: Description | null;
-  status: Status;
+  status: StatusKeys;
 };
 
 const GoalItem: FC<PropsWithChildren<Props>> = (props) => {
@@ -66,10 +67,10 @@ const GoalItem: FC<PropsWithChildren<Props>> = (props) => {
       ) : (
         <div className="flex items-center gap-3">
           <div>
-            {status === STATUS.InProgress && <Clock size={16} className="text-blue-500" />}
-            {status === STATUS.Completed && <CircleCheck size={16} className="text-green-700" />}
-            {status === STATUS.NotCompleted && <CircleX size={16} className="text-red-500" />}
-            {status === STATUS.Canceled && <CirclePause size={16} className="text-gray-500" />}
+            {status === FILTER_STATUS_KEYS.InProgress && <Clock size={16} className="text-blue-500" />}
+            {status === FILTER_STATUS_KEYS.Completed && <CircleCheck size={16} className="text-green-700" />}
+            {status === FILTER_STATUS_KEYS.NotCompleted && <CircleX size={16} className="text-red-500" />}
+            {status === FILTER_STATUS_KEYS.Canceled && <CirclePause size={16} className="text-gray-500" />}
           </div>
 
           <div className="flex flex-col gap-1">

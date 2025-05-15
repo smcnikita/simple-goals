@@ -1,5 +1,6 @@
 import { useMemo, type FC } from 'react';
 import { Loader2 } from 'lucide-react';
+import { useTranslations } from 'next-intl';
 
 import { useGoalsStore } from '@/stores/goals-store';
 
@@ -8,14 +9,14 @@ import useGlobalYear from '@/hooks/use-global-year';
 import GoalForm from '@/components/goal-form/GoalForm';
 import { Button } from '@/components/ui/button';
 
-import type { Status, Description, FormSchema } from '@/types/form-goal.types';
-import { useTranslations } from 'next-intl';
+import type { Description, FormSchema } from '@/types/form-goal.types';
+import type { StatusKeys } from '@/types/status.types';
 
 type Props = {
   id: number;
   name: string;
   description: Description | null;
-  status: Status;
+  status: StatusKeys;
   updateIsEdit: (isEdit: boolean) => void;
 };
 

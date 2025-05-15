@@ -1,7 +1,7 @@
 import { API_PATHS } from '@/constants/api-paths';
 import { fetchFromAPI } from '@/lib/http';
 
-import type { Year } from '@/types/years.types';
+import type { YearModel } from '@/types/years.types';
 
 type HttpUpdateShowStatisticParams = {
   year: number;
@@ -9,7 +9,7 @@ type HttpUpdateShowStatisticParams = {
 
 type UpdateShowStatisticResponse = {
   data: {
-    year: Year;
+    year: YearModel;
   };
 };
 
@@ -25,7 +25,7 @@ type HttpUpdateCanEditPastParams = {
 
 type UpdateCanEditPastResponse = {
   data: {
-    year: Year;
+    year: YearModel;
   };
 };
 

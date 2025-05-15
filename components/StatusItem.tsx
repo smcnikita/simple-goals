@@ -2,12 +2,12 @@ import type { FC } from 'react';
 import clsx from 'clsx';
 import { useTranslations } from 'next-intl';
 
-import { STATUS } from '@/constants/statuses';
+import { FILTER_STATUS_KEYS } from '@/constants/status';
 
-import type { Status } from '@/types/form-goal.types';
+import type { StatusKeys } from '@/types/status.types';
 
 type Props = {
-  status: Status;
+  status: StatusKeys;
 };
 
 const StatusItem: FC<Props> = ({ status }) => {
@@ -16,10 +16,10 @@ const StatusItem: FC<Props> = ({ status }) => {
   return (
     <p
       className={clsx('text-xs', {
-        'text-blue-500': status === STATUS.InProgress,
-        'text-green-700': status === STATUS.Completed,
-        'text-red-500': status === STATUS.NotCompleted,
-        'text-gray-500': status === STATUS.Canceled,
+        'text-blue-500': status === FILTER_STATUS_KEYS.InProgress,
+        'text-green-700': status === FILTER_STATUS_KEYS.Completed,
+        'text-red-500': status === FILTER_STATUS_KEYS.NotCompleted,
+        'text-gray-500': status === FILTER_STATUS_KEYS.Canceled,
       })}
     >
       {t(status)}

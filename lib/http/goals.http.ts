@@ -1,14 +1,14 @@
-import { Goals } from '@prisma/client';
+import { GoalModel } from '@/types/goals.types';
 
 import { API_PATHS } from '@/constants/api-paths';
 
 import { fetchFromAPI } from '@/lib/http';
 
-import type { GoalsWithStatus, GoalsWithStatusItem } from '@/types/goals.types';
+import type { GoalModelWithStatus } from '@/types/goals.types';
 
 type GetGoalsResponse = {
   data: {
-    goals: GoalsWithStatus;
+    goals: GoalModelWithStatus[];
     can_edit_past_goals: boolean;
     show_statistic: boolean;
   };
@@ -29,7 +29,7 @@ type HttpCreateGoalParams = {
 };
 
 type CreateGoalResponse = {
-  data: GoalsWithStatusItem;
+  data: GoalModelWithStatus;
 };
 
 export const httpCreateGoal = async ({ name, description, status, year }: HttpCreateGoalParams) => {
@@ -50,7 +50,7 @@ type HttpDeleteGoalParams = {
 
 type DeleteGoalResponse = {
   message: string;
-  data: Goals;
+  data: GoalModel;
 };
 
 export const httpDeleteGoal = async ({ id, year }: HttpDeleteGoalParams) => {
@@ -68,7 +68,7 @@ type HttpUpdateGoalParams = {
 };
 
 type UpdateGoalResponse = {
-  data: GoalsWithStatusItem;
+  data: GoalModelWithStatus;
 };
 
 export const httpUpdateGoal = async ({ id, name, description, status, year }: HttpUpdateGoalParams) => {

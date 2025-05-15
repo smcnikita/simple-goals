@@ -5,7 +5,7 @@ import { authOptions } from '@/lib/auth';
 
 import { getStatuses } from '@/services/statuses-service';
 
-import { yearsController } from '@/controllers/years-controller';
+import { yearsController } from '@/controllers/years/years.controller';
 
 import StoreInitializer from './store-initializer';
 
@@ -35,7 +35,7 @@ async function validateYear(inputYear: string): Promise<boolean> {
   const userId = Number(session.user.id);
 
   try {
-    const availableYears = await yearsController.getYears({ userId });
+    const availableYears = await yearsController.findOrCreate(userId);
 
     return availableYears.some(({ year }) => year === numericYear);
   } catch (error) {

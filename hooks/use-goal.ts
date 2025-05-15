@@ -1,6 +1,6 @@
 import { useMemo } from 'react';
 
-import { STATUS } from '@/constants/statuses';
+import { FILTER_STATUS_KEYS } from '@/constants/status';
 
 import { useFilterStatusStore } from '@/stores/filter-status-store';
 import { useGoalsStore } from '@/stores/goals-store';
@@ -10,7 +10,7 @@ const useGoal = () => {
   const { goals } = useGoalsStore();
 
   const filteredGoals = useMemo(() => {
-    if (selectedFilterStatus === STATUS.Total) {
+    if (selectedFilterStatus === FILTER_STATUS_KEYS.Total) {
       return goals;
     }
 
@@ -28,23 +28,23 @@ const useGoal = () => {
 
     for (const goal of goals) {
       switch (goal.status) {
-        case STATUS.InProgress:
+        case FILTER_STATUS_KEYS.InProgress:
           stats.inProgress++;
           break;
-        case STATUS.Completed:
+        case FILTER_STATUS_KEYS.Completed:
           stats.completed++;
           break;
-        case STATUS.NotCompleted:
+        case FILTER_STATUS_KEYS.NotCompleted:
           stats.notCompleted++;
           break;
-        case STATUS.Canceled:
+        case FILTER_STATUS_KEYS.Canceled:
           stats.canceled++;
           break;
       }
     }
 
     return stats;
-  }, [goals, STATUS]);
+  }, [goals]);
 
   return { filteredGoals, goalsStatistic };
 };

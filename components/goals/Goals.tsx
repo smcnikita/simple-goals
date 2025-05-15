@@ -3,7 +3,7 @@
 import { useEffect, type FC } from 'react';
 import { useTranslations } from 'next-intl';
 
-import { STATUS_TOTAL } from '@/constants/statuses';
+import { STATUS_OPTION_TOTAL } from '@/constants/status';
 
 import useGoal from '@/hooks/use-goal';
 
@@ -56,7 +56,7 @@ const Goals: FC<Props> = ({ globalYear }) => {
         </div>
 
         <div className="flex items-center gap-3">
-          <Select defaultValue={STATUS_TOTAL.key} onValueChange={updateSelectedFilterStatus}>
+          <Select defaultValue={STATUS_OPTION_TOTAL.key} onValueChange={updateSelectedFilterStatus}>
             <SelectTrigger className="w-[150px]">
               <SelectValue />
             </SelectTrigger>

@@ -1,8 +1,8 @@
 import { prisma } from '@/lib/prisma';
 
-import type { Statuses, StatusKeys } from '@/types/statuses.types';
+import type { StatusModel, StatusKeys } from '@/types/status.types';
 
-export async function getStatuses(): Promise<Statuses> {
+export async function getStatuses(): Promise<StatusModel[]> {
   const statuses = await prisma.statuses.findMany();
 
   return statuses.map((status) => {

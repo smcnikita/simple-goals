@@ -18,10 +18,10 @@ import {
   SidebarMenuItem,
 } from '@/components/ui/sidebar';
 
-import type { Years } from '@/types/years.types';
+import type { YearModel } from '@/types/years.types';
 
 type Props = {
-  years: Years;
+  years: YearModel[];
 };
 
 const Aside: FC<Props> = ({ years }) => {
