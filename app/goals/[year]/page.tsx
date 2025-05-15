@@ -3,7 +3,7 @@ import { getServerSession } from 'next-auth';
 
 import { authOptions } from '@/lib/auth';
 
-import { getStatuses } from '@/services/status.service';
+import { statusService } from '@/services/status/status.service';
 
 import { yearsController } from '@/controllers/years/years.controller';
 
@@ -53,7 +53,7 @@ async function GoalsPage({ params }: { params: Promise<{ year: string }> }) {
     notFound();
   }
 
-  const statuses = await getStatuses();
+  const statuses = await statusService.getStatuses();
 
   return (
     <StoreInitializer statuses={statuses}>
