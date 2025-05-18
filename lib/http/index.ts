@@ -4,8 +4,6 @@ export async function fetchFromAPI<T>(endpoint: string, init?: RequestInit): Pro
   const url = `/api/${endpoint}`;
   const response = await fetch(url, init);
 
-  console.log(response.ok);
-
   if (!response.ok) {
     const errorBody = await response.json();
 

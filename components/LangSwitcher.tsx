@@ -22,7 +22,7 @@ const LangSwitcher: FC = () => {
 
   return (
     <Select value={langValue} onValueChange={onChangeLang}>
-      <SelectTrigger className="w-[66px]">
+      <SelectTrigger className="w-[66px] shrink-0">
         <SelectValue>
           <Image src={localesInfo[langValue].icon} alt={localesInfo[langValue].text} height={16} width={16} />
         </SelectValue>
