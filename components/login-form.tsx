@@ -17,8 +17,10 @@ import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from '
 
 import LangSwitcher from './LangSwitcher';
 
+import type { OAuthErrorKeys } from '@/types/error-auth.types';
+
 type Props = {
-  message: string | null;
+  message: OAuthErrorKeys | null;
 };
 
 export function LoginForm({ message }: Props) {

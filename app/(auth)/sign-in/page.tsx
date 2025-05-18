@@ -4,11 +4,11 @@ import { LoginForm } from '@/components/login-form';
 
 import messages from '@/messages/en.json';
 
+import type { OAuthErrorKeys } from '@/types/error-auth.types';
+
 interface Props {
   error: string | string[] | undefined;
 }
-
-type OAuthErrorKeys = keyof typeof messages.errors.OAuth;
 
 const OAUTH_ERRORS = Object.keys(messages.errors.OAuth) as OAuthErrorKeys[];
 
@@ -20,10 +20,11 @@ async function SignIn({ searchParams }: { searchParams: Promise<Props> }) {
   const { error } = await searchParams;
   const t = await getTranslations('errors.OAuth');
 
-  const rawError = Array.isArray(error) ? error[0] : error;
-  const errorKey = rawError && isOAuthError(rawError) ? rawError : 'default';
+  const rawError: string | undefined = Array.isArray(error) ? error[0] : error;
+  const errorKey: OAuthErrorKeys | null = rawError && isOAuthError(rawError) ? rawError : null;
+  const errorMessage: OAuthErrorKeys | null = errorKey ? (t(errorKey) as OAuthErrorKeys) : null;
 
-  return <LoginForm message={t(errorKey)} />;
+  return <LoginForm message={errorMessage} />;
 }
 
 export default SignIn;
