@@ -56,7 +56,7 @@ const CreateGoalDialogContent: FC<Props> = ({ updateOpenDialog }) => {
             <DialogClose asChild>
               <Button variant="secondary">{t('close')}</Button>
             </DialogClose>
-            <Button type="submit" className="cursor-pointer" disabled={isLoadingCreate}>
+            <Button type="submit" disabled={isLoadingCreate}>
               {t('add_goal')}
             </Button>
           </DialogFooter>

@@ -24,7 +24,6 @@ const GoalsItemFooter: FC<Props> = (props) => {
       <Button
         size={isMobile ? 'default' : 'icon'}
         variant={isMobile ? 'secondary' : 'ghost'}
-        className="cursor-pointer"
         onClick={() => openUpdateForm()}
       >
         <SquarePen />
@@ -33,7 +32,6 @@ const GoalsItemFooter: FC<Props> = (props) => {
       <Button
         size={isMobile ? 'default' : 'icon'}
         variant={isMobile ? 'secondary' : 'ghost'}
-        className="cursor-pointer"
         disabled={isLoadingDelete}
         onClick={async () => await deleteGoal()}
       >

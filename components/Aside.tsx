@@ -1,11 +1,13 @@
 'use client';
 
-import { useMemo, type FC } from 'react';
+import { useEffect, useMemo, type FC } from 'react';
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
 import { useTranslations } from 'next-intl';
 
 import { PATHS } from '@/constants/paths';
+
+import { useUserYearsStore } from '@/stores/user-years-store';
 
 import {
   Sidebar,
@@ -28,17 +30,23 @@ const Aside: FC<Props> = ({ years }) => {
   const pathname = usePathname();
   const t = useTranslations('aside');
 
+  const { updateUserYears, userYears } = useUserYearsStore();
+
   const yearsLinks = useMemo(() => {
-    return years.map((year) => ({
-      title: year.year,
-      url: PATHS.goals.base + PATHS.goals.slugYear.replace(':year', year.year.toString()),
+    return userYears.map((year) => ({
+      title: year,
+      url: PATHS.goals.base + PATHS.goals.slugYear.replace(':year', year.toString()),
     }));
-  }, [years]);
+  }, [userYears]);
 
   const selectedYear = useMemo(() => {
     const segments = pathname.split('/');
     return Number(segments[2]);
   }, [pathname]);
+
+  useEffect(() => {
+    updateUserYears(years.map((year) => year.year));
+  }, [updateUserYears, years]);
 
   return (
     <Sidebar className="left-auto">

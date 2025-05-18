@@ -22,7 +22,7 @@ async function validateYear(inputYear: string): Promise<boolean> {
   const MIN_VALID_YEAR = 2020;
   const numericYear = Number(inputYear);
 
-  if (numericYear < MIN_VALID_YEAR || numericYear > currentYear) {
+  if (numericYear < MIN_VALID_YEAR || numericYear > currentYear + 1) {
     return false;
   }
 
