@@ -21,7 +21,7 @@ const CreateGoalDialog: FC = () => {
   return (
     <Dialog open={openDialog} onOpenChange={setOpenDialog}>
       <DialogTrigger asChild>
-        <Button className="cursor-pointer">
+        <Button>
           <Plus /> {t('add_goal')}
         </Button>
       </DialogTrigger>

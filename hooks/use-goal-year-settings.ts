@@ -1,20 +1,20 @@
-import { useGoalsStore } from '@/stores/goals-store';
 import { useMemo } from 'react';
-import useGlobalYear from './use-global-year';
+
+import { useGoalsStore } from '@/stores/goals-store';
+
+import useYear from './use-year';
 
 const useGoalYearSettings = () => {
   const { canEditPastGoals } = useGoalsStore();
-  const { globalYear } = useGlobalYear();
+  const { isSelectedCurrentYear } = useYear();
 
   const isCanEditPastGoals = useMemo<boolean>(() => {
-    const nowYear = new Date().getFullYear();
-
-    if (globalYear === nowYear) {
+    if (isSelectedCurrentYear) {
       return true;
     }
 
     return canEditPastGoals;
-  }, [canEditPastGoals, globalYear]);
+  }, [canEditPastGoals, isSelectedCurrentYear]);
 
   return { isCanEditPastGoals };
 };

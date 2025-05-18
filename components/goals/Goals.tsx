@@ -6,6 +6,7 @@ import { useTranslations } from 'next-intl';
 import { STATUS_OPTION_TOTAL } from '@/constants/status';
 
 import useGoal from '@/hooks/use-goal';
+import useGoalYearSettings from '@/hooks/use-goal-year-settings';
 
 import { useGoalsStore } from '@/stores/goals-store';
 import { useFilterStatusStore } from '@/stores/filter-status-store';
@@ -20,11 +21,10 @@ import {
   SelectValue,
 } from '@/components/ui/select';
 import CreateGoalDialog from '@/components/create-goal-dialog/CreateGoalDialog';
+import GoalsSettingsDialog from '@/components/goals-settings/GoalsSettingsDialog';
 
 import GoalsList from './GoalsList';
 import GoalStatisticsItem from './GoalStatisticsItem';
-import useGoalYearSettings from '@/hooks/use-goal-year-settings';
-import GoalsSittingsDialog from '../goals-settings/GoalsSittingsDialog';
 
 type Props = {
   globalYear: number;
@@ -50,7 +50,7 @@ const Goals: FC<Props> = ({ globalYear }) => {
         <div>
           <div className="flex items-center gap-1">
             <h1 className="text-2xl font-bold">{t('title', { year: globalYear })}</h1>
-            <GoalsSittingsDialog />
+            <GoalsSettingsDialog />
           </div>
           <p className="text-gray-500 text-sm mt-1">{t('description', { year: globalYear })}</p>
         </div>

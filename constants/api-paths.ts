@@ -7,4 +7,5 @@ export const API_PATHS = {
     UPDATE_SHOW_STATISTIC: '/goals/update-show-statistic',
     UPDATE_CAN_EDIT_PAST: '/goals/update-can-edit-past',
   },
+  CREATE_NEXT_YEAR: '/user/years/create-next',
 };

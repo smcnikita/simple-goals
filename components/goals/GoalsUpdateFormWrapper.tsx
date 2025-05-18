@@ -54,10 +54,10 @@ const GoalsUpdateFormWrapper: FC<Props> = (props) => {
 
   const afterContent = (
     <div className="flex items-center justify-between gap-1">
-      <Button type="button" variant="outline" className="cursor-pointer" onClick={() => updateIsEdit(false)}>
+      <Button type="button" variant="outline" onClick={() => updateIsEdit(false)}>
         {t('cancel')}
       </Button>
-      <Button type="submit" className="cursor-pointer" disabled={isLoadingUpdate}>
+      <Button type="submit" disabled={isLoadingUpdate}>
         {isLoadingUpdate ? <Loader2 className="animate-spin" /> : t('update_goal')}
       </Button>
     </div>
