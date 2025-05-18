@@ -72,6 +72,18 @@
       "type": "Password must be a string",
       "min": "Password must be at least {min} {min, plural, one {character} other {characters}} long",
       "max": "Password must be at most {max} {max, plural, one {character} other {characters}} long"
+    },
+    "OAuth": {
+      "Signin": "Sign in failed",
+      "OAuthSignin": "OAuth sign in failed",
+      "OAuthCallback": "OAuth callback error",
+      "OAuthCreateAccount": "Unable to create OAuth account",
+      "EmailCreateAccount": "Unable to create email account",
+      "Callback": "Redirect callback error",
+      "OAuthAccountNotLinked": "This account is already linked with another provider",
+      "EmailSignin": "Email sign in failed",
+      "CredentialsSignin": "Invalid credentials",
+      "default": "An unknown error occurred"
     }
   },
 

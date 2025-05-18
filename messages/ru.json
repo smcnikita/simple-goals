@@ -72,6 +72,18 @@
       "type": "Пароль должен быть строкой",
       "min": "Пароль должен содержать минимум {min} {min, plural, one {символ} few {символа} many {символов} other {символов}}",
       "max": "Пароль не должен превышать {max} {max, plural, one {символ} few {символа} many {символов} other {символов}}"
+    },
+    "OAuth": {
+      "Signin": "Ошибка входа",
+      "OAuthSignin": "Ошибка входа через OAuth",
+      "OAuthCallback": "Ошибка при возврате от OAuth-провайдера",
+      "OAuthCreateAccount": "Не удалось создать аккаунт через OAuth",
+      "EmailCreateAccount": "Не удалось создать аккаунт с email",
+      "Callback": "Ошибка перенаправления",
+      "OAuthAccountNotLinked": "Эта учетная запись уже привязана к другому провайдеру",
+      "EmailSignin": "Ошибка отправки email для входа",
+      "CredentialsSignin": "Неверные учетные данные",
+      "default": "Произошла неизвестная ошибка"
     }
   },
 

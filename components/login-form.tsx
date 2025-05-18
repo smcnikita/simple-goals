@@ -1,13 +1,12 @@
 'use client';
 
-import { useMemo } from 'react';
+import { useMemo, useState } from 'react';
 import Image from 'next/image';
 import { signIn } from 'next-auth/react';
 import { z } from 'zod';
 import { useTranslations } from 'next-intl';
 import { useForm } from 'react-hook-form';
-
-import { cn } from '@/lib/utils';
+import { Loader2 } from 'lucide-react';
 
 import { zodResolver } from '@hookform/resolvers/zod';
 
@@ -18,9 +17,17 @@ import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from '
 
 import LangSwitcher from './LangSwitcher';
 
-export function LoginForm({ className, ...props }: React.ComponentProps<'div'>) {
+type Props = {
+  message: string | null;
+};
+
+export function LoginForm({ message }: Props) {
   const t = useTranslations('sign_in');
   const tErrors = useTranslations('errors');
+
+  const [isLoadingCredentials, setIsLoadingCredentials] = useState(false);
+  const [isLoadingYandex, setIsLoadingYandex] = useState(false);
+  const [isLoadingGithub, setIsLoadingGithub] = useState(false);
 
   const loginSchema = useMemo(
     () =>
@@ -53,11 +60,26 @@ export function LoginForm({ className, ...props }: React.ComponentProps<'div'>) 
   });
 
   const onSubmit = async (values: z.infer<typeof loginSchema>) => {
+    setIsLoadingCredentials(true);
     await signIn('credentials', { email: values.email, password: values.password });
   };
 
+  const onClickSignInFromYandex = async () => {
+    setIsLoadingYandex(true);
+    await signIn('yandex');
+  };
+
+  const onClickSignInFromGithub = async () => {
+    setIsLoadingGithub(true);
+    await signIn('github');
+  };
+
+  const isDisabled = useMemo<boolean>(() => {
+    return isLoadingCredentials || isLoadingYandex || isLoadingGithub;
+  }, [isLoadingCredentials, isLoadingYandex, isLoadingGithub]);
+
   return (
-    <div className={cn('flex flex-col gap-6', className)} {...props}>
+    <div className="flex flex-col gap-6">
       <div className="absolute top-4 right-4">
         <LangSwitcher />
       </div>
@@ -76,8 +98,10 @@ export function LoginForm({ className, ...props }: React.ComponentProps<'div'>) 
                     type="button"
                     variant="outline"
                     className="w-full"
-                    onClick={async () => await signIn('yandex')}
+                    disabled={isDisabled}
+                    onClick={onClickSignInFromYandex}
                   >
+                    {isLoadingYandex && <Loader2 className="animate-spin" />}
                     <Image src="/img/yandex.png" alt="Yandex logo" width={16} height={16} />
                     {t('yandex')}
                   </Button>
@@ -85,12 +109,15 @@ export function LoginForm({ className, ...props }: React.ComponentProps<'div'>) 
                     type="button"
                     variant="outline"
                     className="w-full"
-                    onClick={async () => await signIn('github')}
+                    disabled={isDisabled}
+                    onClick={onClickSignInFromGithub}
                   >
+                    {isLoadingGithub && <Loader2 className="animate-spin" />}
                     <Image src="/img/github-mark.png" alt="GitHub logo" width={16} height={16} />
                     {t('github')}
                   </Button>
                 </div>
+                {message && <div className="text-sm text-center text-red-500 ">{message}</div>}
                 <div className="after:border-border relative text-center text-sm after:absolute after:inset-0 after:top-1/2 after:z-0 after:flex after:items-center after:border-t">
                   <span className="bg-card text-muted-foreground relative z-10 px-2">{t('or')}</span>
                 </div>
@@ -103,7 +130,7 @@ export function LoginForm({ className, ...props }: React.ComponentProps<'div'>) 
                         <FormItem>
                           <FormLabel>{t('email')}</FormLabel>
                           <FormControl>
-                            <Input type="email" placeholder="m@example.com" {...field} />
+                            <Input type="email" placeholder="m@example.com" disabled={isDisabled} {...field} />
                           </FormControl>
                           <FormMessage />
                         </FormItem>
@@ -118,14 +145,15 @@ export function LoginForm({ className, ...props }: React.ComponentProps<'div'>) 
                         <FormItem>
                           <FormLabel>{t('password')}</FormLabel>
                           <FormControl>
-                            <Input type="password" placeholder="**********" {...field} />
+                            <Input type="password" placeholder="**********" disabled={isDisabled} {...field} />
                           </FormControl>
                           <FormMessage />
                         </FormItem>
                       )}
                     />
                   </div>
-                  <Button type="submit" className="w-full">
+                  <Button type="submit" className="w-full" disabled={isDisabled}>
+                    {isLoadingCredentials && <Loader2 className="animate-spin" />}
                     {t('login')}
                   </Button>
                 </div>
