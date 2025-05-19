@@ -6,6 +6,7 @@ export const API_PATHS = {
     UPDATE_GOAL: '/goals',
     UPDATE_SHOW_STATISTIC: '/goals/update-show-statistic',
     UPDATE_CAN_EDIT_PAST: '/goals/update-can-edit-past',
+    MARK_ALL_AS_INCOMPLETE: '/goals/mark-all-incomplete',
   },
   CREATE_NEXT_YEAR: '/user/years/create-next',
 };

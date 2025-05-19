@@ -94,7 +94,9 @@
     "show_statistic": "Show statistics",
     "can_edit_past_goals": "Allow editing past goals",
     "next_year_is_set_up": "The next year is set up",
-    "create_next_year": "Create the next year"
+    "create_next_year": "Create the next year",
+    "mark_all_as_incomplete": "Mark all as incomplete",
+    "update_successful": "Update successful"
   },
 
   "theme": {

@@ -3,6 +3,7 @@ import { create } from 'zustand';
 import { httpCreateGoal, httpDeleteGoal, httpGetGoal, httpUpdateGoal } from '@/lib/http/goals.http';
 import { httpUpdateCanEditPast, httpUpdateShowStatistic } from '@/lib/http/years.http';
 
+import type { GoalModelWithStatus } from '@/types/goals.types';
 import type { Store, CreateGoalParams, UpdateGoalParams } from './types';
 
 export const useGoalsStore = create<Store>()((set) => ({
@@ -65,6 +66,26 @@ export const useGoalsStore = create<Store>()((set) => ({
     } finally {
       set({ isLoadingDelete: false });
     }
+  },
+
+  setGoals: async (data: GoalModelWithStatus[]) => {
+    set((state) => {
+      const existingGoals = state.goals;
+
+      const updatedGoals = [...existingGoals];
+
+      for (const newGoal of data) {
+        const index = existingGoals.findIndex((g) => g.id === newGoal.id);
+
+        if (index !== -1) {
+          updatedGoals[index] = { ...existingGoals[index], ...newGoal };
+        } else {
+          updatedGoals.push(newGoal);
+        }
+      }
+
+      return { goals: updatedGoals };
+    });
   },
 
   updateGoal: async (data: UpdateGoalParams) => {

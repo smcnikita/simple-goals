@@ -29,6 +29,7 @@ type DataStore = {
 type ActionsStore = {
   fetchGoalsData: (year: number) => Promise<void>;
   createGoal: (data: CreateGoalParams) => Promise<void>;
+  setGoals: (data: GoalModelWithStatus[]) => Promise<void>;
   updateGoal: (data: UpdateGoalParams) => Promise<void>;
   deleteGoal: (id: number, year: number) => Promise<void>;
   updateCanEditPastGoals: (year: number) => Promise<void>;
