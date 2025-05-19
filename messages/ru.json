@@ -94,7 +94,9 @@
     "show_statistic": "Отображать статистику",
     "can_edit_past_goals": "Разрешить редактирование целей",
     "next_year_is_set_up": "Следующий год создан",
-    "create_next_year": "Создать следующий год"
+    "create_next_year": "Создать следующий год",
+    "mark_all_as_incomplete": "Отметить все как не завершено",
+    "update_successful": "Успешно обновлено"
   },
 
   "theme": {

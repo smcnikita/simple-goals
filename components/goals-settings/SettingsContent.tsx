@@ -16,6 +16,7 @@ import { Button } from '@/components/ui/button';
 import { Checkbox } from '@/components/ui/checkbox';
 import { Label } from '@/components/ui/label';
 import { Separator } from '@/components/ui/separator';
+import { markAllAsIncompleteStore } from '@/stores/mark-all-as-incomplete-store';
 
 type Props = {
   updateOpenDialog: (value: boolean) => void;
@@ -30,9 +31,12 @@ const SettingsContent: FC<Props> = ({ updateOpenDialog }) => {
     canEditPastGoals,
     isLoadingShowStatistic,
     isLoadingUpdateCanEditPast,
+    setGoals,
     updateCanEditPastGoals,
     updateIsShowStatistic,
   } = useGoalsStore();
+
+  const { isLoading: isLoadingMarkAllAsIncomplete, markAllAsIncomplete } = markAllAsIncompleteStore();
 
   const { isLoadingCreateNextYear, createNextYear } = useUserYearsStore();
   const { hasNextYear } = useUserYears();
@@ -58,19 +62,32 @@ const SettingsContent: FC<Props> = ({ updateOpenDialog }) => {
     updateOpenDialog(false);
   };
 
+  const handleMarkAllAsIncomplete = async () => {
+    const newGoals = await markAllAsIncomplete(globalYear);
+    setGoals(newGoals);
+    toast.success(t('update_successful'));
+    updateOpenDialog(false);
+  };
+
   return (
     <div className="space-y-4 py-4">
       {isSelectedCurrentYear && !hasNextYear && (
-        <>
-          <div className="flex items-center space-x-2">
-            <Button variant="outline" disabled={isLoadingCreateNextYear} onClick={handleCreateNextYear}>
-              {isLoadingCreateNextYear && <Loader2 className="animate-spin text-gray-400" />}
-              {t('create_next_year')}
-            </Button>
-          </div>
-          <Separator />
-        </>
+        <div className="flex items-center space-x-2">
+          <Button variant="outline" disabled={isLoadingCreateNextYear} onClick={handleCreateNextYear}>
+            {isLoadingCreateNextYear && <Loader2 className="animate-spin text-gray-400" />}
+            {t('create_next_year')}
+          </Button>
+        </div>
       )}
+
+      <div className="flex items-center space-x-2">
+        <Button variant="outline" disabled={isLoadingMarkAllAsIncomplete} onClick={handleMarkAllAsIncomplete}>
+          {isLoadingMarkAllAsIncomplete && <Loader2 className="animate-spin text-gray-400" />}
+          {t('mark_all_as_incomplete')}
+        </Button>
+      </div>
+
+      <Separator />
 
       <div className="flex items-center space-x-2">
         {isLoadingShowStatistic && <Loader2 className="animate-spin text-gray-400" />}
