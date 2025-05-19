@@ -2,8 +2,9 @@
 
 import { useEffect, type FC } from 'react';
 import { useTranslations } from 'next-intl';
+import { CircleCheck, CirclePause, CircleX, Clock, List } from 'lucide-react';
 
-import { STATUS_OPTION_TOTAL } from '@/constants/status';
+import { FILTER_STATUS_KEYS, STATUS_OPTION_TOTAL } from '@/constants/status';
 
 import useGoal from '@/hooks/use-goal';
 import useGoalYearSettings from '@/hooks/use-goal-year-settings';
@@ -66,6 +67,19 @@ const Goals: FC<Props> = ({ globalYear }) => {
                 <SelectLabel>{t('statuses')}</SelectLabel>
                 {filterStatusOptions.map((filterStatus) => (
                   <SelectItem key={filterStatus.key} value={filterStatus.key}>
+                    {filterStatus.key === FILTER_STATUS_KEYS.Total && <List size={16} className="text-zinc-600" />}
+                    {filterStatus.key === FILTER_STATUS_KEYS.InProgress && (
+                      <Clock size={16} className="text-blue-500" />
+                    )}
+                    {filterStatus.key === FILTER_STATUS_KEYS.Completed && (
+                      <CircleCheck size={16} className="text-green-700" />
+                    )}
+                    {filterStatus.key === FILTER_STATUS_KEYS.NotCompleted && (
+                      <CircleX size={16} className="text-red-500" />
+                    )}
+                    {filterStatus.key === FILTER_STATUS_KEYS.Canceled && (
+                      <CirclePause size={16} className="text-gray-500" />
+                    )}
                     {t(filterStatus.key)}
                   </SelectItem>
                 ))}

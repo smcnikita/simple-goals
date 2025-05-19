@@ -17,6 +17,7 @@ import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from '
 
 import type { Name, Description, FormSchema } from '@/types/form-goal.types';
 import type { StatusKeys } from '@/types/status.types';
+import { CircleCheck, CirclePause, CircleX, Clock } from 'lucide-react';
 
 type OldGoalData = {
   id: number;
@@ -120,6 +121,10 @@ const GoalForm: FC<Props> = (props) => {
                   <SelectContent>
                     {statusOptions.map((status) => (
                       <SelectItem key={status.key} value={status.key}>
+                        {status.key === STATUS_KEYS.InProgress && <Clock size={16} className="text-blue-500" />}
+                        {status.key === STATUS_KEYS.Completed && <CircleCheck size={16} className="text-green-700" />}
+                        {status.key === STATUS_KEYS.NotCompleted && <CircleX size={16} className="text-red-500" />}
+                        {status.key === STATUS_KEYS.Canceled && <CirclePause size={16} className="text-gray-500" />}
                         {t(status.key)}
                       </SelectItem>
                     ))}

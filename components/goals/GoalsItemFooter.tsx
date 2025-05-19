@@ -1,3 +1,5 @@
+'use client';
+
 import type { FC } from 'react';
 import { Loader2, SquarePen, Trash2 } from 'lucide-react';
 
@@ -6,6 +8,7 @@ import { useIsMobile } from '@/hooks/use-mobile';
 import { Button } from '@/components/ui/button';
 
 import { useGoalsStore } from '@/stores/goals-store';
+import { useTranslations } from 'next-intl';
 
 type Props = {
   openUpdateForm: () => void;
@@ -14,6 +17,8 @@ type Props = {
 
 const GoalsItemFooter: FC<Props> = (props) => {
   const { openUpdateForm, deleteGoal } = props;
+
+  const t = useTranslations('goals_list');
 
   const { isLoadingDelete } = useGoalsStore();
 
@@ -27,7 +32,7 @@ const GoalsItemFooter: FC<Props> = (props) => {
         onClick={() => openUpdateForm()}
       >
         <SquarePen />
-        {isMobile && 'Edit'}
+        {isMobile && t('short_edit_goal')}
       </Button>
       <Button
         size={isMobile ? 'default' : 'icon'}
@@ -40,7 +45,7 @@ const GoalsItemFooter: FC<Props> = (props) => {
         ) : (
           <>
             <Trash2 />
-            {isMobile && 'Delete'}
+            {isMobile && t('short_delete_goal')}
           </>
         )}
       </Button>

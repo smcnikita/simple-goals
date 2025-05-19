@@ -16,6 +16,7 @@ import { Input } from '@/components/ui/input';
 import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from '@/components/ui/form';
 
 import LangSwitcher from './LangSwitcher';
+import ThemeSwitcher from './ThemeSwitcher';
 
 import type { OAuthErrorKeys } from '@/types/error-auth.types';
 
@@ -82,8 +83,9 @@ export function LoginForm({ message }: Props) {
 
   return (
     <div className="flex flex-col gap-6">
-      <div className="absolute top-4 right-4">
+      <div className="absolute top-4 right-4 flex items-center gap-3 max-w-[144px]">
         <LangSwitcher />
+        <ThemeSwitcher isHideText={true} />
       </div>
 
       <Card>
@@ -115,7 +117,20 @@ export function LoginForm({ message }: Props) {
                     onClick={onClickSignInFromGithub}
                   >
                     {isLoadingGithub && <Loader2 className="animate-spin" />}
-                    <Image src="/img/github-mark.png" alt="GitHub logo" width={16} height={16} />
+                    <Image
+                      src="/img/github-mark.png"
+                      alt="GitHub logo"
+                      width={16}
+                      height={16}
+                      className="block dark:hidden"
+                    />
+                    <Image
+                      src="/img/github-white.png"
+                      alt="GitHub logo"
+                      width={16}
+                      height={16}
+                      className="hidden dark:block"
+                    />
                     {t('github')}
                   </Button>
                 </div>

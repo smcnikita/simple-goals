@@ -3,7 +3,7 @@
 import { useState, type FC, type PropsWithChildren } from 'react';
 import { Clock, CircleCheck, CircleX, CirclePause } from 'lucide-react';
 
-import { FILTER_STATUS_KEYS } from '@/constants/status';
+import { STATUS_KEYS } from '@/constants/status';
 
 import { useGoalsStore } from '@/stores/goals-store';
 
@@ -55,7 +55,7 @@ const GoalItem: FC<PropsWithChildren<Props>> = (props) => {
   };
 
   return (
-    <div className="border border-gray-200 rounded flex items-start md:items-center gap-3 md:gap-1 justify-between flex-col md:flex-row px-4 py-3">
+    <div className="border border-gray-200 rounded flex items-start md:items-center gap-3 md:gap-1 justify-between flex-col md:flex-row px-4 py-3 dark:border-zinc-800 dark:bg-zinc-900">
       {isEdit ? (
         <GoalsUpdateFormWrapper
           updateIsEdit={updateIsEdit}
@@ -67,10 +67,10 @@ const GoalItem: FC<PropsWithChildren<Props>> = (props) => {
       ) : (
         <div className="flex items-center gap-3">
           <div>
-            {status === FILTER_STATUS_KEYS.InProgress && <Clock size={16} className="text-blue-500" />}
-            {status === FILTER_STATUS_KEYS.Completed && <CircleCheck size={16} className="text-green-700" />}
-            {status === FILTER_STATUS_KEYS.NotCompleted && <CircleX size={16} className="text-red-500" />}
-            {status === FILTER_STATUS_KEYS.Canceled && <CirclePause size={16} className="text-gray-500" />}
+            {status === STATUS_KEYS.InProgress && <Clock size={16} className="text-blue-500" />}
+            {status === STATUS_KEYS.Completed && <CircleCheck size={16} className="text-green-700" />}
+            {status === STATUS_KEYS.NotCompleted && <CircleX size={16} className="text-red-500" />}
+            {status === STATUS_KEYS.Canceled && <CirclePause size={16} className="text-gray-500" />}
           </div>
 
           <div className="flex flex-col gap-1">

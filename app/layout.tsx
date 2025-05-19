@@ -4,6 +4,7 @@ import { NextIntlClientProvider } from 'next-intl';
 import { getLocale, getMessages } from 'next-intl/server';
 
 import Providers from '@/components/Providers';
+import ThemeProvider from '@/components/ThemeProvider';
 
 import './globals.css';
 
@@ -57,7 +58,9 @@ export default async function RootLayout({
 
       <NextIntlClientProvider messages={messages}>
         <Providers>
-          <body className={`${notoSans.className} antialiased`}>{children}</body>
+          <body className={`${notoSans.className} antialiased`}>
+            <ThemeProvider>{children}</ThemeProvider>
+          </body>
         </Providers>
       </NextIntlClientProvider>
     </html>
