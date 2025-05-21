@@ -22,7 +22,23 @@ Start the application in detached mode:
 docker compose up --build -d
 ```
 
-### 3. **Access the App**
+### 3. **Update with Docker**
+
+```bash
+# 1. Stop and delete containers
+docker compose down
+
+# 2. Update the code
+git pull
+
+# 3. Rebuild the images (with cache removed)
+docker compose build --no-cache
+
+# 4. Restart the containers
+docker compose up -d
+```
+
+### 4. **Access the App**
 
 Open your browser and navigate to: 👉 [`http://localhost:9096`](http://localhost:9096) (if running locally) or 👉
 `http://your-server-ip:9096` (for remote access).
