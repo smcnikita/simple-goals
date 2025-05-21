@@ -44,7 +44,25 @@ function Button({
   }) {
   const Comp = asChild ? Slot : 'button';
 
-  return <Comp data-slot="button" className={cn(buttonVariants({ variant, size, className }))} {...props} />;
+  const ref = React.useRef<HTMLButtonElement>(null);
+
+  const handlePointerDown = (e: React.PointerEvent<HTMLButtonElement>) => {
+    if (e.pointerType === 'pen') {
+      e.preventDefault();
+      ref.current?.click();
+    }
+    props.onPointerDown?.(e);
+  };
+
+  return (
+    <Comp
+      data-slot="button"
+      ref={ref}
+      className={cn(buttonVariants({ variant, size, className }))}
+      onPointerDown={handlePointerDown}
+      {...props}
+    />
+  );
 }
 
 export { Button, buttonVariants };

@@ -99,8 +99,8 @@ function SelectItem({
 
   const handlePointerDown = (e: React.PointerEvent<HTMLDivElement>) => {
     if (e.pointerType === 'pen') {
-      e.preventDefault(); // чтобы не глушилось Safari
-      ref.current?.click(); // эмулируем click вручную
+      e.preventDefault();
+      ref.current?.click();
     }
 
     onPointerDown?.(e);
