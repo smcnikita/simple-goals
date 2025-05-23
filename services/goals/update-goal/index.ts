@@ -7,7 +7,7 @@ export async function updateGoal(params: UpdateGoalParams) {
 
   return await prisma.goals.update({
     data: {
-      name,
+      name: name.trim(),
       description,
       status_id: statusId,
     },

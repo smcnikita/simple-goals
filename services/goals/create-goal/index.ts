@@ -7,7 +7,7 @@ export async function createGoal(params: CreateGoalParams) {
 
   return await prisma.goals.create({
     data: {
-      name,
+      name: name.trim(),
       description,
       status_id: statusId,
       user_id: userId,
