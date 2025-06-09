@@ -101,8 +101,8 @@ export async function DELETE(req: NextRequest) {
 
   const nowYear = new Date().getFullYear();
 
-  if (nowYear !== yearModel.year) {
-    return createErrorResponse('Invalid year', 422);
+  if (!yearModel.can_edit_past && nowYear !== yearModel.year) {
+    return createErrorResponse('You cannot delete this goal', 403);
   }
 
   const deleteGoals = await goalsController.deleteGoal({ id, userId });
