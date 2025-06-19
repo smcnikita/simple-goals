@@ -12,7 +12,7 @@ import useGoalYearSettings from '@/hooks/use-goal-year-settings';
 
 import StatusItem from '../StatusItem';
 import GoalsUpdateFormWrapper from './GoalsUpdateFormWrapper';
-import GoalsItemFooter from './GoalsItemFooter';
+import GoalsItemFooter from './goals-item-footer';
 
 import type { Description } from '@/types/form-goal.types';
 import type { StatusKeys } from '@/types/status.types';

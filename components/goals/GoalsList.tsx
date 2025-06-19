@@ -5,7 +5,7 @@ import { Loader2 } from 'lucide-react';
 
 import { useGoalsStore } from '@/stores/goals-store';
 
-import GoalItem from './GoalItem';
+import GoalItem from './goal-item';
 
 import type { GoalModelWithStatus } from '@/types/goals.types';
 import { useTranslations } from 'next-intl';
