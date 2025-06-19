@@ -1,82 +1,81 @@
 # Simple Goals
 
-A self-hosted app to set and track your yearly goals with simplicity.
+A self-hosted app to set and track your yearly goals with ease.
 
-## 🚀 Quick Start (Self-Hosted via Docker)
+## 🚀 Quick Start (Self-Hosting with Docker)
 
-### 1. **Set Up Environment**
+### 1. Configure Environment Variables
 
-Copy the example `.env` file and configure it:
+Edit the `environment` section in your `docker-compose.yml` file:
 
-```bash
-cp .env.example .env
+- `NEXTAUTH_URL` – Base URL of your app.
+- `NEXTAUTH_SECRET` – Secret key for NextAuth authentication.
+- `DATABASE_URL` – PostgreSQL connection string.
+
+**Example:**
+
+```yml
+environment:
+  - NEXTAUTH_URL=http://localhost:9096
+  - NEXT_TELEMETRY_DISABLED=1
+  - NEXTAUTH_SECRET=your_secret_key
+  - DATABASE_URL=postgresql://appuser:apppassword@postgres:5432/appdb?schema=public
 ```
 
-Edit the `.env` file to customize settings (e.g., database credentials, secrets).
+### 2. Start the App via Docker
 
-### 2. **Launch with Docker**
-
-Start the application in detached mode:
+Run the following command to build and start the containers in detached mode:
 
 ```bash
 docker compose up --build -d
 ```
 
-### 3. **Update with Docker**
+### 3. Update the App
+
+To update the app with the latest code and rebuild the containers:
 
 ```bash
-# 1. Stop and delete containers
+# 1. Stop and remove existing containers
 docker compose down
 
-# 2. Update the code
+# 2. Pull the latest code
 git pull
 
-# 3. Rebuild the images (with cache removed)
-docker compose build --no-cache
-
-# 4. Restart the containers
-docker compose up -d
+# 3. Start the containers again
+docker compose up --build -d
 ```
 
-### 4. **Access the App**
+### 4. Open the App
 
-Open your browser and navigate to: 👉 [`http://localhost:9096`](http://localhost:9096) (if running locally) or 👉
-`http://your-server-ip:9096` (for remote access).
+Access your app in the browser:
+
+- 👉 `http://localhost:9096` (for local use)
+- 👉 `http://your-server-ip:9096` (for remote access)
 
 **Notes:**
 
-- **Firewall**: Ensure port `9096` is open if accessing externally.
-- **Troubleshooting**: Check logs with `docker compose logs` if the app doesn’t start.
+- 🔥 Firewall: Ensure port 9096 is open for external access.
+- 🐞 Troubleshooting: Use `docker compose logs` to view logs if the app fails to start.
 
 ---
 
 ## 🛠 Development Setup
 
-1. **Install dependencies:**
+1. Install dependencies
 
    ```bash
    npm install
    ```
 
-2. **Set up the database:**
+2. Initialize the database
 
    ```bash
-   npx prisma db push      # Sync schema with the database
+   npx prisma db push     # Apply schema to database
    npx prisma generate    # Generate Prisma client
-   npx prisma db seed     # Seed initial data (if applicable)
+   npx prisma db seed     # Seed initial data (optional)
    ```
 
-3. **Start the development server:**
+3. Run the development server
    ```bash
    npm run dev
    ```
-
----
-
-### Database Migrations
-
-Run pending migrations in production:
-
-```bash
-npx prisma migrate deploy
-```
