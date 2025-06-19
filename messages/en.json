@@ -50,7 +50,9 @@
     "status": "Status",
     "comment": "Comment",
     "enter_goal": "Enter your goal",
-    "add_comment": "Add a comment or note about this goal"
+    "add_comment": "Add a comment or note about this goal",
+
+    "are_you_sure": "Are you sure?"
   },
 
   "errors": {
