@@ -3,6 +3,7 @@ export const PATHS = {
 
   auth: {
     signIn: '/sign-in',
+    signUp: '/sign-up',
   },
 
   goals: {
