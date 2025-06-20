@@ -9,7 +9,7 @@ import { yearsController } from '@/controllers/years/years.controller';
 
 import StoreInitializer from './store-initializer';
 
-import Goals from '@/components/goals/Goals';
+import GoalView from '@/components/goals/goal-view';
 
 async function validateYear(inputYear: string): Promise<boolean> {
   const isValidFormat = /^\d{4}$/.test(inputYear);
@@ -57,9 +57,7 @@ async function GoalsPage({ params }: { params: Promise<{ year: string }> }) {
 
   return (
     <StoreInitializer statuses={statuses}>
-      <div className="flex flex-col gap-6">
-        <Goals globalYear={Number(yearSlug)} />
-      </div>
+      <GoalView year={Number(yearSlug)} />
     </StoreInitializer>
   );
 }
