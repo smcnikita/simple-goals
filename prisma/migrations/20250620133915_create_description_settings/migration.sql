@@ -1,7 +1,7 @@
 /*
   Warnings:
 
-  - Added the required column `description_settings_id` to the `Goals` table without a default value. This is not possible if the table is not empty.
+  - Added the required column `description_settings_id` to the `Years` table without a default value. This is not possible if the table is not empty.
 
 */
 -- DropIndex
@@ -14,7 +14,7 @@ DROP INDEX "Users_email_idx";
 DROP INDEX "Years_user_id_idx";
 
 -- AlterTable
-ALTER TABLE "Goals" ADD COLUMN     "description_settings_id" INTEGER NOT NULL;
+ALTER TABLE "Years" ADD COLUMN     "description_settings_id" INTEGER NOT NULL;
 
 -- CreateTable
 CREATE TABLE "DescriptionSettings" (
