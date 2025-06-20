@@ -1,3 +1,7 @@
+import { prisma } from '@/lib/prisma';
+
+import { DESCRIPTION_SETTINGS_KEYS } from '@/constants/description-settings';
+
 import { yearsService } from '@/services/years/years.service';
 
 import type { CreateNextYearResponse } from './types';
@@ -14,8 +18,21 @@ export const createNextYear = async (userId: number): CreateNextYearResponse => 
     };
   }
 
+  const descriptionSettings = await prisma.descriptionSettings.findUnique({
+    where: {
+      value: DESCRIPTION_SETTINGS_KEYS.display_3_lines,
+    },
+  });
+
+  if (!descriptionSettings) {
+    return {
+      error: 'Description settings already exists',
+    };
+  }
+
   return await yearsService.createUserYear({
     userId,
     year: nextYear,
+    descriptionSettingsId: descriptionSettings.id,
   });
 };

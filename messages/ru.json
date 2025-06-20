@@ -117,7 +117,18 @@
     "year_creation": "Будет создан {year} год",
     "tasks_status_change": "Задачи в статусе «В процессе» будут переведены в статус «Не завершено»",
     "statistics_display_control": "Управляет отображением статистики",
-    "goals_edit_control": "Управляет возможностью редактировать цели"
+    "goals_edit_control": "Управляет возможностью редактировать цели",
+
+    "comment": {
+      "goal_comment_display_setting": "Настройка отображения комментария к цели:",
+      "goal_comment_display_control": "Управляет отображением комментария к цели",
+
+      "options": {
+        "display_none": "Не отображать",
+        "display_3_lines": "Отображать только 3 строки",
+        "display_full": "Отображать полностью"
+      }
+    }
   },
 
   "theme": {

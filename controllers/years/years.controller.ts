@@ -4,6 +4,7 @@ import { getYearByName } from './find-by-name';
 import { updateShowStatistic } from './update-show-statistic';
 import { updateCanEditPast } from './update-can-edit-past';
 import { createNextYear } from './create-next-year';
+import { updateDescriptionSettings } from './update-description-settings';
 
 export const yearsController = {
   findOrCreate,
@@ -12,4 +13,5 @@ export const yearsController = {
   updateShowStatistic,
   updateCanEditPast,
   createNextYear,
+  updateDescriptionSettings,
 };

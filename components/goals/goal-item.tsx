@@ -2,8 +2,10 @@
 
 import { useState, type FC, type PropsWithChildren } from 'react';
 import { Clock, CircleCheck, CircleX, CirclePause } from 'lucide-react';
+import clsx from 'clsx';
 
 import { STATUS_KEYS } from '@/constants/status';
+import { DESCRIPTION_SETTINGS_KEYS } from '@/constants/description-settings';
 
 import { useGoalsStore } from '@/stores/goals-store';
 
@@ -27,7 +29,7 @@ type Props = {
 const GoalItem: FC<PropsWithChildren<Props>> = (props) => {
   const { children, id, name, status, description } = props;
 
-  const { deleteGoal: deleteGoalStore } = useGoalsStore();
+  const { deleteGoal: deleteGoalStore, descriptionSettings } = useGoalsStore();
   const { globalYear } = useGlobalYear();
   const { isCanEditPastGoals } = useGoalYearSettings();
 
@@ -76,7 +78,14 @@ const GoalItem: FC<PropsWithChildren<Props>> = (props) => {
           <div className="flex flex-col gap-1">
             <h3 className="text-base font-medium">{children}</h3>
             <StatusItem status={status} />
-            <p className="mt-1 text-xs line-clamp-6 text-gray-500">{description}</p>
+            <p
+              className={clsx('mt-1 text-xs text-gray-500', {
+                hidden: descriptionSettings.value === DESCRIPTION_SETTINGS_KEYS.display_none,
+                'line-clamp-3': descriptionSettings.value === DESCRIPTION_SETTINGS_KEYS.display_3_lines,
+              })}
+            >
+              {description}
+            </p>
           </div>
         </div>
       )}

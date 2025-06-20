@@ -5,12 +5,14 @@ import { API_PATHS } from '@/constants/api-paths';
 import { fetchFromAPI } from '@/lib/http';
 
 import type { GoalModelWithStatus } from '@/types/goals.types';
+import type { DescriptionSettings } from '@/types/description-settings.type';
 
 type GetGoalsResponse = {
   data: {
     goals: GoalModelWithStatus[];
     can_edit_past_goals: boolean;
     show_statistic: boolean;
+    description_settings: DescriptionSettings;
   };
 };
 
