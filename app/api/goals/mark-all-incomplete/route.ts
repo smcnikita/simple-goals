@@ -2,9 +2,7 @@ import { NextRequest } from 'next/server';
 
 import { goalsController } from '@/controllers/goals/goals.controller';
 
-import { createErrorResponse } from '@/lib/createErrorResponse';
 import { createSuccessResponse } from '@/lib/createSuccessResponse';
-
 import { getUserAndYearModel } from '@/lib/getUserAndYearModel';
 
 type Payload = {
@@ -13,10 +11,6 @@ type Payload = {
 
 export async function POST(req: NextRequest) {
   const { year } = (await req.json()) as Payload;
-
-  if (!year) {
-    return createErrorResponse('Missing required fields', 422);
-  }
 
   const result = await getUserAndYearModel(year);
 

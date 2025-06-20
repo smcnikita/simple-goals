@@ -3,15 +3,16 @@ import { getServerSession } from 'next-auth';
 
 import { authOptions } from '@/lib/auth';
 
+import { yearsService } from '@/services/years/years.service';
 import { statusService } from '@/services/status/status.service';
-
-import { yearsController } from '@/controllers/years/years.controller';
 
 import StoreInitializer from './store-initializer';
 
+import { yearsController } from '@/controllers/years/years.controller';
+
 import GoalView from '@/components/goals/goal-view';
 
-async function validateYear(inputYear: string): Promise<boolean> {
+async function validateYear(inputYear: string) {
   const isValidFormat = /^\d{4}$/.test(inputYear);
 
   if (!isValidFormat) {
@@ -37,7 +38,9 @@ async function validateYear(inputYear: string): Promise<boolean> {
   try {
     const availableYears = await yearsController.findOrCreate(userId);
 
-    return availableYears.some(({ year }) => year === numericYear);
+    if (availableYears) {
+      return availableYears.some(({ year }) => year === numericYear);
+    }
   } catch (error) {
     console.error('Error fetching available years:', error);
     return false;
@@ -54,10 +57,11 @@ async function GoalsPage({ params }: { params: Promise<{ year: string }> }) {
   }
 
   const statuses = await statusService.getStatuses();
+  const descriptionSettings = await yearsService.getDescriptionSettings();
 
   return (
     <StoreInitializer statuses={statuses}>
-      <GoalView year={Number(yearSlug)} />
+      <GoalView year={Number(yearSlug)} descriptionSettings={descriptionSettings} />
     </StoreInitializer>
   );
 }

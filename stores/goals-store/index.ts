@@ -2,9 +2,17 @@ import { create } from 'zustand';
 
 import { httpCreateGoal, httpDeleteGoal, httpGetGoal, httpUpdateGoal } from '@/lib/http/goals.http';
 import { httpUpdateCanEditPast, httpUpdateShowStatistic } from '@/lib/http/years.http';
+import { httpUpdateDescriptionSettings } from '@/lib/http/description-settings.http';
+
+import type { Store, CreateGoalParams, UpdateGoalParams } from './types';
 
 import type { GoalModelWithStatus } from '@/types/goals.types';
-import type { Store, CreateGoalParams, UpdateGoalParams } from './types';
+import type { DescriptionSettings } from '@/types/description-settings.type';
+
+const DEFAULT_DESCRIPTION_SETTINGS: DescriptionSettings = {
+  id: 0,
+  value: 'display_none',
+};
 
 export const useGoalsStore = create<Store>()((set) => ({
   isLoadingFetch: true,
@@ -13,11 +21,14 @@ export const useGoalsStore = create<Store>()((set) => ({
   isLoadingDelete: false,
   isLoadingUpdateCanEditPast: false,
   isLoadingShowStatistic: false,
+  isLoadingDescriptionSettings: false,
 
   goals: [],
 
   canEditPastGoals: false,
   isShowStatistic: true,
+
+  descriptionSettings: DEFAULT_DESCRIPTION_SETTINGS,
 
   fetchGoalsData: async (year: number) => {
     set({ isLoadingFetch: true });
@@ -27,6 +38,7 @@ export const useGoalsStore = create<Store>()((set) => ({
         goals: response.data.goals,
         canEditPastGoals: response.data.can_edit_past_goals,
         isShowStatistic: response.data.show_statistic,
+        descriptionSettings: response.data.description_settings,
       });
     } finally {
       set({ isLoadingFetch: false });
@@ -132,6 +144,20 @@ export const useGoalsStore = create<Store>()((set) => ({
       }));
     } finally {
       set({ isLoadingShowStatistic: false });
+    }
+  },
+
+  updateDescriptionSettings: async (year: number, descriptionSettingsId: number) => {
+    set({ isLoadingDescriptionSettings: true });
+
+    try {
+      const res = await httpUpdateDescriptionSettings({ year, descriptionSettingsId });
+
+      set(() => ({
+        descriptionSettings: res.data.description_settings,
+      }));
+    } finally {
+      set({ isLoadingDescriptionSettings: false });
     }
   },
 }));

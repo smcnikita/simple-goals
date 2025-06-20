@@ -117,7 +117,18 @@
     "year_creation": "Year {year} will be created",
     "tasks_status_change": "Tasks in status «In Progress» will be moved to status «Not Completed»",
     "statistics_display_control": "Controls the display of statistics",
-    "goals_edit_control": "Controls the ability to edit goals"
+    "goals_edit_control": "Controls the ability to edit goals",
+
+    "comment": {
+      "goal_comment_display_setting": "Goal comment display setting:",
+      "goal_comment_display_control": "Controls the display of goal comments",
+
+      "options": {
+        "display_none": "Do not display",
+        "display_3_lines": "Display up to 3 lines",
+        "display_full": "Display in full"
+      }
+    }
   },
 
   "theme": {

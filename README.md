@@ -70,9 +70,9 @@ Access your app in the browser:
 2. Initialize the database
 
    ```bash
-   npx prisma db push     # Apply schema to database
-   npx prisma generate    # Generate Prisma client
-   npx prisma db seed     # Seed initial data (optional)
+   npx prisma migrate dev   # Apply schema to database
+   npx prisma generate      # Generate Prisma client
+   npx prisma db seed       # Seed initial data (optional)
    ```
 
 3. Run the development server

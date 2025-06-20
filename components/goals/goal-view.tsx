@@ -6,11 +6,14 @@ import Goals from './goals';
 
 import GoalsSetting from '@/components/goals-settings/goals-settings';
 
+import type { DescriptionSettings } from '@/types/description-settings.type';
+
 type Props = {
   year: number;
+  descriptionSettings: DescriptionSettings[];
 };
 
-const GoalView: FC<Props> = ({ year }) => {
+const GoalView: FC<Props> = ({ year, descriptionSettings }) => {
   const [isSettings, setIsSettings] = useState(false);
 
   const updateTab = () => {
@@ -18,7 +21,7 @@ const GoalView: FC<Props> = ({ year }) => {
   };
 
   if (isSettings) {
-    return <GoalsSetting year={year} updateTab={updateTab} />;
+    return <GoalsSetting year={year} descriptionSettings={descriptionSettings} updateTab={updateTab} />;
   }
 
   return (

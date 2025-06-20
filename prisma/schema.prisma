@@ -15,21 +15,24 @@ model Users {
   password   String
   created_at DateTime @default(now()) @map("created_at")
   updated_at DateTime @updatedAt @map("updated_at")
+}
 
-  @@index([email])
+model DescriptionSettings {
+  id    Int    @id @default(autoincrement())
+  value String @unique
 }
 
 model Years {
-  id             Int      @id @default(autoincrement())
-  year           Int
-  user_id        Int
-  can_edit_past  Boolean  @default(false)
-  show_statistic Boolean  @default(true)
-  created_at     DateTime @default(now()) @map("created_at")
-  updated_at     DateTime @updatedAt @map("updated_at")
+  id                      Int      @id @default(autoincrement())
+  year                    Int
+  user_id                 Int
+  can_edit_past           Boolean  @default(false)
+  show_statistic          Boolean  @default(true)
+  description_settings_id Int
+  created_at              DateTime @default(now()) @map("created_at")
+  updated_at              DateTime @updatedAt @map("updated_at")
 
   @@unique([user_id, year])
-  @@index([user_id])
 }
 
 model Statuses {
@@ -48,6 +51,4 @@ model Goals {
   user_id     Int
   created_at  DateTime @default(now()) @map("created_at")
   updated_at  DateTime @updatedAt @map("updated_at")
-
-  @@index([year_id, user_id, status_id])
 }

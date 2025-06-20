@@ -6,12 +6,15 @@ import { Button } from '@/components/ui/button';
 
 import GoalsSettingsContent from './goals-settings-content';
 
+import type { DescriptionSettings } from '@/types/description-settings.type';
+
 type Props = {
   year: number;
+  descriptionSettings: DescriptionSettings[];
   updateTab: () => void;
 };
 
-const GoalsSettings: FC<Props> = ({ year, updateTab }) => {
+const GoalsSettings: FC<Props> = ({ year, descriptionSettings, updateTab }) => {
   const t = useTranslations('settings');
 
   return (
@@ -23,7 +26,7 @@ const GoalsSettings: FC<Props> = ({ year, updateTab }) => {
         <h1 className="text-2xl font-bold">{t('goals_settings', { year })}</h1>
       </div>
 
-      <GoalsSettingsContent />
+      <GoalsSettingsContent descriptionSettings={descriptionSettings} />
     </div>
   );
 };

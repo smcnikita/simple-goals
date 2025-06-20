@@ -3,6 +3,7 @@ import { prisma } from '@/lib/prisma';
 import { goalsService } from '@/services/goals/goals.service';
 
 import type { StatusKeys } from '@/types/status.types';
+
 import type { UpdateGoalParams } from './types';
 
 export const updateGoal = async (params: UpdateGoalParams) => {
@@ -21,8 +22,8 @@ export const updateGoal = async (params: UpdateGoalParams) => {
   return {
     data: await goalsService.updateGoal({
       id,
-      description,
-      name,
+      description: description ? description.trim() : null,
+      name: name.trim(),
       statusId: statusModel.id,
       userId,
       yearId,
