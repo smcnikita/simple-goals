@@ -84,23 +84,20 @@ export function RegisterForm() {
     setIsLoading(true);
     setErrorMessage('');
 
-    try {
-      await httpRegister({
-        email: values.email,
-        password: values.password,
-        name: values.name,
+    await httpRegister({
+      email: values.email,
+      password: values.password,
+      name: values.name,
+    })
+      .then(() => {
+        router.push(PATHS.auth.signIn + '?success="true"');
+      })
+      .catch((er) => {
+        setErrorMessage(er.message);
+      })
+      .finally(() => {
+        setIsLoading(false);
       });
-      // eslint-disable-next-line @typescript-eslint/no-explicit-any
-    } catch (err: any) {
-      setErrorMessage(err.message);
-      return;
-    } finally {
-      setIsLoading(false);
-    }
-
-    if (!errorMessage) {
-      router.push(PATHS.auth.signIn + '?success="true"');
-    }
   };
 
   return (

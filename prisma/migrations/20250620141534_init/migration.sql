@@ -11,12 +11,21 @@ CREATE TABLE "Users" (
 );
 
 -- CreateTable
+CREATE TABLE "DescriptionSettings" (
+    "id" SERIAL NOT NULL,
+    "value" TEXT NOT NULL,
+
+    CONSTRAINT "DescriptionSettings_pkey" PRIMARY KEY ("id")
+);
+
+-- CreateTable
 CREATE TABLE "Years" (
     "id" SERIAL NOT NULL,
     "year" INTEGER NOT NULL,
     "user_id" INTEGER NOT NULL,
     "can_edit_past" BOOLEAN NOT NULL DEFAULT false,
     "show_statistic" BOOLEAN NOT NULL DEFAULT true,
+    "description_settings_id" INTEGER NOT NULL,
     "created_at" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
     "updated_at" TIMESTAMP(3) NOT NULL,
 
@@ -51,16 +60,10 @@ CREATE TABLE "Goals" (
 CREATE UNIQUE INDEX "Users_email_key" ON "Users"("email");
 
 -- CreateIndex
-CREATE INDEX "Users_email_idx" ON "Users"("email");
-
--- CreateIndex
-CREATE INDEX "Years_user_id_idx" ON "Years"("user_id");
+CREATE UNIQUE INDEX "DescriptionSettings_value_key" ON "DescriptionSettings"("value");
 
 -- CreateIndex
 CREATE UNIQUE INDEX "Years_user_id_year_key" ON "Years"("user_id", "year");
 
 -- CreateIndex
 CREATE UNIQUE INDEX "Statuses_key_key" ON "Statuses"("key");
-
--- CreateIndex
-CREATE INDEX "Goals_year_id_user_id_status_id_idx" ON "Goals"("year_id", "user_id", "status_id");
