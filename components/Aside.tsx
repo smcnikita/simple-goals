@@ -18,11 +18,9 @@ import {
   SidebarMenu,
   SidebarMenuButton,
   SidebarMenuItem,
-  SidebarFooter,
 } from '@/components/ui/sidebar';
 
 import type { YearModel } from '@/types/years.types';
-import ThemeSwitcher from './ThemeSwitcher';
 
 type Props = {
   years: YearModel[];
@@ -70,10 +68,6 @@ const Aside: FC<Props> = ({ years }) => {
           </SidebarGroupContent>
         </SidebarGroup>
       </SidebarContent>
-
-      <SidebarFooter>
-        <ThemeSwitcher />
-      </SidebarFooter>
     </Sidebar>
   );
 };

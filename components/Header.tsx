@@ -5,6 +5,7 @@ import { User2, LogOut } from 'lucide-react';
 import Link from 'next/link';
 import { useSession } from 'next-auth/react';
 import { signOut } from 'next-auth/react';
+import { useTranslations } from 'next-intl';
 
 import { SidebarTrigger } from '@/components/ui/sidebar';
 import {
@@ -18,7 +19,7 @@ import {
 import { Button } from '@/components/ui/button';
 
 import LangSwitcher from './LangSwitcher';
-import { useTranslations } from 'next-intl';
+import ThemeSwitcher from './ThemeSwitcher';
 
 const Header: FC = () => {
   const { data: session } = useSession();
@@ -35,6 +36,7 @@ const Header: FC = () => {
       </div>
 
       <div className="flex items-center gap-3">
+        <ThemeSwitcher isHideText={true} />
         <LangSwitcher />
 
         <DropdownMenu>
@@ -52,6 +54,7 @@ const Header: FC = () => {
             </DropdownMenuLabel>
 
             <DropdownMenuSeparator />
+
             <DropdownMenuItem onClick={async () => await signOut()}>
               <LogOut />
               {t('log_out')}
