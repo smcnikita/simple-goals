@@ -2,7 +2,7 @@
 
 import { useEffect, type FC } from 'react';
 import { useTranslations } from 'next-intl';
-import { CircleCheck, CirclePause, CircleX, Clock, List } from 'lucide-react';
+import { CircleCheck, CirclePause, CircleX, Clock, List, Settings } from 'lucide-react';
 
 import { FILTER_STATUS_KEYS, STATUS_OPTION_TOTAL } from '@/constants/status';
 
@@ -21,17 +21,18 @@ import {
   SelectTrigger,
   SelectValue,
 } from '@/components/ui/select';
+import { Button } from '@/components/ui/button';
 import CreateGoalDialog from '@/components/create-goal-dialog/CreateGoalDialog';
-import GoalsSettingsDialog from '@/components/goals-settings/GoalsSettingsDialog';
 
 import GoalsList from './GoalsList';
 import GoalStatisticsItem from './GoalStatisticsItem';
 
 type Props = {
   globalYear: number;
+  updateTab: () => void;
 };
 
-const Goals: FC<Props> = ({ globalYear }) => {
+const Goals: FC<Props> = ({ globalYear, updateTab }) => {
   const t = useTranslations('goals_list');
 
   const { filterStatusOptions, updateSelectedFilterStatus } = useFilterStatusStore();
@@ -51,7 +52,9 @@ const Goals: FC<Props> = ({ globalYear }) => {
         <div>
           <div className="flex items-center gap-1">
             <h1 className="text-2xl font-bold">{t('title', { year: globalYear })}</h1>
-            <GoalsSettingsDialog />
+            <Button variant="ghost" size="icon" onClick={updateTab}>
+              <Settings className="text-gray-400" />
+            </Button>
           </div>
           <p className="text-gray-500 text-sm mt-1">{t('description', { year: globalYear })}</p>
         </div>

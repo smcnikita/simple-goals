@@ -112,8 +112,12 @@
     "can_edit_past_goals": "Разрешить редактирование целей",
     "next_year_is_set_up": "Следующий год создан",
     "create_next_year": "Создать следующий год",
-    "mark_all_as_incomplete": "Отметить все как не завершено",
-    "update_successful": "Успешно обновлено"
+    "mark_all_as_incomplete": "Отметить как не завершённые",
+    "update_successful": "Успешно обновлено",
+    "year_creation": "Будет создан {year} год",
+    "tasks_status_change": "Задачи в статусе «В процессе» будут переведены в статус «Не завершено»",
+    "statistics_display_control": "Управляет отображением статистики",
+    "goals_edit_control": "Управляет возможностью редактировать цели"
   },
 
   "theme": {

@@ -113,7 +113,11 @@
     "next_year_is_set_up": "The next year is set up",
     "create_next_year": "Create the next year",
     "mark_all_as_incomplete": "Mark all as incomplete",
-    "update_successful": "Update successful"
+    "update_successful": "Update successful",
+    "year_creation": "Year {year} will be created",
+    "tasks_status_change": "Tasks in status «In Progress» will be moved to status «Not Completed»",
+    "statistics_display_control": "Controls the display of statistics",
+    "goals_edit_control": "Controls the ability to edit goals"
   },
 
   "theme": {
