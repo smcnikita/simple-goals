@@ -22,7 +22,9 @@ export async function findOrCreate({ userId, descriptionSettingsId }: GetUserYea
       descriptionSettingsId,
     });
 
-    return [...years, newYear];
+    if (newYear.status === 'success') {
+      return [...years, newYear.data];
+    }
   }
 
   return years;

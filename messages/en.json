@@ -1,4 +1,6 @@
 {
+  "save": "Save",
+
   "sign_in": {
     "email": "Email",
     "password": "Password",
@@ -103,7 +105,8 @@
       "EmailSignin": "Email sign in failed",
       "CredentialsSignin": "Invalid credentials",
       "default": "An unknown error occurred"
-    }
+    },
+    "user_update_name": "An issue arose while attempting to modify the user name"
   },
 
   "settings": {
@@ -136,5 +139,11 @@
     "dark": "Dark theme",
     "light": "Light theme",
     "system": "System theme"
+  },
+
+  "user_settings": {
+    "settings": "Settings",
+    "is_updated": "The name is being updated",
+    "enter_name": "Enter a new name"
   }
 }

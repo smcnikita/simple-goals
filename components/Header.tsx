@@ -7,6 +7,8 @@ import { useSession } from 'next-auth/react';
 import { signOut } from 'next-auth/react';
 import { useTranslations } from 'next-intl';
 
+import { PATHS } from '@/constants/paths';
+
 import { SidebarTrigger } from '@/components/ui/sidebar';
 import {
   DropdownMenu,
@@ -21,15 +23,21 @@ import { Button } from '@/components/ui/button';
 import LangSwitcher from './LangSwitcher';
 import ThemeSwitcher from './ThemeSwitcher';
 
-const Header: FC = () => {
+type Props = {
+  isShowSidebarToggle?: boolean;
+};
+
+const Header: FC<Props> = ({ isShowSidebarToggle = true }) => {
   const { data: session } = useSession();
 
   const t = useTranslations('auth');
+  const tSettings = useTranslations('user_settings');
 
   return (
     <header className="py-4 px-3 flex items-center justify-between gap-1">
       <div className="flex items-center gap-2">
-        <SidebarTrigger />
+        {isShowSidebarToggle && <SidebarTrigger />}
+
         <Link href="/" className="font-semibold">
           Simple Goals
         </Link>
@@ -48,10 +56,16 @@ const Header: FC = () => {
           <DropdownMenuContent>
             <DropdownMenuLabel asChild>
               <div className="grid flex-1 text-left text-sm">
-                <span className="font-semibold">{session?.user?.name}</span>
+                <span className="font-semibold">{session?.user.name}</span>
                 <span className="text-xs text-gray-500">{session?.user?.email}</span>
               </div>
             </DropdownMenuLabel>
+
+            <DropdownMenuSeparator />
+
+            <DropdownMenuItem asChild>
+              <Link href={PATHS.settings}>{tSettings('settings')}</Link>
+            </DropdownMenuItem>
 
             <DropdownMenuSeparator />
 

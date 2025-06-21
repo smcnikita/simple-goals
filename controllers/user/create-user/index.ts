@@ -1,21 +1,21 @@
-import { getTranslations } from 'next-intl/server';
-
-import { prisma } from '@/lib/prisma';
-
 import { userService } from '@/services/user/user.service';
+
+import { BaseResponse } from '@/types/base-controller.type';
 
 import type { Params } from './types';
 
-export const createUser = async ({ email, name, password }: Params): Promise<string | void> => {
-  const t = await getTranslations('errors');
+export const createUser = async ({ email, name, password }: Params): Promise<BaseResponse<null>> => {
+  const createUserService = await userService.createUser({ email, name, password });
 
-  const user = await prisma.users.findUnique({
-    where: { email },
-  });
-
-  if (user) {
-    return t('OAuth.Signup');
+  if (createUserService.status === 'error') {
+    return {
+      status: 'error',
+      message: createUserService.message,
+    };
   }
 
-  await userService.createUser({ email, name, password });
+  return {
+    status: 'success',
+    data: createUserService.data,
+  };
 };
