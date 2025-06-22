@@ -10,7 +10,7 @@ import type { DescriptionSettings } from '@/types/description-settings.type';
 
 type Props = {
   year: number;
-  descriptionSettings: DescriptionSettings[];
+  descriptionSettings: DescriptionSettings;
 };
 
 const GoalView: FC<Props> = ({ year, descriptionSettings }) => {
@@ -21,12 +21,12 @@ const GoalView: FC<Props> = ({ year, descriptionSettings }) => {
   };
 
   if (isSettings) {
-    return <GoalsSetting year={year} descriptionSettings={descriptionSettings} updateTab={updateTab} />;
+    return <GoalsSetting year={year} updateTab={updateTab} />;
   }
 
   return (
     <div className="flex flex-col gap-6">
-      <Goals globalYear={year} updateTab={updateTab} />
+      <Goals globalYear={year} updateTab={updateTab} descriptionSettings={descriptionSettings} />
     </div>
   );
 };

@@ -11,4 +11,6 @@ export const API_PATHS = {
     UPDATE_DESCRIPTION_SETTINGS: '/goals/update-description-settings',
   },
   CREATE_NEXT_YEAR: '/user/years/create-next',
+  UPDATE_USER_NAME: '/user/update-name',
+  UPDATE_USER_PASSWORD: '/user/update-password',
 };

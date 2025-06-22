@@ -9,12 +9,13 @@ datasource db {
 }
 
 model Users {
-  id         Int      @id @default(autoincrement())
-  name       String
-  email      String   @unique
-  password   String
-  created_at DateTime @default(now()) @map("created_at")
-  updated_at DateTime @updatedAt @map("updated_at")
+  id                      Int      @id @default(autoincrement())
+  name                    String
+  email                   String   @unique
+  password                String
+  description_settings_id Int?
+  created_at              DateTime @default(now()) @map("created_at")
+  updated_at              DateTime @updatedAt @map("updated_at")
 }
 
 model DescriptionSettings {
@@ -23,14 +24,13 @@ model DescriptionSettings {
 }
 
 model Years {
-  id                      Int      @id @default(autoincrement())
-  year                    Int
-  user_id                 Int
-  can_edit_past           Boolean  @default(false)
-  show_statistic          Boolean  @default(true)
-  description_settings_id Int
-  created_at              DateTime @default(now()) @map("created_at")
-  updated_at              DateTime @updatedAt @map("updated_at")
+  id             Int      @id @default(autoincrement())
+  year           Int
+  user_id        Int
+  can_edit_past  Boolean  @default(false)
+  show_statistic Boolean  @default(true)
+  created_at     DateTime @default(now()) @map("created_at")
+  updated_at     DateTime @updatedAt @map("updated_at")
 
   @@unique([user_id, year])
 }

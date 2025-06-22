@@ -1,6 +1,6 @@
 'use client';
 
-import { useMemo, type FC } from 'react';
+import { type FC } from 'react';
 import { Loader2 } from 'lucide-react';
 import { useTranslations } from 'next-intl';
 import { toast } from 'sonner';
@@ -17,17 +17,9 @@ import { Button } from '@/components/ui/button';
 import { Checkbox } from '@/components/ui/checkbox';
 import { Label } from '@/components/ui/label';
 import { Separator } from '@/components/ui/separator';
-import { Select, SelectContent, SelectGroup, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
 
-import type { DescriptionSettings, DescriptionSettingsKeys } from '@/types/description-settings.type';
-
-type Props = {
-  descriptionSettings: DescriptionSettings[];
-};
-
-const GoalsSettingsContent: FC<Props> = ({ descriptionSettings }) => {
+const GoalsSettingsContent: FC = () => {
   const t = useTranslations('settings');
-  const tComment = useTranslations('settings.comment.options');
 
   const { globalYear, isNowYear } = useGlobalYear();
 
@@ -36,32 +28,10 @@ const GoalsSettingsContent: FC<Props> = ({ descriptionSettings }) => {
     canEditPastGoals,
     isLoadingShowStatistic,
     isLoadingUpdateCanEditPast,
-    isLoadingDescriptionSettings,
-    descriptionSettings: descriptionSettingsSelected,
     setGoals,
     updateCanEditPastGoals,
     updateIsShowStatistic,
-    updateDescriptionSettings,
   } = useGoalsStore();
-
-  const updateDisplayComment = async (selectedCommentValue: string) => {
-    const comment = descriptionSettings.find((el) => el.id === Number(selectedCommentValue));
-
-    if (!comment) {
-      return;
-    }
-    await updateDescriptionSettings(globalYear, comment.id);
-  };
-
-  const selectedValue = useMemo<string>(() => {
-    const comment = descriptionSettings.find((el) => el.id === descriptionSettingsSelected.id);
-
-    if (!comment) {
-      return '';
-    }
-
-    return comment.value;
-  }, [descriptionSettings, descriptionSettingsSelected.id]);
 
   const { isLoading: isLoadingMarkAllAsIncomplete, markAllAsIncomplete } = markAllAsIncompleteStore();
 
@@ -157,34 +127,6 @@ const GoalsSettingsContent: FC<Props> = ({ descriptionSettings }) => {
           </div>
         </>
       )}
-
-      <Separator />
-
-      <div className="flex flex-col gap-2">
-        <p className="text-sm">{t('comment.goal_comment_display_setting')}</p>
-
-        <Select
-          value={descriptionSettingsSelected.id.toString()}
-          onValueChange={updateDisplayComment}
-          disabled={isLoadingDescriptionSettings}
-        >
-          <SelectTrigger className="shrink-0">
-            <SelectValue>{tComment(selectedValue as DescriptionSettingsKeys)}</SelectValue>
-          </SelectTrigger>
-
-          <SelectContent>
-            <SelectGroup>
-              {descriptionSettings.map((comment) => (
-                <SelectItem key={comment.id} value={comment.id.toString()}>
-                  {tComment(comment.value)}
-                </SelectItem>
-              ))}
-            </SelectGroup>
-          </SelectContent>
-        </Select>
-
-        <p className="text-sm text-gray-500">{t('comment.goal_comment_display_control')}</p>
-      </div>
     </div>
   );
 };

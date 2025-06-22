@@ -6,7 +6,7 @@ import type { YearModel } from '@/types/years.types';
 
 import type { GetUserYearsParams } from './types';
 
-export async function findOrCreate({ userId, descriptionSettingsId }: GetUserYearsParams): Promise<YearModel[]> {
+export async function findOrCreate({ userId }: GetUserYearsParams): Promise<YearModel[]> {
   const nowYear = new Date().getFullYear();
 
   const years = await prisma.years.findMany({
@@ -19,10 +19,11 @@ export async function findOrCreate({ userId, descriptionSettingsId }: GetUserYea
     const newYear = await createUserYear({
       userId,
       year: nowYear,
-      descriptionSettingsId,
     });
 
-    return [...years, newYear];
+    if (newYear.status === 'success') {
+      return [...years, newYear.data];
+    }
   }
 
   return years;

@@ -11,19 +11,36 @@ export const getDescriptionSettings = async (): Promise<DescriptionSettings[]> =
 };
 
 export const getDescriptionSettingsById = async (id: number): Promise<DescriptionSettings | undefined> => {
-  const t = await getTranslations('settings.comment.options');
-
   const descriptionSettings = await prisma.descriptionSettings.findUnique({
     where: { id },
   });
 
   return {
     id: descriptionSettings?.id ?? 0,
-    value: (t(descriptionSettings?.value as DescriptionSettingsKeys) as DescriptionSettingsKeys) ?? 'display_none',
+    value: (descriptionSettings?.value as DescriptionSettingsKeys) ?? 'display_none',
   };
 };
 
 export const getDescriptionSettingsValueByKey = async (key: DescriptionSettingsKeys): Promise<string> => {
   const t = await getTranslations('settings.comment.options');
   return t(key);
+};
+
+export const getUserDescriptionSettings = async (userId: number) => {
+  const user = await prisma.users.findUnique({
+    where: { id: userId },
+    omit: {
+      id: true,
+      description_settings_id: false,
+      created_at: true,
+      email: true,
+      name: true,
+      password: true,
+      updated_at: true,
+    },
+  });
+
+  if (user && user.description_settings_id) {
+    return getDescriptionSettingsById(user.description_settings_id);
+  }
 };

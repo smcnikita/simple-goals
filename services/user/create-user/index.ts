@@ -1,4 +1,5 @@
 import { hash } from 'bcryptjs';
+import { getTranslations } from 'next-intl/server';
 
 import { DESCRIPTION_SETTINGS_KEYS } from '@/constants/description-settings';
 
@@ -7,14 +8,10 @@ import { prisma } from '@/lib/prisma';
 import { yearsService } from '@/services/years/years.service';
 
 import type { Params } from './types';
+import type { BaseResponse } from '@/types/base-controller.type';
 
-export const createUser = async ({ email, name, password }: Params) => {
-  const hashedPassword = await hash(password, 12);
-  const nowYear = new Date().getFullYear();
-
-  const user = await prisma.users.create({
-    data: { email, name, password: hashedPassword },
-  });
+export const createUser = async ({ email, name, password }: Params): Promise<BaseResponse<null>> => {
+  const t = await getTranslations('errors');
 
   const descriptionSettings = await prisma.descriptionSettings.findUnique({
     where: {
@@ -23,12 +20,44 @@ export const createUser = async ({ email, name, password }: Params) => {
   });
 
   if (!descriptionSettings) {
-    return;
+    return {
+      status: 'error',
+      message: t('OAuth.Signup'),
+    };
   }
 
-  await yearsService.createUserYear({
-    userId: user.id,
-    year: nowYear,
-    descriptionSettingsId: descriptionSettings.id,
+  const user = await prisma.users.findUnique({
+    where: { email },
   });
+
+  if (user) {
+    return {
+      status: 'error',
+      message: t('OAuth.Signup'),
+    };
+  }
+
+  const hashedPassword = await hash(password, 12);
+  const nowYear = new Date().getFullYear();
+
+  const newUser = await prisma.users.create({
+    data: { email, name, password: hashedPassword, description_settings_id: descriptionSettings.id },
+  });
+
+  const createUserYearService = await yearsService.createUserYear({
+    userId: newUser.id,
+    year: nowYear,
+  });
+
+  if (createUserYearService.status === 'error') {
+    return {
+      status: 'error',
+      message: createUserYearService.message,
+    };
+  }
+
+  return {
+    status: 'success',
+    data: null,
+  };
 };

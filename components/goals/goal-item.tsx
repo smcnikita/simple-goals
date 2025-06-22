@@ -18,18 +18,20 @@ import GoalsItemFooter from './goals-item-footer';
 
 import type { Description } from '@/types/form-goal.types';
 import type { StatusKeys } from '@/types/status.types';
+import type { DescriptionSettings } from '@/types/description-settings.type';
 
 type Props = {
   id: number;
   name: string;
   description: Description | null;
   status: StatusKeys;
+  descriptionSettings: DescriptionSettings;
 };
 
 const GoalItem: FC<PropsWithChildren<Props>> = (props) => {
   const { children, id, name, status, description } = props;
 
-  const { deleteGoal: deleteGoalStore, descriptionSettings } = useGoalsStore();
+  const { deleteGoal: deleteGoalStore } = useGoalsStore();
   const { globalYear } = useGlobalYear();
   const { isCanEditPastGoals } = useGoalYearSettings();
 
@@ -80,8 +82,8 @@ const GoalItem: FC<PropsWithChildren<Props>> = (props) => {
             <StatusItem status={status} />
             <p
               className={clsx('mt-1 text-xs text-gray-500', {
-                hidden: descriptionSettings.value === DESCRIPTION_SETTINGS_KEYS.display_none,
-                'line-clamp-3': descriptionSettings.value === DESCRIPTION_SETTINGS_KEYS.display_3_lines,
+                hidden: props.descriptionSettings.value === DESCRIPTION_SETTINGS_KEYS.display_none,
+                'line-clamp-3': props.descriptionSettings.value === DESCRIPTION_SETTINGS_KEYS.display_3_lines,
               })}
             >
               {description}

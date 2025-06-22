@@ -6,8 +6,6 @@ import { createErrorResponse } from '@/lib/createErrorResponse';
 import { createSuccessResponse } from '@/lib/createSuccessResponse';
 import { getUserAndYearModel } from '@/lib/getUserAndYearModel';
 
-import { yearsService } from '@/services/years/years.service';
-
 import type { StatusKeys } from '@/types/status.types';
 
 export async function GET(req: NextRequest) {
@@ -28,15 +26,10 @@ export async function GET(req: NextRequest) {
     yearId: yearModel.id,
   });
 
-  const descriptionSettings = await yearsService.getDescriptionSettings();
-
-  const descriptionSettingsSelected = descriptionSettings.find((el) => el.id === yearModel.description_settings_id);
-
   return createSuccessResponse({
     goals,
     can_edit_past_goals: yearModel.can_edit_past,
     show_statistic: yearModel.show_statistic,
-    description_settings: descriptionSettingsSelected,
   });
 }
 

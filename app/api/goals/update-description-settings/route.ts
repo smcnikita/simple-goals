@@ -1,44 +1,41 @@
 import { NextRequest } from 'next/server';
 
-import { getUserAndYearModel } from '@/lib/getUserAndYearModel';
 import { createSuccessResponse } from '@/lib/createSuccessResponse';
 import { createErrorResponse } from '@/lib/createErrorResponse';
 
-import { yearsController } from '@/controllers/years/years.controller';
-
-import { yearsService } from '@/services/years/years.service';
+import { userService } from '@/services/user/user.service';
+import { userController } from '@/controllers/user/user.controller';
+import { getUserIdOrUnauthorized } from '@/lib/getUserIdOrUnauthorized';
 
 type Payload = {
-  year: number;
   description_settings_id: number;
 };
 
 export async function POST(req: NextRequest) {
-  const { year, description_settings_id } = (await req.json()) as Payload;
+  const { description_settings_id } = (await req.json()) as Payload;
 
   if (!description_settings_id) {
     return createErrorResponse('Missing required fields', 422);
   }
 
-  const result = await getUserAndYearModel(year);
+  const userIdOrRes = await getUserIdOrUnauthorized();
 
-  if (result instanceof Response) {
-    return result;
+  if (userIdOrRes instanceof Response) {
+    return userIdOrRes;
   }
 
-  const [userId, yearModel] = result;
+  const userId = userIdOrRes;
 
-  const updatedYear = await yearsController.updateDescriptionSettings({
-    id: yearModel.id,
+  const updatedUser = await userController.updateDescriptionSettings({
+    id: userId,
     descriptionSettingsId: description_settings_id,
-    userId,
   });
 
-  if (!updatedYear) {
+  if (!updatedUser || updatedUser.description_settings_id === null) {
     return createErrorResponse('Year not found', 400);
   }
 
   return createSuccessResponse({
-    description_settings: await yearsService.getDescriptionSettingsById(updatedYear.description_settings_id),
+    description_settings: await userService.getDescriptionSettingsById(updatedUser.description_settings_id),
   });
 }

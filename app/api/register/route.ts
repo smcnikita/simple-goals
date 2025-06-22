@@ -22,9 +22,12 @@ export async function POST(req: NextRequest) {
 
   const userErrorMessage = await userController.createUser({ email, name, password });
 
-  if (userErrorMessage) {
-    return createErrorResponse(userErrorMessage, 422);
+  if (userErrorMessage.status === 'error') {
+    return createErrorResponse(userErrorMessage.message, 422);
   }
 
-  return createSuccessResponse({});
+  return createSuccessResponse({
+    status: userErrorMessage.status,
+    data: userErrorMessage.data,
+  });
 }

@@ -3,7 +3,6 @@ import { getServerSession } from 'next-auth';
 
 import { authOptions } from '@/lib/auth';
 
-import { yearsService } from '@/services/years/years.service';
 import { statusService } from '@/services/status/status.service';
 
 import StoreInitializer from './store-initializer';
@@ -11,6 +10,7 @@ import StoreInitializer from './store-initializer';
 import { yearsController } from '@/controllers/years/years.controller';
 
 import GoalView from '@/components/goals/goal-view';
+import { userService } from '@/services/user/user.service';
 
 async function validateYear(inputYear: string) {
   const isValidFormat = /^\d{4}$/.test(inputYear);
@@ -50,6 +50,12 @@ async function validateYear(inputYear: string) {
 async function GoalsPage({ params }: { params: Promise<{ year: string }> }) {
   const yearSlug = (await params).year;
 
+  const session = await getServerSession(authOptions);
+
+  if (!session) {
+    throw new Error('Session is not defined. Please ensure that the session is initialized before proceeding.');
+  }
+
   const isValidYear = await validateYear(yearSlug);
 
   if (!isValidYear) {
@@ -57,11 +63,16 @@ async function GoalsPage({ params }: { params: Promise<{ year: string }> }) {
   }
 
   const statuses = await statusService.getStatuses();
-  const descriptionSettings = await yearsService.getDescriptionSettings();
+
+  const userDescriptionSetting = await userService.getUserDescriptionSettings(Number(session.user.id));
+
+  if (!userDescriptionSetting) {
+    throw new Error('User description settings could not be found');
+  }
 
   return (
     <StoreInitializer statuses={statuses}>
-      <GoalView year={Number(yearSlug)} descriptionSettings={descriptionSettings} />
+      <GoalView year={Number(yearSlug)} descriptionSettings={userDescriptionSetting} />
     </StoreInitializer>
   );
 }

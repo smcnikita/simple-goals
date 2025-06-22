@@ -1,6 +1,5 @@
 import type { StatusKeys } from '@/types/status.types';
 import type { GoalModelWithStatus } from '@/types/goals.types';
-import type { DescriptionSettings } from '@/types/description-settings.type';
 
 export type CreateGoalParams = {
   name: string;
@@ -20,14 +19,11 @@ type DataStore = {
   isLoadingDelete: boolean;
   isLoadingUpdateCanEditPast: boolean;
   isLoadingShowStatistic: boolean;
-  isLoadingDescriptionSettings: boolean;
 
   goals: GoalModelWithStatus[];
 
   canEditPastGoals: boolean;
   isShowStatistic: boolean;
-
-  descriptionSettings: DescriptionSettings;
 };
 
 type ActionsStore = {
@@ -38,7 +34,6 @@ type ActionsStore = {
   deleteGoal: (id: number, year: number) => Promise<void>;
   updateCanEditPastGoals: (year: number) => Promise<void>;
   updateIsShowStatistic: (year: number) => Promise<void>;
-  updateDescriptionSettings: (year: number, descriptionSettingsId: number) => Promise<void>;
 };
 
 export type Store = DataStore & ActionsStore;
