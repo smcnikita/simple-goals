@@ -41,13 +41,12 @@ export const createUser = async ({ email, name, password }: Params): Promise<Bas
   const nowYear = new Date().getFullYear();
 
   const newUser = await prisma.users.create({
-    data: { email, name, password: hashedPassword },
+    data: { email, name, password: hashedPassword, description_settings_id: descriptionSettings.id },
   });
 
   const createUserYearService = await yearsService.createUserYear({
     userId: newUser.id,
     year: nowYear,
-    descriptionSettingsId: descriptionSettings.id,
   });
 
   if (createUserYearService.status === 'error') {

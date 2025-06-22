@@ -15,5 +15,5 @@ export const findOrCreate = async (userId: number) => {
     return;
   }
 
-  return await yearsService.findOrCreate({ userId, descriptionSettingsId: descriptionSettings.id });
+  return await yearsService.findOrCreate({ userId });
 };

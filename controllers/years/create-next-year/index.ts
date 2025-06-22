@@ -33,6 +33,5 @@ export const createNextYear = async (userId: number): CreateNextYearResponse => 
   return await yearsService.createUserYear({
     userId,
     year: nextYear,
-    descriptionSettingsId: descriptionSettings.id,
   });
 };

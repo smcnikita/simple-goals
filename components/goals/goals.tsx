@@ -27,12 +27,15 @@ import CreateGoalDialog from '@/components/create-goal-dialog/CreateGoalDialog';
 import GoalsList from './GoalsList';
 import GoalStatisticsItem from './GoalStatisticsItem';
 
+import type { DescriptionSettings } from '@/types/description-settings.type';
+
 type Props = {
   globalYear: number;
+  descriptionSettings: DescriptionSettings;
   updateTab: () => void;
 };
 
-const Goals: FC<Props> = ({ globalYear, updateTab }) => {
+const Goals: FC<Props> = ({ globalYear, descriptionSettings, updateTab }) => {
   const t = useTranslations('goals_list');
 
   const { filterStatusOptions, updateSelectedFilterStatus } = useFilterStatusStore();
@@ -104,7 +107,7 @@ const Goals: FC<Props> = ({ globalYear, updateTab }) => {
         </div>
       )}
 
-      <GoalsList goals={filteredGoals} />
+      <GoalsList goals={filteredGoals} descriptionSettings={descriptionSettings} />
     </>
   );
 };

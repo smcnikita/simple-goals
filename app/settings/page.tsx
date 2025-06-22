@@ -1,8 +1,13 @@
-import UpdateName from '@/components/settings/update-name/update-name';
-import { Separator } from '@/components/ui/separator';
-import { authOptions } from '@/lib/auth';
 import { getServerSession } from 'next-auth';
 import { getTranslations } from 'next-intl/server';
+
+import { authOptions } from '@/lib/auth';
+
+import { userService } from '@/services/user/user.service';
+
+import UpdateDescription from '@/components/settings/update-descriptions/update-description';
+import UpdateName from '@/components/settings/update-name/update-name';
+import { Separator } from '@/components/ui/separator';
 
 export default async function Page() {
   const t = await getTranslations('user_settings');
@@ -11,6 +16,13 @@ export default async function Page() {
 
   if (!session) {
     throw new Error('Session is not defined. Please ensure that the session is initialized before proceeding.');
+  }
+
+  const userDescriptionSetting = await userService.getUserDescriptionSettings(Number(session.user.id));
+  const descriptionSettings = await userService.getDescriptionSettings();
+
+  if (!userDescriptionSetting) {
+    throw new Error('User description settings could not be found');
   }
 
   return (
@@ -22,6 +34,10 @@ export default async function Page() {
       <div>
         <UpdateName currentUserName={session.user.name} />
       </div>
+
+      <Separator />
+
+      <UpdateDescription selected={userDescriptionSetting} options={descriptionSettings} />
     </div>
   );
 }
