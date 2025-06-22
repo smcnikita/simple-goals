@@ -5,9 +5,10 @@ import { authOptions } from '@/lib/auth';
 
 import { userService } from '@/services/user/user.service';
 
+import { Separator } from '@/components/ui/separator';
 import UpdateDescription from '@/components/settings/update-descriptions/update-description';
 import UpdateName from '@/components/settings/update-name/update-name';
-import { Separator } from '@/components/ui/separator';
+import UpdatePassword from '@/components/settings/update-password/update-password';
 
 export default async function Page() {
   const t = await getTranslations('user_settings');
@@ -38,6 +39,10 @@ export default async function Page() {
       <Separator />
 
       <UpdateDescription selected={userDescriptionSetting} options={descriptionSettings} />
+
+      <Separator />
+
+      <UpdatePassword />
     </div>
   );
 }

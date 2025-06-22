@@ -86,7 +86,9 @@
       "required": "Password is required",
       "type": "Password must be a string",
       "min": "Password must be at least {min} {min, plural, one {character} other {characters}} long",
-      "max": "Password must be at most {max} {max, plural, one {character} other {characters}} long"
+      "max": "Password must be at most {max} {max, plural, one {character} other {characters}} long",
+      "invalid_current_password": "Invalid current password",
+      "new_password_and_old": "The new password must be different from the old one"
     },
     "passwordRepeat": {
       "required": "Password confirmation is required",
@@ -106,7 +108,8 @@
       "CredentialsSignin": "Invalid credentials",
       "default": "An unknown error occurred"
     },
-    "user_update_name": "An issue arose while attempting to modify the user name"
+    "user_update_name": "An issue arose while attempting to modify the user name",
+    "user_not_found": "The user was not found"
   },
 
   "settings": {
@@ -144,6 +147,11 @@
   "user_settings": {
     "settings": "Settings",
     "is_updated": "The name is being updated",
-    "enter_name": "Enter a new name"
+    "enter_name": "Enter a new name",
+
+    "current_password": "Current password",
+    "new_password": "New password",
+    "repeat_new_password": "Repeat new password",
+    "success_update_password": "Password changed successfully"
   }
 }
