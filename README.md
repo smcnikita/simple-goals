@@ -2,6 +2,8 @@
 
 A self-hosted app to set and track your yearly goals with ease.
 
+Demo: https://simple-goals.vercel.app/
+
 ## 📸 Screenshots
 
 [All screenshots](./docs/screenshots.md)
