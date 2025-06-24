@@ -3,6 +3,7 @@ services:
     image: smcnikita/simple-goals
     container_name: simple-goals-app
     restart: unless-stopped
+    platform: linux/amd64
     ports:
       - 9096:3000
     environment:
@@ -17,6 +18,7 @@ services:
     image: postgres:16
     container_name: simple-goals-postgres
     restart: unless-stopped
+    platform: linux/amd64
     environment:
       POSTGRES_USER: appuser
       POSTGRES_PASSWORD: apppassword
