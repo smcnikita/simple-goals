@@ -9,6 +9,7 @@ import { Separator } from '@/components/ui/separator';
 import UpdateDescription from '@/components/settings/update-descriptions/update-description';
 import UpdateName from '@/components/settings/update-name/update-name';
 import UpdatePassword from '@/components/settings/update-password/update-password';
+import DeleteProfile from '@/components/settings/delete-profile/delete-profile';
 
 export default async function Page() {
   const t = await getTranslations('user_settings');
@@ -43,6 +44,10 @@ export default async function Page() {
       <Separator />
 
       <UpdatePassword />
+
+      <Separator />
+
+      <DeleteProfile />
     </div>
   );
 }

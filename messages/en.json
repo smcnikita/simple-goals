@@ -153,5 +153,11 @@
     "new_password": "New password",
     "repeat_new_password": "Repeat new password",
     "success_update_password": "Password changed successfully"
+  },
+
+  "delete_user": {
+    "delete_profile": "Delete profile",
+    "delete_profile_confirmation": "Do you really want to delete your account and all your data?",
+    "cancel": "Cancel"
   }
 }
