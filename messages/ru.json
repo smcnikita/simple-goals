@@ -153,5 +153,11 @@
     "new_password": "Новый пароль",
     "repeat_new_password": "Повторите новый пароль",
     "success_update_password": "Пароль успешно изменен"
+  },
+
+  "delete_user": {
+    "delete_profile": "Удалить профиль",
+    "delete_profile_confirmation": "Вы действительно хотите удалить свою учетную запись и все свои данные?",
+    "cancel": "Отменить"
   }
 }

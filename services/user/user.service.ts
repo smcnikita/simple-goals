@@ -6,6 +6,7 @@ import {
   getDescriptionSettingsValueByKey,
   getUserDescriptionSettings,
 } from './get-description-settings';
+import { deleteUser } from './delete';
 
 export const userService = {
   createUser,
@@ -14,4 +15,5 @@ export const userService = {
   getDescriptionSettingsById,
   getDescriptionSettingsValueByKey,
   getUserDescriptionSettings,
+  deleteUser,
 };

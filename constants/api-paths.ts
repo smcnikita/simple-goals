@@ -13,4 +13,5 @@ export const API_PATHS = {
   CREATE_NEXT_YEAR: '/user/years/create-next',
   UPDATE_USER_NAME: '/user/update-name',
   UPDATE_USER_PASSWORD: '/user/update-password',
+  DELETE_USER: '/user',
 };
