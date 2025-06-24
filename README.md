@@ -2,6 +2,12 @@
 
 A self-hosted app to set and track your yearly goals with ease.
 
+## 📸 Screenshots
+
+[All screenshots](./docs/screenshots.md)
+
+![Screenshot](./docs/screenshots/1.png)
+
 ## 🚀 Quick Start (Self-Hosting with Docker)
 
 ### 1. Configure Environment Variables
@@ -10,16 +16,13 @@ Edit the `environment` section in your `docker-compose.yml` file:
 
 - `NEXTAUTH_URL` – Base URL of your app.
 - `NEXTAUTH_SECRET` – Secret key for NextAuth authentication.
-- `DATABASE_URL` – PostgreSQL connection string.
 
 **Example:**
 
 ```yml
 environment:
   - NEXTAUTH_URL=http://localhost:9096
-  - NEXT_TELEMETRY_DISABLED=1
   - NEXTAUTH_SECRET=your_secret_key
-  - DATABASE_URL=postgresql://appuser:apppassword@postgres:5432/appdb?schema=public
 ```
 
 ### 2. Start the App via Docker
@@ -70,9 +73,14 @@ Access your app in the browser:
 2. Initialize the database
 
    ```bash
-   npx prisma migrate dev   # Apply schema to database
-   npx prisma generate      # Generate Prisma client
-   npx prisma db seed       # Seed initial data (optional)
+   # Apply schema to database
+   npx prisma migrate dev
+
+   # Generate Prisma client
+   npx prisma generate
+
+   # Seed initial data (optional)
+   npx prisma db seed
    ```
 
 3. Run the development server

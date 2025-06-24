@@ -7,8 +7,8 @@ services:
       - 9096:3000
     environment:
       - NEXTAUTH_URL=http://localhost:9096
-      - NEXT_TELEMETRY_DISABLED=1
       - NEXTAUTH_SECRET=your_secret_key
+      - NEXT_TELEMETRY_DISABLED=1
       - DATABASE_URL=postgresql://appuser:apppassword@postgres:5432/appdb?schema=public
     depends_on:
       postgres:
