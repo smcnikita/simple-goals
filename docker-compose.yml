@@ -1,6 +1,6 @@
 services:
   simple-goals:
-    build: .
+    image: smcnikita/simple-goals
     container_name: simple-goals-app
     restart: unless-stopped
     ports:
@@ -8,7 +8,6 @@ services:
     environment:
       - NEXTAUTH_URL=http://localhost:9096
       - NEXTAUTH_SECRET=your_secret_key
-      - NEXT_TELEMETRY_DISABLED=1
       - DATABASE_URL=postgresql://appuser:apppassword@postgres:5432/appdb?schema=public
     depends_on:
       postgres:
