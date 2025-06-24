@@ -28,3 +28,6 @@ dist
 
 prisma/dev.db
 *.db-journal
+
+docs
+.DS_Store
