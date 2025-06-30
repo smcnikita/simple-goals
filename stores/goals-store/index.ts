@@ -47,6 +47,7 @@ export const useGoalsStore = create<Store>()((set) => ({
         description: data.description ?? undefined,
         status: data.status,
         year: data.year,
+        section_id: data.section_id,
       });
       set((state) => ({
         goals: [...state.goals, res.data],
@@ -103,6 +104,7 @@ export const useGoalsStore = create<Store>()((set) => ({
         description: data.description ?? undefined,
         status: data.status,
         year: data.year,
+        section_id: data.section_id,
       });
       set((state) => ({
         goals: state.goals.map((goal) => (goal.id === res.data.id ? res.data : goal)),

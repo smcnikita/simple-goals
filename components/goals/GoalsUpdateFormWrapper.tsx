@@ -17,11 +17,12 @@ type Props = {
   name: string;
   description: Description | null;
   status: StatusKeys;
+  section_id: number | null;
   updateIsEdit: (isEdit: boolean) => void;
 };
 
 const GoalsUpdateFormWrapper: FC<Props> = (props) => {
-  const { id, name, description, status, updateIsEdit } = props;
+  const { id, name, description, status, section_id, updateIsEdit } = props;
 
   const t = useTranslations('goals_list');
 
@@ -33,8 +34,9 @@ const GoalsUpdateFormWrapper: FC<Props> = (props) => {
       name,
       description,
       status,
+      section_id,
     };
-  }, [id, name, description, status]);
+  }, [id, name, description, status, section_id]);
 
   const { globalYear } = useGlobalYear();
 
@@ -46,6 +48,7 @@ const GoalsUpdateFormWrapper: FC<Props> = (props) => {
     await updateGoal({
       ...values,
       id,
+      section_id: values.section_id || null,
       year: globalYear,
     });
 

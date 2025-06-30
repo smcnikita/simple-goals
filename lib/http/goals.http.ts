@@ -28,19 +28,21 @@ type HttpCreateGoalParams = {
   description?: string;
   status: string;
   year: number;
+  section_id: number | null;
 };
 
 type CreateGoalResponse = {
   data: GoalModelWithStatus;
 };
 
-export const httpCreateGoal = async ({ name, description, status, year }: HttpCreateGoalParams) => {
+export const httpCreateGoal = async ({ name, description, status, year, section_id }: HttpCreateGoalParams) => {
   const apiUrl = API_PATHS.GOALS.CREATE_GOAL;
   const body = JSON.stringify({
     year,
     name: name.trim(),
     description: description ?? undefined,
     status,
+    section_id,
   });
   return fetchFromAPI<CreateGoalResponse>(apiUrl, { method: 'POST', body });
 };
@@ -67,13 +69,14 @@ type HttpUpdateGoalParams = {
   description?: string;
   status: string;
   year: number;
+  section_id: number | null;
 };
 
 type UpdateGoalResponse = {
   data: GoalModelWithStatus;
 };
 
-export const httpUpdateGoal = async ({ id, name, description, status, year }: HttpUpdateGoalParams) => {
+export const httpUpdateGoal = async ({ id, name, description, status, year, section_id }: HttpUpdateGoalParams) => {
   const apiUrl = API_PATHS.GOALS.UPDATE_GOAL;
   const body = JSON.stringify({
     id,
@@ -81,6 +84,7 @@ export const httpUpdateGoal = async ({ id, name, description, status, year }: Ht
     name: name.trim(),
     description: description ?? undefined,
     status,
+    section_id,
   });
   return fetchFromAPI<UpdateGoalResponse>(apiUrl, { method: 'PUT', body });
 };

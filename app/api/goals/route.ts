@@ -38,12 +38,13 @@ type GoalCreatePayload = {
   year: number;
   status: StatusKeys;
   description?: string;
+  section_id: number | null;
 };
 
 export async function POST(req: NextRequest) {
-  const { name, year, description, status } = (await req.json()) as GoalCreatePayload;
+  const { name, year, description, status, section_id } = (await req.json()) as GoalCreatePayload;
 
-  if (!name || !year || !status) {
+  if (!name || !year || !status || section_id === undefined) {
     return createErrorResponse('Missing required fields', 422);
   }
 
@@ -63,6 +64,7 @@ export async function POST(req: NextRequest) {
     yearId: yearModel.id,
     year: yearModel.year,
     canEditPastGoals: yearModel.can_edit_past,
+    section_id,
   });
 
   if (!newGoal) {
@@ -120,12 +122,13 @@ type GoalUpdatePayload = {
   year: number;
   status: StatusKeys;
   description?: string;
+  section_id: number | null;
 };
 
 export async function PUT(req: NextRequest) {
-  const { id, name, year, description, status } = (await req.json()) as GoalUpdatePayload;
+  const { id, name, year, description, status, section_id } = (await req.json()) as GoalUpdatePayload;
 
-  if (!id || !name || !year || !status) {
+  if (!id || !name || !year || !status || section_id === undefined) {
     return createErrorResponse('Missing required fields', 422);
   }
 
@@ -144,6 +147,7 @@ export async function PUT(req: NextRequest) {
     statusKey: status,
     userId,
     yearId: yearModel.id,
+    section_id,
   });
 
   if (!updatedGoal) {

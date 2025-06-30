@@ -28,6 +28,7 @@ const CreateGoalDialogContent: FC<Props> = ({ updateOpenDialog }) => {
     try {
       await createGoalStore({
         ...values,
+        section_id: values.section_id || null,
         year: globalYear,
       });
 

@@ -7,4 +7,5 @@ export type FormSchema = {
   name: Name;
   description: Description;
   status: StatusKeys;
+  section_id: number | null;
 };

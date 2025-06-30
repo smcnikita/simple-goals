@@ -3,7 +3,7 @@ import { prisma } from '@/lib/prisma';
 import type { CreateGoalParams } from './types';
 
 export async function createGoal(params: CreateGoalParams) {
-  const { name, description, statusId, userId, yearId } = params;
+  const { name, description, statusId, userId, yearId, section_id } = params;
 
   return await prisma.goals.create({
     data: {
@@ -12,6 +12,7 @@ export async function createGoal(params: CreateGoalParams) {
       status_id: statusId,
       user_id: userId,
       year_id: yearId,
+      section_id,
     },
   });
 }

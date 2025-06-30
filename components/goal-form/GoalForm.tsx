@@ -13,17 +13,20 @@ import { useStatusStore } from '@/stores/status-store';
 import { Input } from '@/components/ui/input';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
 import { Textarea } from '@/components/ui/textarea';
-import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from '@/components/ui/form';
+import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage, FormDescription } from '@/components/ui/form';
 
 import type { Name, Description, FormSchema } from '@/types/form-goal.types';
 import type { StatusKeys } from '@/types/status.types';
 import { CircleCheck, CirclePause, CircleX, Clock } from 'lucide-react';
+import { useGoalsStore } from '@/stores/goals-store';
+import { Button } from '../ui/button';
 
 type OldGoalData = {
   id: number;
   name: Name;
   description: Description;
   status: StatusKeys;
+  section_id: number | null;
 };
 
 type Props = {
@@ -47,6 +50,15 @@ const GoalForm: FC<Props> = (props) => {
   const t = useTranslations('goals_list');
   const tErrors = useTranslations('errors');
 
+  const { sections } = useGoalsStore();
+
+  const sectionOptions = useMemo(() => {
+    return sections.map((section) => ({
+      value: section.id,
+      label: section.name,
+    }));
+  }, [sections]);
+
   const formSchema = useMemo(
     () =>
       z.object({
@@ -66,11 +78,17 @@ const GoalForm: FC<Props> = (props) => {
             message: tErrors('status.invalid'),
           }
         ),
+
+        section_id: z.string().nullable().optional(),
       }),
     [tErrors]
   );
 
   const { statusOptions } = useStatusStore();
+
+  if (oldGoalData) {
+    console.log(oldGoalData.section_id === null ? undefined : oldGoalData.section_id.toString());
+  }
 
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
@@ -80,12 +98,22 @@ const GoalForm: FC<Props> = (props) => {
             name: oldGoalData.name,
             description: oldGoalData.description,
             status: oldGoalData.status,
+            section_id: oldGoalData.section_id === null ? undefined : oldGoalData.section_id.toString(),
           }
         : DEFAULT_GOAL_VALUES,
   });
 
   const onSubmit = async (values: z.infer<typeof formSchema>) => {
-    await handleSubmit(values);
+    let section_id = values.section_id === undefined ? null : values.section_id;
+
+    if (section_id === 'none') {
+      section_id = null;
+    }
+
+    await handleSubmit({
+      ...values,
+      section_id: section_id ? Number(section_id) : null,
+    });
   };
 
   return (
@@ -101,6 +129,44 @@ const GoalForm: FC<Props> = (props) => {
                 <FormControl>
                   <Input placeholder={t('enter_goal')} {...field} />
                 </FormControl>
+                <FormMessage />
+              </FormItem>
+            )}
+          />
+
+          <FormField
+            control={form.control}
+            name="section_id"
+            render={({ field }) => (
+              <FormItem>
+                <FormLabel>{t('section')}</FormLabel>
+                <Select
+                  onValueChange={(val) => {
+                    field.onChange(val === 'none' ? undefined : val);
+                  }}
+                  value={field.value ?? 'none'}
+                >
+                  <FormControl className="w-full">
+                    <SelectTrigger>
+                      <SelectValue placeholder={t('select_section')} />
+                    </SelectTrigger>
+                  </FormControl>
+                  <SelectContent>
+                    <SelectItem value="none">{t('select_section')}</SelectItem>
+                    {sectionOptions.map((section) => (
+                      <SelectItem key={section.value} value={String(section.value)}>
+                        {section.label}
+                      </SelectItem>
+                    ))}
+                  </SelectContent>
+                </Select>
+                {field.value !== undefined && field.value !== 'none' && (
+                  <FormDescription>
+                    <Button className="pl-1" variant="link" type="button" onClick={() => field.onChange('none')}>
+                      {t('clear_section')}
+                    </Button>
+                  </FormDescription>
+                )}
                 <FormMessage />
               </FormItem>
             )}

@@ -54,7 +54,11 @@
     "enter_goal": "Enter your goal",
     "add_comment": "Add a comment or note about this goal",
 
-    "are_you_sure": "Are you sure?"
+    "are_you_sure": "Are you sure?",
+
+    "section": "Section",
+    "select_section": "Without a section",
+    "clear_section": "Clear section"
   },
 
   "errors": {

@@ -7,6 +7,7 @@ export type CreateGoalParams = {
   description: string | null;
   year: number;
   status: StatusKeys;
+  section_id: number | null;
 };
 
 export type UpdateGoalParams = CreateGoalParams & {

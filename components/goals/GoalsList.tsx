@@ -57,6 +57,7 @@ const GoalsList: FC<Props> = ({ goals, descriptionSettings, goalsCount, sectionG
               description={goal.description}
               status={goal.status}
               descriptionSettings={descriptionSettings}
+              section_id={goal.section_id}
             >
               {goal.name}
             </GoalItem>
@@ -76,6 +77,7 @@ const GoalsList: FC<Props> = ({ goals, descriptionSettings, goalsCount, sectionG
                 description={goal.description}
                 status={goal.status}
                 descriptionSettings={descriptionSettings}
+                section_id={goal.section_id}
               >
                 {goal.name}
               </GoalItem>
