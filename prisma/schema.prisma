@@ -16,6 +16,8 @@ model Users {
   description_settings_id Int?
   created_at              DateTime @default(now()) @map("created_at")
   updated_at              DateTime @updatedAt @map("updated_at")
+  Goals                   Goals[]
+  Years                   Years[]
 }
 
 model DescriptionSettings {
@@ -24,13 +26,16 @@ model DescriptionSettings {
 }
 
 model Years {
-  id             Int      @id @default(autoincrement())
+  id             Int       @id @default(autoincrement())
   year           Int
   user_id        Int
-  can_edit_past  Boolean  @default(false)
-  show_statistic Boolean  @default(true)
-  created_at     DateTime @default(now()) @map("created_at")
-  updated_at     DateTime @updatedAt @map("updated_at")
+  user           Users     @relation(fields: [user_id], references: [id])
+  can_edit_past  Boolean   @default(false)
+  show_statistic Boolean   @default(true)
+  created_at     DateTime  @default(now()) @map("created_at")
+  updated_at     DateTime  @updatedAt @map("updated_at")
+  Goals          Goals[]
+  Section        Section[]
 
   @@unique([user_id, year])
 }
@@ -48,7 +53,21 @@ model Goals {
   description String?
   status_id   Int
   year_id     Int
+  year        Years    @relation(fields: [year_id], references: [id])
   user_id     Int
+  user        Users    @relation(fields: [user_id], references: [id])
+  section     Section? @relation(fields: [section_id], references: [id])
+  section_id  Int?
   created_at  DateTime @default(now()) @map("created_at")
   updated_at  DateTime @updatedAt @map("updated_at")
+}
+
+model Section {
+  id         Int      @id @default(autoincrement())
+  name       String
+  year       Years    @relation(fields: [years_id], references: [id])
+  years_id   Int
+  Goals      Goals[]
+  created_at DateTime @default(now()) @map("created_at")
+  updated_at DateTime @updatedAt @map("updated_at")
 }
