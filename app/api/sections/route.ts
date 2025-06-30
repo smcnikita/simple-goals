@@ -78,13 +78,13 @@ export async function DELETE(req: NextRequest) {
   const [userId, yearModel] = result;
 
   try {
-    const deletedSection = await sectionsController.deleteSection({
+    await sectionsController.deleteSection({
       userId,
       yearId: yearModel.id,
       sectionId,
     });
 
-    return createSuccessResponse({ section: deletedSection });
+    return createSuccessResponse({ sectionId: sectionId });
   } catch (error) {
     return createErrorResponse((error as Error).message, 500);
   }

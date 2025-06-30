@@ -2,7 +2,7 @@ import { create } from 'zustand';
 
 import { httpCreateGoal, httpDeleteGoal, httpGetGoal, httpUpdateGoal } from '@/lib/http/goals.http';
 import { httpUpdateCanEditPast, httpUpdateShowStatistic } from '@/lib/http/years.http';
-import { httpGetSections } from '@/lib/http/get-sections';
+import { httpDeleteSection, httpGetSections, httpUpdateSection } from '@/lib/http/get-sections';
 
 import type { Store, CreateGoalParams, UpdateGoalParams } from './types';
 
@@ -15,6 +15,8 @@ export const useGoalsStore = create<Store>()((set) => ({
   isLoadingDelete: false,
   isLoadingUpdateCanEditPast: false,
   isLoadingShowStatistic: false,
+  isLoadingDeleteSection: false,
+  isLoadingUpdateSection: false,
 
   goals: [],
   sections: [],
@@ -139,6 +141,43 @@ export const useGoalsStore = create<Store>()((set) => ({
       }));
     } finally {
       set({ isLoadingShowStatistic: false });
+    }
+  },
+
+  deleteSection: async (sectionId: number, year: number) => {
+    set({ isLoadingDeleteSection: true });
+
+    try {
+      const res = await httpDeleteSection({ sectionId, year });
+      set((state) => ({
+        sections: state.sections.filter((section) => section.id !== res.data.sectionId),
+        goals: state.goals.map((goal) => {
+          if (goal.section_id === res.data.sectionId) {
+            return { ...goal, section_id: null };
+          }
+          return goal;
+        }),
+      }));
+    } finally {
+      set({ isLoadingDeleteSection: false });
+    }
+  },
+
+  updateSection: async (sectionId: number, year: number, name: string) => {
+    set({ isLoadingUpdateSection: true });
+
+    try {
+      const res = await httpUpdateSection({ sectionId, name, year });
+      set((state) => ({
+        sections: state.sections.map((section) => {
+          if (section.id === res.data.section.id) {
+            return { ...section, name: res.data.section.name };
+          }
+          return section;
+        }),
+      }));
+    } finally {
+      set({ isLoadingUpdateSection: false });
     }
   },
 }));

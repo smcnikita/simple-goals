@@ -55,6 +55,8 @@
     "add_comment": "Добавьте комментарий или заметку об этой цели",
 
     "are_you_sure": "Вы уверены?",
+    "are_you_sure_section": "Goals are not deleted along with the section",
+    "section_description": "Цели не удалятся вместе с разделом",
 
     "section": "Раздел",
     "select_section": "Без раздела",

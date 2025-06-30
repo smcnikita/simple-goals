@@ -55,6 +55,8 @@
     "add_comment": "Add a comment or note about this goal",
 
     "are_you_sure": "Are you sure?",
+    "are_you_sure_section": "Are you sure you want to delete the section?",
+    "section_description": "If you delete a section, the goals will not be deleted",
 
     "section": "Section",
     "select_section": "Without a section",

@@ -86,10 +86,6 @@ const GoalForm: FC<Props> = (props) => {
 
   const { statusOptions } = useStatusStore();
 
-  if (oldGoalData) {
-    console.log(oldGoalData.section_id === null ? undefined : oldGoalData.section_id.toString());
-  }
-
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
     defaultValues:

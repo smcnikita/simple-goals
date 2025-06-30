@@ -41,7 +41,7 @@ type DeleteSectionParams = {
 
 type DeleteSectionResponse = {
   data: {
-    section: Section;
+    sectionId: number;
   };
 };
 

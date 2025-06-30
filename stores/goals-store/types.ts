@@ -21,6 +21,8 @@ type DataStore = {
   isLoadingDelete: boolean;
   isLoadingUpdateCanEditPast: boolean;
   isLoadingShowStatistic: boolean;
+  isLoadingDeleteSection: boolean;
+  isLoadingUpdateSection: boolean;
 
   goals: GoalModelWithStatus[];
   sections: Section[];
@@ -37,6 +39,9 @@ type ActionsStore = {
   deleteGoal: (id: number, year: number) => Promise<void>;
   updateCanEditPastGoals: (year: number) => Promise<void>;
   updateIsShowStatistic: (year: number) => Promise<void>;
+
+  deleteSection: (sectionId: number, year: number) => Promise<void>;
+  updateSection: (sectionId: number, year: number, name: string) => Promise<void>;
 };
 
 export type Store = DataStore & ActionsStore;

@@ -5,6 +5,19 @@ import type { UpdateGoalParams } from './types';
 export async function updateGoal(params: UpdateGoalParams) {
   const { id, name, description, statusId, userId, yearId, section_id } = params;
 
+  if (section_id) {
+    const section = await prisma.section.findFirst({
+      where: {
+        id: section_id,
+        years_id: yearId,
+      },
+    });
+
+    if (!section) {
+      throw new Error('Section not found');
+    }
+  }
+
   return await prisma.goals.update({
     data: {
       name: name.trim(),
