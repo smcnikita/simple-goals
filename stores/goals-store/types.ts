@@ -1,5 +1,6 @@
 import type { StatusKeys } from '@/types/status.types';
 import type { GoalModelWithStatus } from '@/types/goals.types';
+import type { Section } from '@prisma/client';
 
 export type CreateGoalParams = {
   name: string;
@@ -21,6 +22,7 @@ type DataStore = {
   isLoadingShowStatistic: boolean;
 
   goals: GoalModelWithStatus[];
+  sections: Section[];
 
   canEditPastGoals: boolean;
   isShowStatistic: boolean;

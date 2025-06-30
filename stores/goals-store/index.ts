@@ -2,6 +2,7 @@ import { create } from 'zustand';
 
 import { httpCreateGoal, httpDeleteGoal, httpGetGoal, httpUpdateGoal } from '@/lib/http/goals.http';
 import { httpUpdateCanEditPast, httpUpdateShowStatistic } from '@/lib/http/years.http';
+import { httpGetSections } from '@/lib/http/get-sections';
 
 import type { Store, CreateGoalParams, UpdateGoalParams } from './types';
 
@@ -16,6 +17,7 @@ export const useGoalsStore = create<Store>()((set) => ({
   isLoadingShowStatistic: false,
 
   goals: [],
+  sections: [],
 
   canEditPastGoals: false,
   isShowStatistic: true,
@@ -24,8 +26,10 @@ export const useGoalsStore = create<Store>()((set) => ({
     set({ isLoadingFetch: true });
     try {
       const response = await httpGetGoal(year);
+      const sections = await httpGetSections(year);
       set({
         goals: response.data.goals,
+        sections: sections.data.sections,
         canEditPastGoals: response.data.can_edit_past_goals,
         isShowStatistic: response.data.show_statistic,
       });
