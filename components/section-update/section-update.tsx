@@ -1,15 +1,19 @@
 'use client';
 
 import { useMemo, type FC } from 'react';
-import { Button } from '../ui/button';
-import { Input } from '../ui/input';
 import { Check, X } from 'lucide-react';
 import { z } from 'zod';
 import { useTranslations } from 'next-intl';
 import { useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
-import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from '../ui/form';
+
 import { useGoalsStore } from '@/stores/goals-store';
+
+import { capitalizeFirstLetter } from '@/utils/capitalizeFirstLetter';
+
+import { Button } from '../ui/button';
+import { Input } from '../ui/input';
+import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from '../ui/form';
 
 type Props = {
   name: string;
@@ -19,6 +23,7 @@ type Props = {
 };
 
 const SectionUpdate: FC<Props> = ({ name, sectionId, closeEditSection, updateSection }) => {
+  const t = useTranslations('goals_list');
   const tErrors = useTranslations('errors');
   const { isLoadingUpdateSection } = useGoalsStore();
 
@@ -53,9 +58,13 @@ const SectionUpdate: FC<Props> = ({ name, sectionId, closeEditSection, updateSec
             name="name"
             render={({ field }) => (
               <FormItem className="w-full">
-                <FormLabel>Название раздела</FormLabel>
+                <FormLabel>{t('section_name')}</FormLabel>
                 <FormControl>
-                  <Input placeholder="Введите название" {...field} />
+                  <Input
+                    placeholder={t('enter_section')}
+                    {...field}
+                    onChange={(e) => field.onChange(capitalizeFirstLetter(e.target.value))}
+                  />
                 </FormControl>
                 <FormMessage />
               </FormItem>

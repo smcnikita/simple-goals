@@ -42,6 +42,7 @@ type ActionsStore = {
 
   deleteSection: (sectionId: number, year: number) => Promise<void>;
   updateSection: (sectionId: number, year: number, name: string) => Promise<void>;
+  addSection: (section: Section) => void;
 };
 
 export type Store = DataStore & ActionsStore;

@@ -7,6 +7,7 @@ import { httpDeleteSection, httpGetSections, httpUpdateSection } from '@/lib/htt
 import type { Store, CreateGoalParams, UpdateGoalParams } from './types';
 
 import type { GoalModelWithStatus } from '@/types/goals.types';
+import { Section } from '@prisma/client';
 
 export const useGoalsStore = create<Store>()((set) => ({
   isLoadingFetch: true,
@@ -179,5 +180,11 @@ export const useGoalsStore = create<Store>()((set) => ({
     } finally {
       set({ isLoadingUpdateSection: false });
     }
+  },
+
+  addSection: (section: Section) => {
+    set((state) => ({
+      sections: [...state.sections, section],
+    }));
   },
 }));
