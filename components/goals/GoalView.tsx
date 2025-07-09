@@ -2,7 +2,7 @@
 
 import { useState, type FC } from 'react';
 
-import Goals from './goals';
+import Goals from './Goals';
 
 import GoalsSetting from '@/components/goals-settings/goals-settings';
 

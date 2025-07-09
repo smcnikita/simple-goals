@@ -2,6 +2,7 @@
 
 import type { FC } from 'react';
 import { Loader2, SquarePen, Trash2 } from 'lucide-react';
+import { useTranslations } from 'next-intl';
 
 import { useIsMobile } from '@/hooks/use-mobile';
 
@@ -18,7 +19,6 @@ import {
 } from '@/components/ui/alert-dialog';
 
 import { useGoalsStore } from '@/stores/goals-store';
-import { useTranslations } from 'next-intl';
 
 type Props = {
   openUpdateForm: () => void;
