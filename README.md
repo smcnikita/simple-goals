@@ -91,9 +91,6 @@ Access your app in the browser:
    # Apply schema to database
    npx prisma migrate dev
 
-   # Generate Prisma client
-   npx prisma generate
-
    # Seed initial data (optional)
    npx prisma db seed
    ```
