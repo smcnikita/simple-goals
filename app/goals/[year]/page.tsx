@@ -4,13 +4,13 @@ import { getServerSession } from 'next-auth';
 import { authOptions } from '@/lib/auth';
 
 import { statusService } from '@/services/status/status.service';
+import { userService } from '@/services/user/user.service';
 
 import StoreInitializer from './store-initializer';
 
 import { yearsController } from '@/controllers/years/years.controller';
 
-import GoalView from '@/components/goals/goal-view';
-import { userService } from '@/services/user/user.service';
+import GoalView from '@/components/goals/GoalView';
 
 async function validateYear(inputYear: string) {
   const isValidFormat = /^\d{4}$/.test(inputYear);

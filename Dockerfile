@@ -9,7 +9,6 @@ COPY . .
 ENV NODE_ENV=production
 ENV NEXT_TELEMETRY_DISABLED=1
 
-RUN npx prisma generate
 RUN npm run build
 
 FROM node:22.16.0-alpine AS production

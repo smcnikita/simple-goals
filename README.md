@@ -22,7 +22,6 @@ services:
     restart: unless-stopped
     ports:
       - 9096:3000
-    platform: linux/amd64
     environment:
       - NEXTAUTH_URL=http://localhost:9096
       - NEXTAUTH_SECRET=your_secret_key
@@ -35,7 +34,6 @@ services:
     image: postgres:16
     container_name: simple-goals-postgres
     restart: unless-stopped
-    platform: linux/amd64
     environment:
       POSTGRES_USER: appuser
       POSTGRES_PASSWORD: apppassword
@@ -92,9 +90,6 @@ Access your app in the browser:
    ```bash
    # Apply schema to database
    npx prisma migrate dev
-
-   # Generate Prisma client
-   npx prisma generate
 
    # Seed initial data (optional)
    npx prisma db seed
