@@ -14,4 +14,10 @@ export const API_PATHS = {
   UPDATE_USER_NAME: '/user/update-name',
   UPDATE_USER_PASSWORD: '/user/update-password',
   DELETE_USER: '/user',
+  SECTIONS: {
+    GET: '/sections',
+    CREATE_SECTION: '/sections',
+    DELETE_SECTION: '/sections',
+    UPDATE_SECTION: '/sections',
+  },
 };

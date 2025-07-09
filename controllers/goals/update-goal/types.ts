@@ -7,4 +7,5 @@ export type UpdateGoalParams = {
   name: string;
   description: string | null;
   statusKey: StatusKeys;
+  section_id: number | null;
 };

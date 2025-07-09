@@ -1,6 +1,6 @@
 'use client';
 
-import { useEffect, type FC } from 'react';
+import { useEffect, useMemo, type FC } from 'react';
 import { useTranslations } from 'next-intl';
 import { CircleCheck, CirclePause, CircleX, Clock, List, Settings } from 'lucide-react';
 
@@ -40,8 +40,41 @@ const Goals: FC<Props> = ({ globalYear, descriptionSettings, updateTab }) => {
 
   const { filterStatusOptions, updateSelectedFilterStatus } = useFilterStatusStore();
   const { filteredGoals, goalsStatistic } = useGoal();
-  const { fetchGoalsData, isShowStatistic, isLoadingFetch } = useGoalsStore();
+  const { fetchGoalsData, isShowStatistic, isLoadingFetch, sections } = useGoalsStore();
   const { isCanEditPastGoals } = useGoalYearSettings();
+
+  const goalsBySections = useMemo(() => {
+    const goalsCount = filteredGoals.length;
+
+    if (sections.length === 0) {
+      return {
+        sections: {},
+        goals: filteredGoals,
+        goalsCount,
+      };
+    }
+
+    const sectionMap = new Map(sections.map((section) => [section.id, section]));
+    const sectionedGoals: Record<number, typeof filteredGoals> = {};
+    const unsectionedGoals: typeof filteredGoals = [];
+
+    for (const goal of filteredGoals) {
+      if (goal.section_id !== null && sectionMap.has(goal.section_id)) {
+        if (!sectionedGoals[goal.section_id]) {
+          sectionedGoals[goal.section_id] = [];
+        }
+        sectionedGoals[goal.section_id].push(goal);
+      } else {
+        unsectionedGoals.push(goal);
+      }
+    }
+
+    return {
+      sections: sectionedGoals,
+      goals: unsectionedGoals,
+      goalsCount,
+    };
+  }, [filteredGoals, sections]);
 
   useEffect(() => {
     if (globalYear) {
@@ -107,7 +140,12 @@ const Goals: FC<Props> = ({ globalYear, descriptionSettings, updateTab }) => {
         </div>
       )}
 
-      <GoalsList goals={filteredGoals} descriptionSettings={descriptionSettings} />
+      <GoalsList
+        goals={goalsBySections.goals}
+        sectionGoals={goalsBySections.sections}
+        goalsCount={goalsBySections.goalsCount}
+        descriptionSettings={descriptionSettings}
+      />
     </>
   );
 };

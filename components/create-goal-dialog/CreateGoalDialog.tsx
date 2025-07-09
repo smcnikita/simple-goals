@@ -7,6 +7,7 @@ import { Button } from '@/components/ui/button';
 import { Dialog, DialogTrigger } from '@/components/ui/dialog';
 
 import CreateGoalDialogContent from './CreateGoalDialogContent';
+import YearActions from '../year-actions/YearActions';
 
 const CreateGoalDialog: FC = () => {
   const [openDialog, setOpenDialog] = useState(false);
@@ -16,15 +17,19 @@ const CreateGoalDialog: FC = () => {
   };
 
   return (
-    <Dialog open={openDialog} onOpenChange={setOpenDialog}>
-      <DialogTrigger asChild>
-        <Button>
-          <Plus />
-        </Button>
-      </DialogTrigger>
+    <>
+      <YearActions setOpenDialogAddGoal={updateOpenDialog} />
 
-      <CreateGoalDialogContent updateOpenDialog={updateOpenDialog} />
-    </Dialog>
+      <Dialog open={openDialog} onOpenChange={setOpenDialog}>
+        <DialogTrigger asChild>
+          <Button>
+            <Plus />
+          </Button>
+        </DialogTrigger>
+
+        <CreateGoalDialogContent updateOpenDialog={updateOpenDialog} />
+      </Dialog>
+    </>
   );
 };
 

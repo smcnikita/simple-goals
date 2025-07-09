@@ -8,4 +8,5 @@ export type CreateGoalParams = {
   description: string | null;
   statusKey: StatusKeys;
   canEditPastGoals: boolean;
+  section_id: number | null;
 };

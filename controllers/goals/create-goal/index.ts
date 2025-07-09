@@ -6,7 +6,7 @@ import type { StatusKeys } from '@/types/status.types';
 import type { CreateGoalParams } from './types';
 
 export const createGoal = async (params: CreateGoalParams) => {
-  const { name, description, statusKey, userId, yearId, year, canEditPastGoals } = params;
+  const { name, description, statusKey, userId, yearId, year, canEditPastGoals, section_id } = params;
 
   const statusModel = await prisma.statuses.findFirst({
     where: {
@@ -28,6 +28,7 @@ export const createGoal = async (params: CreateGoalParams) => {
         statusId: statusModel.id,
         userId,
         yearId,
+        section_id,
       }),
       status: statusModel.key as StatusKeys,
     };

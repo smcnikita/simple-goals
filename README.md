@@ -8,7 +8,7 @@ Demo: https://simple-goals.vercel.app/
 
 [All screenshots](./docs/screenshots.md)
 
-![Screenshot](./docs/screenshots/1.png)
+![Screenshot](./docs/screenshots/2.png)
 
 ## 🚀 Quick Start (Self-Hosting with Docker)
 

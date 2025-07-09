@@ -26,10 +26,11 @@ type Props = {
   description: Description | null;
   status: StatusKeys;
   descriptionSettings: DescriptionSettings;
+  section_id: number | null;
 };
 
 const GoalItem: FC<PropsWithChildren<Props>> = (props) => {
-  const { children, id, name, status, description } = props;
+  const { children, id, name, status, description, section_id } = props;
 
   const { deleteGoal: deleteGoalStore } = useGoalsStore();
   const { globalYear } = useGlobalYear();
@@ -67,6 +68,7 @@ const GoalItem: FC<PropsWithChildren<Props>> = (props) => {
           name={name}
           description={description}
           status={status}
+          section_id={section_id}
         />
       ) : (
         <div className="flex items-center gap-3">

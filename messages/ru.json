@@ -54,7 +54,17 @@
     "enter_goal": "Введите вашу цель",
     "add_comment": "Добавьте комментарий или заметку об этой цели",
 
-    "are_you_sure": "Вы уверены?"
+    "are_you_sure": "Вы уверены?",
+    "are_you_sure_section": "Goals are not deleted along with the section",
+    "section_description": "Цели не удалятся вместе с разделом",
+
+    "section": "Раздел",
+    "select_section": "Без раздела",
+    "clear_section": "Очистить раздел",
+    "add_section": "Добавить раздел",
+    "enter_section": "Введите название раздела",
+    "section_created": "Раздел создан",
+    "section_name": "Название раздела"
   },
 
   "errors": {
@@ -62,6 +72,10 @@
     "name": {
       "min": "Название цели должно содержать минимум {min} {min, plural, one {символ} few {символа} many {символов} other {символов}}",
       "max": "Название цели не должно превышать {max} {max, plural, one {символ} few {символа} many {символов} other {символов}}"
+    },
+    "section_name": {
+      "min": "Название раздела должно содержать минимум {min} {min, plural, one {символ} few {символа} many {символов} other {символов}}",
+      "max": "Название раздела не должно превышать {max} {max, plural, one {символ} few {символа} many {символов} other {символов}}"
     },
     "username": {
       "required": "Имя обязательно",
@@ -109,7 +123,8 @@
       "default": "Произошла неизвестная ошибка"
     },
     "user_update_name": "При попытке изменить имя пользователя возникла проблема",
-    "user_not_found": "Пользователь не найден"
+    "user_not_found": "Пользователь не найден",
+    "section_create": "При попытке создать раздел возникла проблема"
   },
 
   "settings": {
