@@ -3,7 +3,8 @@
   "version": "0.3.0",
   "private": true,
   "scripts": {
-    "prebuild": "npx prisma generate && next telemetry disable",
+    "postinstall": "prisma generate",
+    "prebuild": "next telemetry disable",
     "dev": "next dev --turbopack",
     "build": "next build",
     "start": "next start",
