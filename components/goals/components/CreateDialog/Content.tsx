@@ -10,7 +10,8 @@ import useGlobalYear from '@/hooks/use-global-year';
 
 import { DialogClose, DialogContent, DialogFooter, DialogHeader, DialogTitle } from '@/components/ui/dialog';
 import { Button } from '@/components/ui/button';
-import GoalForm from '@/components/goal-form/GoalForm';
+
+import Form from '../Form';
 
 import type { FormSchema } from '@/types/form-goal.types';
 
@@ -18,7 +19,7 @@ type Props = {
   updateOpenDialog: (isOpen: boolean) => void;
 };
 
-const CreateGoalDialogContent: FC<Props> = ({ updateOpenDialog }) => {
+const Content: FC<Props> = ({ updateOpenDialog }) => {
   const t = useTranslations('goals_list');
 
   const { createGoal: createGoalStore, isLoadingCreate } = useGoalsStore();
@@ -50,7 +51,7 @@ const CreateGoalDialogContent: FC<Props> = ({ updateOpenDialog }) => {
         <DialogTitle>{t('add_goal')}</DialogTitle>
       </DialogHeader>
 
-      <GoalForm
+      <Form
         onSubmit={onSubmit}
         afterContent={
           <DialogFooter>
@@ -67,4 +68,4 @@ const CreateGoalDialogContent: FC<Props> = ({ updateOpenDialog }) => {
   );
 };
 
-export default CreateGoalDialogContent;
+export default Content;

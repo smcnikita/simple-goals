@@ -2,7 +2,7 @@
 
 import { useEffect, useMemo, type FC } from 'react';
 import { useTranslations } from 'next-intl';
-import { CircleCheck, CirclePause, CircleX, Clock, List, Settings } from 'lucide-react';
+import { CircleCheck, CirclePause, CircleX, Clock, Settings, List as ListIcon } from 'lucide-react';
 
 import { FILTER_STATUS_KEYS, STATUS_OPTION_TOTAL } from '@/constants/status';
 
@@ -22,10 +22,10 @@ import {
   SelectValue,
 } from '@/components/ui/select';
 import { Button } from '@/components/ui/button';
-import CreateGoalDialog from '@/components/create-goal-dialog/CreateGoalDialog';
 
-import GoalsList from './GoalsList';
-import GoalStatisticsItem from './GoalStatisticsItem';
+import List from './List';
+import Dialog from './CreateDialog';
+import GoalStatisticsItem from './Item/Statistics';
 
 import type { DescriptionSettings } from '@/types/description-settings.type';
 
@@ -35,7 +35,7 @@ type Props = {
   updateTab: () => void;
 };
 
-const Goals: FC<Props> = ({ globalYear, descriptionSettings, updateTab }) => {
+const View: FC<Props> = ({ globalYear, descriptionSettings, updateTab }) => {
   const t = useTranslations('goals_list');
 
   const { filterStatusOptions, updateSelectedFilterStatus } = useFilterStatusStore();
@@ -106,7 +106,7 @@ const Goals: FC<Props> = ({ globalYear, descriptionSettings, updateTab }) => {
                 <SelectLabel>{t('statuses')}</SelectLabel>
                 {filterStatusOptions.map((filterStatus) => (
                   <SelectItem key={filterStatus.key} value={filterStatus.key}>
-                    {filterStatus.key === FILTER_STATUS_KEYS.Total && <List size={16} className="text-zinc-600" />}
+                    {filterStatus.key === FILTER_STATUS_KEYS.Total && <ListIcon size={16} className="text-zinc-600" />}
                     {filterStatus.key === FILTER_STATUS_KEYS.InProgress && (
                       <Clock size={16} className="text-blue-500" />
                     )}
@@ -126,7 +126,7 @@ const Goals: FC<Props> = ({ globalYear, descriptionSettings, updateTab }) => {
             </SelectContent>
           </Select>
 
-          {isCanEditPastGoals && <CreateGoalDialog />}
+          {isCanEditPastGoals && <Dialog />}
         </div>
       </div>
 
@@ -140,7 +140,7 @@ const Goals: FC<Props> = ({ globalYear, descriptionSettings, updateTab }) => {
         </div>
       )}
 
-      <GoalsList
+      <List
         goals={goalsBySections.goals}
         sectionGoals={goalsBySections.sections}
         goalsCount={goalsBySections.goalsCount}
@@ -150,4 +150,4 @@ const Goals: FC<Props> = ({ globalYear, descriptionSettings, updateTab }) => {
   );
 };
 
-export default Goals;
+export default View;

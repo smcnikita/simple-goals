@@ -6,9 +6,9 @@ import { useTranslations } from 'next-intl';
 
 import { useGoalsStore } from '@/stores/goals-store';
 
-import GoalsContainer from './GoalsContainer';
+import Container from './Container';
 
-import SectionList from '../sections/SectionList';
+import SectionList from '../../sections/SectionList';
 
 import type { GoalModelWithStatus } from '@/types/goals.types';
 import type { DescriptionSettings } from '@/types/description-settings.type';
@@ -20,7 +20,7 @@ type Props = {
   goalsCount: number;
 };
 
-const GoalsList: FC<Props> = ({ goals, descriptionSettings, goalsCount, sectionGoals }) => {
+const List: FC<Props> = ({ goals, descriptionSettings, goalsCount, sectionGoals }) => {
   const t = useTranslations('goals_list');
   const { isLoadingFetch, sections } = useGoalsStore();
 
@@ -51,7 +51,7 @@ const GoalsList: FC<Props> = ({ goals, descriptionSettings, goalsCount, sectionG
   return (
     <div className="space-y-6">
       {/* Goals without sections */}
-      <GoalsContainer goals={goals} descriptionSettings={descriptionSettings} />
+      <Container goals={goals} descriptionSettings={descriptionSettings} />
 
       {/* Goals with sections */}
       <SectionList descriptionSettings={descriptionSettings} sectionsWithGoals={sectionsWithGoals} />
@@ -59,4 +59,4 @@ const GoalsList: FC<Props> = ({ goals, descriptionSettings, goalsCount, sectionG
   );
 };
 
-export default GoalsList;
+export default List;

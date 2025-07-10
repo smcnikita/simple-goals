@@ -6,8 +6,9 @@ import { useGoalsStore } from '@/stores/goals-store';
 
 import useGlobalYear from '@/hooks/use-global-year';
 
-import GoalForm from '@/components/goal-form/GoalForm';
 import { Button } from '@/components/ui/button';
+
+import Form from '.';
 
 import type { Description, FormSchema } from '@/types/form-goal.types';
 import type { StatusKeys } from '@/types/status.types';
@@ -21,7 +22,7 @@ type Props = {
   updateIsEdit: (isEdit: boolean) => void;
 };
 
-const GoalsUpdateFormWrapper: FC<Props> = (props) => {
+const UpdateWrapper: FC<Props> = (props) => {
   const { id, name, description, status, section_id, updateIsEdit } = props;
 
   const t = useTranslations('goals_list');
@@ -67,13 +68,8 @@ const GoalsUpdateFormWrapper: FC<Props> = (props) => {
   );
 
   return (
-    <GoalForm
-      afterContent={afterContent}
-      isUpdateGoals={true}
-      oldGoalData={oldGoalData}
-      onSubmit={onSubmitUpdateGoal}
-    />
+    <Form afterContent={afterContent} isUpdateGoals={true} oldGoalData={oldGoalData} onSubmit={onSubmitUpdateGoal} />
   );
 };
 
-export default GoalsUpdateFormWrapper;
+export default UpdateWrapper;

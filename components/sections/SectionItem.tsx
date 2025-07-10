@@ -4,7 +4,7 @@ import { useMemo, useState, type FC } from 'react';
 
 import SectionHeader from './SectionHeader';
 
-import GoalsContainer from '@/components/goals/GoalsContainer';
+import Container from '@/components/goals/components/Container';
 
 import type { sectionsWithGoalsItem } from '@/types/sections.type';
 import type { DescriptionSettings } from '@/types/description-settings.type';
@@ -35,7 +35,7 @@ const SectionItem: FC<SectionItemProps> = ({ section, descriptionSettings }) => 
       />
 
       {/* Goals List */}
-      <GoalsContainer goals={goals} descriptionSettings={descriptionSettings} />
+      <Container goals={goals} descriptionSettings={descriptionSettings} />
     </div>
   );
 };

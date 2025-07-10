@@ -12,10 +12,10 @@ import { useGoalsStore } from '@/stores/goals-store';
 import useGlobalYear from '@/hooks/use-global-year';
 import useGoalYearSettings from '@/hooks/use-goal-year-settings';
 
-import GoalsUpdateFormWrapper from './GoalsUpdateFormWrapper';
-import GoalsItemFooter from './GoalsItemFooter';
+import Footer from './Footer';
+import UpdateWrapper from '../Form/UpdateWrapper';
 
-import StatusItem from '../StatusItem';
+import StatusItem from '../../../StatusItem';
 
 import type { Description } from '@/types/form-goal.types';
 import type { StatusKeys } from '@/types/status.types';
@@ -30,7 +30,7 @@ type Props = {
   section_id: number | null;
 };
 
-const GoalItem: FC<PropsWithChildren<Props>> = (props) => {
+const Item: FC<PropsWithChildren<Props>> = (props) => {
   const { children, id, name, status, description, section_id } = props;
 
   const { deleteGoal: deleteGoalStore } = useGoalsStore();
@@ -63,7 +63,7 @@ const GoalItem: FC<PropsWithChildren<Props>> = (props) => {
   return (
     <div className="border border-gray-200 rounded flex items-start md:items-center gap-3 md:gap-1 justify-between flex-col md:flex-row px-4 py-3 dark:border-zinc-800 dark:bg-zinc-900">
       {isEdit ? (
-        <GoalsUpdateFormWrapper
+        <UpdateWrapper
           updateIsEdit={updateIsEdit}
           id={id}
           name={name}
@@ -95,9 +95,9 @@ const GoalItem: FC<PropsWithChildren<Props>> = (props) => {
         </div>
       )}
 
-      {isCanEditPastGoals && !isEdit && <GoalsItemFooter deleteGoal={deleteGoal} openUpdateForm={openUpdateForm} />}
+      {isCanEditPastGoals && !isEdit && <Footer deleteGoal={deleteGoal} openUpdateForm={openUpdateForm} />}
     </div>
   );
 };
 
-export default GoalItem;
+export default Item;

@@ -1,6 +1,6 @@
 import type { FC } from 'react';
 
-import GoalItem from './GoalItem';
+import Item from './Item/Item';
 
 import type { GoalModelWithStatus } from '@/types/goals.types';
 import type { DescriptionSettings } from '@/types/description-settings.type';
@@ -10,7 +10,7 @@ type Props = {
   descriptionSettings: DescriptionSettings;
 };
 
-const GoalsContainer: FC<Props> = ({ goals, descriptionSettings }) => {
+const Container: FC<Props> = ({ goals, descriptionSettings }) => {
   if (goals.length === 0) {
     return null;
   }
@@ -18,7 +18,7 @@ const GoalsContainer: FC<Props> = ({ goals, descriptionSettings }) => {
   return (
     <div className="space-y-2">
       {goals.map((goal) => (
-        <GoalItem
+        <Item
           key={goal.id}
           id={goal.id}
           name={goal.name}
@@ -28,10 +28,10 @@ const GoalsContainer: FC<Props> = ({ goals, descriptionSettings }) => {
           section_id={goal.section_id}
         >
           {goal.name}
-        </GoalItem>
+        </Item>
       ))}
     </div>
   );
 };
 
-export default GoalsContainer;
+export default Container;

@@ -5,21 +5,29 @@ import { useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { z } from 'zod';
 import { useTranslations } from 'next-intl';
+import { CircleCheck, CirclePause, CircleX, Clock } from 'lucide-react';
 
 import { FILTER_STATUS_KEYS, STATUS_KEYS } from '@/constants/status';
 
 import { useStatusStore } from '@/stores/status-store';
+import { useGoalsStore } from '@/stores/goals-store';
 
 import { Input } from '@/components/ui/input';
+import { Button } from '@/components/ui/button';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
 import { Textarea } from '@/components/ui/textarea';
-import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage, FormDescription } from '@/components/ui/form';
+import {
+  Form as FormComponent,
+  FormControl,
+  FormField,
+  FormItem,
+  FormLabel,
+  FormMessage,
+  FormDescription,
+} from '@/components/ui/form';
 
 import type { Name, Description, FormSchema } from '@/types/form-goal.types';
 import type { StatusKeys } from '@/types/status.types';
-import { CircleCheck, CirclePause, CircleX, Clock } from 'lucide-react';
-import { useGoalsStore } from '@/stores/goals-store';
-import { Button } from '../ui/button';
 
 type OldGoalData = {
   id: number;
@@ -44,7 +52,7 @@ const DEFAULT_GOAL_VALUES = {
   status: DEFAULT_STATUS,
 };
 
-const GoalForm: FC<Props> = (props) => {
+const Form: FC<Props> = (props) => {
   const { afterContent, onSubmit: handleSubmit, isUpdateGoals = false, oldGoalData } = props;
 
   const t = useTranslations('goals_list');
@@ -113,7 +121,7 @@ const GoalForm: FC<Props> = (props) => {
   };
 
   return (
-    <Form {...form}>
+    <FormComponent {...form}>
       <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-4 w-full py-4">
         <div className="space-y-4">
           <FormField
@@ -214,8 +222,8 @@ const GoalForm: FC<Props> = (props) => {
 
         {afterContent}
       </form>
-    </Form>
+    </FormComponent>
   );
 };
 
-export default GoalForm;
+export default Form;

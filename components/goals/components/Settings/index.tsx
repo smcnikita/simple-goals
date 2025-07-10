@@ -4,14 +4,14 @@ import { useTranslations } from 'next-intl';
 
 import { Button } from '@/components/ui/button';
 
-import GoalsSettingsContent from './goals-settings-content';
+import GoalsSettingsContent from './Content';
 
 type Props = {
   year: number;
   updateTab: () => void;
 };
 
-const GoalsSettings: FC<Props> = ({ year, updateTab }) => {
+const Settings: FC<Props> = ({ year, updateTab }) => {
   const t = useTranslations('settings');
 
   return (
@@ -28,4 +28,4 @@ const GoalsSettings: FC<Props> = ({ year, updateTab }) => {
   );
 };
 
-export default GoalsSettings;
+export default Settings;

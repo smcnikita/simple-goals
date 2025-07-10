@@ -4,12 +4,12 @@ import { useState, type FC } from 'react';
 import { Plus } from 'lucide-react';
 
 import { Button } from '@/components/ui/button';
-import { Dialog, DialogTrigger } from '@/components/ui/dialog';
+import { Dialog as DialogComponent, DialogTrigger } from '@/components/ui/dialog';
+import YearActions from '@/components/year-actions/YearActions';
 
-import CreateGoalDialogContent from './CreateGoalDialogContent';
-import YearActions from '../year-actions/YearActions';
+import Content from './Content';
 
-const CreateGoalDialog: FC = () => {
+const Dialog: FC = () => {
   const [openDialog, setOpenDialog] = useState(false);
 
   const updateOpenDialog = (isOpen: boolean) => {
@@ -20,17 +20,17 @@ const CreateGoalDialog: FC = () => {
     <>
       <YearActions setOpenDialogAddGoal={updateOpenDialog} />
 
-      <Dialog open={openDialog} onOpenChange={setOpenDialog}>
+      <DialogComponent open={openDialog} onOpenChange={setOpenDialog}>
         <DialogTrigger asChild>
           <Button>
             <Plus />
           </Button>
         </DialogTrigger>
 
-        <CreateGoalDialogContent updateOpenDialog={updateOpenDialog} />
-      </Dialog>
+        <Content updateOpenDialog={updateOpenDialog} />
+      </DialogComponent>
     </>
   );
 };
 
-export default CreateGoalDialog;
+export default Dialog;

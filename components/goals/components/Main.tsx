@@ -2,9 +2,8 @@
 
 import { useState, type FC } from 'react';
 
-import Goals from './Goals';
-
-import GoalsSetting from '@/components/goals-settings/goals-settings';
+import View from './View';
+import Settings from './Settings';
 
 import type { DescriptionSettings } from '@/types/description-settings.type';
 
@@ -13,7 +12,7 @@ type Props = {
   descriptionSettings: DescriptionSettings;
 };
 
-const GoalView: FC<Props> = ({ year, descriptionSettings }) => {
+const Main: FC<Props> = ({ year, descriptionSettings }) => {
   const [isSettings, setIsSettings] = useState(false);
 
   const updateTab = () => {
@@ -21,14 +20,14 @@ const GoalView: FC<Props> = ({ year, descriptionSettings }) => {
   };
 
   if (isSettings) {
-    return <GoalsSetting year={year} updateTab={updateTab} />;
+    return <Settings year={year} updateTab={updateTab} />;
   }
 
   return (
     <div className="flex flex-col gap-6">
-      <Goals globalYear={year} updateTab={updateTab} descriptionSettings={descriptionSettings} />
+      <View globalYear={year} updateTab={updateTab} descriptionSettings={descriptionSettings} />
     </div>
   );
 };
 
-export default GoalView;
+export default Main;

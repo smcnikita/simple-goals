@@ -25,7 +25,7 @@ type Props = {
   deleteGoal: () => Promise<void>;
 };
 
-const GoalsItemFooter: FC<Props> = (props) => {
+const Footer: FC<Props> = (props) => {
   const { openUpdateForm, deleteGoal } = props;
 
   const t = useTranslations('goals_list');
@@ -76,4 +76,4 @@ const GoalsItemFooter: FC<Props> = (props) => {
   );
 };
 
-export default GoalsItemFooter;
+export default Footer;
