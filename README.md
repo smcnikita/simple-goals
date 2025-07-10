@@ -23,10 +23,6 @@ Demo: https://simple-goals.vercel.app
 
 - Multilingual interface — available in English and Russian.
 
-## 📸 Screenshots (UI Preview)
-
-[All screenshots](./docs/screenshots.md)
-
 ## 🚀 Quick Start (Self-Hosting with Docker)
 
 ### 1. Create `docker-compose.yml` file
