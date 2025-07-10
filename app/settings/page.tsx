@@ -6,10 +6,7 @@ import { authOptions } from '@/lib/auth';
 import { userService } from '@/services/user/user.service';
 
 import { Separator } from '@/components/ui/separator';
-import UpdateDescription from '@/components/settings/update-descriptions/update-description';
-import UpdateName from '@/components/settings/update-name/update-name';
-import UpdatePassword from '@/components/settings/update-password/update-password';
-import DeleteProfile from '@/components/settings/delete-profile/delete-profile';
+import { DeleteProfileDialog, DescriptionForm, NameForm, PasswordForm } from '@/components/settings';
 
 export default async function Page() {
   const t = await getTranslations('user_settings');
@@ -34,20 +31,20 @@ export default async function Page() {
       <Separator />
 
       <div>
-        <UpdateName currentUserName={session.user.name} />
+        <NameForm currentUserName={session.user.name} />
       </div>
 
       <Separator />
 
-      <UpdateDescription selected={userDescriptionSetting} options={descriptionSettings} />
+      <DescriptionForm selected={userDescriptionSetting} options={descriptionSettings} />
 
       <Separator />
 
-      <UpdatePassword />
+      <PasswordForm />
 
       <Separator />
 
-      <DeleteProfile />
+      <DeleteProfileDialog />
     </div>
   );
 }

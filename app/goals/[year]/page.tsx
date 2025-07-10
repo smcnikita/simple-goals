@@ -10,7 +10,7 @@ import StoreInitializer from './store-initializer';
 
 import { yearsController } from '@/controllers/years/years.controller';
 
-import GoalView from '@/components/goals/GoalView';
+import { Main } from '@/components/goals';
 
 async function validateYear(inputYear: string) {
   const isValidFormat = /^\d{4}$/.test(inputYear);
@@ -72,7 +72,7 @@ async function GoalsPage({ params }: { params: Promise<{ year: string }> }) {
 
   return (
     <StoreInitializer statuses={statuses}>
-      <GoalView year={Number(yearSlug)} descriptionSettings={userDescriptionSetting} />
+      <Main year={Number(yearSlug)} descriptionSettings={userDescriptionSetting} />
     </StoreInitializer>
   );
 }
