@@ -29,6 +29,8 @@
     "title": "{year} Goals",
     "description": "Track and manage your goals for {year}",
 
+    "is_encrypted": "The data is encrypted",
+
     "statuses": "Statuses",
 
     "add_goal": "Add goal",

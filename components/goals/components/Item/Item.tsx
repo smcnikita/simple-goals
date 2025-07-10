@@ -81,7 +81,7 @@ const Item: FC<PropsWithChildren<Props>> = (props) => {
           </div>
 
           <div className="flex flex-col gap-1">
-            <h3 className="text-base font-medium">{children}</h3>
+            <h3 className="text-base font-medium wrap-anywhere">{children}</h3>
             <StatusItem status={status} />
             <p
               className={clsx('mt-1 text-xs text-gray-500', {
