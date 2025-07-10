@@ -18,6 +18,7 @@ model Users {
   updated_at              DateTime @updatedAt @map("updated_at")
   Goals                   Goals[]
   Years                   Years[]
+  is_encrypted_goals      Boolean  @default(false)
 }
 
 model DescriptionSettings {
