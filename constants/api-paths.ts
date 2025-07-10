@@ -1,5 +1,6 @@
 export const API_PATHS = {
   REGISTER: '/register',
+  GET_USER: '/user',
   GOALS: {
     GET: '/goals',
     CREATE_GOAL: '/goals',

@@ -69,11 +69,21 @@
     "section_name": "Section name"
   },
 
+  "encryption": {
+    "password": "Password for decryption goals",
+    "description": "Your data is encrypted. To access them, use the form below. The password is stored locally and cannot be recovered.",
+    "info": "Save your password in a safe place"
+  },
+
   "errors": {
     "required_fields": "Missing required fields",
     "name": {
       "min": "Title must be at least {min} {min, plural, one {character} other {characters}} long",
       "max": "Title must not exceed {max} {max, plural, one {character} other {characters}}"
+    },
+    "password_crypto": {
+      "min": "Password must be at least {min} {min, plural, one {character} other {characters}} long",
+      "max": "Password must not exceed {max} {max, plural, one {character} other {characters}}"
     },
     "section_name": {
       "min": "Section title must be at least {min} {min, plural, one {character} other {characters}} long",
