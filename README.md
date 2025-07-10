@@ -21,6 +21,8 @@ Demo: https://simple-goals.vercel.app
 
 - Self-hosting support — run the app on your own server without relying on third-party services.
 
+- Multilingual interface — available in English and Russian.
+
 ## 📸 Screenshots (UI Preview)
 
 [All screenshots](./docs/screenshots.md)
