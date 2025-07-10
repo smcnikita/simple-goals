@@ -10,6 +10,10 @@ export function getPasswordFromLocalStorage(): string | null {
   return localStorage.getItem(CRYPTO_STORAGE_KEY);
 }
 
+export function removePasswordToLocalStorage() {
+  localStorage.removeItem(CRYPTO_STORAGE_KEY);
+}
+
 export function encryptText(text: string): string {
   const password = getPasswordFromLocalStorage();
 

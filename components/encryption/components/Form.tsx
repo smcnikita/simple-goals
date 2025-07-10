@@ -73,7 +73,7 @@ const Form: FC<Props> = ({ updateIsShowEncryption }) => {
           />
         </div>
 
-        <Button type="submit">Получить доступ</Button>
+        <Button type="submit">{t('get_access')}</Button>
       </form>
     </FormComponent>
   );
