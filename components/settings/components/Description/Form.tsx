@@ -1,18 +1,20 @@
 'use client';
 
-import { Select, SelectContent, SelectGroup, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
 import { useTranslations } from 'next-intl';
 import { useMemo, useState, type FC } from 'react';
 
-import type { DescriptionSettings } from '@/types/description-settings.type';
 import { httpUpdateDescriptionSettings } from '@/lib/http/description-settings.http';
+
+import { Select, SelectContent, SelectGroup, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
+
+import type { DescriptionSettings } from '@/types/description-settings.type';
 
 type Props = {
   selected: DescriptionSettings;
   options: DescriptionSettings[];
 };
 
-const UpdateDescription: FC<Props> = ({ selected, options }) => {
+const Form: FC<Props> = ({ selected, options }) => {
   const t = useTranslations('settings');
   const tComment = useTranslations('settings.comment.options');
 
@@ -67,4 +69,4 @@ const UpdateDescription: FC<Props> = ({ selected, options }) => {
   );
 };
 
-export default UpdateDescription;
+export default Form;

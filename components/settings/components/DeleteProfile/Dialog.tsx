@@ -18,7 +18,7 @@ import {
   AlertDialogTrigger,
 } from '@/components/ui/alert-dialog';
 
-const DeleteProfile: FC = () => {
+const Dialog: FC = () => {
   const t = useTranslations('delete_user');
 
   const [isLoading, setIsLoading] = useState(false);
@@ -57,4 +57,4 @@ const DeleteProfile: FC = () => {
   );
 };
 
-export default DeleteProfile;
+export default Dialog;

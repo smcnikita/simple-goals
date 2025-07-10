@@ -13,14 +13,22 @@ import { zodResolver } from '@hookform/resolvers/zod';
 import { httpUpdateUserName } from '@/lib/http/update-user-name.http';
 
 import { Button } from '@/components/ui/button';
-import { Form, FormControl, FormDescription, FormField, FormItem, FormLabel, FormMessage } from '@/components/ui/form';
+import {
+  Form as FormComponent,
+  FormControl,
+  FormDescription,
+  FormField,
+  FormItem,
+  FormLabel,
+  FormMessage,
+} from '@/components/ui/form';
 import { Input } from '@/components/ui/input';
 
 type Props = {
   currentUserName: string;
 };
 
-const UpdateName: FC<Props> = ({ currentUserName }) => {
+const Form: FC<Props> = ({ currentUserName }) => {
   const t = useTranslations();
   const tLogin = useTranslations('sign_in');
   const tErrors = useTranslations('errors');
@@ -83,7 +91,7 @@ const UpdateName: FC<Props> = ({ currentUserName }) => {
   };
 
   return (
-    <Form {...form}>
+    <FormComponent {...form}>
       <form noValidate onSubmit={form.handleSubmit(onSubmit)} className="w-2/3 space-y-6">
         <FormField
           control={form.control}
@@ -112,8 +120,8 @@ const UpdateName: FC<Props> = ({ currentUserName }) => {
           {t('save')}
         </Button>
       </form>
-    </Form>
+    </FormComponent>
   );
 };
 
-export default UpdateName;
+export default Form;

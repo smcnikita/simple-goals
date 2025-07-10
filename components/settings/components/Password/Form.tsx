@@ -11,10 +11,10 @@ import { zodResolver } from '@hookform/resolvers/zod';
 import { httpUpdateUserPassword } from '@/lib/http/update-user-password.http';
 
 import { Button } from '@/components/ui/button';
-import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from '@/components/ui/form';
+import { Form as FormComponent, FormControl, FormField, FormItem, FormLabel, FormMessage } from '@/components/ui/form';
 import { Input } from '@/components/ui/input';
 
-const UpdatePassword: FC = () => {
+const Form: FC = () => {
   const t = useTranslations();
   const tErrors = useTranslations('errors');
   const tSettings = useTranslations('user_settings');
@@ -79,7 +79,7 @@ const UpdatePassword: FC = () => {
   };
 
   return (
-    <Form {...form}>
+    <FormComponent {...form}>
       <form noValidate onSubmit={form.handleSubmit(onSubmit)} className="w-2/3 space-y-6">
         <FormField
           control={form.control}
@@ -124,8 +124,8 @@ const UpdatePassword: FC = () => {
           {t('save')}
         </Button>
       </form>
-    </Form>
+    </FormComponent>
   );
 };
 
-export default UpdatePassword;
+export default Form;
