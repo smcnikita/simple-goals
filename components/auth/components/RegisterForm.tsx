@@ -16,11 +16,11 @@ import { httpRegister } from '@/lib/http/register';
 
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
-import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from '@/components/ui/form';
+import { Form as FormComponent, FormControl, FormField, FormItem, FormLabel, FormMessage } from '@/components/ui/form';
 
-import BaseForm from './base-form';
+import BaseForm from './BaseForm';
 
-export function RegisterForm() {
+export function Form() {
   const t = useTranslations('sign_in');
   const tErrors = useTranslations('errors');
 
@@ -102,7 +102,7 @@ export function RegisterForm() {
 
   return (
     <BaseForm>
-      <Form {...form}>
+      <FormComponent {...form}>
         <form noValidate onSubmit={form.handleSubmit(onSubmit)} className="space-y-4 w-full">
           <div className="grid gap-6">
             {errorMessage && <div className="text-sm text-center text-red-500 ">{errorMessage}</div>}
@@ -180,7 +180,7 @@ export function RegisterForm() {
             </div>
           </div>
         </form>
-      </Form>
+      </FormComponent>
     </BaseForm>
   );
 }

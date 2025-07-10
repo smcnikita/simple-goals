@@ -14,9 +14,9 @@ import { zodResolver } from '@hookform/resolvers/zod';
 
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
-import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from '@/components/ui/form';
+import { Form as FormComponent, FormControl, FormField, FormItem, FormLabel, FormMessage } from '@/components/ui/form';
 
-import BaseForm from './base-form';
+import BaseForm from './BaseForm';
 
 import type { OAuthErrorKeys } from '@/types/error-auth.types';
 import { toast } from 'sonner';
@@ -26,7 +26,7 @@ type Props = {
   isSuccessRegister?: boolean;
 };
 
-export function LoginForm({ message, isSuccessRegister = false }: Props) {
+export function Form({ message, isSuccessRegister = false }: Props) {
   const t = useTranslations('sign_in');
   const tErrors = useTranslations('errors');
 
@@ -75,7 +75,7 @@ export function LoginForm({ message, isSuccessRegister = false }: Props) {
 
   return (
     <BaseForm>
-      <Form {...form}>
+      <FormComponent {...form}>
         <form noValidate onSubmit={form.handleSubmit(onSubmit)} className="space-y-4 w-full">
           <div className="grid gap-6">
             {message && <div className="text-sm text-center text-red-500 ">{message}</div>}
@@ -123,7 +123,7 @@ export function LoginForm({ message, isSuccessRegister = false }: Props) {
             </div>
           </div>
         </form>
-      </Form>
+      </FormComponent>
     </BaseForm>
   );
 }

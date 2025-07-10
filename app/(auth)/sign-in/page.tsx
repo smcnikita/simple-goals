@@ -1,8 +1,8 @@
 import { getTranslations } from 'next-intl/server';
 
-import { LoginForm } from '@/components/auth-form';
-
 import messages from '@/messages/en.json';
+
+import { LoginForm } from '@/components/auth';
 
 import type { OAuthErrorKeys } from '@/types/error-auth.types';
 
