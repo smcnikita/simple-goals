@@ -66,7 +66,7 @@ const Form: FC<Props> = ({ updateIsShowEncryption }) => {
                 <FormControl>
                   <Input type="password" placeholder="********" {...field} />
                 </FormControl>
-                <FormDescription>{t('info')}</FormDescription>
+                <FormDescription>{t('password_hint')}</FormDescription>
                 <FormMessage />
               </FormItem>
             )}

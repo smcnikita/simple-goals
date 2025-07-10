@@ -64,7 +64,7 @@ const Form: FC = () => {
                 <Input type="password" placeholder="********" {...field} />
               </FormControl>
               <FormDescription>
-                {t('encryption')} {t('info')}
+                {t('encryption_info')} {t('password_hint')}
               </FormDescription>
               <FormMessage />
             </FormItem>

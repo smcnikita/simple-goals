@@ -46,7 +46,7 @@ const Form: FC = () => {
 
         <div>
           <Button type="button" onClick={decryptGoals}>
-            {t('remove')}
+            {t('remove_encryption')}
           </Button>
         </div>
       </div>
@@ -57,7 +57,7 @@ const Form: FC = () => {
     <div className="w-2/3 space-y-6">
       <div>
         <Button type="button" onClick={decryptGoals}>
-          {t('remove')}
+          {t('remove_encryption')}
         </Button>
       </div>
     </div>
