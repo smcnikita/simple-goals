@@ -70,14 +70,33 @@
   },
 
   "encryption": {
-    "password": "Password for decrypting goals",
-    "description": "Your data is encrypted. To access your goals, use the form below. The password is stored locally and cannot be recovered.",
-    "password_hint": "Save your password in a safe place",
-    "encryption_info": "You can locally encrypt your goals. Encryption applies only to newly created goals.",
-    "get_access": "Get access",
-    "is_encrypted": "Goals are encrypted",
+    "title": {
+      "encrypted": "Data is encrypted"
+    },
+    "description": {
+      "encrypted": "Your data is encrypted. To access your goals, use the form below. The password is stored locally and cannot be recovered."
+    },
+    "passwordLabel": "Password for decrypting goals",
+    "savePasswordInfo": "Save your password in a safe place",
     "encrypt": "Encrypt goals",
-    "remove_encryption": "Remove encryption from goals"
+    "decrypt": "Decrypt goals",
+    "setPassword": "Set password",
+    "warningRemoveGoals": "Current goals will be deleted.",
+    "encryptionInfo": {
+      "1": "New goals will be encrypted using the password you set. The password is",
+      "2": "not sent",
+      "3": "to the server, and only you will have access.",
+      "4": "Store the password",
+      "5": "in a safe place, because it is",
+      "6": "impossible",
+      "7": "to recover it."
+    },
+    "disableEncryption": "Lock goals",
+    "disableEncryptionInfo": {
+      "1": "New goals will",
+      "2": "not be",
+      "3": "encrypted. The current password will be removed."
+    }
   },
 
   "errors": {

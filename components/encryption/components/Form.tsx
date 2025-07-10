@@ -55,25 +55,25 @@ const Form: FC<Props> = ({ updateIsShowEncryption }) => {
     <FormComponent {...form}>
       <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-4 w-full py-4">
         <div className="space-y-4">
-          <div className="text-sm">{t('description')}</div>
+          <div className="text-sm">{t('description.encrypted')}</div>
 
           <FormField
             control={form.control}
             name="password"
             render={({ field }) => (
               <FormItem>
-                <FormLabel>{t('password')}</FormLabel>
+                <FormLabel>{t('passwordLabel')}</FormLabel>
                 <FormControl>
                   <Input type="password" placeholder="********" {...field} />
                 </FormControl>
-                <FormDescription>{t('password_hint')}</FormDescription>
+                <FormDescription>{t('savePasswordInfo')}</FormDescription>
                 <FormMessage />
               </FormItem>
             )}
           />
         </div>
 
-        <Button type="submit">{t('get_access')}</Button>
+        <Button type="submit">{t('decrypt')}</Button>
       </form>
     </FormComponent>
   );

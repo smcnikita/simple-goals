@@ -8,20 +8,17 @@ import { z } from 'zod';
 
 import { savePasswordToLocalStorage } from '@/utils/cryptoHelper';
 
-import { Button } from '@/components/ui/button';
-import {
-  Form as FormComponent,
-  FormControl,
-  FormField,
-  FormItem,
-  FormLabel,
-  FormMessage,
-  FormDescription,
-} from '@/components/ui/form';
+import { Form as FormComponent, FormControl, FormField, FormItem, FormLabel, FormMessage } from '@/components/ui/form';
 import { Input } from '@/components/ui/input';
 import { httpEncryptGoals } from '@/lib/http/encrypt-goals.http';
 
-const Form: FC = () => {
+type Props = {
+  footer: React.ReactNode;
+  isLoading: boolean;
+  updateIsLoading: (isLoading: boolean) => void;
+};
+
+const Form: FC<Props> = ({ footer, isLoading, updateIsLoading }) => {
   const t = useTranslations('encryption');
   const tErrors = useTranslations('errors');
 
@@ -44,34 +41,36 @@ const Form: FC = () => {
   });
 
   const onSubmit = async (values: z.infer<typeof formSchema>) => {
+    updateIsLoading(true);
     const { password } = values;
-    await httpEncryptGoals().then(() => {
-      savePasswordToLocalStorage(password);
-      window.location.reload();
-    });
+    await httpEncryptGoals()
+      .then(() => {
+        savePasswordToLocalStorage(password);
+        window.location.reload();
+      })
+      .finally(() => {
+        updateIsLoading(false);
+      });
   };
 
   return (
     <FormComponent {...form}>
-      <form onSubmit={form.handleSubmit(onSubmit)} className="w-2/3 space-y-6">
+      <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-6">
         <FormField
           control={form.control}
           name="password"
           render={({ field }) => (
             <FormItem>
-              <FormLabel>{t('password')}</FormLabel>
+              <FormLabel>{t('setPassword')}</FormLabel>
               <FormControl>
-                <Input type="password" placeholder="********" {...field} />
+                <Input type="password" placeholder="********" {...field} disabled={isLoading} />
               </FormControl>
-              <FormDescription>
-                {t('encryption_info')} {t('password_hint')}
-              </FormDescription>
               <FormMessage />
             </FormItem>
           )}
         />
 
-        <Button type="submit">{t('encrypt')}</Button>
+        {footer}
       </form>
     </FormComponent>
   );

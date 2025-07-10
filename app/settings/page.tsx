@@ -6,14 +6,9 @@ import { authOptions } from '@/lib/auth';
 import { userService } from '@/services/user/user.service';
 
 import { Separator } from '@/components/ui/separator';
-import {
-  DeleteProfileDialog,
-  DescriptionForm,
-  NameForm,
-  PasswordForm,
-  EncryptionForm,
-  DecryptionForm,
-} from '@/components/settings';
+import { DeleteProfileDialog, DescriptionForm, BlockGoalsAction, NameForm, PasswordForm } from '@/components/settings';
+import { EncryptionDialog } from '@/components/encryption';
+import { DecryptionDialog } from '@/components/decryption';
 
 export default async function Page() {
   const t = await getTranslations('user_settings');
@@ -53,16 +48,18 @@ export default async function Page() {
 
       <Separator />
 
+      {isEncryptedGoals && <BlockGoalsAction />}
+
       {isEncryptedGoals && (
         <>
-          <EncryptionForm />
+          <DecryptionDialog />
           <Separator />
         </>
       )}
 
       {!isEncryptedGoals && (
         <>
-          <DecryptionForm />
+          <EncryptionDialog />
           <Separator />
         </>
       )}
