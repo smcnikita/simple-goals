@@ -2,7 +2,7 @@
 
 import { useMemo, useState, type FC } from 'react';
 
-import SectionHeader from './SectionHeader';
+import Header from '../Header';
 
 import Container from '@/components/goals/components/Container';
 
@@ -14,7 +14,7 @@ interface SectionItemProps {
   descriptionSettings: DescriptionSettings;
 }
 
-const SectionItem: FC<SectionItemProps> = ({ section, descriptionSettings }) => {
+const Item: FC<SectionItemProps> = ({ section, descriptionSettings }) => {
   const [isEditSection, setIsEditSection] = useState(false);
 
   const closeEditSection = () => {
@@ -27,7 +27,7 @@ const SectionItem: FC<SectionItemProps> = ({ section, descriptionSettings }) => 
 
   return (
     <div className="space-y-2">
-      <SectionHeader
+      <Header
         section={section}
         isEditSection={isEditSection}
         closeEditSection={closeEditSection}
@@ -40,4 +40,4 @@ const SectionItem: FC<SectionItemProps> = ({ section, descriptionSettings }) => 
   );
 };
 
-export default SectionItem;
+export default Item;

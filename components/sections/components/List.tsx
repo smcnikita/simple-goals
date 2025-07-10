@@ -2,7 +2,7 @@
 
 import type { FC } from 'react';
 
-import SectionItem from './SectionItem';
+import Item from './Item/Item';
 
 import type { DescriptionSettings } from '@/types/description-settings.type';
 import type { sectionsWithGoalsItem } from '@/types/sections.type';
@@ -12,14 +12,14 @@ interface SectionListProps {
   descriptionSettings: DescriptionSettings;
 }
 
-const SectionList: FC<SectionListProps> = ({ sectionsWithGoals, descriptionSettings }) => {
+const List: FC<SectionListProps> = ({ sectionsWithGoals, descriptionSettings }) => {
   return (
     <>
       {sectionsWithGoals.map((section) => (
-        <SectionItem key={section.section_id} section={section} descriptionSettings={descriptionSettings} />
+        <Item key={section.section_id} section={section} descriptionSettings={descriptionSettings} />
       ))}
     </>
   );
 };
 
-export default SectionList;
+export default List;

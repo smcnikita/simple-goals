@@ -28,7 +28,7 @@ interface SectionActionsProps {
   setIsEditSection: (value: boolean) => void;
 }
 
-const SectionActions: FC<SectionActionsProps> = ({ section, setIsEditSection }) => {
+const Actions: FC<SectionActionsProps> = ({ section, setIsEditSection }) => {
   const t = useTranslations('goals_list');
   const { globalYear } = useGlobalYear();
   const { deleteSection, isLoadingDeleteSection } = useGoalsStore();
@@ -78,4 +78,4 @@ const SectionActions: FC<SectionActionsProps> = ({ section, setIsEditSection }) 
   );
 };
 
-export default SectionActions;
+export default Actions;

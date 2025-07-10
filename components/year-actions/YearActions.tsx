@@ -10,9 +10,9 @@ import {
   DropdownMenuItem,
   DropdownMenuTrigger,
 } from '@/components/ui/dropdown-menu';
-import { Button } from '../ui/button';
-import CreateSectionDialogContent from '../create-section/CreateSectionDialogContent';
-import { Dialog } from '../ui/dialog';
+import { Button } from '@/components/ui/button';
+import { Dialog } from '@/components/ui/dialog';
+import { CreateDialog } from '@/components/sections';
 
 type Props = {
   setOpenDialogAddGoal: (value: boolean) => void;
@@ -42,7 +42,7 @@ const YearActions: FC<Props> = ({ setOpenDialogAddGoal }) => {
       </DropdownMenu>
 
       <Dialog open={openDialog} onOpenChange={setOpenDialog}>
-        <CreateSectionDialogContent updateOpenDialog={updateOpenDialog} />
+        <CreateDialog updateOpenDialog={updateOpenDialog} />
       </Dialog>
     </>
   );

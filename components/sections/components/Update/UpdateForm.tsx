@@ -11,9 +11,9 @@ import { useGoalsStore } from '@/stores/goals-store';
 
 import { capitalizeFirstLetter } from '@/utils/capitalizeFirstLetter';
 
-import { Button } from '../ui/button';
-import { Input } from '../ui/input';
-import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from '../ui/form';
+import { Button } from '@/components/ui/button';
+import { Input } from '@/components/ui/input';
+import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from '@/components/ui/form';
 
 type Props = {
   name: string;
@@ -22,7 +22,7 @@ type Props = {
   updateSection: (sectionId: number, name: string) => Promise<void>;
 };
 
-const SectionUpdate: FC<Props> = ({ name, sectionId, closeEditSection, updateSection }) => {
+const UpdateForm: FC<Props> = ({ name, sectionId, closeEditSection, updateSection }) => {
   const t = useTranslations('goals_list');
   const tErrors = useTranslations('errors');
   const { isLoadingUpdateSection } = useGoalsStore();
@@ -96,4 +96,4 @@ const SectionUpdate: FC<Props> = ({ name, sectionId, closeEditSection, updateSec
   );
 };
 
-export default SectionUpdate;
+export default UpdateForm;

@@ -6,9 +6,8 @@ import useGlobalYear from '@/hooks/use-global-year';
 
 import { useGoalsStore } from '@/stores/goals-store';
 
-import SectionActions from './SectionActions';
-
-import SectionUpdate from '@/components/section-update/SectionUpdate';
+import Actions from './Actions';
+import UpdateForm from './Update/UpdateForm';
 
 import type { sectionsWithGoalsItem } from '@/types/sections.type';
 
@@ -19,7 +18,7 @@ interface SectionHeaderProps {
   setIsEditSection: (value: boolean) => void;
 }
 
-const SectionHeader: FC<SectionHeaderProps> = ({ section, isEditSection, closeEditSection, setIsEditSection }) => {
+const Header: FC<SectionHeaderProps> = ({ section, isEditSection, closeEditSection, setIsEditSection }) => {
   const { globalYear } = useGlobalYear();
   const { updateSection } = useGoalsStore();
 
@@ -29,15 +28,15 @@ const SectionHeader: FC<SectionHeaderProps> = ({ section, isEditSection, closeEd
   };
 
   return isEditSection ? (
-    <SectionUpdate
+    <UpdateForm
       updateSection={handleUpdateSection}
       name={section.section_name}
       sectionId={section.section_id}
       closeEditSection={closeEditSection}
     />
   ) : (
-    <SectionActions section={section} setIsEditSection={setIsEditSection} />
+    <Actions section={section} setIsEditSection={setIsEditSection} />
   );
 };
 
-export default SectionHeader;
+export default Header;

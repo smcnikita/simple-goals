@@ -24,7 +24,7 @@ import {
 import { Button } from '@/components/ui/button';
 
 import List from './List';
-import Dialog from './CreateDialog';
+import Dialog from './CreateDialog/Dialog';
 import GoalStatisticsItem from './Item/Statistics';
 
 import type { DescriptionSettings } from '@/types/description-settings.type';

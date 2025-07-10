@@ -8,7 +8,7 @@ import { useGoalsStore } from '@/stores/goals-store';
 
 import Container from './Container';
 
-import SectionList from '../../sections/SectionList';
+import { List as SectionList } from '@/components/sections';
 
 import type { GoalModelWithStatus } from '@/types/goals.types';
 import type { DescriptionSettings } from '@/types/description-settings.type';

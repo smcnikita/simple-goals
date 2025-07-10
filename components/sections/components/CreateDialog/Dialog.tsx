@@ -17,14 +17,14 @@ import { capitalizeFirstLetter } from '@/utils/capitalizeFirstLetter';
 
 import { DialogClose, DialogContent, DialogFooter, DialogHeader, DialogTitle } from '@/components/ui/dialog';
 import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from '@/components/ui/form';
-import { Input } from '../ui/input';
-import { Button } from '../ui/button';
+import { Input } from '@/components/ui/input';
+import { Button } from '@/components/ui/button';
 
 type Props = {
   updateOpenDialog: (isOpen: boolean) => void;
 };
 
-const CreateSectionDialogContent: FC<Props> = ({ updateOpenDialog }) => {
+const Dialog: FC<Props> = ({ updateOpenDialog }) => {
   const t = useTranslations('goals_list');
   const tErrors = useTranslations('errors');
 
@@ -106,4 +106,4 @@ const CreateSectionDialogContent: FC<Props> = ({ updateOpenDialog }) => {
   );
 };
 
-export default CreateSectionDialogContent;
+export default Dialog;
