@@ -5,7 +5,7 @@ import { Plus } from 'lucide-react';
 
 import { Button } from '@/components/ui/button';
 import { Dialog as DialogComponent, DialogTrigger } from '@/components/ui/dialog';
-import YearActions from '@/components/year-actions/YearActions';
+import { Actions } from '@/components/years';
 
 import Content from './Content';
 
@@ -18,7 +18,7 @@ const Dialog: FC = () => {
 
   return (
     <>
-      <YearActions setOpenDialogAddGoal={updateOpenDialog} />
+      <Actions setOpenDialogAddGoal={updateOpenDialog} />
 
       <DialogComponent open={openDialog} onOpenChange={setOpenDialog}>
         <DialogTrigger asChild>

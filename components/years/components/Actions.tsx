@@ -18,7 +18,7 @@ type Props = {
   setOpenDialogAddGoal: (value: boolean) => void;
 };
 
-const YearActions: FC<Props> = ({ setOpenDialogAddGoal }) => {
+const Actions: FC<Props> = ({ setOpenDialogAddGoal }) => {
   const t = useTranslations('goals_list');
 
   const [openDialog, setOpenDialog] = useState(false);
@@ -48,4 +48,4 @@ const YearActions: FC<Props> = ({ setOpenDialogAddGoal }) => {
   );
 };
 
-export default YearActions;
+export default Actions;
