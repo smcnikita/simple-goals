@@ -29,6 +29,8 @@
     "title": "{year} Goals",
     "description": "Track and manage your goals for {year}",
 
+    "is_encrypted": "The data is encrypted",
+
     "statuses": "Statuses",
 
     "add_goal": "Add goal",
@@ -67,11 +69,45 @@
     "section_name": "Section name"
   },
 
+  "encryption": {
+    "title": {
+      "encrypted": "Data is encrypted"
+    },
+    "description": {
+      "encrypted": "Your data is encrypted. To access your goals, use the form below. The password is stored locally and cannot be recovered."
+    },
+    "passwordLabel": "Password for decrypting goals",
+    "savePasswordInfo": "Save your password in a safe place",
+    "encrypt": "Encrypt goals",
+    "decrypt": "Decrypt goals",
+    "setPassword": "Set password",
+    "warningRemoveGoals": "Current goals will be deleted.",
+    "encryptionInfo": {
+      "1": "New goals will be encrypted using the password you set. The password is",
+      "2": "not sent",
+      "3": "to the server, and only you will have access.",
+      "4": "Store the password",
+      "5": "in a safe place, because it is",
+      "6": "impossible",
+      "7": "to recover it."
+    },
+    "disableEncryption": "Lock goals",
+    "disableEncryptionInfo": {
+      "1": "New goals will",
+      "2": "not be",
+      "3": "encrypted. The current password will be removed."
+    }
+  },
+
   "errors": {
     "required_fields": "Missing required fields",
     "name": {
       "min": "Title must be at least {min} {min, plural, one {character} other {characters}} long",
       "max": "Title must not exceed {max} {max, plural, one {character} other {characters}}"
+    },
+    "password_crypto": {
+      "min": "Password must be at least {min} {min, plural, one {character} other {characters}} long",
+      "max": "Password must not exceed {max} {max, plural, one {character} other {characters}}"
     },
     "section_name": {
       "min": "Section title must be at least {min} {min, plural, one {character} other {characters}} long",

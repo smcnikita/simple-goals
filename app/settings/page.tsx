@@ -6,7 +6,9 @@ import { authOptions } from '@/lib/auth';
 import { userService } from '@/services/user/user.service';
 
 import { Separator } from '@/components/ui/separator';
-import { DeleteProfileDialog, DescriptionForm, NameForm, PasswordForm } from '@/components/settings';
+import { DeleteProfileDialog, DescriptionForm, BlockGoalsAction, NameForm, PasswordForm } from '@/components/settings';
+import { EncryptionDialog } from '@/components/encryption';
+import { DecryptionDialog } from '@/components/decryption';
 
 export default async function Page() {
   const t = await getTranslations('user_settings');
@@ -23,6 +25,8 @@ export default async function Page() {
   if (!userDescriptionSetting) {
     throw new Error('User description settings could not be found');
   }
+
+  const isEncryptedGoals = await userService.getIsUserGoalsEncrypted();
 
   return (
     <div className="space-y-4 py-4">
@@ -43,6 +47,22 @@ export default async function Page() {
       <PasswordForm />
 
       <Separator />
+
+      {isEncryptedGoals && <BlockGoalsAction />}
+
+      {isEncryptedGoals && (
+        <>
+          <DecryptionDialog />
+          <Separator />
+        </>
+      )}
+
+      {!isEncryptedGoals && (
+        <>
+          <EncryptionDialog />
+          <Separator />
+        </>
+      )}
 
       <DeleteProfileDialog />
     </div>

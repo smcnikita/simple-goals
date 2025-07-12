@@ -2,7 +2,7 @@
 
 import { useEffect, useMemo, type FC } from 'react';
 import { useTranslations } from 'next-intl';
-import { CircleCheck, CirclePause, CircleX, Clock, Settings, List as ListIcon } from 'lucide-react';
+import { CircleCheck, CirclePause, CircleX, Clock, Settings, List as ListIcon, ShieldCheck } from 'lucide-react';
 
 import { FILTER_STATUS_KEYS, STATUS_OPTION_TOTAL } from '@/constants/status';
 
@@ -40,7 +40,7 @@ const View: FC<Props> = ({ globalYear, descriptionSettings, updateTab }) => {
 
   const { filterStatusOptions, updateSelectedFilterStatus } = useFilterStatusStore();
   const { filteredGoals, goalsStatistic } = useGoal();
-  const { fetchGoalsData, isShowStatistic, isLoadingFetch, sections } = useGoalsStore();
+  const { fetchGoalsData, isShowStatistic, isLoadingFetch, sections, isEncrypted } = useGoalsStore();
   const { isCanEditPastGoals } = useGoalYearSettings();
 
   const goalsBySections = useMemo(() => {
@@ -137,6 +137,13 @@ const View: FC<Props> = ({ globalYear, descriptionSettings, updateTab }) => {
           <GoalStatisticsItem text={t('completed')} count={goalsStatistic.completed} />
           <GoalStatisticsItem text={t('not_completed')} count={goalsStatistic.notCompleted} />
           <GoalStatisticsItem text={t('canceled')} count={goalsStatistic.canceled} />
+        </div>
+      )}
+
+      {isEncrypted && (
+        <div className="text-sm text-gray-500 flex items-center gap-1">
+          <ShieldCheck />
+          {t('is_encrypted')}
         </div>
       )}
 

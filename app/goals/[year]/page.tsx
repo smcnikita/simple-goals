@@ -70,9 +70,11 @@ async function GoalsPage({ params }: { params: Promise<{ year: string }> }) {
     throw new Error('User description settings could not be found');
   }
 
+  const isEncryptedGoals = await userService.getIsUserGoalsEncrypted();
+
   return (
     <StoreInitializer statuses={statuses}>
-      <Main year={Number(yearSlug)} descriptionSettings={userDescriptionSetting} />
+      <Main year={Number(yearSlug)} descriptionSettings={userDescriptionSetting} isEncryptedGoals={isEncryptedGoals} />
     </StoreInitializer>
   );
 }

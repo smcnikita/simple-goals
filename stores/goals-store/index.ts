@@ -8,8 +8,9 @@ import type { Store, CreateGoalParams, UpdateGoalParams } from './types';
 
 import type { GoalModelWithStatus } from '@/types/goals.types';
 import { Section } from '@prisma/client';
+import { decryptText, encryptText } from '@/utils/cryptoHelper';
 
-export const useGoalsStore = create<Store>()((set) => ({
+export const useGoalsStore = create<Store>()((set, get) => ({
   isLoadingFetch: true,
   isLoadingCreate: false,
   isLoadingUpdate: false,
@@ -19,19 +20,38 @@ export const useGoalsStore = create<Store>()((set) => ({
   isLoadingDeleteSection: false,
   isLoadingUpdateSection: false,
 
+  isEncrypted: true,
+
   goals: [],
   sections: [],
 
   canEditPastGoals: false,
   isShowStatistic: true,
 
+  updateIsEncrypted: (isEncrypted: boolean) => {
+    set({ isEncrypted });
+  },
+
   fetchGoalsData: async (year: number) => {
     set({ isLoadingFetch: true });
+
     try {
       const response = await httpGetGoal(year);
       const sections = await httpGetSections(year);
+
+      let goals = response.data.goals;
+
+      const { isEncrypted } = get();
+
+      if (isEncrypted) {
+        goals = goals.map((goal) => ({
+          ...goal,
+          name: decryptText(goal.name),
+        }));
+      }
+
       set({
-        goals: response.data.goals,
+        goals,
         sections: sections.data.sections,
         canEditPastGoals: response.data.can_edit_past_goals,
         isShowStatistic: response.data.show_statistic,
@@ -44,16 +64,25 @@ export const useGoalsStore = create<Store>()((set) => ({
   createGoal: async (data: CreateGoalParams) => {
     set({ isLoadingCreate: true });
 
+    const { isEncrypted } = get();
+
     try {
       const res = await httpCreateGoal({
-        name: data.name,
+        name: isEncrypted ? encryptText(data.name) : data.name,
         description: data.description ?? undefined,
         status: data.status,
         year: data.year,
         section_id: data.section_id,
       });
+
       set((state) => ({
-        goals: [...state.goals, res.data],
+        goals: [
+          ...state.goals,
+          {
+            ...res.data,
+            name: isEncrypted ? decryptText(res.data.name) : res.data.name,
+          },
+        ],
       }));
     } catch (err: unknown) {
       if (err instanceof Error) {
@@ -100,17 +129,29 @@ export const useGoalsStore = create<Store>()((set) => ({
   updateGoal: async (data: UpdateGoalParams) => {
     set({ isLoadingUpdate: true });
 
+    const { isEncrypted } = get();
+
     try {
       const res = await httpUpdateGoal({
         id: data.id,
-        name: data.name,
+        name: isEncrypted ? encryptText(data.name) : data.name,
         description: data.description ?? undefined,
         status: data.status,
         year: data.year,
         section_id: data.section_id,
       });
+
       set((state) => ({
-        goals: state.goals.map((goal) => (goal.id === res.data.id ? res.data : goal)),
+        goals: state.goals.map((goal) => {
+          if (goal.id === res.data.id) {
+            return {
+              ...res.data,
+              name: isEncrypted ? decryptText(res.data.name) : res.data.name,
+            };
+          } else {
+            return goal;
+          }
+        }),
       }));
     } finally {
       set({ isLoadingUpdate: false });

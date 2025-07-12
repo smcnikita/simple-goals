@@ -1,5 +1,6 @@
 export const API_PATHS = {
   REGISTER: '/register',
+  GET_USER: '/user',
   GOALS: {
     GET: '/goals',
     CREATE_GOAL: '/goals',
@@ -14,6 +15,8 @@ export const API_PATHS = {
   UPDATE_USER_NAME: '/user/update-name',
   UPDATE_USER_PASSWORD: '/user/update-password',
   DELETE_USER: '/user',
+  ENCRYPT_GOALS: '/user/encrypt',
+  DECRYPT_GOALS: '/user/decrypt',
   SECTIONS: {
     GET: '/sections',
     CREATE_SECTION: '/sections',
