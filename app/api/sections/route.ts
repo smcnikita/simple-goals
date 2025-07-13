@@ -1,8 +1,8 @@
 import { NextRequest } from 'next/server';
 
-import { createErrorResponse } from '@/lib/createErrorResponse';
-import { createSuccessResponse } from '@/lib/createSuccessResponse';
-import { getUserAndYearModel } from '@/lib/getUserAndYearModel';
+import { createErrorResponse } from '@/lib/responses/createErrorResponse';
+import { createSuccessResponse } from '@/lib/responses/createSuccessResponse';
+import { getUserAndYearModel } from '@/lib/models/getUserAndYearModel';
 
 import * as sectionsController from '@/controllers/sections';
 

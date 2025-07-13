@@ -1,4 +1,4 @@
-import { prisma } from '@/lib/prisma';
+import { prisma } from '@/lib/prisma/prisma';
 
 import type { StatusKeys } from '@/types/status.types';
 import type { MarkAllAsIncompleteResponse } from '@/app/api/goals/mark-all-incomplete/types';

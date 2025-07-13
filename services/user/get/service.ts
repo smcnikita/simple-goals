@@ -1,7 +1,7 @@
 import { getServerSession } from 'next-auth';
 
-import { prisma } from '@/lib/prisma';
-import { authOptions } from '@/lib/auth';
+import { prisma } from '@/lib/prisma/prisma';
+import { authOptions } from '@/lib/auth/auth';
 
 export const getIsUserGoalsEncrypted = async () => {
   const session = await getServerSession(authOptions);

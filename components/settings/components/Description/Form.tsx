@@ -3,7 +3,7 @@
 import { useTranslations } from 'next-intl';
 import { useMemo, useState, type FC } from 'react';
 
-import { httpUpdateDescriptionSettings } from '@/lib/http/description-settings.http';
+import { httpUpdateDescriptionSettings } from '@/lib/api/user';
 
 import { Select, SelectContent, SelectGroup, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
 

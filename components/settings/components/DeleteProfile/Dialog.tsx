@@ -4,7 +4,7 @@ import { signOut } from 'next-auth/react';
 import { useTranslations } from 'next-intl';
 import { useState, type FC } from 'react';
 
-import { httpDeleteUser } from '@/lib/http/delete-user.http';
+import { httpDeleteUser } from '@/lib/api/user';
 
 import { Button } from '@/components/ui/button';
 import {

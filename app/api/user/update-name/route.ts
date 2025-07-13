@@ -1,8 +1,8 @@
 import { NextRequest } from 'next/server';
 
-import { getUserIdOrUnauthorized } from '@/lib/getUserIdOrUnauthorized';
-import { createErrorResponse } from '@/lib/createErrorResponse';
-import { createSuccessResponse } from '@/lib/createSuccessResponse';
+import { getUserIdOrUnauthorized } from '@/lib/auth/getUserIdOrUnauthorized';
+import { createErrorResponse } from '@/lib/responses/createErrorResponse';
+import { createSuccessResponse } from '@/lib/responses/createSuccessResponse';
 
 import * as userController from '@/controllers/user';
 

@@ -1,6 +1,6 @@
 import { NextResponse } from 'next/server';
 
-import { createErrorResponse } from '@/lib/createErrorResponse';
+import { createErrorResponse } from '@/lib/responses/createErrorResponse';
 
 import * as yearsController from '@/controllers/years';
 

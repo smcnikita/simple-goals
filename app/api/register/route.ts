@@ -1,8 +1,8 @@
 import { NextRequest } from 'next/server';
 import { getTranslations } from 'next-intl/server';
 
-import { createErrorResponse } from '@/lib/createErrorResponse';
-import { createSuccessResponse } from '@/lib/createSuccessResponse';
+import { createErrorResponse } from '@/lib/responses/createErrorResponse';
+import { createSuccessResponse } from '@/lib/responses/createSuccessResponse';
 
 import * as userController from '@/controllers/user';
 

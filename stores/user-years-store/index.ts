@@ -1,6 +1,6 @@
 import { create } from 'zustand';
 
-import { httpCreateNextYear } from '@/lib/http/create-next-year.http';
+import { httpCreateNext } from '@/lib/api/years';
 
 import type { Store } from './types';
 
@@ -11,7 +11,7 @@ export const useUserYearsStore = create<Store>()((set) => ({
   createNextYear: async () => {
     set({ isLoadingCreateNextYear: true });
 
-    const res = await httpCreateNextYear();
+    const res = await httpCreateNext();
 
     set((state) => ({
       userYears: [res.data.year, ...state.userYears].sort((a, b) => b - a),

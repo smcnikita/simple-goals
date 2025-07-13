@@ -1,6 +1,6 @@
-import { createErrorResponse } from '@/lib/createErrorResponse';
-import { getUserIdOrUnauthorized } from '@/lib/getUserIdOrUnauthorized';
-import { getYearModelOrError } from '@/lib/getYearModelOrError';
+import { createErrorResponse } from '@/lib/responses/createErrorResponse';
+import { getUserIdOrUnauthorized } from '@/lib/auth/getUserIdOrUnauthorized';
+import { getYearModelOrError } from '@/lib/models/getYearModelOrError';
 
 export async function getUserAndYearModel(year: number) {
   if (Number.isNaN(year)) {

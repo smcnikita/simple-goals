@@ -2,8 +2,8 @@ import { NextRequest } from 'next/server';
 
 import * as goalsController from '@/controllers/goals';
 
-import { createSuccessResponse } from '@/lib/createSuccessResponse';
-import { getUserAndYearModel } from '@/lib/getUserAndYearModel';
+import { createSuccessResponse } from '@/lib/responses/createSuccessResponse';
+import { getUserAndYearModel } from '@/lib/models/getUserAndYearModel';
 
 type Payload = {
   year: number;

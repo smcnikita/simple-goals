@@ -1,8 +1,8 @@
 import { NextResponse } from 'next/server';
 import { getServerSession } from 'next-auth';
 
-import { authOptions } from '@/lib/auth';
-import { createErrorResponse } from '@/lib/createErrorResponse';
+import { authOptions } from '@/lib/auth/auth';
+import { createErrorResponse } from '@/lib/responses/createErrorResponse';
 
 type NextResponseType = NextResponse<{ message: string }>;
 

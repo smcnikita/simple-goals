@@ -1,4 +1,4 @@
-import { prisma } from '@/lib/prisma';
+import { prisma } from '@/lib/prisma/prisma';
 
 const deleteGoal = async (id: number, year: number) => {
   return await prisma.goals.delete({

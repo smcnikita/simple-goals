@@ -1,4 +1,4 @@
-import { prisma } from '@/lib/prisma';
+import { prisma } from '@/lib/prisma/prisma';
 
 export const getSections = async (userId: number, yearId: number) => {
   const year = await prisma.years.findFirst({

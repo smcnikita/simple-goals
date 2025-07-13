@@ -1,7 +1,7 @@
 import type { BaseResponse } from '@/types/base-controller.type';
 
 import type { UpdateNameParams, UpdateNameData } from './types';
-import { prisma } from '@/lib/prisma';
+import { prisma } from '@/lib/prisma/prisma';
 
 export const updateUserName = async ({ name, userId }: UpdateNameParams): Promise<BaseResponse<UpdateNameData>> => {
   const user = await prisma.users.update({

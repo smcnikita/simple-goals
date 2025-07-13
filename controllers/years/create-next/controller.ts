@@ -1,4 +1,4 @@
-import { prisma } from '@/lib/prisma';
+import { prisma } from '@/lib/prisma/prisma';
 
 import { DESCRIPTION_SETTINGS_KEYS } from '@/constants/description-settings';
 

@@ -1,6 +1,6 @@
 import { create } from 'zustand';
 
-import { httpMarkAllAsIncomplete } from '@/lib/http/markAllGoalsAsIncomplete.http';
+import { httpMarkAllIncomplete } from '@/lib/api/goals';
 
 import type { Store } from './types';
 
@@ -12,7 +12,7 @@ export const markAllAsIncompleteStore = create<Store>()((set) => ({
     });
 
     try {
-      const res = await httpMarkAllAsIncomplete(year);
+      const res = await httpMarkAllIncomplete(year);
 
       return res.data;
     } finally {

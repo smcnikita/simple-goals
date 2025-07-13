@@ -4,7 +4,7 @@ import CredentialsProvider from 'next-auth/providers/credentials';
 
 import { PATHS } from '@/constants/paths';
 
-import { prisma } from './prisma';
+import { prisma } from '../prisma/prisma';
 
 import * as authService from '@/services/auth';
 

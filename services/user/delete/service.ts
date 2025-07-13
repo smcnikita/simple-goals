@@ -1,4 +1,4 @@
-import { prisma } from '@/lib/prisma';
+import { prisma } from '@/lib/prisma/prisma';
 
 export const deleteUser = async (id: number) => {
   const useGoals = await prisma.goals.findMany({

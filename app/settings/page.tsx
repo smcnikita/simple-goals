@@ -1,7 +1,7 @@
 import { getServerSession } from 'next-auth';
 import { getTranslations } from 'next-intl/server';
 
-import { authOptions } from '@/lib/auth';
+import { authOptions } from '@/lib/auth/auth';
 
 import * as userService from '@/services/user';
 

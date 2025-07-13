@@ -3,7 +3,7 @@ import { getTranslations } from 'next-intl/server';
 
 import { DESCRIPTION_SETTINGS_KEYS } from '@/constants/description-settings';
 
-import { prisma } from '@/lib/prisma';
+import { prisma } from '@/lib/prisma/prisma';
 
 import * as yearsService from '@/services/years';
 

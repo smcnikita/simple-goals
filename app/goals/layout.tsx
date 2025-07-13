@@ -1,7 +1,7 @@
 import { getServerSession } from 'next-auth';
 import { CircleCheck, CircleX } from 'lucide-react';
 
-import { authOptions } from '@/lib/auth';
+import { authOptions } from '@/lib/auth/auth';
 
 import * as yearsController from '@/controllers/years';
 

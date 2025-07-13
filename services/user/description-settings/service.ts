@@ -1,4 +1,4 @@
-import { prisma } from '@/lib/prisma';
+import { prisma } from '@/lib/prisma/prisma';
 import { getTranslations } from 'next-intl/server';
 
 import type { DescriptionSettings, DescriptionSettingsKeys } from '@/types/description-settings.type';

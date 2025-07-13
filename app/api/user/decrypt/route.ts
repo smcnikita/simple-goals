@@ -1,5 +1,5 @@
-import { createSuccessResponse } from '@/lib/createSuccessResponse';
-import { getUserIdOrUnauthorized } from '@/lib/getUserIdOrUnauthorized';
+import { createSuccessResponse } from '@/lib/responses/createSuccessResponse';
+import { getUserIdOrUnauthorized } from '@/lib/auth/getUserIdOrUnauthorized';
 
 import * as goalsController from '@/controllers/goals';
 
