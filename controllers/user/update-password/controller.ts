@@ -1,8 +1,9 @@
 import { hash, compare } from 'bcryptjs';
-
-import type { BaseResponse } from '@/types/base-controller.type';
-import { prisma } from '@/lib/prisma/prisma';
 import { getTranslations } from 'next-intl/server';
+
+import { prisma } from '@/lib/prisma/prisma';
+
+import type { BaseResponse } from '@/types/controllers/base';
 
 export const updatePassword = async (
   userId: number,

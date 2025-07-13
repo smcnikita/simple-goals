@@ -7,7 +7,7 @@ import { httpUpdateDescriptionSettings } from '@/lib/api/user';
 
 import { Select, SelectContent, SelectGroup, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
 
-import type { DescriptionSettings } from '@/types/description-settings.type';
+import type { DescriptionSettings } from '@/types/settings/description';
 
 type Props = {
   selected: DescriptionSettings;

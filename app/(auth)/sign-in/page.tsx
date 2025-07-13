@@ -4,7 +4,7 @@ import messages from '@/messages/en.json';
 
 import { LoginForm } from '@/components/auth';
 
-import type { OAuthErrorKeys } from '@/types/error-auth.types';
+import type { OAuthErrorKeys } from '@/types/auth/error.ts';
 
 interface Props {
   error: string | string[] | undefined;

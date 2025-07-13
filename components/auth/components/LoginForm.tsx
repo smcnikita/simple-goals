@@ -7,19 +7,19 @@ import { useTranslations } from 'next-intl';
 import { useForm } from 'react-hook-form';
 import { Loader2 } from 'lucide-react';
 import Link from 'next/link';
+import { toast } from 'sonner';
 
 import { PATHS } from '@/constants/paths';
 
 import { zodResolver } from '@hookform/resolvers/zod';
 
+import BaseForm from './BaseForm';
+
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Form as FormComponent, FormControl, FormField, FormItem, FormLabel, FormMessage } from '@/components/ui/form';
 
-import BaseForm from './BaseForm';
-
-import type { OAuthErrorKeys } from '@/types/error-auth.types';
-import { toast } from 'sonner';
+import type { OAuthErrorKeys } from '@/types/auth/error.ts';
 
 type Props = {
   message: OAuthErrorKeys | null;

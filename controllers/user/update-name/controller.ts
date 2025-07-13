@@ -2,7 +2,7 @@ import * as userService from '@/services/user';
 
 import type { UpdateNameData, UpdateNameParams } from './types';
 
-import type { BaseResponse } from '@/types/base-controller.type';
+import type { BaseResponse } from '@/types/controllers/base';
 
 export const updateUserName = async (params: UpdateNameParams): Promise<BaseResponse<UpdateNameData>> => {
   const updateUserNameService = await userService.updateUserName(params);

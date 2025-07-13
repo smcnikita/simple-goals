@@ -4,7 +4,7 @@ import { createErrorResponse } from '@/lib/responses/createErrorResponse';
 
 import * as yearsController from '@/controllers/years';
 
-import type { YearModel } from '@/types/years.types';
+import type { YearModel } from '@/types/years/year';
 
 type NextResponseType = NextResponse<{ message: string }>;
 

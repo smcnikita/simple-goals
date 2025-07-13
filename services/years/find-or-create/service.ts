@@ -2,9 +2,9 @@ import { prisma } from '@/lib/prisma/prisma';
 
 import { createUserYear } from '@/services/years/create/service';
 
-import type { YearModel } from '@/types/years.types';
-
 import type { FindOrCreateParams } from './types';
+
+import type { YearModel } from '@/types/years/year';
 
 export async function findOrCreate({ userId }: FindOrCreateParams): Promise<YearModel[]> {
   const nowYear = new Date().getFullYear();

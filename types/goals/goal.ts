@@ -1,6 +1,6 @@
 import type { Goals } from '@prisma/client';
 
-import type { StatusKeys } from './status.types';
+import type { StatusKeys } from '../status/status';
 
 export type GoalModel = Goals;
 

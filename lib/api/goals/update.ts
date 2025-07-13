@@ -2,7 +2,7 @@ import { API_PATHS } from '@/constants/api-paths';
 
 import { fetchFromAPI } from '@/lib/http';
 
-import type { GoalModelWithStatus } from '@/types/goals.types';
+import type { GoalModelWithStatus } from '@/types/goals/goal';
 
 type HttpUpdateGoalParams = {
   id: number;

@@ -1,7 +1,8 @@
 import { API_PATHS } from '@/constants/api-paths';
+
 import { fetchFromAPI } from '@/lib/http';
 
-import type { YearModel } from '@/types/years.types';
+import type { YearModel } from '@/types/years/year';
 
 type HttpUpdateShowStatisticParams = {
   year: number;

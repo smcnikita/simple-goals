@@ -1,8 +1,8 @@
-import { GoalModel } from '@/types/goals.types';
-
 import { API_PATHS } from '@/constants/api-paths';
 
 import { fetchFromAPI } from '@/lib/http';
+
+import type { GoalModel } from '@/types/goals/goal';
 
 type HttpDeleteGoalParams = {
   id: number;

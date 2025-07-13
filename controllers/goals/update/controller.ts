@@ -4,7 +4,7 @@ import * as goalsService from '@/services/goals';
 
 import type { UpdateParams } from './types';
 
-import type { StatusKeys } from '@/types/status.types';
+import type { StatusKeys } from '@/types/status/status';
 
 export const updateGoal = async (params: UpdateParams) => {
   const { id, name, description, statusKey, userId, yearId, section_id } = params;

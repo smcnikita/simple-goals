@@ -27,7 +27,7 @@ import List from './List';
 import Dialog from './CreateDialog/Dialog';
 import GoalStatisticsItem from './Item/Statistics';
 
-import type { DescriptionSettings } from '@/types/description-settings.type';
+import type { DescriptionSettings } from '@/types/settings/description';
 
 type Props = {
   globalYear: number;

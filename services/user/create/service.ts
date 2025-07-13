@@ -8,7 +8,8 @@ import { prisma } from '@/lib/prisma/prisma';
 import * as yearsService from '@/services/years';
 
 import type { CreateParams } from './types';
-import type { BaseResponse } from '@/types/base-controller.type';
+
+import type { BaseResponse } from '@/types/controllers/base';
 
 export const createUser = async ({ email, name, password }: CreateParams): Promise<BaseResponse<null>> => {
   const t = await getTranslations('errors');

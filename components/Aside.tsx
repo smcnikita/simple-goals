@@ -20,7 +20,7 @@ import {
   SidebarMenuItem,
 } from '@/components/ui/sidebar';
 
-import type { YearModel } from '@/types/years.types';
+import type { YearModel } from '@/types/years/year';
 
 type Props = {
   years: YearModel[];

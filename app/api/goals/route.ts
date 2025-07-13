@@ -6,7 +6,7 @@ import { createErrorResponse } from '@/lib/responses/createErrorResponse';
 import { createSuccessResponse } from '@/lib/responses/createSuccessResponse';
 import { getUserAndYearModel } from '@/lib/models/getUserAndYearModel';
 
-import type { StatusKeys } from '@/types/status.types';
+import type { StatusKeys } from '@/types/status/status';
 
 export async function GET(req: NextRequest) {
   const searchParams = req.nextUrl.searchParams;

@@ -9,10 +9,10 @@ import { useGoalsStore } from '@/stores/goals-store';
 import Actions from './Actions';
 import UpdateForm from './Update/UpdateForm';
 
-import type { sectionsWithGoalsItem } from '@/types/sections.type';
+import type { SectionsWithGoalsItem } from '@/types/sections/section';
 
 interface SectionHeaderProps {
-  section: sectionsWithGoalsItem;
+  section: SectionsWithGoalsItem;
   isEditSection: boolean;
   closeEditSection: () => void;
   setIsEditSection: (value: boolean) => void;

@@ -1,4 +1,4 @@
-import type { FilterStatusModel } from '@/types/status.types';
+import type { FilterStatusModel } from '@/types/status/status';
 
 export const STATUS_KEYS = {
   InProgress: 'in_progress',

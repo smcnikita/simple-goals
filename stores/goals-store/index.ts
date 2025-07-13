@@ -9,7 +9,7 @@ import { httpDeleteSection, httpGetSections, httpUpdateSection } from '@/lib/api
 
 import type { Store, CreateGoalParams, UpdateGoalParams } from './types';
 
-import type { GoalModelWithStatus } from '@/types/goals.types';
+import type { GoalModelWithStatus } from '@/types/goals/goal';
 
 export const useGoalsStore = create<Store>()((set, get) => ({
   isLoadingFetch: true,

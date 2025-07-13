@@ -4,7 +4,7 @@ import * as goalsService from '@/services/goals';
 
 import type { CreateGoalParams } from './types';
 
-import type { StatusKeys } from '@/types/status.types';
+import type { StatusKeys } from '@/types/status/status';
 
 export const createGoal = async (params: CreateGoalParams) => {
   const { name, description, statusKey, userId, yearId, year, canEditPastGoals, section_id } = params;

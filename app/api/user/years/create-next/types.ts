@@ -1,4 +1,4 @@
-import type { YearModel } from '@/types/years.types';
+import type { YearModel } from '@/types/years/year';
 
 type SuccessResponse = {
   data: YearModel;

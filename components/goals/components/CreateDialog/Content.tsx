@@ -13,7 +13,7 @@ import { Button } from '@/components/ui/button';
 
 import Form from '../Form';
 
-import type { FormSchema } from '@/types/form-goal.types';
+import type { FormSchema } from '@/types/goals/form';
 
 type Props = {
   updateOpenDialog: (isOpen: boolean) => void;

@@ -1,4 +1,4 @@
-import type { StatusKeys } from '@/types/status.types';
+import type { StatusKeys } from '@/types/status/status';
 
 export type CreateGoalParams = {
   userId: number;

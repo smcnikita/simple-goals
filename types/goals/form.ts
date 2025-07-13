@@ -1,4 +1,4 @@
-import type { StatusKeys } from './status.types';
+import type { StatusKeys } from '../status/status';
 
 export type Name = string;
 export type Description = string | null;

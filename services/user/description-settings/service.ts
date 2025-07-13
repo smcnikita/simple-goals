@@ -1,7 +1,7 @@
 import { prisma } from '@/lib/prisma/prisma';
 import { getTranslations } from 'next-intl/server';
 
-import type { DescriptionSettings, DescriptionSettingsKeys } from '@/types/description-settings.type';
+import type { DescriptionSettings, DescriptionSettingsKeys } from '@/types/settings/description';
 
 export const getDescriptionSettings = async (): Promise<DescriptionSettings[]> => {
   return (await prisma.descriptionSettings.findMany()).map((el) => ({

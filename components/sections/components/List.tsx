@@ -4,11 +4,11 @@ import type { FC } from 'react';
 
 import Item from './Item/Item';
 
-import type { DescriptionSettings } from '@/types/description-settings.type';
-import type { sectionsWithGoalsItem } from '@/types/sections.type';
+import type { DescriptionSettings } from '@/types/settings/description';
+import type { SectionsWithGoalsItem } from '@/types/sections/section';
 
 interface SectionListProps {
-  sectionsWithGoals: sectionsWithGoalsItem[];
+  sectionsWithGoals: SectionsWithGoalsItem[];
   descriptionSettings: DescriptionSettings;
 }
 

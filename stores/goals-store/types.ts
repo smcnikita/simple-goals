@@ -1,6 +1,7 @@
-import type { StatusKeys } from '@/types/status.types';
-import type { GoalModelWithStatus } from '@/types/goals.types';
 import type { Section } from '@prisma/client';
+
+import type { StatusKeys } from '@/types/status/status';
+import type { GoalModelWithStatus } from '@/types/goals/goal';
 
 export type CreateGoalParams = {
   name: string;

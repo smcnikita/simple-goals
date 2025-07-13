@@ -1,4 +1,4 @@
-import type { FilterStatusKeys, FilterStatusOption } from '@/types/status.types';
+import type { FilterStatusKeys, FilterStatusOption } from '@/types/status/status';
 
 export type Store = {
   selectedFilterStatus: FilterStatusKeys;

@@ -1,6 +1,6 @@
 import { prisma } from '@/lib/prisma/prisma';
 
-import type { StatusKeys } from '@/types/status.types';
+import type { StatusKeys } from '@/types/status/status';
 import type { MarkAllAsIncompleteResponse } from '@/app/api/goals/mark-all-incomplete/types';
 
 type ServiceResponse = Promise<MarkAllAsIncompleteResponse['data']>;
