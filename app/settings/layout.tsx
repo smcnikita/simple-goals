@@ -1,7 +1,7 @@
 import { getServerSession } from 'next-auth';
 import { CircleCheck, CircleX } from 'lucide-react';
 
-import { authOptions } from '@/lib/auth';
+import { authOptions } from '@/lib/auth/auth';
 
 import { SidebarProvider } from '@/components/ui/sidebar';
 import { Separator } from '@/components/ui/separator';

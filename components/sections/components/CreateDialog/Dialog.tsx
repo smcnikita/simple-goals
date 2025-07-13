@@ -9,7 +9,7 @@ import { toast } from 'sonner';
 
 import useGlobalYear from '@/hooks/use-global-year';
 
-import { httpCreateSection } from '@/lib/http/get-sections';
+import { httpCreateSection } from '@/lib/api/sections';
 
 import { useGoalsStore } from '@/stores/goals-store';
 

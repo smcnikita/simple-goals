@@ -10,8 +10,8 @@ import { Button } from '@/components/ui/button';
 
 import Form from '.';
 
-import type { Description, FormSchema } from '@/types/form-goal.types';
-import type { StatusKeys } from '@/types/status.types';
+import type { Description, FormSchema } from '@/types/goals/form';
+import type { StatusKeys } from '@/types/status/status';
 
 type Props = {
   id: number;

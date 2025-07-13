@@ -6,11 +6,11 @@ import Header from '../Header';
 
 import Container from '@/components/goals/components/Container';
 
-import type { sectionsWithGoalsItem } from '@/types/sections.type';
-import type { DescriptionSettings } from '@/types/description-settings.type';
+import type { SectionsWithGoalsItem } from '@/types/sections/section';
+import type { DescriptionSettings } from '@/types/settings/description';
 
 interface SectionItemProps {
-  section: sectionsWithGoalsItem;
+  section: SectionsWithGoalsItem;
   descriptionSettings: DescriptionSettings;
 }
 

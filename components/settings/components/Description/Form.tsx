@@ -3,11 +3,11 @@
 import { useTranslations } from 'next-intl';
 import { useMemo, useState, type FC } from 'react';
 
-import { httpUpdateDescriptionSettings } from '@/lib/http/description-settings.http';
+import { httpUpdateDescriptionSettings } from '@/lib/api/user';
 
 import { Select, SelectContent, SelectGroup, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
 
-import type { DescriptionSettings } from '@/types/description-settings.type';
+import type { DescriptionSettings } from '@/types/settings/description';
 
 type Props = {
   selected: DescriptionSettings;

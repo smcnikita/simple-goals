@@ -1,3 +1,3 @@
-export type GetUserYearsParams = {
+export type FindOrCreateParams = {
   userId: number;
 };

@@ -11,7 +11,7 @@ import Settings from './Settings';
 
 import { Form } from '@/components/encryption';
 
-import type { DescriptionSettings } from '@/types/description-settings.type';
+import type { DescriptionSettings } from '@/types/settings/description';
 
 type Props = {
   year: number;

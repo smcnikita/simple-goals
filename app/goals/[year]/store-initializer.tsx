@@ -7,7 +7,7 @@ import { STATUS_OPTION_TOTAL } from '@/constants/status';
 import { useFilterStatusStore } from '@/stores/filter-status-store';
 import { useStatusStore } from '@/stores/status-store';
 
-import type { StatusModel, StatusOption, FilterStatusOption } from '@/types/status.types';
+import type { StatusModel, StatusOption, FilterStatusOption } from '@/types/status/status';
 
 type Props = {
   statuses: StatusModel[];

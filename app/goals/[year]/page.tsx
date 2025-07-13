@@ -1,14 +1,14 @@
 import { notFound } from 'next/navigation';
 import { getServerSession } from 'next-auth';
 
-import { authOptions } from '@/lib/auth';
-
-import { statusService } from '@/services/status/status.service';
-import { userService } from '@/services/user/user.service';
+import { authOptions } from '@/lib/auth/auth';
 
 import StoreInitializer from './store-initializer';
 
-import { yearsController } from '@/controllers/years/years.controller';
+import * as yearsController from '@/controllers/years';
+
+import * as statusService from '@/services/status';
+import * as userService from '@/services/user';
 
 import { Main } from '@/components/goals';
 

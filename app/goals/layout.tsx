@@ -1,16 +1,17 @@
 import { getServerSession } from 'next-auth';
 import { CircleCheck, CircleX } from 'lucide-react';
 
-import { authOptions } from '@/lib/auth';
+import { authOptions } from '@/lib/auth/auth';
 
-import { yearsController } from '@/controllers/years/years.controller';
+import * as yearsController from '@/controllers/years';
 
 import Aside from '@/components/Aside';
 import { SidebarProvider } from '@/components/ui/sidebar';
 import { Separator } from '@/components/ui/separator';
+import { Toaster } from '@/components/ui/sonner';
+
 import Header from '@/components/Header';
 import Content from '@/components/Content';
-import { Toaster } from '@/components/ui/sonner';
 
 type Props = Readonly<{
   children: React.ReactNode;

@@ -6,7 +6,7 @@ import { useLocale } from 'next-intl';
 
 import { type Locale, locales, localesInfo } from '@/i18n/config';
 
-import { localeService } from '@/services/locale/locale.service';
+import * as localeService from '@/services/locale';
 
 import { Select, SelectContent, SelectGroup, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
 

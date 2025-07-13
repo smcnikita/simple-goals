@@ -4,7 +4,7 @@ import { useEffect, type FC, type PropsWithChildren } from 'react';
 
 import { useThemeStore } from '@/stores/theme-store';
 
-import type { Theme } from '@/types/theme.types';
+import type { Theme } from '@/types/theme/theme';
 
 const ThemeProvider: FC<PropsWithChildren> = ({ children }) => {
   const { updateTheme } = useThemeStore();

@@ -12,7 +12,7 @@ import { PATHS } from '@/constants/paths';
 
 import { zodResolver } from '@hookform/resolvers/zod';
 
-import { httpRegister } from '@/lib/http/register';
+import { httpRegister } from '@/lib/api/user';
 
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';

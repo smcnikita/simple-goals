@@ -1,7 +1,7 @@
-import { createSuccessResponse } from '@/lib/createSuccessResponse';
-import { getUserIdOrUnauthorized } from '@/lib/getUserIdOrUnauthorized';
+import { createSuccessResponse } from '@/lib/responses/createSuccessResponse';
+import { getUserIdOrUnauthorized } from '@/lib/auth/getUserIdOrUnauthorized';
 
-import { userController } from '@/controllers/user/user.controller';
+import * as userController from '@/controllers/user';
 
 export async function DELETE() {
   const userIdOrRes = await getUserIdOrUnauthorized();

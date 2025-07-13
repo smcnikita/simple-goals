@@ -10,7 +10,7 @@ import { useSession } from 'next-auth/react';
 
 import { zodResolver } from '@hookform/resolvers/zod';
 
-import { httpUpdateUserName } from '@/lib/http/update-user-name.http';
+import { httpUpdateName } from '@/lib/api/user';
 
 import { Button } from '@/components/ui/button';
 import {
@@ -74,7 +74,7 @@ const Form: FC<Props> = ({ currentUserName }) => {
 
     setIsLoading(true);
 
-    await httpUpdateUserName(values.name)
+    await httpUpdateName(values.name)
       .then(async ({ data }) => {
         const newName = data.data.name;
         setOldUserName(newName);

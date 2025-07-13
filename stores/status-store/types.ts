@@ -1,4 +1,4 @@
-import type { StatusOption } from '@/types/status.types';
+import type { StatusOption } from '@/types/status/status';
 
 export type Store = {
   statusOptions: StatusOption[];

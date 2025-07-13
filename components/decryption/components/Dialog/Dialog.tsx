@@ -17,7 +17,7 @@ import { useTranslations } from 'next-intl';
 import Content from './Content';
 import { Loader2 } from 'lucide-react';
 import { removePasswordToLocalStorage } from '@/utils/cryptoHelper';
-import { httpDecryptGoals } from '@/lib/http/encrypt-goals.http';
+import { httpDecryptGoals } from '@/lib/api/goals';
 
 const Dialog: FC = () => {
   const t = useTranslations('goals_list');

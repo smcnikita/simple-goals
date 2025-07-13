@@ -1,12 +1,12 @@
 import { NextRequest } from 'next/server';
 
-import { goalsController } from '@/controllers/goals/goals.controller';
+import * as goalsController from '@/controllers/goals';
 
-import { createErrorResponse } from '@/lib/createErrorResponse';
-import { createSuccessResponse } from '@/lib/createSuccessResponse';
-import { getUserAndYearModel } from '@/lib/getUserAndYearModel';
+import { createErrorResponse } from '@/lib/responses/createErrorResponse';
+import { createSuccessResponse } from '@/lib/responses/createSuccessResponse';
+import { getUserAndYearModel } from '@/lib/models/getUserAndYearModel';
 
-import type { StatusKeys } from '@/types/status.types';
+import type { StatusKeys } from '@/types/status/status';
 
 export async function GET(req: NextRequest) {
   const searchParams = req.nextUrl.searchParams;

@@ -10,8 +10,8 @@ import Container from './Container';
 
 import { List as SectionList } from '@/components/sections';
 
-import type { GoalModelWithStatus } from '@/types/goals.types';
-import type { DescriptionSettings } from '@/types/description-settings.type';
+import type { GoalModelWithStatus } from '@/types/goals/goal';
+import type { DescriptionSettings } from '@/types/settings/description';
 
 type Props = {
   goals: GoalModelWithStatus[];

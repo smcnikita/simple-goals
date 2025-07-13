@@ -17,9 +17,9 @@ import UpdateWrapper from '../Form/UpdateWrapper';
 
 import StatusItem from '../../../StatusItem';
 
-import type { Description } from '@/types/form-goal.types';
-import type { StatusKeys } from '@/types/status.types';
-import type { DescriptionSettings } from '@/types/description-settings.type';
+import type { Description } from '@/types/goals/form';
+import type { StatusKeys } from '@/types/status/status';
+import type { DescriptionSettings } from '@/types/settings/description';
 
 type Props = {
   id: number;

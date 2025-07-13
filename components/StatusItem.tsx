@@ -4,7 +4,7 @@ import { useTranslations } from 'next-intl';
 
 import { FILTER_STATUS_KEYS } from '@/constants/status';
 
-import type { StatusKeys } from '@/types/status.types';
+import type { StatusKeys } from '@/types/status/status';
 
 type Props = {
   status: StatusKeys;

@@ -8,9 +8,10 @@ import { z } from 'zod';
 
 import { savePasswordToLocalStorage } from '@/utils/cryptoHelper';
 
+import { httpEncryptGoals } from '@/lib/api/goals';
+
 import { Form as FormComponent, FormControl, FormField, FormItem, FormLabel, FormMessage } from '@/components/ui/form';
 import { Input } from '@/components/ui/input';
-import { httpEncryptGoals } from '@/lib/http/encrypt-goals.http';
 
 type Props = {
   footer: React.ReactNode;

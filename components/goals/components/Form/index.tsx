@@ -26,8 +26,8 @@ import {
   FormDescription,
 } from '@/components/ui/form';
 
-import type { Name, Description, FormSchema } from '@/types/form-goal.types';
-import type { StatusKeys } from '@/types/status.types';
+import type { Name, Description, FormSchema } from '@/types/goals/form';
+import type { StatusKeys } from '@/types/status/status';
 
 type OldGoalData = {
   id: number;

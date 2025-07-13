@@ -21,10 +21,10 @@ import {
   AlertDialogAction,
 } from '@/components/ui/alert-dialog';
 
-import type { sectionsWithGoalsItem } from '@/types/sections.type';
+import type { SectionsWithGoalsItem } from '@/types/sections/section';
 
 interface SectionActionsProps {
-  section: sectionsWithGoalsItem;
+  section: SectionsWithGoalsItem;
   setIsEditSection: (value: boolean) => void;
 }
 

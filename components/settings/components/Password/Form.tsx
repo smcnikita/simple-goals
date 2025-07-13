@@ -8,7 +8,7 @@ import { toast } from 'sonner';
 
 import { zodResolver } from '@hookform/resolvers/zod';
 
-import { httpUpdateUserPassword } from '@/lib/http/update-user-password.http';
+import { httpUpdatePassword } from '@/lib/api/user';
 
 import { Button } from '@/components/ui/button';
 import { Form as FormComponent, FormControl, FormField, FormItem, FormLabel, FormMessage } from '@/components/ui/form';
@@ -69,7 +69,7 @@ const Form: FC = () => {
 
     setIsLoading(true);
 
-    await httpUpdateUserPassword(values.password, values.oldPassword)
+    await httpUpdatePassword(values.password, values.oldPassword)
       .then(() => {
         toast.success(tSettings('success_update_password'));
       })

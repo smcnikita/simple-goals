@@ -1,7 +1,7 @@
-import { createSuccessResponse } from '@/lib/createSuccessResponse';
-import { getUserIdOrUnauthorized } from '@/lib/getUserIdOrUnauthorized';
+import { createSuccessResponse } from '@/lib/responses/createSuccessResponse';
+import { getUserIdOrUnauthorized } from '@/lib/auth/getUserIdOrUnauthorized';
 
-import { userController } from '@/controllers/user/user.controller';
+import * as goalsController from '@/controllers/goals';
 
 export async function POST() {
   const userIdOrRes = await getUserIdOrUnauthorized();
@@ -12,7 +12,7 @@ export async function POST() {
 
   const userId = userIdOrRes;
 
-  await userController.decryptGoals(userId);
+  await goalsController.decryptGoals(userId);
 
   return createSuccessResponse(null);
 }

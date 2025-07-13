@@ -1,14 +1,15 @@
 import { create } from 'zustand';
+import type { Section } from '@prisma/client';
 
-import { httpCreateGoal, httpDeleteGoal, httpGetGoal, httpUpdateGoal } from '@/lib/http/goals.http';
-import { httpUpdateCanEditPast, httpUpdateShowStatistic } from '@/lib/http/years.http';
-import { httpDeleteSection, httpGetSections, httpUpdateSection } from '@/lib/http/get-sections';
+import { decryptText, encryptText } from '@/utils/cryptoHelper';
+
+import { httpCreateGoal, httpDeleteGoal, httpGetGoal, httpUpdateGoal } from '@/lib/api/goals';
+import { httpUpdateCanEditPast, httpUpdateShowStatistic } from '@/lib/api/years';
+import { httpDeleteSection, httpGetSections, httpUpdateSection } from '@/lib/api/sections';
 
 import type { Store, CreateGoalParams, UpdateGoalParams } from './types';
 
-import type { GoalModelWithStatus } from '@/types/goals.types';
-import { Section } from '@prisma/client';
-import { decryptText, encryptText } from '@/utils/cryptoHelper';
+import type { GoalModelWithStatus } from '@/types/goals/goal';
 
 export const useGoalsStore = create<Store>()((set, get) => ({
   isLoadingFetch: true,
