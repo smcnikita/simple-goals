@@ -1,10 +1,10 @@
 import { NextRequest } from 'next/server';
 
 import { getUserAndYearModel } from '@/lib/getUserAndYearModel';
-
-import { yearsController } from '@/controllers/years/years.controller';
 import { createSuccessResponse } from '@/lib/createSuccessResponse';
 import { createErrorResponse } from '@/lib/createErrorResponse';
+
+import * as yearsController from '@/controllers/years';
 
 type UpdateCanEditPastPayload = {
   year: number;

@@ -2,8 +2,9 @@ import { NextRequest } from 'next/server';
 
 import { createErrorResponse } from '@/lib/createErrorResponse';
 import { getUserIdOrUnauthorized } from '@/lib/getUserIdOrUnauthorized';
-import { userController } from '@/controllers/user/user.controller';
 import { createSuccessResponse } from '@/lib/createSuccessResponse';
+
+import * as userController from '@/controllers/user';
 
 type Payload = {
   password: string;

@@ -2,10 +2,11 @@ import { NextRequest } from 'next/server';
 
 import { createSuccessResponse } from '@/lib/createSuccessResponse';
 import { createErrorResponse } from '@/lib/createErrorResponse';
+import { getUserIdOrUnauthorized } from '@/lib/getUserIdOrUnauthorized';
+
+import * as userController from '@/controllers/user';
 
 import { userService } from '@/services/user/user.service';
-import { userController } from '@/controllers/user/user.controller';
-import { getUserIdOrUnauthorized } from '@/lib/getUserIdOrUnauthorized';
 
 type Payload = {
   description_settings_id: number;

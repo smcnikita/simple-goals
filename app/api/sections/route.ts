@@ -1,8 +1,10 @@
-import { sectionsController } from '@/controllers/sections/sections.controller';
+import { NextRequest } from 'next/server';
+
 import { createErrorResponse } from '@/lib/createErrorResponse';
 import { createSuccessResponse } from '@/lib/createSuccessResponse';
 import { getUserAndYearModel } from '@/lib/getUserAndYearModel';
-import { NextRequest } from 'next/server';
+
+import * as sectionsController from '@/controllers/sections';
 
 export async function GET(req: NextRequest) {
   const searchParams = req.nextUrl.searchParams;

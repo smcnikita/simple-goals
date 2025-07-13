@@ -3,12 +3,12 @@ import { getServerSession } from 'next-auth';
 
 import { authOptions } from '@/lib/auth';
 
-import { statusService } from '@/services/status/status.service';
-import { userService } from '@/services/user/user.service';
-
 import StoreInitializer from './store-initializer';
 
-import { yearsController } from '@/controllers/years/years.controller';
+import * as yearsController from '@/controllers/years';
+
+import { statusService } from '@/services/status/status.service';
+import { userService } from '@/services/user/user.service';
 
 import { Main } from '@/components/goals';
 

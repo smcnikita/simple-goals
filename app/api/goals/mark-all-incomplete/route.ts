@@ -1,6 +1,6 @@
 import { NextRequest } from 'next/server';
 
-import { goalsController } from '@/controllers/goals/goals.controller';
+import * as goalsController from '@/controllers/goals';
 
 import { createSuccessResponse } from '@/lib/createSuccessResponse';
 import { getUserAndYearModel } from '@/lib/getUserAndYearModel';

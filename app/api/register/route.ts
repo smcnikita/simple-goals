@@ -4,7 +4,7 @@ import { getTranslations } from 'next-intl/server';
 import { createErrorResponse } from '@/lib/createErrorResponse';
 import { createSuccessResponse } from '@/lib/createSuccessResponse';
 
-import { userController } from '@/controllers/user/user.controller';
+import * as userController from '@/controllers/user';
 
 type RegisterPayload = {
   email: string;

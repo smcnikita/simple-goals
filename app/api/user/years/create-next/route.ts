@@ -2,7 +2,7 @@ import { getUserIdOrUnauthorized } from '@/lib/getUserIdOrUnauthorized';
 import { createErrorResponse } from '@/lib/createErrorResponse';
 import { createSuccessResponse } from '@/lib/createSuccessResponse';
 
-import { yearsController } from '@/controllers/years/years.controller';
+import * as yearsController from '@/controllers/years';
 
 export async function POST() {
   const userIdOrRes = await getUserIdOrUnauthorized();

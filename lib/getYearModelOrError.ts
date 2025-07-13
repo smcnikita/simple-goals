@@ -1,11 +1,10 @@
-// lib/getYearModelOrError.ts
 import { NextResponse } from 'next/server';
-
-import { yearsController } from '@/controllers/years/years.controller';
 
 import { createErrorResponse } from '@/lib/createErrorResponse';
 
-import { YearModel } from '@/types/years.types';
+import * as yearsController from '@/controllers/years';
+
+import type { YearModel } from '@/types/years.types';
 
 type NextResponseType = NextResponse<{ message: string }>;
 
