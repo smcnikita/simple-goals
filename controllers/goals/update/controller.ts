@@ -1,6 +1,6 @@
 import { prisma } from '@/lib/prisma';
 
-import { goalsService } from '@/services/goals/goals.service';
+import * as goalsService from '@/services/goals';
 
 import type { UpdateParams } from './types';
 

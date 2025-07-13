@@ -1,6 +1,6 @@
 import { getRequestConfig } from 'next-intl/server';
 
-import { localeService } from '@/services/locale/locale.service';
+import * as localeService from '@/services/locale';
 
 export default getRequestConfig(async () => {
   const locale = await localeService.getUserLocale();

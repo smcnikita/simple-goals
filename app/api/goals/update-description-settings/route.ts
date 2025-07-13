@@ -6,7 +6,7 @@ import { getUserIdOrUnauthorized } from '@/lib/getUserIdOrUnauthorized';
 
 import * as userController from '@/controllers/user';
 
-import { userService } from '@/services/user/user.service';
+import * as userService from '@/services/user';
 
 type Payload = {
   description_settings_id: number;

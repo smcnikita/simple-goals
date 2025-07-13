@@ -2,7 +2,7 @@ import { prisma } from '@/lib/prisma';
 
 import { DESCRIPTION_SETTINGS_KEYS } from '@/constants/description-settings';
 
-import { yearsService } from '@/services/years/years.service';
+import * as yearsService from '@/services/years';
 
 import type { CreateNextResponse } from './types';
 

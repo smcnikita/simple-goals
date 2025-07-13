@@ -1,8 +1,9 @@
 import { prisma } from '@/lib/prisma';
 
-import { goalsService } from '@/services/goals/goals.service';
+import * as goalsService from '@/services/goals';
 
 import type { CreateGoalParams } from './types';
+
 import type { StatusKeys } from '@/types/status.types';
 
 export const createGoal = async (params: CreateGoalParams) => {

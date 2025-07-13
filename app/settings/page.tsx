@@ -3,7 +3,7 @@ import { getTranslations } from 'next-intl/server';
 
 import { authOptions } from '@/lib/auth';
 
-import { userService } from '@/services/user/user.service';
+import * as userService from '@/services/user';
 
 import { Separator } from '@/components/ui/separator';
 import { DeleteProfileDialog, DescriptionForm, BlockGoalsAction, NameForm, PasswordForm } from '@/components/settings';

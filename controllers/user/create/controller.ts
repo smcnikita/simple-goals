@@ -1,4 +1,4 @@
-import { userService } from '@/services/user/user.service';
+import * as userService from '@/services/user';
 
 import type { CreateUserParams } from './types';
 

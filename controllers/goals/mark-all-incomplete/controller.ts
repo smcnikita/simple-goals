@@ -1,4 +1,4 @@
-import { goalsService } from '@/services/goals/goals.service';
+import * as goalsService from '@/services/goals';
 
 import type { MarkAllAsIncompleteResponse } from '@/app/api/goals/mark-all-incomplete/types';
 

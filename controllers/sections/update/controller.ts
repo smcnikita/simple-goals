@@ -1,4 +1,4 @@
-import { sectionsService } from '@/services/sections/sections.service';
+import * as sectionsService from '@/services/sections';
 
 type Params = {
   userId: number;

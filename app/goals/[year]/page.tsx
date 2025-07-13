@@ -7,8 +7,8 @@ import StoreInitializer from './store-initializer';
 
 import * as yearsController from '@/controllers/years';
 
-import { statusService } from '@/services/status/status.service';
-import { userService } from '@/services/user/user.service';
+import * as statusService from '@/services/status';
+import * as userService from '@/services/user';
 
 import { Main } from '@/components/goals';
 

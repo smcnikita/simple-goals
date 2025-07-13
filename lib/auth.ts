@@ -6,7 +6,7 @@ import { PATHS } from '@/constants/paths';
 
 import { prisma } from './prisma';
 
-import { authService } from '@/services/auth/auth.service';
+import * as authService from '@/services/auth';
 
 export const authOptions: NextAuthOptions = {
   providers: [
