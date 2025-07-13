@@ -24,6 +24,8 @@ type DataStore = {
   isLoadingDeleteSection: boolean;
   isLoadingUpdateSection: boolean;
 
+  isEncrypted: boolean;
+
   goals: GoalModelWithStatus[];
   sections: Section[];
 
@@ -32,6 +34,8 @@ type DataStore = {
 };
 
 type ActionsStore = {
+  updateIsEncrypted: (isEncrypted: boolean) => void;
+
   fetchGoalsData: (year: number) => Promise<void>;
   createGoal: (data: CreateGoalParams) => Promise<void>;
   setGoals: (data: GoalModelWithStatus[]) => Promise<void>;

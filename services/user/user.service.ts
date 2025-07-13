@@ -7,8 +7,10 @@ import {
   getUserDescriptionSettings,
 } from './get-description-settings';
 import { deleteUser } from './delete';
+import { getIsUserGoalsEncrypted } from './get-user';
 
 export const userService = {
+  getIsUserGoalsEncrypted,
   createUser,
   updateUserName,
   getDescriptionSettings,

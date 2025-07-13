@@ -1,14 +1,27 @@
 # Simple Goals
 
-A self-hosted app to set and track your yearly goals with ease.
+A lightweight, self-hosted app to set, track, and organize your yearly goals — with encryption and clear progress
+statistics.
 
-Demo: https://simple-goals.vercel.app/
-
-## 📸 Screenshots
+![Screenshot](./docs/screenshots/1.png)
 
 [All screenshots](./docs/screenshots.md)
 
-![Screenshot](./docs/screenshots/2.png)
+Demo: https://simple-goals.vercel.app
+
+## ✨ Features
+
+- Set and track your yearly goals.
+
+- Add descriptions and statuses (e.g., in progress, completed) to each goal.
+
+- Encrypt goals locally — your data is encrypted and stored only on your device.
+
+- View progress and statistics by year.
+
+- Self-hosting support — run the app on your own server without relying on third-party services.
+
+- Multilingual interface — available in English and Russian.
 
 ## 🚀 Quick Start (Self-Hosting with Docker)
 
@@ -76,6 +89,14 @@ Access your app in the browser:
 - 👉 `http://your-server-ip:9096` (for remote access)
 
 ---
+
+## ⚙️ Environment Variables
+
+| Variable        | Description                   |
+| --------------- | ----------------------------- |
+| NEXTAUTH_URL    | Base URL for the app          |
+| NEXTAUTH_SECRET | Secret key for authentication |
+| DATABASE_URL    | PostgreSQL connection string  |
 
 ## 🛠 Development Setup
 

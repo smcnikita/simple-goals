@@ -2,3 +2,5 @@ export { default as DeleteProfileDialog } from './components/DeleteProfile/Dialo
 export { default as DescriptionForm } from './components/Description/Form';
 export { default as NameForm } from './components/Name/Form';
 export { default as PasswordForm } from './components/Password/Form';
+
+export { default as BlockGoalsAction } from './components/BlockGoals/Action';
