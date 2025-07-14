@@ -3,7 +3,7 @@ import { prisma } from '@/lib/prisma/prisma';
 import type { CreateParams } from './types';
 
 export async function createGoal(params: CreateParams) {
-  const { name, description, statusId, userId, yearId, section_id } = params;
+  const { name, description, statusId, userId, yearId, section_id, completedAt } = params;
 
   if (section_id) {
     const section = await prisma.section.findFirst({
@@ -26,6 +26,7 @@ export async function createGoal(params: CreateParams) {
       user_id: userId,
       year_id: yearId,
       section_id,
+      completed_at: completedAt,
     },
   });
 }

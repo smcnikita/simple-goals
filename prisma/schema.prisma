@@ -49,18 +49,19 @@ model Statuses {
 }
 
 model Goals {
-  id          Int      @id @default(autoincrement())
-  name        String
-  description String?
-  status_id   Int
-  year_id     Int
-  year        Years    @relation(fields: [year_id], references: [id])
-  user_id     Int
-  user        Users    @relation(fields: [user_id], references: [id])
-  section     Section? @relation(fields: [section_id], references: [id])
-  section_id  Int?
-  created_at  DateTime @default(now()) @map("created_at")
-  updated_at  DateTime @updatedAt @map("updated_at")
+  id           Int       @id @default(autoincrement())
+  name         String
+  description  String?
+  status_id    Int
+  year_id      Int
+  year         Years     @relation(fields: [year_id], references: [id])
+  user_id      Int
+  user         Users     @relation(fields: [user_id], references: [id])
+  section      Section?  @relation(fields: [section_id], references: [id])
+  section_id   Int?
+  created_at   DateTime  @default(now()) @map("created_at")
+  updated_at   DateTime  @updatedAt @map("updated_at")
+  completed_at DateTime?
 }
 
 model Section {

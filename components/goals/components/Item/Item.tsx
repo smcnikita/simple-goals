@@ -27,11 +27,12 @@ type Props = {
   description: Description | null;
   status: StatusKeys;
   descriptionSettings: DescriptionSettings;
-  section_id: number | null;
+  sectionId: number | null;
+  completedAt?: Date | string | null;
 };
 
 const Item: FC<PropsWithChildren<Props>> = (props) => {
-  const { children, id, name, status, description, section_id } = props;
+  const { children, id, name, status, description, sectionId } = props;
 
   const { deleteGoal: deleteGoalStore } = useGoalsStore();
   const { globalYear } = useGlobalYear();
@@ -69,7 +70,7 @@ const Item: FC<PropsWithChildren<Props>> = (props) => {
           name={name}
           description={description}
           status={status}
-          section_id={section_id}
+          section_id={sectionId}
         />
       ) : (
         <div className="flex items-center gap-3">
@@ -82,7 +83,7 @@ const Item: FC<PropsWithChildren<Props>> = (props) => {
 
           <div className="flex flex-col gap-1">
             <h3 className="text-base font-medium wrap-anywhere">{children ? children : <>null</>}</h3>
-            <StatusItem status={status} />
+            <StatusItem status={status} completedAt={props.completedAt} />
             <p
               className={clsx('mt-1 text-xs text-gray-500', {
                 hidden: props.descriptionSettings.value === DESCRIPTION_SETTINGS_KEYS.display_none,

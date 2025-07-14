@@ -25,7 +25,8 @@ const Container: FC<Props> = ({ goals, descriptionSettings }) => {
           description={goal.description}
           status={goal.status}
           descriptionSettings={descriptionSettings}
-          section_id={goal.section_id}
+          sectionId={goal.section_id}
+          completedAt={goal.completed_at}
         >
           {goal.name}
         </Item>
