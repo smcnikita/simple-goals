@@ -5,6 +5,7 @@ import * as goalsService from '@/services/goals';
 import type { CreateGoalParams } from './types';
 
 import type { StatusKeys } from '@/types/status/status';
+import { STATUS_KEYS } from '@/constants/status';
 
 export const createGoal = async (params: CreateGoalParams) => {
   const { name, description, statusKey, userId, yearId, year, canEditPastGoals, section_id } = params;
@@ -19,6 +20,12 @@ export const createGoal = async (params: CreateGoalParams) => {
 
   const nowYear = new Date().getFullYear();
 
+  let completedAt: Date | string | null = null;
+
+  if (statusModel.key === STATUS_KEYS.Completed) {
+    completedAt = new Date();
+  }
+
   if (nowYear === year || canEditPastGoals) {
     return {
       data: await goalsService.createGoal({
@@ -28,6 +35,7 @@ export const createGoal = async (params: CreateGoalParams) => {
         userId,
         yearId,
         section_id,
+        completedAt,
       }),
       status: statusModel.key as StatusKeys,
     };

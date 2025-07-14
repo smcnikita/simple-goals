@@ -5,6 +5,7 @@ import * as goalsService from '@/services/goals';
 import type { UpdateParams } from './types';
 
 import type { StatusKeys } from '@/types/status/status';
+import { STATUS_KEYS } from '@/constants/status';
 
 export const updateGoal = async (params: UpdateParams) => {
   const { id, name, description, statusKey, userId, yearId, section_id } = params;
@@ -19,6 +20,12 @@ export const updateGoal = async (params: UpdateParams) => {
     return null;
   }
 
+  let completedAt: Date | string | null = null;
+
+  if (statusModel.key === STATUS_KEYS.Completed) {
+    completedAt = new Date();
+  }
+
   return {
     data: await goalsService.updateGoal({
       id,
@@ -28,6 +35,7 @@ export const updateGoal = async (params: UpdateParams) => {
       userId,
       yearId,
       section_id,
+      completedAt,
     }),
     status: statusModel.key as StatusKeys,
   };
