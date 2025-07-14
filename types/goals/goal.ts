@@ -6,4 +6,5 @@ export type GoalModel = Goals;
 
 export type GoalModelWithStatus = GoalModel & {
   status: StatusKeys;
+  completed_at: string | null;
 };

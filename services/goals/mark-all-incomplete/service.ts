@@ -34,6 +34,7 @@ export const markAllAsIncomplete = async (userId: number, yearId: number): Servi
   await prisma.goals.updateMany({
     data: {
       status_id: notCompletedStatus.id,
+      completed_at: null,
     },
     where: {
       id: { in: goalsToUpdate.map((goal) => goal.id) },

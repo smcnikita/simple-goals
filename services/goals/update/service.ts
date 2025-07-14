@@ -3,7 +3,7 @@ import { prisma } from '@/lib/prisma/prisma';
 import type { UpdateParams } from './types';
 
 export async function updateGoal(params: UpdateParams) {
-  const { id, name, description, statusId, userId, yearId, section_id } = params;
+  const { id, name, description, statusId, userId, yearId, section_id, completedAt } = params;
 
   if (section_id) {
     const section = await prisma.section.findFirst({
@@ -24,6 +24,7 @@ export async function updateGoal(params: UpdateParams) {
       description,
       status_id: statusId,
       section_id,
+      completed_at: completedAt,
     },
     where: {
       id: id,
