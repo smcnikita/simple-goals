@@ -28,7 +28,7 @@ type Props = {
   status: StatusKeys;
   descriptionSettings: DescriptionSettings;
   sectionId: number | null;
-  completedAt?: string | null;
+  completedAt?: Date | string | null;
 };
 
 const Item: FC<PropsWithChildren<Props>> = (props) => {

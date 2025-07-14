@@ -3,7 +3,7 @@
 import { useLocale } from 'next-intl';
 import { useMemo } from 'react';
 
-const useDate = (date: string | null | undefined) => {
+const useDate = (date: Date | string | null | undefined) => {
   const locale = useLocale();
 
   const getLocaleKey = useMemo<Intl.LocalesArgument>(() => {

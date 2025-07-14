@@ -9,7 +9,7 @@ import useDate from '@/hooks/use-date';
 
 type Props = {
   status: StatusKeys;
-  completedAt?: string | null;
+  completedAt?: Date | string | null;
 };
 
 const StatusItem: FC<Props> = ({ status, completedAt }) => {
