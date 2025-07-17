@@ -17,6 +17,7 @@ import { Button } from '@/components/ui/button';
 import { Checkbox } from '@/components/ui/checkbox';
 import { Label } from '@/components/ui/label';
 import { Separator } from '@/components/ui/separator';
+import { Card, CardContent } from '@/components/ui/card';
 
 const GoalsSettingsContent: FC = () => {
   const t = useTranslations('settings');
@@ -65,68 +66,70 @@ const GoalsSettingsContent: FC = () => {
   };
 
   return (
-    <div className="space-y-4 py-4">
-      <Separator />
+    <div className="py-4">
+      <Card>
+        <CardContent className="space-y-4">
+          {isSelectedCurrentYear && !hasNextYear && (
+            <>
+              <div className="flex flex-col gap-2">
+                <div className="flex items-center space-x-2">
+                  <Button variant="outline" disabled={isLoadingCreateNextYear} onClick={handleCreateNextYear}>
+                    {isLoadingCreateNextYear && <Loader2 className="animate-spin text-gray-400" />}
+                    {t('create_next_year')}
+                  </Button>
+                </div>
+                <p className="text-sm text-gray-500">{t('year_creation', { year: globalYear })}</p>
+              </div>
+              <Separator />
+            </>
+          )}
 
-      {isSelectedCurrentYear && !hasNextYear && (
-        <>
           <div className="flex flex-col gap-2">
             <div className="flex items-center space-x-2">
-              <Button variant="outline" disabled={isLoadingCreateNextYear} onClick={handleCreateNextYear}>
-                {isLoadingCreateNextYear && <Loader2 className="animate-spin text-gray-400" />}
-                {t('create_next_year')}
+              <Button variant="outline" disabled={isLoadingMarkAllAsIncomplete} onClick={handleMarkAllAsIncomplete}>
+                {isLoadingMarkAllAsIncomplete && <Loader2 className="animate-spin text-gray-400" />}
+                {t('mark_all_as_incomplete')}
               </Button>
             </div>
-            <p className="text-sm text-gray-500">{t('year_creation', { year: globalYear })}</p>
+            <p className="text-sm text-gray-500">{t('tasks_status_change')}</p>
           </div>
+
           <Separator />
-        </>
-      )}
 
-      <div className="flex flex-col gap-2">
-        <div className="flex items-center space-x-2">
-          <Button variant="outline" disabled={isLoadingMarkAllAsIncomplete} onClick={handleMarkAllAsIncomplete}>
-            {isLoadingMarkAllAsIncomplete && <Loader2 className="animate-spin text-gray-400" />}
-            {t('mark_all_as_incomplete')}
-          </Button>
-        </div>
-        <p className="text-sm text-gray-500">{t('tasks_status_change')}</p>
-      </div>
-
-      <Separator />
-
-      <div className="flex flex-col gap-2">
-        <div className="flex items-center space-x-2">
-          {isLoadingShowStatistic && <Loader2 className="animate-spin text-gray-400" />}
-          <Checkbox
-            id="show-statistic"
-            checked={isShowStatistic}
-            onCheckedChange={onChangeIsShowStatistic}
-            disabled={isLoadingShowStatistic}
-          />
-          <Label htmlFor="show-statistic">{t('show_statistic')}</Label>
-        </div>
-        <p className="text-sm text-gray-500">{t('statistics_display_control')}</p>
-      </div>
-
-      {!isNowYear && (
-        <>
-          <Separator />
           <div className="flex flex-col gap-2">
             <div className="flex items-center space-x-2">
-              {isLoadingUpdateCanEditPast && <Loader2 className="animate-spin text-gray-400" />}
+              {isLoadingShowStatistic && <Loader2 className="animate-spin text-gray-400" />}
               <Checkbox
-                id="can-edit-past-goals"
-                checked={canEditPastGoals}
-                onCheckedChange={onChangeCanEditPast}
-                disabled={isLoadingUpdateCanEditPast}
+                id="show-statistic"
+                checked={isShowStatistic}
+                onCheckedChange={onChangeIsShowStatistic}
+                disabled={isLoadingShowStatistic}
               />
-              <Label htmlFor="can-edit-past-goals">{t('can_edit_past_goals')}</Label>
+              <Label htmlFor="show-statistic">{t('show_statistic')}</Label>
             </div>
-            <p className="text-sm text-gray-500">{t('goals_edit_control')}</p>
+            <p className="text-sm text-gray-500">{t('statistics_display_control')}</p>
           </div>
-        </>
-      )}
+
+          {!isNowYear && (
+            <>
+              <Separator />
+              <div className="flex flex-col gap-2">
+                <div className="flex items-center space-x-2">
+                  {isLoadingUpdateCanEditPast && <Loader2 className="animate-spin text-gray-400" />}
+                  <Checkbox
+                    id="can-edit-past-goals"
+                    checked={canEditPastGoals}
+                    onCheckedChange={onChangeCanEditPast}
+                    disabled={isLoadingUpdateCanEditPast}
+                  />
+                  <Label htmlFor="can-edit-past-goals">{t('can_edit_past_goals')}</Label>
+                </div>
+                <p className="text-sm text-gray-500">{t('goals_edit_control')}</p>
+              </div>
+            </>
+          )}
+        </CardContent>
+      </Card>
     </div>
   );
 };

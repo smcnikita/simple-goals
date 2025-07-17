@@ -13,3 +13,5 @@ export * from './update/controller';
 export type * from './update/types';
 
 export * from './crypt/controller';
+
+export * from './export/controller';

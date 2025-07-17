@@ -7,3 +7,5 @@ export * from './mark-all-incomplete/service';
 
 export * from './update/service';
 export type * from './update/types';
+
+export * from './export/service';

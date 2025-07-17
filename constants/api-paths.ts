@@ -23,4 +23,5 @@ export const API_PATHS = {
     DELETE_SECTION: '/sections',
     UPDATE_SECTION: '/sections',
   },
+  EXPORT_GOALS: '/export',
 };

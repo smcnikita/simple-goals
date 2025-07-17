@@ -185,6 +185,10 @@
         "display_3_lines": "Display up to 3 lines",
         "display_full": "Display in full"
       }
+    },
+
+    "export": {
+      "button": "Export goals"
     }
   },
 
@@ -199,6 +203,12 @@
     "settings": "Settings",
     "is_updated": "The name is being updated",
     "enter_name": "Enter a new name",
+
+    "home": "Home",
+    "user": "User",
+    "display": "Display",
+    "encryption": "Encryption",
+    "export": "Export",
 
     "current_password": "Current password",
     "new_password": "New password",

@@ -1,9 +1,8 @@
 import { NextResponse } from 'next/server';
 
-type NextResponseType<T> = NextResponse<{
-  message: 'Success';
-  data: T;
-}>;
+export type NextResponseTypeItem<T> = { message: 'Success'; data: T };
+
+export type NextResponseType<T> = NextResponse<NextResponseTypeItem<T>>;
 
 export function createSuccessResponse<T>(data: T): NextResponseType<T> {
   return NextResponse.json({ message: 'Success', data }, { status: 200 });

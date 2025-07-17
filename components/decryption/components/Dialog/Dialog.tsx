@@ -41,7 +41,9 @@ const Dialog: FC = () => {
   return (
     <DialogComponent open={openDialog} onOpenChange={setOpenDialog}>
       <DialogTrigger asChild>
-        <Button type="button">{tEncryption('decrypt')}</Button>
+        <Button type="button" variant="outline">
+          {tEncryption('decrypt')}
+        </Button>
       </DialogTrigger>
 
       <DialogContent>
