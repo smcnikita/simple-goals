@@ -4,3 +4,5 @@ export { default as NameForm } from './components/Name/Form';
 export { default as PasswordForm } from './components/Password/Form';
 
 export { default as BlockGoalsAction } from './components/BlockGoals/Action';
+
+export { default as ExportForm } from './components/Export/Form';

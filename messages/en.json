@@ -185,6 +185,10 @@
         "display_3_lines": "Display up to 3 lines",
         "display_full": "Display in full"
       }
+    },
+
+    "export": {
+      "button": "Export goals"
     }
   },
 

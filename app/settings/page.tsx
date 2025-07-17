@@ -6,7 +6,14 @@ import { authOptions } from '@/lib/auth/auth';
 import * as userService from '@/services/user';
 
 import { Separator } from '@/components/ui/separator';
-import { DeleteProfileDialog, DescriptionForm, BlockGoalsAction, NameForm, PasswordForm } from '@/components/settings';
+import {
+  DeleteProfileDialog,
+  DescriptionForm,
+  BlockGoalsAction,
+  NameForm,
+  PasswordForm,
+  ExportForm,
+} from '@/components/settings';
 import { EncryptionDialog } from '@/components/encryption';
 import { DecryptionDialog } from '@/components/decryption';
 
@@ -63,6 +70,10 @@ export default async function Page() {
           <Separator />
         </>
       )}
+
+      <ExportForm />
+
+      <Separator />
 
       <DeleteProfileDialog />
     </div>
