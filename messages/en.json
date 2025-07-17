@@ -204,6 +204,12 @@
     "is_updated": "The name is being updated",
     "enter_name": "Enter a new name",
 
+    "home": "Home",
+    "user": "User",
+    "display": "Display",
+    "encryption": "Encryption",
+    "export": "Export",
+
     "current_password": "Current password",
     "new_password": "New password",
     "repeat_new_password": "Repeat new password",

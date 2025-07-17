@@ -14,7 +14,7 @@ export const useUserYearsStore = create<Store>()((set) => ({
     const res = await httpCreateNext();
 
     set((state) => ({
-      userYears: [res.data.year, ...state.userYears].sort((a, b) => b - a),
+      userYears: [res.data.data.year, ...state.userYears].sort((a, b) => b - a),
       isLoadingCreateNextYear: false,
     }));
   },

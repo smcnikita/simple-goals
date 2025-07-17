@@ -33,7 +33,7 @@ const Form: FC = () => {
 
   return (
     <form noValidate onSubmit={onSubmit}>
-      <Button type="submit" variant="ghost">
+      <Button type="submit" variant="outline">
         <Download />
         {t('button')}
       </Button>
