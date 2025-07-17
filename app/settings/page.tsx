@@ -1,11 +1,23 @@
 import { getServerSession } from 'next-auth';
 import { getTranslations } from 'next-intl/server';
+import Link from 'next/link';
+
+import { PATHS } from '@/constants/paths';
 
 import { authOptions } from '@/lib/auth/auth';
 
 import * as userService from '@/services/user';
 
 import { Separator } from '@/components/ui/separator';
+import {
+  Breadcrumb,
+  BreadcrumbItem,
+  BreadcrumbLink,
+  BreadcrumbList,
+  BreadcrumbPage,
+  BreadcrumbSeparator,
+} from '@/components/ui/breadcrumb';
+import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import {
   DeleteProfileDialog,
   DescriptionForm,
@@ -37,43 +49,66 @@ export default async function Page() {
 
   return (
     <div className="space-y-4 py-4">
+      <Breadcrumb>
+        <BreadcrumbList>
+          <BreadcrumbItem>
+            <BreadcrumbLink asChild>
+              <Link href={PATHS.home}>{t('home')}</Link>
+            </BreadcrumbLink>
+          </BreadcrumbItem>
+          <BreadcrumbSeparator />
+          <BreadcrumbItem>
+            <BreadcrumbPage>{t('settings')}</BreadcrumbPage>
+          </BreadcrumbItem>
+        </BreadcrumbList>
+      </Breadcrumb>
+
       <h1 className="text-2xl font-bold">{t('settings')}</h1>
 
-      <Separator />
-
-      <div>
-        <NameForm currentUserName={session.user.name} />
-      </div>
-
-      <Separator />
-
-      <DescriptionForm selected={userDescriptionSetting} options={descriptionSettings} />
-
-      <Separator />
-
-      <PasswordForm />
-
-      <Separator />
-
-      {isEncryptedGoals && <BlockGoalsAction />}
-
-      {isEncryptedGoals && (
-        <>
-          <DecryptionDialog />
+      <Card>
+        <CardHeader>
+          <CardTitle>{t('user')}</CardTitle>
+        </CardHeader>
+        <CardContent className="space-y-4">
+          <NameForm currentUserName={session.user.name} />
           <Separator />
-        </>
-      )}
+          <PasswordForm />
+        </CardContent>
+      </Card>
 
-      {!isEncryptedGoals && (
-        <>
-          <EncryptionDialog />
-          <Separator />
-        </>
-      )}
+      <Card>
+        <CardHeader>
+          <CardTitle>{t('display')}</CardTitle>
+        </CardHeader>
+        <CardContent className="space-y-4">
+          <DescriptionForm selected={userDescriptionSetting} options={descriptionSettings} />
+        </CardContent>
+      </Card>
 
-      <ExportForm />
+      <Card>
+        <CardHeader>
+          <CardTitle>{t('encryption')}</CardTitle>
+        </CardHeader>
+        <CardContent className="flex flex-col gap-3 md:flex-row">
+          {isEncryptedGoals ? (
+            <>
+              <BlockGoalsAction />
+              <DecryptionDialog />
+            </>
+          ) : (
+            <EncryptionDialog />
+          )}
+        </CardContent>
+      </Card>
 
-      <Separator />
+      <Card>
+        <CardHeader>
+          <CardTitle>{t('export')}</CardTitle>
+        </CardHeader>
+        <CardContent className="space-y-4">
+          <ExportForm />
+        </CardContent>
+      </Card>
 
       <DeleteProfileDialog />
     </div>
