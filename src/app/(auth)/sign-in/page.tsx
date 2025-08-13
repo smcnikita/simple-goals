@@ -1,6 +1,6 @@
 import { getTranslations } from 'next-intl/server';
 
-import messages from '@/messages/en.json';
+import messages from '@root/messages/en.json';
 
 import { LoginForm } from '@/components/auth';
 
