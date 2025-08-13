@@ -19,9 +19,9 @@
       }
     ],
     "paths": {
-      "@/*": ["./*"]
+      "@/*": ["./src/*"]
     }
   },
-  "include": ["next-env.d.ts", "**/*.ts", "**/*.tsx", ".next/types/**/*.ts", "globals.d.ts"],
+  "include": ["src/next-env.d.ts", "**/*.ts", "**/*.tsx", ".next/types/**/*.ts", "src/globals.d.ts"],
   "exclude": ["node_modules"]
 }
