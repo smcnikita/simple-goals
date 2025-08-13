@@ -1,5 +1,6 @@
-import { DESCRIPTION_SETTINGS_KEYS } from '@/constants/description-settings';
 import { PrismaClient } from '@prisma/client';
+
+import { DESCRIPTION_SETTINGS_KEYS } from '@/constants/description-settings';
 
 const prisma = new PrismaClient();
 
