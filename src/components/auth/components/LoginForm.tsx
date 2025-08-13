@@ -19,7 +19,7 @@ import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Form as FormComponent, FormControl, FormField, FormItem, FormLabel, FormMessage } from '@/components/ui/form';
 
-import type { OAuthErrorKeys } from '@/types/auth/error.ts';
+import type { OAuthErrorKeys } from '@/types/auth/error';
 
 type Props = {
   message: OAuthErrorKeys | null;

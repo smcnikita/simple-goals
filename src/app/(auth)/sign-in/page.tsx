@@ -1,10 +1,10 @@
 import { getTranslations } from 'next-intl/server';
 
-import messages from '@/messages/en.json';
+import messages from '@root/messages/en.json';
 
 import { LoginForm } from '@/components/auth';
 
-import type { OAuthErrorKeys } from '@/types/auth/error.ts';
+import type { OAuthErrorKeys } from '@/types/auth/error';
 
 interface Props {
   error: string | string[] | undefined;

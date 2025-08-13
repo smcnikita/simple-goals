@@ -9,8 +9,8 @@
     "build": "next build",
     "start": "next start",
     "lint": "next lint .",
-    "format": "prettier -c .",
-    "format:fix": "prettier -w .",
+    "format": "prettier -c ./src",
+    "format:fix": "prettier -w ./src",
     "prepare": "husky"
   },
   "prisma": {
