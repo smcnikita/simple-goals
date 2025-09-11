@@ -35,18 +35,11 @@ export function Form({ message, isSuccessRegister = false }: Props) {
   const loginSchema = useMemo(
     () =>
       z.object({
-        email: z
-          .string({
-            required_error: tErrors('email.required'),
-            invalid_type_error: tErrors('email.type'),
-          })
-          .email(tErrors('email.invalid'))
-          .max(254, tErrors('email.max', { max: 254 })),
+        email: z.email(tErrors('email.invalid')).max(254, tErrors('email.max', { max: 254 })),
 
         password: z
           .string({
-            required_error: tErrors('password.required'),
-            invalid_type_error: tErrors('password.type'),
+            error: (issue) => (issue.input === undefined ? tErrors('password.required') : tErrors('password.type')),
           })
           .min(8, tErrors('password.min', { min: 8 }))
           .max(100, tErrors('password.max', { max: 100 })),
