@@ -8,7 +8,7 @@
     "dev": "next dev --turbopack",
     "build": "next build",
     "start": "next start",
-    "lint": "next lint .",
+    "lint": "eslint ./src",
     "format": "prettier -c ./src",
     "format:fix": "prettier -w ./src",
     "prepare": "husky"
