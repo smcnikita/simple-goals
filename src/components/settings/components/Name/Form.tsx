@@ -44,8 +44,7 @@ const Form: FC<Props> = ({ currentUserName }) => {
       z.object({
         name: z
           .string({
-            required_error: tErrors('username.required'),
-            invalid_type_error: tErrors('username.type'),
+            error: (issue) => (issue.input === undefined ? tErrors('username.required') : tErrors('username.type')),
           })
           .min(2, tErrors('username.min', { min: 2 }))
           .max(50, tErrors('username.max', { max: 50 }))

@@ -15,7 +15,6 @@ export const useGoalsStore = create<Store>()((set, get) => ({
   isLoadingFetch: true,
   isLoadingCreate: false,
   isLoadingUpdate: false,
-  isLoadingDelete: false,
   isLoadingUpdateCanEditPast: false,
   isLoadingShowStatistic: false,
   isLoadingDeleteSection: false,
@@ -95,16 +94,10 @@ export const useGoalsStore = create<Store>()((set, get) => ({
   },
 
   deleteGoal: async (id: number, year: number) => {
-    set({ isLoadingDelete: true });
-
-    try {
-      const res = await httpDeleteGoal({ id, year });
-      set((state) => ({
-        goals: state.goals.filter((goal) => goal.id !== res.data.id),
-      }));
-    } finally {
-      set({ isLoadingDelete: false });
-    }
+    const res = await httpDeleteGoal({ id, year });
+    set((state) => ({
+      goals: state.goals.filter((goal) => goal.id !== res.data.id),
+    }));
   },
 
   setGoals: async (data: GoalModelWithStatus[]) => {

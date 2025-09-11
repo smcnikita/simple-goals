@@ -27,23 +27,21 @@ const Form: FC = () => {
         .object({
           password: z
             .string({
-              required_error: tErrors('password.required'),
-              invalid_type_error: tErrors('password.type'),
+              error: (issue) => (issue.input === undefined ? tErrors('password.required') : tErrors('password.type')),
             })
             .min(8, tErrors('password.min', { min: 8 }))
             .max(100, tErrors('password.max', { max: 100 })),
 
           oldPassword: z
             .string({
-              required_error: tErrors('password.required'),
-              invalid_type_error: tErrors('password.type'),
+              error: (issue) => (issue.input === undefined ? tErrors('password.required') : tErrors('password.type')),
             })
             .min(8, tErrors('password.min', { min: 8 }))
             .max(100, tErrors('password.max', { max: 100 })),
 
           passwordRepeat: z.string({
-            required_error: tErrors('passwordRepeat.required'),
-            invalid_type_error: tErrors('passwordRepeat.type'),
+            error: (issue) =>
+              issue.input === undefined ? tErrors('passwordRepeat.required') : tErrors('passwordRepeat.type'),
           }),
         })
         .refine((data) => data.password === data.passwordRepeat, {

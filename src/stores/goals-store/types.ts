@@ -19,7 +19,6 @@ type DataStore = {
   isLoadingFetch: boolean;
   isLoadingCreate: boolean;
   isLoadingUpdate: boolean;
-  isLoadingDelete: boolean;
   isLoadingUpdateCanEditPast: boolean;
   isLoadingShowStatistic: boolean;
   isLoadingDeleteSection: boolean;
