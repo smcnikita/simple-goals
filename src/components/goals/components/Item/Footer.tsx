@@ -18,19 +18,16 @@ import {
   AlertDialogTrigger,
 } from '@/components/ui/alert-dialog';
 
-import { useGoalsStore } from '@/stores/goals-store';
-
 type Props = {
+  isLoadingDelete: boolean;
   openUpdateForm: () => void;
   deleteGoal: () => Promise<void>;
 };
 
 const Footer: FC<Props> = (props) => {
-  const { openUpdateForm, deleteGoal } = props;
+  const { isLoadingDelete, openUpdateForm, deleteGoal } = props;
 
   const t = useTranslations('goals_list');
-
-  const { isLoadingDelete } = useGoalsStore();
 
   const isMobile = useIsMobile();
 
@@ -39,6 +36,7 @@ const Footer: FC<Props> = (props) => {
       <Button
         size={isMobile ? 'default' : 'icon'}
         variant={isMobile ? 'secondary' : 'ghost'}
+        disabled={isLoadingDelete}
         onClick={() => openUpdateForm()}
       >
         <SquarePen />
