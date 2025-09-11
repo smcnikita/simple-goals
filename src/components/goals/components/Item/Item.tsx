@@ -38,6 +38,8 @@ const Item: FC<PropsWithChildren<Props>> = (props) => {
   const { globalYear } = useGlobalYear();
   const { isCanEditPastGoals } = useGoalYearSettings();
 
+  const [isLoadingDelete, setIsLoadingDelete] = useState(false);
+
   const [isEdit, setIsEdit] = useState(false);
 
   const updateIsEdit = (isEdit: boolean) => {
@@ -58,7 +60,8 @@ const Item: FC<PropsWithChildren<Props>> = (props) => {
     if (!isCanEditPastGoals) {
       return;
     }
-    await deleteGoalStore(id, globalYear);
+    setIsLoadingDelete(true);
+    await deleteGoalStore(id, globalYear).finally(() => setIsLoadingDelete(false));
   };
 
   return (
@@ -96,7 +99,9 @@ const Item: FC<PropsWithChildren<Props>> = (props) => {
         </div>
       )}
 
-      {isCanEditPastGoals && !isEdit && <Footer deleteGoal={deleteGoal} openUpdateForm={openUpdateForm} />}
+      {isCanEditPastGoals && !isEdit && (
+        <Footer isLoadingDelete={isLoadingDelete} deleteGoal={deleteGoal} openUpdateForm={openUpdateForm} />
+      )}
     </div>
   );
 };
