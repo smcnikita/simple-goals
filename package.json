@@ -9,22 +9,17 @@
     "build": "next build",
     "start": "next start",
     "lint": "eslint ./src",
-    "format": "prettier -c ./src",
-    "format:fix": "prettier -w ./src",
+    "format": "prettier --check .",
+    "format:fix": "prettier --write .",
     "prepare": "husky"
   },
-  "husky": {
-    "hooks": {
-      "pre-commit": "lint-staged"
-    }
-  },
   "lint-staged": {
-    "*.(json|html|css|md)": [
-      "prettier -c ./src"
+    "*.{json,html,css,md,yml}": [
+      "prettier --write"
     ],
-    "*.(ts|tsx)": [
-      "prettier -c ./src",
-      "eslint ./src"
+    "*.{ts,tsx,js,jsx}": [
+      "prettier --write",
+      "eslint --fix"
     ]
   },
   "dependencies": {
