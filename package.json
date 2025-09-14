@@ -1,6 +1,6 @@
 {
   "name": "simple-goals",
-  "version": "0.4.3",
+  "version": "0.5.0",
   "private": true,
   "scripts": {
     "postinstall": "prisma generate",
@@ -9,22 +9,18 @@
     "build": "next build",
     "start": "next start",
     "lint": "eslint ./src",
-    "format": "prettier -c ./src",
-    "format:fix": "prettier -w ./src",
+    "lint:fix": "eslint --fix ./src",
+    "format": "prettier --check .",
+    "format:fix": "prettier --write .",
     "prepare": "husky"
   },
-  "husky": {
-    "hooks": {
-      "pre-commit": "lint-staged"
-    }
-  },
   "lint-staged": {
-    "*.(json|html|css|md)": [
-      "npm run format"
+    "*.{json,html,css,md,yml}": [
+      "prettier --write"
     ],
-    "*.(ts|tsx)": [
-      "npm run format",
-      "npm run lint"
+    "*.{ts,tsx,js,jsx}": [
+      "prettier --write",
+      "eslint --fix"
     ]
   },
   "dependencies": {
