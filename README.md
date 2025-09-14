@@ -44,8 +44,8 @@ services:
       dockerfile: Dockerfile
       target: production
     depends_on:
-      migrate:
-        condition: service_completed_successfully
+      db:
+        condition: service_healthy
 
   db:
     image: postgres:16
@@ -56,35 +56,20 @@ services:
       - POSTGRES_PASSWORD
       - POSTGRES_DB
     volumes:
-      - simple-goals-db:/var/lib/postgresql/data
+      - db-data:/var/lib/postgresql/data
     healthcheck:
       test: ['CMD-SHELL', 'pg_isready -U appuser -d appdb']
       interval: 10s
       timeout: 5s
       retries: 5
 
-  migrate:
-    container_name: simple-goals-migrate
-    environment:
-      - DATABASE_URL=postgresql://${POSTGRES_USER}:${POSTGRES_PASSWORD}@db:${POSTGRES_PORT}/${POSTGRES_DB}?schema=public
-    command: sh -c "pnpx prisma migrate deploy && ./node_modules/.bin/tsx prisma/seeders/seed.ts"
-    build:
-      context: .
-      dockerfile: Dockerfile
-      target: builder
-    depends_on:
-      db:
-        condition: service_healthy
-
 volumes:
-  simple-goals-db:
+  db-data:
 ```
 
 ### 2. Create `.env` file
 
-```bash
-cp .env.example .env
-```
+See [`.env.example`](https://github.com/smcnikita/simple-goals/blob/main/.env.example)
 
 Edit `.env` file:
 
