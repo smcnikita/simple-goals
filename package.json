@@ -20,11 +20,11 @@
   },
   "lint-staged": {
     "*.(json|html|css|md)": [
-      "npm run format"
+      "prettier -c ./src"
     ],
     "*.(ts|tsx)": [
-      "npm run format",
-      "npm run lint"
+      "prettier -c ./src",
+      "eslint ./src"
     ]
   },
   "dependencies": {
