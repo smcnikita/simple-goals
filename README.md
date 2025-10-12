@@ -7,8 +7,6 @@ statistics.
 
 [All screenshots](./docs/screenshots.md)
 
-Demo: https://simple-goals.vercel.app
-
 ## ✨ Features
 
 - Set and track your yearly goals.
